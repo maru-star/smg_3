@@ -1,0 +1,47 @@
+@extends('layouts.admin.app')
+
+@section('content')
+
+<div class="float-right">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active">{{ Breadcrumbs::render(Route::currentRouteName(),$service->id) }}</li>
+    </ol>
+  </nav>
+</div>
+<h1 class="mt-3 mb-5">有料サービス管理　編集</h1>
+<div class="text-right mb-3">
+  <a href="/admin/equipments/create" class="btn btn-outline-info btn-lg d-inline-block" style="width: 140px;">新規登録　<i
+      class="fas fa-plus"></i></a>
+</div>
+
+
+
+{{ Form::model($service, ['route' => ['admin.services.update', $service->id], 'method' => 'put']) }}
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>登録日</th>
+      <th>サービス名</th>
+      <th>料金</th>
+      <th>備考</th>
+      <th>詳細(編集)・削除</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{ $service->id }}</td>
+      <td>{{ $service->created_at }}</td>
+      <td>{{ Form::text('item', $service->item, ['class' => 'form-control']) }}</td>
+      <td>{{ Form::text('price', $service->price, ['class' => 'form-control']) }}</td>
+      <td>{{ Form::text('remark', $service->remark, ['class' => 'form-control']) }}</td>
+      <td>
+        {{ Form::submit('更新', ['class' => 'btn btn-primary']) }}
+      </td>
+    </tr>
+  </tbody>
+</table>
+{{ Form::close() }}
+
+@endsection
