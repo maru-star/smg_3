@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 use App\Models\Equipment;
 
-
 class EquipmentsController extends Controller
 {
   /**
@@ -17,15 +16,18 @@ class EquipmentsController extends Controller
    */
   public function index(Request $request)
   {
+
     // 検索処理はモデルに移行
     $search_freeword = $request->freeword;
     $search_id = $request->id;
     $search_item = $request->item;
     $search_createdat = $request->createdat;
-    $querys = Equipment::searchs($search_freeword, $search_id, $search_item, $search_createdat);
+
+    $equipment = new Equipment;
+    $equipments = $equipment->searchs($search_freeword, $search_id, $search_item, $search_createdat);
 
     return view('admin.equipments.index', [
-      'querys' => $querys,
+      'equipments' => $equipments,
     ]);
   }
 

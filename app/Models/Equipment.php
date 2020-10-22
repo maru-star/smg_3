@@ -17,22 +17,22 @@ class Equipment extends Model
     return $this->belongsToMany('App\Models\Venue');
   }
 
-  public static function searchs($freeword, $id, $item, $createdat)
+  public function searchs($freeword, $id, $item, $createdat)
   {
     if (isset($freeword)) {
-      return self::where('id', 'LIKE', "%$freeword%")
+      return $this->where('id', 'LIKE', "%$freeword%")
         ->orWhere('item', 'LIKE', "%$freeword%")
         ->orWhere('price', 'LIKE', "%$freeword%")
         ->orWhere('created_at', 'LIKE', "%$freeword%")
         ->orWhere('remark', 'LIKE', "%$freeword%")->paginate(10);
     } else if (isset($id)) {
-      return self::where('id', 'LIKE', "%$id%")->paginate(10);
+      return $this->where('id', 'LIKE', "%$id%")->paginate(10);
     } else if (isset($item)) {
-      return self::where('item', 'LIKE', "%$item%")->paginate(10);
+      return $this->where('item', 'LIKE', "%$item%")->paginate(10);
     } else if (isset($createdat)) {
-      return self::where('created_at', 'LIKE', "%$createdat%")->paginate(10);
+      return $this->where('created_at', 'LIKE', "%$createdat%")->paginate(10);
     } else {
-      return self::query()->paginate(10);
+      return $this->query()->paginate(10);
     }
   }
 }

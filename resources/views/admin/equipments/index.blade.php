@@ -32,7 +32,7 @@
   </div>
   <hr>
   <div class="d-flex justify-content-between mt-3 mb-5">
-    <span>{{$querys->count()}}件表示</span>
+    <span>{{$equipments->count()}}件表示</span>
     <div>
       <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
@@ -85,7 +85,7 @@
     </tr>
   </thead>
   <tbody>
-    @foreach ($querys as $query)
+    @foreach ($equipments as $query)
     <tr>
       <td>{{ $query->id }}</td>
       <td>{{ $query->created_at }}</td>
@@ -104,5 +104,5 @@
     @endforeach
   </tbody>
 </table>
-{{ $querys->links() }}
+{{ $equipments->links() }}
 @endsection
