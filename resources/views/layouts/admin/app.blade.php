@@ -19,10 +19,10 @@
   <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
   <!-- Theme style -->
-  <link href="{{ asset('css/adminlte.min.css')}}" rel="stylesheet">
+  <link href="{{ asset('/css/adminlte.min.css')}}" rel="stylesheet">
 
   <!-- Styles -->
-  <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+  <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
   <!-- jQuery UI 1.12.1 -->
@@ -95,7 +95,7 @@
     <!-- Bootstrap 4 -->
     {{-- <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script> --}}
     <!-- AdminLTE App -->
-    <script src="{{ asset('js/adminlte.min.js') }}"></script>
+    <script src="{{ asset('/js/adminlte.min.js') }}"></script>
 
   </div>
 </body>
