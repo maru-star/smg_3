@@ -26,7 +26,13 @@
         // Ajaxリクエスト成功時の処理
         .done(function(data) {
             // Laravel内で処理された結果がdataに入って返ってくる
-            $('#message').text(data['name_area']);
+            // $('#message').text(data[0]['item']);
+            $('#message').text(data.length);
+            // 以下で戻ってきた配列を個別に取得
+            $.each(data,function(index, value){
+              console.log(value);
+            })
+            
         })
         // Ajaxリクエスト失敗時の処理
         .fail(function(data) {
@@ -40,7 +46,6 @@
 
 <div id="message"></div>
 <button id="excute">ボタン</button>
-
 
 
 

@@ -31,7 +31,7 @@ class ReservationsController extends Controller
     // $message = $data['text'];
     // return $message;
     $venue = Venue::find($id);
-    return $venue;
+    return $venue->equipments()->get();
   }
 
   /**
