@@ -71,5 +71,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('clients', 'ClientsController');
     // 予約
     Route::resource('reservations', 'ReservationsController');
+
+    Route::post('reservations/getvene', 'ReservationsController@getVene');
   });
 });

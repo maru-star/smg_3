@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Models\Reservation;
+use App\Models\Venue;
 
 
 class ReservationsController extends Controller
@@ -21,6 +22,16 @@ class ReservationsController extends Controller
     return view('admin.reservations.index', [
       'reservations' => $reservations,
     ]);
+  }
+
+  public function getVene(Request $request)
+  {
+    // $data = $request->all();
+    $id = $request->user_id;
+    // $message = $data['text'];
+    // return $message;
+    $venue = Venue::find($id);
+    return $venue;
   }
 
   /**

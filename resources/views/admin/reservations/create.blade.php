@@ -8,28 +8,56 @@
 
 
 
+<script>
+  $(function() {
+    $('#excute').on('click', function() {
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },//Headersを書き忘れるとエラーになる
+            url: '/admin/reservations/getvene',//ご自身のweb.phpのURLに合わせる
+            type: 'POST',//リクエストタイプ
+            data: {'user_id': 1, 'text': 'Ajax成功'},//Laravelに渡すデータ
+            // contentType: false,//渡すデータによって必要(文字列だけなら不要)
+            // processData: false,//渡すデータによって必要(文字列だけなら不要)
+            dataType: 'json', //必須。json形式で返すように設定
+
+        })
+        // Ajaxリクエスト成功時の処理
+        .done(function(data) {
+            // Laravel内で処理された結果がdataに入って返ってくる
+            $('#message').text(data['name_area']);
+        })
+        // Ajaxリクエスト失敗時の処理
+        .fail(function(data) {
+            alert('Ajaxリクエスト失敗');
+        });
+    });
+});
+
+</script>
+
+
+<div id="message"></div>
+<button id="excute">ボタン</button>
 
 
 
 
 
 
-
-
-
-
-
+{{-- 
 
 <div class="container-field mt-3">
   <div class="float-right">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active">{{ Breadcrumbs::render(Route::currentRouteName()) }}</li>
-      </ol>
-    </nav>
-  </div>
-  <h1 class="mt-3 mb-5">予約　新規登録</h1>
-  <hr>
+</ol>
+</nav>
+</div>
+<h1 class="mt-3 mb-5">予約　新規登録</h1>
+<hr>
 </div>
 
 <div class="container-field">
@@ -38,7 +66,6 @@
 
   <div class="row">
     <div class="col">
-      {{-- ビル情報 --}}
       <div class="p-3 mb-2 bg-white text-dark">
         <span><i class="fas fa-info-circle"></i>ビル情報</span>
         <div class="mt-2 mb-2">
@@ -153,7 +180,6 @@
         </div>
       </div>
 
-      {{-- 荷物預かり --}}
       <div class="p-3 mb-2 bg-white text-dark">
         <span><i class="fas fa-suitcase-rolling"></i>荷物預かり</span>
 
@@ -642,7 +668,7 @@
       </div>
     </form>
   </div>
-</div>
+</div> --}}
 
 
 
