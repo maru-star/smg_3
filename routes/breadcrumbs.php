@@ -103,3 +103,10 @@ Breadcrumbs::for('admin.time_prices.edit', function ($trail, $time_price) {
   $trail->parent('admin.frame_prices.index');
   $trail->push('料金管理　編集（時間貸し）', route('admin.time_prices.edit', $time_price));
 });
+
+
+// reservatioins
+Breadcrumbs::for('admin.reservations.create', function ($trail) {
+  $trail->parent('admin.home.index');
+  $trail->push('予約　新規登録', route('admin.reservations.create'));
+});
