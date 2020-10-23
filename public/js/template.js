@@ -23,3 +23,7 @@ $(function () {
 });
 
 
+// reservations内
+$(function () {
+  $('#equipments_selector').multiSelect();
+});

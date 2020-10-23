@@ -72,6 +72,6 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
     // 予約
     Route::resource('reservations', 'ReservationsController');
 
-    Route::post('reservations/getvene', 'ReservationsController@getVene');
+    Route::post('reservations/getequipments', 'ReservationsController@getequipments');
   });
 });

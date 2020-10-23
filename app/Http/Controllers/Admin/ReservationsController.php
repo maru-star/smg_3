@@ -24,10 +24,10 @@ class ReservationsController extends Controller
     ]);
   }
 
-  public function getVene(Request $request)
+  public function getequipments(Request $request)
   {
     // $data = $request->all();
-    $id = $request->user_id;
+    $id = $request->venue_id;
     // $message = $data['text'];
     // return $message;
     $venue = Venue::find($id);
@@ -41,7 +41,10 @@ class ReservationsController extends Controller
    */
   public function create()
   {
-    return view('admin.reservations.create', []);
+    $venues = Venue::select('name_area', 'name_bldg', 'name_venue', 'id')->get();
+    return view('admin.reservations.create', [
+      'venues' => $venues
+    ]);
   }
 
   /**

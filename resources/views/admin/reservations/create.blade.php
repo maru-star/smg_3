@@ -6,14 +6,16 @@
 
 <script>
   $(function() {
-    $('#excute').on('click', function() {
+    $('#venues_selector').on('change', function() {
+      var venue_id=$('#venues_selector').val();
+      alert(venue_id);
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },//Headersを書き忘れるとエラーになる
-            url: '/admin/reservations/getvene',//ご自身のweb.phpのURLに合わせる
+            url: '/admin/reservations/getequipments',//ご自身のweb.phpのURLに合わせる
             type: 'POST',//リクエストタイプ
-            data: {'user_id': 1, 'text': 'Ajax成功'},//Laravelに渡すデータ
+            data: {'venue_id': venue_id, 'text': 'Ajax成功'},//Laravelに渡すデータ
             // contentType: false,//渡すデータによって必要(文字列だけなら不要)
             // processData: false,//渡すデータによって必要(文字列だけなら不要)
             dataType: 'json', //必須。json形式で返すように設定
@@ -26,15 +28,18 @@
           $('#fullOverlay').css('display','none');
             // Laravel内で処理された結果がdataに入って返ってくる
             // $('#message').text(data[0]['item']);
-            $('#message').text(data.length);
+            // $('#message').text(data.length);
             // 以下で戻ってきた配列を個別に取得
-            $.each(data,function(index, value){
-              console.log(value);
-            })
-            
+            var selectors=[];
+              $.each(data,function(index, value){
+                selectors.push("<option value='"+value['id']+"'>"+value['item']+"</option>");
+            });
+            $('.ms-equipments_selector').html(selectors);
+
         })
         // Ajaxリクエスト失敗時の処理
         .fail(function(data) {
+          $('#fullOverlay').css('display','none');
             alert('Ajaxリクエスト失敗');
         });
     });
@@ -70,23 +75,6 @@
     </div>
   </div>
 </div>
-
-
-
-
-<div id="message"></div>
-<button id="excute">ボタン</button>
-
-
-
-
-
-
-
-
-
-
-
 
 <div class="container-field mt-3">
   <div class="float-right">
@@ -137,7 +125,14 @@
         </tr>
         <tr>
           <td class="table-active">会場</td>
-          <td>四ツ橋サンワールドビル</td>
+          <td>
+            <select id="venues_selector">
+              <option value=""></option>
+              @foreach ($venues as $venue)
+              <option value="{{$venue->id}}">{{$venue->name_area}}{{$venue->name_bldg}}{{$venue->name_venue}}</option>
+              @endforeach
+            </select>
+          </td>
         </tr>
         <tr>
           <td class="table-active">入室時間</td>
@@ -168,13 +163,19 @@
           <td>2021年新卒採用</td>
         </tr>
         <tr>
-          <td class="table-active">主催者s名</td>
+          <td class="table-active">主催者名</td>
           <td>株式会社BAC</td>
         </tr>
-        <tr>
-          <td>有料備品</td>
-        </tr>
       </table>
+      <div id="equipments_master">
+        <select name="equipments_selector" id="equipments_selector" multiple='multiple[]'>
+          {{-- <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option> --}}
+        </select>
+      </div>
     </div>
 
 
