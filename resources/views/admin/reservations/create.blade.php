@@ -4,10 +4,6 @@
 <link href="{{ asset('/css/template.css') }}" rel="stylesheet">
 <script src="{{ asset('/js/template.js') }}"></script>
 
-
-
-
-
 <script>
   $(function() {
     $('#excute').on('click', function() {
@@ -21,10 +17,13 @@
             // contentType: false,//渡すデータによって必要(文字列だけなら不要)
             // processData: false,//渡すデータによって必要(文字列だけなら不要)
             dataType: 'json', //必須。json形式で返すように設定
-
+            beforeSend: function(){
+            $('#fullOverlay').css('display','block');
+          }
         })
         // Ajaxリクエスト成功時の処理
         .done(function(data) {
+          $('#fullOverlay').css('display','none');
             // Laravel内で処理された結果がdataに入って返ってくる
             // $('#message').text(data[0]['item']);
             $('#message').text(data.length);
@@ -42,6 +41,37 @@
 });
 
 </script>
+
+<style>
+  #fullOverlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(100, 100, 100, .5);
+    z-index: 2147483647;
+    display: none;
+  }
+
+  .frame_spinner {
+    max-width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
+
+<div id="fullOverlay">
+  <div class="frame_spinner">
+    <div class="spinner-border text-primary " role="status">
+      <span class="sr-only hide">Loading...</span>
+    </div>
+  </div>
+</div>
+
+
 
 
 <div id="message"></div>
@@ -66,44 +96,36 @@
 </div>
 
 <div class="container-field">
-  {{ Form::open(['url' => 'admin/reservations', 'method'=>'PSOT', 'id'=>'']) }}
+  {{ Form::open(['url' => 'admin/reservations', 'method'=>'POST', 'id'=>'']) }}
   @csrf
 
   <div class="row">
     <div class="col">
       <div class="p-3 mb-2 bg-white text-dark">
         <span><i class="fas fa-info-circle"></i>ビル情報</span>
-        <div class="mt-2 mb-2">
-          {{ Form::label('alliance_flag', '直営') }}
-          {{Form::radio('alliance_flag', '0')}}
-          {{ Form::label('alliance_flag', '提携')}}
-          {{Form::radio('alliance_flag', '1')}}
-        </div>
 
         <div class="row">
-          <div class="col-sm-4">{{ Form::label('name_area', 'エリア名') }}</div>
-          <div class="col-sm-8">{{ Form::text('name_area', old('name_area'), ['class' => 'form-control']) }}</div>
+          {{ Form::label('reserve_date', '利用日') }}
+          {{ Form::text('reserve_date', old('reserve_date'), ['class' => 'form-control', 'id'=>'datepicker1']) }}
         </div>
 
         <hr>
 
         <div class="row">
-          <div class="col-sm-4">{{ Form::label('name_bldg', 'ビル名') }}</div>
-          <div class="col-sm-8">{{ Form::text('name_bldg', old('name_bldg'), ['class' => 'form-control']) }}</div>
+          {{ Form::label('reserve_date', '会場') }}
+          ここはselect 必要
         </div>
 
         <hr>
-
         <div class="row">
-          <div class="col-sm-4">{{ Form::label('name_venue', '会場名') }}</div>
-          <div class="col-sm-8">{{ Form::text('name_venue', old('name_venue'), ['class' => 'form-control']) }}</div>
+          {{ Form::label('start', '入室時間') }}
+          {{ Form::text('start', old('start'), ['class' => 'form-control']) }}
         </div>
-
         <hr>
 
         <div class="row">
-          <div class="col-sm-4">{{ Form::label('size1', '会場広さ（坪）') }}</div>
-          <div class="col-sm-8">{{ Form::number('size1', old('size1'), ['class' => 'form-control']) }}</div>
+          {{ Form::label('status', '退室時間') }}
+          {{ Form::number('status', old('status'), ['class' => 'form-control']) }}
         </div>
 
         <hr>
