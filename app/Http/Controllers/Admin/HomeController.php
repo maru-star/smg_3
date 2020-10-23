@@ -11,18 +11,18 @@ use App\Models\User;
 class HomeController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware('auth:admin');
-    }
+  public function __construct()
+  {
+    $this->middleware('auth:admin');
+  }
 
-    public function index()
-    {
-        $venues = Venue::all()->count();
-        $users = User::all()->count();
-        return view('admin.home', [
-            'venues' => $venues,
-            'users' => $users,
-        ]);
-    }
+  public function index()
+  {
+    $venues = Venue::all()->count();
+    $users = User::all()->count();
+    return view('admin.home', [
+      'venues' => $venues,
+      'users' => $users,
+    ]);
+  }
 }
