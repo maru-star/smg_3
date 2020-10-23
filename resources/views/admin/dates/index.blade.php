@@ -22,8 +22,8 @@
   <hr>
   <span>会場</span>
   <!-- 選択事後、自動で該当IDに変遷。ライブラリhtml2を利用 -->
-  <div class="form-group" style="max-width: 90%;">
-    <select id="venue_id" name="venue_id" class="form-control form-control-lg" onChange="location.href=value;">
+  <div class="form-group">
+    <select id="venue_id" name="venue_id" class="form-control form-control-lg w-50" onChange="location.href=value;">
       <option value="" selected></option>
       @foreach ($venues as $venue)
       <option value="{{ url('/admin/dates',$venue->id) }}">
