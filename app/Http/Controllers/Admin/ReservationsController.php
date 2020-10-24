@@ -24,14 +24,23 @@ class ReservationsController extends Controller
     ]);
   }
 
-  public function getequipments(Request $request)
+  public function geteitems(Request $request)
   {
-    // $data = $request->all();
     $id = $request->venue_id;
-    // $message = $data['text'];
-    // return $message;
     $venue = Venue::find($id);
-    return $venue->equipments()->get();
+    $venue_equipments = $venue->equipments()->get();
+    $venue_services = $venue->services()->get();
+    return [$venue_equipments, $venue_services];
+  }
+
+  public function getprices(Request $request)
+  {
+    $id = $request->venue_id;
+    $venue = Venue::find($id);
+    $frame_price = $venue->frame_prices()->count();
+    $time_price = $venue->time_prices()->count();
+
+    return [$frame_price, $time_price];
   }
 
   /**

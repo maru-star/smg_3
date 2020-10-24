@@ -54,6 +54,13 @@
   {{-- datepicker日本語化 --}}
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
 
+  {{-- wickedpicker 時計 --}}
+  {{-- 以下参照 --}}
+  {{-- https://www.kabanoki.net/2880/ --}}
+  <link href="https://cdn.jsdelivr.net/npm/wickedpicker@0.4.3/dist/wickedpicker.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/wickedpicker@0.4.3/dist/wickedpicker.min.js"></script>
+
+
 </head>
 
 <body class="hold-transition sidebar-mini">

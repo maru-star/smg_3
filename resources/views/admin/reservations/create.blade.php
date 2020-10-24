@@ -79,7 +79,7 @@
         </tr>
         <tr>
           <td class="table-active">利用日</td>
-          <td>2020/02/12</td>
+          <td><input id="datepicker1" type="text"></td>
         </tr>
         <tr>
           <td class="table-active">会場</td>
@@ -87,18 +87,19 @@
             <select id="venues_selector">
               <option value=""></option>
               @foreach ($venues as $venue)
-              <option value="{{$venue->id}}">{{$venue->name_area}}{{$venue->name_bldg}}{{$venue->name_venue}}</option>
+              <option value="{{$venue->id}}">{{$venue->name_area}}
+                {{$venue->name_bldg}}{{$venue->name_venue}}</option>
               @endforeach
             </select>
           </td>
         </tr>
         <tr>
           <td class="table-active">入室時間</td>
-          <td>09:00</td>
+          <td></td>
         </tr>
         <tr>
           <td class="table-active">退室時間</td>
-          <td>19:00</td>
+          <td></td>
         </tr>
         <tr>
           <td>案内板</td>
@@ -153,7 +154,9 @@
 
 
 
+    <div class="venues_prices">
 
+    </div>
 
 
 
@@ -161,6 +164,54 @@
 
     <div class="col">col2</div>
   </div>
+
+  {{-- 請求情報 --}}
+  <div class="container-field bg-white text-dark">
+    <span>請求情報：会場量</span>
+    <div class="row">
+      <div class="col">
+        <div><label for="total">請求総額</label></div>
+        <div><input type="text" name="total" value="0"></div>
+      </div>
+      <div class="col">
+        <div><label for="sub_total">小計</label></div>
+        <div><input type="text" name="total" value="0"></div>
+      </div>
+      <div class="col">
+        <div><label for="tax">消費税</label></div>
+        <div><input type="text" name="total" value="0"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div><label for="venue_amount">会場料金</label></div>
+        <div><input type="text" name="total" value="0"></div>
+      </div>
+      <div class="col">
+        <div><label for="extend">延長料金</label></div>
+        <div><input type="text" name="total" value="0"></div>
+      </div>
+      <div class="col">
+        <div><label for="equipments">備品料金</label></div>
+        <div><input type="text" name="total" value="0"></div>
+      </div>
+      <div class="col">
+        <div><label for="equipments">サービス料金</label></div>
+        <div><input type="text" name="total" value="0"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div><label for="discount">割引料金</label></div>
+        <div><input type="text" name="total" value="0"></div>
+      </div>
+      <div class="col">
+        <div><label for="change_total">変更後請求総額</label></div>
+        <div><input type="text" name="total" value="0"></div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 {{-- <div class="container-field">
