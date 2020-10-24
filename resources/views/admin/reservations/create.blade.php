@@ -135,6 +135,16 @@
           <tbody></tbody>
         </table>
       </div>
+      <div class="services">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th colspan="2">有料サービス</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
     </div>
 
 
