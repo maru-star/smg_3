@@ -3,49 +3,7 @@
 
 <link href="{{ asset('/css/template.css') }}" rel="stylesheet">
 <script src="{{ asset('/js/template.js') }}"></script>
-
-<script>
-  $(function() {
-    $('#venues_selector').on('change', function() {
-      var venue_id=$('#venues_selector').val();
-      alert(venue_id);
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },//Headersを書き忘れるとエラーになる
-            url: '/admin/reservations/getequipments',//ご自身のweb.phpのURLに合わせる
-            type: 'POST',//リクエストタイプ
-            data: {'venue_id': venue_id, 'text': 'Ajax成功'},//Laravelに渡すデータ
-            // contentType: false,//渡すデータによって必要(文字列だけなら不要)
-            // processData: false,//渡すデータによって必要(文字列だけなら不要)
-            dataType: 'json', //必須。json形式で返すように設定
-            beforeSend: function(){
-            $('#fullOverlay').css('display','block');
-          }
-        })
-        // Ajaxリクエスト成功時の処理
-        .done(function(data) {
-          $('#fullOverlay').css('display','none');
-            // Laravel内で処理された結果がdataに入って返ってくる
-            // $('#message').text(data[0]['item']);
-            // $('#message').text(data.length);
-            // 以下で戻ってきた配列を個別に取得
-            var selectors=[];
-              $.each(data,function(index, value){
-                selectors.push("<option value='"+value['id']+"'>"+value['item']+"</option>");
-            });
-            $('.ms-equipments_selector').html(selectors);
-
-        })
-        // Ajaxリクエスト失敗時の処理
-        .fail(function(data) {
-          $('#fullOverlay').css('display','none');
-            alert('Ajaxリクエスト失敗');
-        });
-    });
-});
-
-</script>
+<script src="{{ asset('/js/ajax.js') }}"></script>
 
 <style>
   #fullOverlay {
@@ -167,23 +125,17 @@
           <td>株式会社BAC</td>
         </tr>
       </table>
-      <div id="equipments_master">
-        <select name="equipments_selector" id="equipments_selector" multiple='multiple[]'>
-          {{-- <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option> --}}
-        </select>
+      <div class="equipemnts">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th colspan="2">有料備品</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
       </div>
     </div>
-
-
-
-
-
-
-
 
 
 
