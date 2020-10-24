@@ -91,6 +91,8 @@
                 {{$venue->name_bldg}}{{$venue->name_venue}}</option>
               @endforeach
             </select>
+            <div class="price_selector">
+            </div>
           </td>
         </tr>
         <tr>
@@ -153,10 +155,6 @@
 
 
 
-
-    <div class="venues_prices">
-
-    </div>
 
 
 
