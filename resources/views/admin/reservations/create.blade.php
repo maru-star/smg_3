@@ -24,6 +24,10 @@
     justify-content: center;
     align-items: center;
   }
+
+  .hide {
+    display: none;
+  }
 </style>
 
 <div id="fullOverlay">
@@ -84,7 +88,7 @@
         <tr>
           <td class="table-active">会場</td>
           <td>
-            <select id="venues_selector">
+            <select id="venues_selector" class="hide">
               <option value=""></option>
               @foreach ($venues as $venue)
               <option value="{{$venue->id}}">{{$venue->name_area}}
@@ -97,11 +101,23 @@
         </tr>
         <tr>
           <td class="table-active">入室時間</td>
-          <td></td>
+          <td>
+            <div>
+              <select name="sales_start" id="sales_start">
+                <option value="">選択してください</option>
+              </select>
+            </div>
+          </td>
         </tr>
         <tr>
           <td class="table-active">退室時間</td>
-          <td></td>
+          <td>
+            <div>
+              <select name="sales_finish" id="sales_finish">
+                <option value="">選択してください</option>
+              </select>
+            </div>
+          </td>
         </tr>
         <tr>
           <td>案内板</td>
@@ -148,8 +164,11 @@
           <tbody></tbody>
         </table>
       </div>
-    </div>
+      <div class='price_details'>
 
+      </div>
+
+    </div>
 
 
 

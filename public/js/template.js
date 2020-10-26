@@ -40,3 +40,14 @@ $(function () {
 });
 
 
+// reservation create 日付選択後、会場選択表示
+$(function () {
+  $('#datepicker1').on('change', function () {
+    if ($(this).val() === "") {
+      $('#venues_selector').addClass('hide');
+    } else {
+      $('#venues_selector').removeClass('hide');
+    }
+  })
+
+});

@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Reservation;
 use App\Models\Venue;
 
+use Carbon\Carbon;
+
 
 class ReservationsController extends Controller
 {
@@ -35,12 +37,29 @@ class ReservationsController extends Controller
 
   public function getprices(Request $request)
   {
-    $id = $request->venue_id;
-    $venue = Venue::find($id);
-    $frame_price = $venue->frame_prices()->count();
-    $time_price = $venue->time_prices()->count();
+    $id = $request->venue_id; //会場ID
+    $dates = Carbon::parse($request->dates); //日付取得
+    $week_day = $dates->dayOfWeekIso; //曜日取得
 
-    return [$frame_price, $time_price];
+    $venue = Venue::find($id);
+
+    $date = $venue->dates()->where('week_day', $week_day)->get();
+
+    $frame_price = $venue->frame_prices()->get();
+    $time_price = $venue->time_prices()->get();
+
+    return [$frame_price, $time_price, $date];
+  }
+
+  public function getsaleshours(Request $request)
+  {
+    $venue = Venue::find($request->venue_id);
+    $dates = Carbon::parse($request->dates); //日付取得
+    $week_day = $dates->dayOfWeekIso; //曜日取得
+    $sales_start = Carbon::parse($venue->dates()->where('week_day', $week_day)->first()->start);
+    $sales_finish = Carbon::parse($venue->dates()->where('week_day', $week_day)->first()->finish);
+
+    return [$sales_start, $sales_finish];
   }
 
   /**
