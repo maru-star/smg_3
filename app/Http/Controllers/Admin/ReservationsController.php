@@ -26,7 +26,10 @@ class ReservationsController extends Controller
     ]);
   }
 
-  // ajax 備品orサービス取得
+  /*
+   * ajax 備品orサービス取得
+   *
+   */
   public function geteitems(Request $request)
   {
     $id = $request->venue_id;
@@ -36,7 +39,11 @@ class ReservationsController extends Controller
     return [$venue_equipments, $venue_services];
   }
 
-  public function getprices(Request $request)
+  /*
+   * ajax 備品orサービス取得
+   *
+   */
+  public function getpricesystem(Request $request)
   {
     $id = $request->venue_id; //会場ID
     $dates = Carbon::parse($request->dates); //日付取得
@@ -52,7 +59,10 @@ class ReservationsController extends Controller
     return [$frame_price, $time_price, $date];
   }
 
-  // ajax 営業時間取得
+  /*
+   * ajax 営業時間取得
+   *
+   */
   public function getsaleshours(Request $request)
   {
     $venue = Venue::find($request->venue_id);

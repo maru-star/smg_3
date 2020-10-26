@@ -176,9 +176,7 @@
           <tbody></tbody>
         </table>
       </div>
-      <div class='price_details'>
-
-      </div>
+      <button class="btn btn-primary">計算する！！！！</button>
 
     </div>
 

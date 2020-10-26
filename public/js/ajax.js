@@ -9,6 +9,7 @@ $(function () {
     var venue_id = $('#venues_selector').val();
     ajaxGetItems(venue_id);
     ajaxGetSalesHours(venue_id, dates);
+    ajaxGetPriceStstem(venue_id);
   });
 
   // 日付選択トリガー
@@ -54,7 +55,7 @@ $(function () {
   };
 
 
-
+  // 営業時間取得
   function ajaxGetSalesHours($venue_id, $dates) {
     $.ajax({
       headers: {
@@ -93,35 +94,38 @@ $(function () {
       });
   };
 
-  // function ajaxGetPrice($venue_id, $dates) {
-  //   $.ajax({
-  //     headers: {
-  //       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-  //     },
-  //     url: '/admin/reservations/getprices',
-  //     type: 'POST',
-  //     data: { 'venue_id': $venue_id, 'dates': $dates },
-  //     dataType: 'json',
-  //     beforeSend: function () {
-  //       $('#fullOverlay').css('display', 'block');
-  //     },
-  //   })
-  //     .done(function ($prices) {
-  //       $('#fullOverlay').css('display', 'none');
-  //       $('.price_selector').html(''); //一旦初期化
-  //       if ($prices[0] != 0 && $prices[1] != 0) {
-  //         $('.price_selector').append("<div> <small>※料金体系を選択してください</small> </div> <div class='form-inline'> <small class='mr-4'><input type='radio' name='price_system' value='1' checked='checked'>通常(枠貸し)</small> <small><input type='radio' name='price_system' value=' 2'>アクセア(時間貸し)</small> </div>")
-  //       } else {
-  //         $('.price_selector').html('');
-  //         console.log($prices);
-  //       }
-  //     })
-  //     .fail(function ($prices) {
-  //       $('#fullOverlay').css('display', 'none');
-  //       $('.price_selector').html('');
-  //       console.log('失敗したよ');
-  //     });
-  // };
+  // 料金体系取得
+  function ajaxGetPriceStstem($venue_id) {
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      url: '/admin/reservations/getpricesystem',
+      type: 'POST',
+      data: { 'venue_id': $venue_id },
+      dataType: 'json',
+      beforeSend: function () {
+        $('#fullOverlay').css('display', 'block');
+      },
+    })
+      .done(function ($prices) {
+        $('#fullOverlay').css('display', 'none');
+        $('.price_selector').html(''); //一旦初期化
+        if ($prices[0] != 0 && $prices[1] != 0) {
+          $('.price_selector').append("<div> <small>※料金体系を選択してください</small> </div> <div class='form-inline'> <small class='mr-4'><input type='radio' name='price_system' value='1' checked='checked'>通常(枠貸し)</small> <small><input type='radio' name='price_system' value=' 2'>アクセア(時間貸し)</small> </div>")
+        } else if ($prices[0] == 0 && $prices[1] == 0) {
+          alert('登録された料金体系がありません。会場管理/料金管理 にて作成してください');
+        }
+        else {
+          $('.price_selector').html('');
+        }
+      })
+      .fail(function ($prices) {
+        $('#fullOverlay').css('display', 'none');
+        $('.price_selector').html('');
+        console.log('失敗したよ');
+      });
+  };
 });
 
 
