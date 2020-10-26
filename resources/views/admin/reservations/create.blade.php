@@ -125,11 +125,23 @@
         </tr>
         <tr>
           <td class="table-active">イベント開始時間</td>
-          <td>10:00</td>
+          <td>
+            <div>
+              <select name="event_start" id="event_start">
+                <option value="">選択してください</option>
+              </select>
+            </div>
+          </td>
         </tr>
         <tr>
           <td class="table-active">イベント終了時間</td>
-          <td>17:00</td>
+          <td>
+            <div>
+              <select name="event_finish" id="event_finish">
+                <option value="">選択してください</option>
+              </select>
+            </div>
+          </td>
         </tr>
         <tr>
           <td class="table-active">イベント名称1</td>

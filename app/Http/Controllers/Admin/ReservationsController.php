@@ -26,6 +26,7 @@ class ReservationsController extends Controller
     ]);
   }
 
+  // ajax 備品orサービス取得
   public function geteitems(Request $request)
   {
     $id = $request->venue_id;
@@ -51,6 +52,7 @@ class ReservationsController extends Controller
     return [$frame_price, $time_price, $date];
   }
 
+  // ajax 営業時間取得
   public function getsaleshours(Request $request)
   {
     $venue = Venue::find($request->venue_id);
