@@ -17,7 +17,8 @@ class CreateDatesTable extends Migration
       $table->bigIncrements('id');
       $table->bigInteger('venue_id')->unsigned();
       $table->integer('week_day');
-      $table->unique(['venue_id', 'week_day'], 'uniq');
+      // ↓　会場と日付の重複不可
+      // $table->unique(['venue_id', 'week_day'], 'uniq');
       $table->time('start');
       $table->time('finish');
       $table->timestamps();

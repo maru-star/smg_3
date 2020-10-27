@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class DatesTableSeeder extends Seeder
 {
@@ -11,19 +14,16 @@ class DatesTableSeeder extends Seeder
      */
     public function run()
     {
-        // DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-
         // DB::table('dates')->truncate();
-        // DB::table('dates')->insert([
-        //     ['week_day' => '1', 'start' => '08:00', 'finish' => '22:00'],
-        //     ['week_day' => '2', 'start' => '08:00', 'finish' => '22:00'],
-        //     ['week_day' => '3', 'start' => '08:00', 'finish' => '22:00'],
-        //     ['week_day' => '4', 'start' => '08:00', 'finish' => '22:00'],
-        //     ['week_day' => '5', 'start' => '08:00', 'finish' => '22:00'],
-        //     ['week_day' => '6', 'start' => '08:00', 'finish' => '22:00'],
-        //     ['week_day' => '7', 'start' => '08:00', 'finish' => '22:00'],
-        // ]);
-
-        // DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        for ($id = 1; $id <= 30; $id++) {
+            for ($day = 1; $day <= 7; $day++) {
+                DB::table('dates')->insert([
+                    'venue_id'              => $id,
+                    'week_day'             => $day,
+                    'start'          => '08:00',
+                    'finish'    => '22:00',
+                ]);
+            };
+        };
     }
 }
