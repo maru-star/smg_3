@@ -20,6 +20,20 @@ $(function () {
     ajaxGetSalesHours(venue_id, dates);
   });
 
+  // 計算するボタン押下トリガー
+  $('#calculate').on('click', function () {
+    var venue_id = $('#venues_selector').val();
+    var radio_val = $('input:radio[name="price_system"]:checked').val();
+    var start_time=$('#sales_start').val();
+    var finish_time=$('#sales_finish').val();
+    ajaxGetPriceDetails(
+      venue_id, 
+      radio_val,
+      start_time, 
+      finish_time,
+      );
+  });
+
   // 備品とサービス取得ajax
   function ajaxGetItems($venue_id) {
     $.ajax({
@@ -123,6 +137,35 @@ $(function () {
       .fail(function ($prices) {
         $('#fullOverlay').css('display', 'none');
         $('.price_selector').html('');
+        console.log('失敗したよ');
+      });
+  };
+
+  // 料金詳細　取得
+  function ajaxGetPriceDetails($venue_id, $status, $start, $finish) {
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      url: '/admin/reservations/getpricedetails',
+      type: 'POST',
+      data: { 
+        'venue_id': $venue_id, 
+        'status': $status, 
+        'start':$start, 
+        'finish': $finish,
+       },
+      dataType: 'json',
+      beforeSend: function () {
+        $('#fullOverlay').css('display', 'block');
+      },
+    })
+      .done(function ($details) {
+        $('#fullOverlay').css('display', 'none');
+        console.log($details);
+      })
+      .fail(function ($details) {
+        $('#fullOverlay').css('display', 'none');
         console.log('失敗したよ');
       });
   };

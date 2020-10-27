@@ -74,6 +74,30 @@ class ReservationsController extends Controller
     return [$sales_start, $sales_finish];
   }
 
+  public function getpricedetails(Request $request)
+  {
+    $venue_id = Venue::find($request->venue_id);
+    $status = $request->status;
+    $start = $request->start;
+    $finish = $request->finish;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   /**
    * Show the form for creating a new resource.
    *

@@ -176,7 +176,12 @@
           <tbody></tbody>
         </table>
       </div>
-      <button class="btn btn-primary">計算する！！！！</button>
+
+
+
+      <div class="price_details">
+      </div>
+      <button id='calculate' class="btn btn-primary">計算する！！！！</button>
 
     </div>
 
@@ -489,7 +494,7 @@
 
 
 
-{{-- 
+{{--
 
 <div class="container-field mt-3">
   <div class="float-right">
