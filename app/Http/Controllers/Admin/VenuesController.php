@@ -246,23 +246,23 @@ class VenuesController extends Controller
     $venue = Venue::find($id);
     $m_equipment = Equipment::all();
     $equipments = $venue->equipments()->get();
-    $r_emptys = [];
-    foreach ($equipments as $equipment) {
-      $r_emptys[] = $equipment;
-    }
+    // $r_emptys = [];
+    // foreach ($equipments as $equipment) {
+    //   $r_emptys[] = $equipment;
+    // }
 
     $m_service = Service::all();
     $services = $venue->services()->get();
-    $s_emptys = [];
-    foreach ($services as $service) {
-      $s_emptys[] = $service;
-    }
+    // $s_emptys = [];
+    // foreach ($services as $service) {
+    //   $s_emptys[] = $service;
+    // }
 
     return view('admin.venues.edit', [
       'venue' => $venue,
-      'r_emptys' => $r_emptys,
+      'equipments' => $equipments,
       'm_equipment' => $m_equipment,
-      's_emptys' => $s_emptys,
+      'services' => $services,
       'm_service' => $m_service,
     ]);
   }

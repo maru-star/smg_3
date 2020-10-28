@@ -21,7 +21,6 @@
   <hr>
 </div>
 
-
 <div class="container-field">
   <div class="p-3 mb-2 bg-white text-dark">
     {{ Form::label('smg_url', '会場SMG Url') }}

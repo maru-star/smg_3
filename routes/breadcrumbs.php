@@ -20,6 +20,11 @@ Breadcrumbs::for('admin.venues.show', function ($trail, $venue) {
   $trail->push('会場　詳細', route('admin.venues.show', $venue));
 });
 
+Breadcrumbs::for('admin.venues.edit', function ($trail, $venue) {
+  $trail->parent('admin.venues.index');
+  $trail->push('会場　編集', route('admin.venues.edit', $venue));
+});
+
 
 // eqipment
 Breadcrumbs::for('admin.equipments.index', function ($trail) {

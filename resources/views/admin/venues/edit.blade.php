@@ -2,26 +2,391 @@
 
 @section('content')
 
+
+<div class="container-field mt-3">
+  <div class="float-right">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active">
+          {{ Breadcrumbs::render(Route::currentRouteName(),$venue->id) }}
+        </li>
+      </ol>
+    </nav>
+  </div>
+  <h1 class="mt-3 mb-5">会場　詳細情報</h1>
+  <hr>
+</div>
+
+
+
+<div class="container-field">
+  {{ Form::open(['url' => 'admin/venues', 'method'=>'PSOT', 'id'=>'']) }}
+  @csrf
+
+  <div class="p-3 mb-2 bg-white text-dark">
+    {{ Form::label('smg_url', '会場SMG Url') }}
+    {{ Form::text('smg_url', $venue->smg_url, ['class' => 'form-control']) }}
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <div class="p-3 mb-2 bg-white text-dark">
+        <span><i class="fas fa-info-circle"></i>ビル情報</span>
+        <div class="mt-2 mb-2">
+          {{ Form::label('alliance_flag', '直営') }}
+          {{Form::radio('alliance_flag', '0')}}
+          {{ Form::label('alliance_flag', '提携')}}
+          {{Form::radio('alliance_flag', '1')}}
+        </div>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('name_area', 'エリア名') }}</div>
+          <div class="col-sm-8">{{ Form::text('name_area', $venue->name_area, ['class' => 'form-control']) }}</div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('name_bldg', 'ビル名') }}</div>
+          <div class="col-sm-8">{{ Form::text('name_bldg', $venue->name_bldg, ['class' => 'form-control']) }}</div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('name_venue', '会場名') }}</div>
+          <div class="col-sm-8">{{ Form::text('name_venue', $venue->name_venue, ['class' => 'form-control']) }}</div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('size1', '会場広さ（坪）') }}</div>
+          <div class="col-sm-8">{{ Form::number('size1', $venue->size1, ['class' => 'form-control']) }}</div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('size2', '会場広さ（㎡）') }}</div>
+          <div class="col-sm-8">{{ Form::number('size2', $venue->size2, ['class' => 'form-control']) }}</div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('capacity', '収容人数') }}</div>
+          <div class="col-sm-8">
+            {{ Form::number('capacity', $venue->capacity, ['placeholder' => '15','class' => 'form-control']) }}</div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('post_code', '郵便番号') }}</div>
+          <div class="col-sm-8"> {{ Form::text('post_code', $venue->post_code, [
+            'class' => 'form-control',
+            'onKeyUp'=>"AjaxZip3.zip2addr(this,'','address1','address2');",
+            'autocomplete'=>'off',
+            ]) }}
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('address1', '住所（都道府県）') }}</div>
+          <div class="col-sm-8">
+            {{ Form::text('address1', $venue->address1, ['placeholder' => '大阪府','class' => 'form-control search_address2']) }}
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('address2', '住所（市町村番地）') }}</div>
+          <div class="col-sm-8">
+            {{ Form::text('address2', $venue->address2, ['placeholder' => '大阪市北堀江1-23-1','class' => 'form-control search_address3']) }}
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('address3', '住所（建物名）') }}</div>
+          <div class="col-sm-8">
+            {{ Form::text('address3', $venue->address3, ['placeholder' => 'プレサンスビル703号室','class' => 'form-control']) }}
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('entrance_open_time', '正面入口の開閉時間') }}</div>
+          <div class="col-sm-8">
+            {{ Form::text('entrance_open_time', $venue->entrance_open_time, ['class' => 'form-control']) }}</div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('backyard_open_time', '通用口の開閉時間') }}</div>
+          <div class="col-sm-8">
+            {{ Form::text('backyard_open_time', $venue->backyard_open_time, ['class' => 'form-control']) }}</div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('remark', '備考') }}</div>
+          <div class="col-sm-8">
+            {{ Form::textarea('remark', $venue->remark, ['class' => 'form-control']) }}</div>
+        </div>
+      </div>
+
+      <div class="p-3 mb-2 bg-white text-dark">
+        <span><i class="fas fa-suitcase-rolling"></i>荷物預かり</span>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('luggage_flag', '荷物預かり　有・無') }}</div>
+          <div class="col-sm-8">
+            {{Form::select('luggage_flag', ['有り', '無し'],$venue->luggage_flag,['placeholder' => '選択してください','class'=>'custom-select mr-sm-2'])}}
+          </div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('luggage_post_code', '送付先郵便番号') }}</div>
+          <div class="col-sm-8"> {{ Form::text('luggage_post_code', $venue->luggage_post_code, [
+            'class' => 'form-control',
+            'onKeyUp'=>"AjaxZip3.zip2addr(this,'','luggage_address1','luggage_address2');",
+            'autocomplete'=>'off',
+            ]) }}
+          </div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('luggage_address1', '住所（都道府県）') }}</div>
+          <div class="col-sm-8">
+            {{ Form::text('luggage_address1', $venue->luggage_address1, ['class' => 'form-control']) }}</div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('luggage_address2', '住所（市町村番地）') }}</div>
+          <div class="col-sm-8">
+            {{ Form::text('luggage_address2', $venue->luggage_address2, ['class' => 'form-control']) }}</div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('luggage_address3', '住所（建物名）') }}</div>
+          <div class="col-sm-8">
+            {{ Form::text('luggage_address3', $venue->luggage_address3, ['class' => 'form-control']) }}</div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('luggage_name', '送付先名') }}</div>
+          <div class="col-sm-8">
+            {{ Form::text('luggage_name', $venue->luggage_name, ['class' => 'form-control']) }}</div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('luggage_tel', '電話番号') }}</div>
+          <div class="col-sm-8">
+            {{ Form::text('luggage_tel', $venue->luggage_tel, ['class' => 'form-control']) }}</div>
+        </div>
+
+      </div>
+
+    </div>
+    <div class="col">
+      <div class="p-3 mb-2 bg-white text-dark">
+        <span><i class="fas fa-user-check"></i>担当者情報</span>
+
+        <div class="row">
+          <div class="col-sm-2">{{ Form::label('first_name', '氏名(姓)') }}</div>
+          <div class="col-sm-4">
+            {{ Form::text('first_name', $venue->first_name, ['class' => 'form-control']) }}</div>
+          <div class="col-sm-2">{{ Form::label('last_name', '氏名(名)') }}</div>
+          <div class="col-sm-4">
+            {{ Form::text('last_name', $venue->last_name, ['class' => 'form-control']) }}</div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-2">{{ Form::label('first_name', '氏名(セイ)') }}</div>
+          <div class="col-sm-4">
+            {{ Form::text('first_name_kana', $venue->first_name, ['class' => 'form-control']) }}</div>
+          <div class="col-sm-2">{{ Form::label('last_name', '氏名(メイ)') }}</div>
+          <div class="col-sm-4">
+            {{ Form::text('last_name_kana', $venue->last_name, ['class' => 'form-control']) }}</div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('person_tel', '担当者電話番号') }}</div>
+          <div class="col-sm-8">
+            {{ Form::text('person_tel', $venue->person_tel, ['class' => 'form-control']) }}</div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('person_email', '担当者メール') }}</div>
+          <div class="col-sm-8">
+            {{ Form::text('person_email', $venue->person_email, ['class' => 'form-control']) }}</div>
+        </div>
+      </div>
+
+      <div class="p-3 mb-2 bg-white text-dark">
+        <span><i class="fas fa-building"></i>ビル管理会社</span>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('mgmt_company', '会社名') }}</div>
+          <div class="col-sm-8">
+            {{ Form::text('mgmt_company', $venue->mgmt_company, ['class' => 'form-control']) }}</div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('mgmt_tel', '電話番号') }}</div>
+          <div class="col-sm-8">
+            {{ Form::text('mgmt_tel', $venue->mgmt_tel, ['class' => 'form-control']) }}</div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('mgmt_emer_tel', '夜間緊急連絡先') }}</div>
+          <div class="col-sm-8">
+            {{ Form::text('mgmt_emer_tel', $venue->mgmt_emer_tel, ['class' => 'form-control']) }}</div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-2">{{ Form::label('mgmt_first_name', '氏名(姓)') }}</div>
+          <div class="col-sm-4">
+            {{ Form::text('mgmt_first_name', $venue->mgmt_first_name, ['class' => 'form-control']) }}</div>
+          <div class="col-sm-2">{{ Form::label('mgmt_last_name', '氏名(名)') }}</div>
+          <div class="col-sm-4">
+            {{ Form::text('mgmt_last_name', $venue->mgmt_last_name, ['class' => 'form-control']) }}</div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('mgmt_email', '担当者メール') }}</div>
+          <div class="col-sm-8">
+            {{ Form::text('mgmt_email', $venue->mgmt_email, ['class' => 'form-control']) }}</div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('mgmt_sec_company', '警備会社名') }}</div>
+          <div class="col-sm-8">
+            {{ Form::text('mgmt_sec_company', $venue->mgmt_sec_company, ['class' => 'form-control']) }}</div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('mgmt_sec_tel', '警備会社電話番号') }}</div>
+          <div class="col-sm-8">
+            {{ Form::text('mgmt_sec_company', $venue->mgmt_sec_tel, ['class' => 'form-control']) }}</div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('mgmt_remark', '備考') }}</div>
+          <div class="col-sm-8">
+            {{ Form::textarea('mgmt_remark', $venue->mgmt_remark, ['class' => 'form-control']) }}</div>
+        </div>
+        <hr>
+      </div>
+
+
+
+
+      <div class="p-3 mb-2 bg-white text-dark">
+        <span><i class="fas fa-utensils"></i>室内飲食</span>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('eat_in_flag', '室内飲食') }}</div>
+          <div class="col-sm-8">
+            {{{Form::select('eat_in_flag', ['有り', '無し'],$venue->eat_in_flag,['placeholder' => '選択してください', 'class'=>'custom-select mr-sm-2'])}}}
+          </div>
+        </div>
+        <hr>
+      </div>
+
+      <div class="p-3 mb-2 bg-white text-dark">
+        <span><i class="fas fa-utensils"></i>支払データ</span>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('cost', '支払割合（原価）') }}</div>
+          <div class="col-sm-8">
+            {{ Form::number('cost', $venue->cost, ['class' => 'form-control']) }}</div>
+        </div>
+      </div>
+      <hr>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="p-3 mb-2 bg-white text-dark">
+  <span>有料備品</span>
+  <div>
+    <span>※左部リストよりクリックで選択し右部リストに移動させてください</span>
+  </div>
+  {{-- <select id='equipment_id' multiple='multiple' name="equipment_id[]">
+    @for ($i = 0; $i < $equipments->count(); $i++)
+      <option value={{$i_equipments[$i]}}>{{$s_equipments[$i]}}</option>
+      @endfor
+  </select> --}}
+</div>
+
+<div class="p-3 mb-2 bg-white text-dark">
+  <span>有料サービス</span>
+  <div>
+    <span>※左部リストよりクリックで選択し右部リストに移動させてください</span>
+  </div>
+  {{-- <select id='service_id' multiple='multiple' name="service_id[]">
+    @for ($i = 0; $i < $services->count(); $i++)
+      <option value={{$i_services[$i]}}>{{$s_services[$i]}}</option>
+      @endfor
+  </select> --}}
+</div>
+
+<div class="mx-auto" style="width: 100px;">
+  {{ Form::submit('登録', ['class' => 'btn btn-primary']) }}
+</div>
+
+
+{{ Form::close() }}
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{-- 
 <script src="{{ asset('/js/template.js') }}"></script>
-<style>
-  .ms-container {
-    display: flex;
-  }
-
-  .ms-selectable {
-    width: 300px;
-    height: 300px;
-    overflow: scroll;
-    border: solid 2px gray;
-  }
-
-  .ms-selection {
-    width: 300px;
-    height: 300px;
-    overflow: scroll;
-    border: solid 2px pink;
-  }
-</style>
 
 <h1><span class="badge badge-secondary">会場管理 新規登録</span></h1>
 <div class="border-bottom border-danger" style="padding:10px; margin-bottom:20px;">基本情報</div>
@@ -273,5 +638,5 @@
 <div class="mx-auto" style="width: 100px;">
   {{ Form::submit('変更を登録', ['class' => 'btn btn-primary']) }}
 </div>
-{{ Form::close() }}
+{{ Form::close() }} --}}
 @endsection
