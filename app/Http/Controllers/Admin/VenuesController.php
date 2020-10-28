@@ -206,16 +206,16 @@ class VenuesController extends Controller
     $venue = Venue::find($id);
     // 【備品連携】
     $equipments = $venue->equipments()->get();
-    $r_emptys = [];
-    foreach ($equipments as $equipment) {
-      $r_emptys[] = $equipment;
-    }
+    // $r_emptys = [];
+    // foreach ($equipments as $equipment) {
+    //   $r_emptys[] = $equipment;
+    // }
     // サービス連携
     $services = $venue->services()->get();
-    $s_emptys = [];
-    foreach ($services as $service) {
-      $s_emptys[] = $service;
-    }
+    // $s_emptys = [];
+    // foreach ($services as $service) {
+    //   $s_emptys[] = $service;
+    // }
     // 営業時間
     $date_venues = $venue->dates()->get();
 
@@ -227,8 +227,8 @@ class VenuesController extends Controller
 
     return view('admin.venues.show', [
       'venue' => $venue,
-      'r_emptys' => $r_emptys,
-      's_emptys' => $s_emptys,
+      'equipments' => $equipments,
+      'services' => $services,
       'date_venues' => $date_venues,
       'frame_prices' => $frame_prices,
       'time_prices' => $time_prices,

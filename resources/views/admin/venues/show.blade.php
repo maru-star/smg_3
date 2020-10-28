@@ -1,6 +1,339 @@
 @extends('layouts.admin.app')
 
 @section('content')
+
+
+
+<script src="{{ asset('/js/template.js') }}"></script>
+<link href="{{ asset('/css/template.css') }}" rel="stylesheet">
+
+
+<div class="container-field mt-3">
+  <div class="float-right">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active">
+          {{ Breadcrumbs::render(Route::currentRouteName(),$venue->id) }}
+        </li>
+      </ol>
+    </nav>
+  </div>
+  <h1 class="mt-3 mb-5">会場　詳細情報</h1>
+  <hr>
+</div>
+
+
+<div class="container-field">
+  <div class="p-3 mb-2 bg-white text-dark">
+    {{ Form::label('smg_url', '会場SMG Url') }}
+    <div>{{$venue->smg_url}}</div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <div class="p-3 mb-2 bg-white text-dark">
+        <span><i class="fas fa-info-circle"></i>ビル情報</span>
+        <div class="mt-2 mb-2">
+          <div>{{$venue->alliance_flag==1?"直営":'提携'}}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('name_area', 'エリア名') }}</div>
+          <div class="col-sm-8">{{ $venue->name_area }}</div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('name_bldg', 'ビル名') }}</div>
+          <div class="col-sm-8">{{ $venue->name_bldg }}</div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('name_venue', '会場名') }}</div>
+          <div class="col-sm-8">{{ $venue->name_venue }}</div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('size1', '会場広さ（坪）') }}</div>
+          <div class="col-sm-8">{{ $venue->size1 }}</div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('size2', '会場広さ（㎡）') }}</div>
+          <div class="col-sm-8">{{ $venue->size2 }}</div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('capacity', '収容人数') }}</div>
+          <div class="col-sm-8">{{ $venue->capacity }}</div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('post_code', '郵便番号') }}</div>
+          <div class="col-sm-8">{{ $venue->post_code }}</div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('address1', '住所（都道府県）') }}</div>
+          <div class="col-sm-8">{{ $venue->address1 }}</div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('address2', '住所（市町村番地）') }}</div>
+          <div class="col-sm-8">{{ $venue->address2 }}</div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('address3', '住所（建物名）') }}</div>
+          <div class="col-sm-8">{{ $venue->address3 }}</div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('entrance_open_time', '正面入口の開閉時間') }}</div>
+          <div class="col-sm-8">{{ $venue->entrance_open_time }}</div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('backyard_open_time', '通用口の開閉時間') }}</div>
+          <div class="col-sm-8">{{ $venue->backyard_open_time }}</div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('remark', '備考') }}</div>
+          <div class="col-sm-8">{{ $venue->remark }}</div>
+        </div>
+      </div>
+
+      <div class="p-3 mb-2 bg-white text-dark">
+        <span><i class="fas fa-suitcase-rolling"></i>荷物預かり</span>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('luggage_flag', '荷物預かり　有・無') }}</div>
+          <div class="col-sm-8">{{ $venue->luggage_flag==1?"有り":"無し" }}</div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('luggage_post_code', '送付先郵便番号') }}</div>
+          <div class="col-sm-8">{{ $venue->luggage_post_code }}</div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('luggage_address1', '住所（都道府県）') }}</div>
+          <div class="col-sm-8">{{ $venue->luggage_address1 }}</div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('luggage_address2', '住所（市町村番地）') }}</div>
+          <div class="col-sm-8">{{ $venue->luggage_address2 }}</div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('luggage_address3', '住所（建物名）') }}</div>
+          <div class="col-sm-8">{{ $venue->luggage_address3 }}</div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('luggage_name', '送付先名') }}</div>
+          <div class="col-sm-8">{{ $venue->luggage_name }}</div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('luggage_tel', '電話番号') }}</div>
+          <div class="col-sm-8">{{ $venue->luggage_tel }}</div>
+        </div>
+
+      </div>
+
+    </div>
+    <div class="col">
+      <div class="p-3 mb-2 bg-white text-dark">
+        <span><i class="fas fa-user-check"></i>担当者情報</span>
+
+        <div class="row">
+          <div class="col-sm-2">{{ Form::label('first_name', '氏名(姓)') }}</div>
+          <div class="col-sm-4">
+            {{ $venue->first_name}}</div>
+          <div class="col-sm-2">{{ Form::label('last_name', '氏名(名)') }}</div>
+          <div class="col-sm-4">
+            {{ $venue->last_name}}</div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-2">{{ Form::label('first_name', '氏名(セイ)') }}</div>
+          <div class="col-sm-4">
+            {{ $venue->first_name}}
+          </div>
+          <div class="col-sm-2">{{ Form::label('last_name', '氏名(メイ)') }}</div>
+          <div class="col-sm-4">
+            {{ $venue->last_name}}
+          </div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('person_tel', '担当者電話番号') }}</div>
+          <div class="col-sm-8">{{ $venue->person_tel}}</div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('person_email', '担当者メール') }}</div>
+          <div class="col-sm-8">{{ $venue->person_email}}</div>
+        </div>
+      </div>
+
+      <div class="p-3 mb-2 bg-white text-dark">
+        <span><i class="fas fa-building"></i>ビル管理会社</span>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('mgmt_company', '会社名') }}</div>
+          <div class="col-sm-8">{{ $venue->mgmt_company}}</div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('mgmt_tel', '電話番号') }}</div>
+          <div class="col-sm-8">{{ $venue->mgmt_tel}}</div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('mgmt_emer_tel', '夜間緊急連絡先') }}</div>
+          <div class="col-sm-8">{{ $venue->mgmt_emer_tel}}</div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-2">{{ Form::label('mgmt_first_name', '氏名(姓)') }}</div>
+          <div class="col-sm-4">
+            {{ $venue-> mgmt_first_name}}</div>
+          <div class="col-sm-2">{{ Form::label('mgmt_last_name', '氏名(名)') }}</div>
+          <div class="col-sm-4">
+            {{ $venue-> mgmt_last_name}}</div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('mgmt_email', '担当者メール') }}</div>
+          <div class="col-sm-8">{{ $venue->mgmt_email}}</div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('mgmt_sec_company', '警備会社名') }}</div>
+          <div class="col-sm-8">{{ $venue->mgmt_sec_company}}</div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('mgmt_sec_tel', '警備会社電話番号') }}</div>
+          <div class="col-sm-8">{{ $venue->mgmt_sec_tel}}</div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('mgmt_remark', '備考') }}</div>
+          <div class="col-sm-8">{{ $venue->mgmt_remark}}</div>
+        </div>
+        <hr>
+      </div>
+
+
+
+
+      <div class="p-3 mb-2 bg-white text-dark">
+        <span><i class="fas fa-utensils"></i>室内飲食</span>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('eat_in_flag', '室内飲食') }}</div>
+          <div class="col-sm-8">{{ $venue->eat_in_flag==1?"有り":"無し"}}</div>
+        </div>
+        <hr>
+      </div>
+
+      <div class="p-3 mb-2 bg-white text-dark">
+        <span><i class="fas fa-utensils"></i>支払データ</span>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('cost', '支払割合（原価）') }}</div>
+          <div class="col-sm-8">{{ $venue->cost}}%</div>
+        </div>
+      </div>
+      <hr>
+    </div>
+  </div>
+</div>
+
+
+
+  <div class="p-3 mb-2 bg-white text-dark">
+    <span>有料備品</span>
+    <div>
+      <ul>
+        @foreach ($equipments as $equipment)
+            <li>{{$equipment->item}}</li>
+        @endforeach
+      </ul>
+    </div>
+  </div>
+
+  <div class="p-3 mb-2 bg-white text-dark">
+    <span>有料サービス</span>
+    <div>
+      <ul>
+        @foreach ($services as $service)
+            <li>{{$service->item}}</li>
+        @endforeach
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{-- 
+
+
 {{ Breadcrumbs::render(Route::currentRouteName(),$venue->id) }}
 <h1><span class="badge badge-secondary">会場管理 詳細</span></h1>
 <div class="d-inline-flex p-2 bd-highlight">
@@ -136,13 +469,11 @@
       <p> {{ $r_empty->item }} </p>
       @endforeach
 
-      <!-- サービス -->
       <h3> <span class="badge badge-info">有料サービス</span></h3>
       @foreach ($s_emptys as $s_empty)
       <p> {{ $s_empty->item }} </p>
       @endforeach
 
-      {{-- 営業時間 --}}
       <h3> <span class="badge badge-info">営業時間</span></h3>
       <table class="table">
         <tbody>
@@ -166,7 +497,6 @@
         </tbody>
       </table>
 
-      {{-- 料金体系 --}}
       <h3> <span class="badge badge-info">料金体系</span></h3>
       <div>
         <h4>料金体系：枠貸し</h4>
@@ -316,5 +646,5 @@
       </div>
     </div>
   </div>
-</div>
+</div> --}}
 @endsection

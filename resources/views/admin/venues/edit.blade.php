@@ -159,8 +159,7 @@
       <select id='equipment_id' multiple='multiple' name="equipment_id[]">
         <!-- 要注意！かなり無理矢理作成した。後ほど別に関数としてまとめる必要あり -->
         @for ($i = 0; $i < $m_equipment->count(); $i++)
-          <option value={{$m_equipment[$i]->id}} @foreach ($r_emptys as $r_empty)
-            {{$m_equipment[$i]->id==$r_empty->id?"selected":""}} @endforeach>{{$m_equipment[$i]->item}}
+          <option value={{$m_equipment[$i]->id}} @foreach ($r_emptys as $r_empty) {{$m_equipment[$i]->id==$r_empty->id?"selected":""}} @endforeach>{{$m_equipment[$i]->item}}
           </option>
           @endfor
       </select>
@@ -168,8 +167,7 @@
       {{ Form::label('service_id', '備品') }}
       <select id='service_id' multiple='multiple' name="service_id[]">
         @for ($s = 0; $s < $m_service->count(); $s++)
-          <option value={{$m_service[$s]->id}} @foreach ($s_emptys as $s_empty)
-            {{$m_service[$s]->id==$s_empty->id?"selected":""}} @endforeach>{{$m_service[$s]->item}}
+          <option value={{$m_service[$s]->id}} @foreach ($s_emptys as $s_empty) {{$m_service[$s]->id==$s_empty->id?"selected":""}} @endforeach>{{$m_service[$s]->item}}
           </option>
           @endfor
       </select>
