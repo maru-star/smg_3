@@ -1,9 +1,6 @@
 @extends('layouts.admin.app')
 
 @section('content')
-
-
-
 <script src="{{ asset('/js/template.js') }}"></script>
 <link href="{{ asset('/css/template.css') }}" rel="stylesheet">
 
@@ -19,6 +16,8 @@
     </nav>
   </div>
   <h1 class="mt-3 mb-5">会場　詳細情報</h1>
+  <div class="d-flex justify-content-end ">{{ link_to_route('admin.venues.edit', '編集', $parameters = $venue->id, ['class' => 'btn btn-primary'])}}
+  </div>
   <hr>
 </div>
 
@@ -323,7 +322,7 @@
 <div class="p-3 mb-2 bg-white text-dark">
   <span>営業時間</span>
   <div>
-    <table class="table">
+    <table class="table table-bordered">
       <thead>
         <tr>
           <th scope="col">曜日</th>
@@ -361,6 +360,58 @@
 </div>
 
 
+<div class="p-3 mb-2 bg-white text-dark">
+  <span>料金管理</span>
+  <div>
+    <strong>料金体系</strong>
+    <p>通常料金（枠貸し）</p>
+  </div>
+  <div>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">枠</th>
+          <th>時間</th>
+          <th>料金</th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach ($frame_prices as $frame_price)
+        <tr>
+        <td>{{$frame_price->frame}}</td>
+        <td>{{$frame_price->start}} ~ {{$date_venue->finish}}</td>
+        <td>{{$frame_price->price}}</td>
+        </tr>
+        @endforeach
+      </tbody>
+    </table>
+  </div>
+
+  <div>
+    <strong>料金体系</strong>
+    <p>アクセア料金（時間貸し）</p>
+  </div>
+  <div>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">時間</th>
+          <th>料金</th>
+          <th>延長料金</th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach ($time_prices as $time_price)
+        <tr>
+        <td>{{$time_price->time}}</td>
+        <td>{{$time_price->price}} ~ {{$date_venue->finish}}</td>
+        <td>{{$time_price->extend}}</td>
+        </tr>
+        @endforeach
+      </tbody>
+    </table>
+  </div>
+</div>
 
 
 
