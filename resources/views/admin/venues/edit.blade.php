@@ -1,6 +1,8 @@
 @extends('layouts.admin.app')
 
 @section('content')
+<script src="{{ asset('/js/template.js') }}"></script>
+<link href="{{ asset('/css/template.css') }}" rel="stylesheet">
 
 
 <div class="container-field mt-3">
@@ -338,25 +340,21 @@
 <div class="p-3 mb-2 bg-white text-dark">
   <span>有料備品</span>
   <div>
-    <span>※左部リストよりクリックで選択し右部リストに移動させてください</span>
+    <div><span>※左部リストよりクリックで選択し右部リストに移動させてください</span></div>
+    <div><span>※右部リストは現在選択されている備品一覧です</span></div>
+    <select id='equipment_id' multiple='multiple' name="equipment_id[]">
+    </select>
+
   </div>
-  {{-- <select id='equipment_id' multiple='multiple' name="equipment_id[]">
-    @for ($i = 0; $i < $equipments->count(); $i++)
-      <option value={{$i_equipments[$i]}}>{{$s_equipments[$i]}}</option>
-      @endfor
-  </select> --}}
 </div>
 
 <div class="p-3 mb-2 bg-white text-dark">
   <span>有料サービス</span>
   <div>
-    <span>※左部リストよりクリックで選択し右部リストに移動させてください</span>
+    <div><span>※左部リストよりクリックで選択し右部リストに移動させてください</span></div>
+    <div><span>※右部リストは現在選択されているサービス一覧です</span></div>
+  
   </div>
-  {{-- <select id='service_id' multiple='multiple' name="service_id[]">
-    @for ($i = 0; $i < $services->count(); $i++)
-      <option value={{$i_services[$i]}}>{{$s_services[$i]}}</option>
-      @endfor
-  </select> --}}
 </div>
 
 <div class="mx-auto" style="width: 100px;">
