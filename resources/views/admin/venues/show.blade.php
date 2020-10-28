@@ -320,6 +320,45 @@
 </div>
 
 
+<div class="p-3 mb-2 bg-white text-dark">
+  <span>営業時間</span>
+  <div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">曜日</th>
+          <th colspan="2">営業時間</th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach ($date_venues as $date_venue)
+        <tr>
+        <td>
+        @if ($date_venue->week_day==1)
+          月曜
+          @elseif($date_venue->week_day==2)
+          火曜
+          @elseif($date_venue->week_day==3)
+          水曜
+          @elseif($date_venue->week_day==4)
+          木曜
+          @elseif($date_venue->week_day==5)
+          金曜
+          @elseif($date_venue->week_day==6)
+          土曜
+          @elseif($date_venue->week_day==7)
+          日曜
+        @endif
+      </td>
+        <td>{{$date_venue->start}}</td>
+        <td>{{$date_venue->finish}}</td>
+        </tr>
+        @endforeach
+      </tbody>
+    </table>
+    
+  </div>
+</div>
 
 
 
