@@ -339,19 +339,18 @@
 
 <div class="p-3 mb-2 bg-white text-dark">
   <span>有料備品</span>
-  <pre>
-  </pre>
   <div>
     <div><span>※左部リストよりクリックで選択し右部リストに移動させてください</span></div>
     <div><span>※右部リストは現在選択されている備品一覧です</span></div>
     <select id='equipment_id' multiple='multiple' name="equipment_id[]">
-
-      @for ($i = 0; $i < count($m_equipments); $i++) @if (isset($equipments[$i])) <option
-        value="{{$m_equipments[$i]->id}}" selected>{{$m_equipments[$i]->item}}</option>
-        @else
-        <option value="{{$m_equipments[$i]->id}}">{{$m_equipments[$i]->item}}</option>
-        @endif
-        @endfor
+      @for ($i = 0; $i < $m_equipments->count(); $i++)
+      <option value={{$m_equipments[$i]->id}} 
+      @foreach ($r_emptys as $r_empty)
+      {{$m_equipments[$i]->id==$r_empty->id?"selected":""}}
+      @endforeach
+      >{{$m_equipments[$i]->item}}
+      </option>
+    @endfor
 
     </select>
 
@@ -363,7 +362,16 @@
   <div>
     <div><span>※左部リストよりクリックで選択し右部リストに移動させてください</span></div>
     <div><span>※右部リストは現在選択されているサービス一覧です</span></div>
-
+    <select id='service_id' multiple='multiple' name="service_id[]">
+      @for ($s = 0; $s < $m_services->count(); $s++)
+      <option value={{$m_services[$s]->id}} 
+      @foreach ($s_emptys as $s_empty)
+      {{$m_services[$s]->id==$s_empty->id?"selected":""}}
+      @endforeach
+      >{{$m_services[$s]->item}}
+      </option>
+    @endfor
+    </select>
   </div>
 </div>
 
