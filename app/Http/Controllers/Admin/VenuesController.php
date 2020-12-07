@@ -244,24 +244,16 @@ class VenuesController extends Controller
   public function edit($id)
   {
     $venue = Venue::find($id);
-    $m_equipment = Equipment::all();
+    $m_equipments = Equipment::all();
     $equipments = $venue->equipments()->get();
-    // $r_emptys = [];
-    // foreach ($equipments as $equipment) {
-    //   $r_emptys[] = $equipment;
-    // }
 
     $m_service = Service::all();
     $services = $venue->services()->get();
-    // $s_emptys = [];
-    // foreach ($services as $service) {
-    //   $s_emptys[] = $service;
-    // }
 
     return view('admin.venues.edit', [
       'venue' => $venue,
       'equipments' => $equipments,
-      'm_equipment' => $m_equipment,
+      'm_equipments' => $m_equipments,
       'services' => $services,
       'm_service' => $m_service,
     ]);
