@@ -131,3 +131,13 @@ table.dataTable thead .sorting_desc:after {
 .border-info {
   border-color:white;
 }
+
+.form_required:after{
+  content: '必須';
+  margin-left: 10px;
+  font-size: 12px;
+  background: #ff6679;
+  color: white;
+  padding: 1px 5px;
+  border-radius: 15%;
+}

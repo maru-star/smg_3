@@ -6,36 +6,36 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateEquipmentsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('equipments', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('item');
-            $table->integer('price');
-            $table->integer('stock');
-            $table->text('remark');
-            $table->timestamps();
-        });
-    }
+  /**
+   * Run the migrations.
+   *
+   * @return void
+   */
+  public function up()
+  {
+    Schema::create('equipments', function (Blueprint $table) {
+      $table->bigIncrements('id');
+      $table->string('item');
+      $table->integer('price');
+      $table->integer('stock');
+      $table->text('remark')->nullable();
+      $table->timestamps();
+    });
+  }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        // 無効化
-        Schema::disableForeignKeyConstraints();
+  /**
+   * Reverse the migrations.
+   *
+   * @return void
+   */
+  public function down()
+  {
+    // 無効化
+    Schema::disableForeignKeyConstraints();
 
-        Schema::dropIfExists('equipments');
+    Schema::dropIfExists('equipments');
 
-        // 有効化
-        Schema::enableForeignKeyConstraints();
-    }
+    // 有効化
+    Schema::enableForeignKeyConstraints();
+  }
 }

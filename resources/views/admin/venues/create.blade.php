@@ -19,62 +19,70 @@
 
 
 <div class="container-field">
-  {{ Form::open(['url' => 'admin/venues', 'method'=>'PSOT', 'id'=>'']) }}
+  {{ Form::open(['url' => 'admin/venues', 'method'=>'PSOT', 'id'=>'VenuesCreateForm']) }}
   @csrf
 
   <div class="p-3 mb-2 bg-white text-dark">
-    {{ Form::label('smg_url', '会場SMG Url') }}
+    {{ Form::label('smg_url', '会場SMG URL',['class' => 'form_required']) }}
     {{ Form::text('smg_url', old('smg_url'), ['class' => 'form-control']) }}
   </div>
 
   <div class="row">
     <div class="col">
       <div class="p-3 mb-2 bg-white text-dark">
-        <span><i class="fas fa-info-circle"></i>ビル情報</span>
-        <div class="mt-2 mb-2">
-          {{ Form::label('alliance_flag', '直営') }}
-          {{Form::radio('alliance_flag', '0')}}
-          {{ Form::label('alliance_flag', '提携')}}
-          {{Form::radio('alliance_flag', '1')}}
+        <div class="row">
+          <span class="form_required col-sm-4" id="alliance_flag"><i class="fas fa-info-circle"></i>ビル情報</span>
+          <div class="mt-2 mb-2 col-sm-8">
+            {{ Form::label('alliance_flag', '直営') }}
+            {{Form::radio('alliance_flag', '0')}}
+            <br>
+            {{ Form::label('alliance_flag', '提携')}}
+            {{Form::radio('alliance_flag', '1')}}
+          </div>
         </div>
 
         <div class="row">
-          <div class="col-sm-4">{{ Form::label('name_area', 'エリア名') }}</div>
+          <div class="col-sm-4">{{ Form::label('name_area', 'エリア名',['class' => 'form_required']) }}
+          </div>
           <div class="col-sm-8">{{ Form::text('name_area', old('name_area'), ['class' => 'form-control']) }}</div>
         </div>
 
         <hr>
 
         <div class="row">
-          <div class="col-sm-4">{{ Form::label('name_bldg', 'ビル名') }}</div>
+          <div class="col-sm-4">{{ Form::label('name_bldg', 'ビル名',['class' => 'form_required']) }}
+          </div>
           <div class="col-sm-8">{{ Form::text('name_bldg', old('name_bldg'), ['class' => 'form-control']) }}</div>
         </div>
 
         <hr>
 
         <div class="row">
-          <div class="col-sm-4">{{ Form::label('name_venue', '会場名') }}</div>
+          <div class="col-sm-4">{{ Form::label('name_venue', '会場名',['class' => 'form_required']) }}
+          </div>
           <div class="col-sm-8">{{ Form::text('name_venue', old('name_venue'), ['class' => 'form-control']) }}</div>
         </div>
 
         <hr>
 
         <div class="row">
-          <div class="col-sm-4">{{ Form::label('size1', '会場広さ（坪）') }}</div>
-          <div class="col-sm-8">{{ Form::number('size1', old('size1'), ['class' => 'form-control']) }}</div>
+          <div class="col-sm-4">{{ Form::label('size1', '会場広さ（坪）',['class' => 'form_required']) }}</div>
+          <div class="col-sm-8">
+            {{ Form::number('size1', old('size1'), ['placeholder' => '15','class' => 'form-control']) }}</div>
         </div>
 
         <hr>
 
         <div class="row">
-          <div class="col-sm-4">{{ Form::label('size2', '会場広さ（㎡）') }}</div>
-          <div class="col-sm-8">{{ Form::number('size2', old('size2'), ['class' => 'form-control']) }}</div>
+          <div class="col-sm-4">{{ Form::label('size2', '会場広さ（㎡）',['class' => 'form_required']) }}</div>
+          <div class="col-sm-8">
+            {{ Form::number('size2', old('size2'), ['placeholder' => '15','class' => 'form-control']) }}</div>
         </div>
 
         <hr>
 
         <div class="row">
-          <div class="col-sm-4">{{ Form::label('capacity', '収容人数') }}</div>
+          <div class="col-sm-4">{{ Form::label('capacity', '収容人数',['class' => 'form_required']) }}</div>
           <div class="col-sm-8">
             {{ Form::number('capacity', old('capacity'), ['placeholder' => '15','class' => 'form-control']) }}</div>
         </div>
@@ -82,7 +90,7 @@
         <hr>
 
         <div class="row">
-          <div class="col-sm-4">{{ Form::label('post_code', '郵便番号') }}</div>
+          <div class="col-sm-4">{{ Form::label('post_code', '郵便番号',['class' => 'form_required']) }}</div>
           <div class="col-sm-8"> {{ Form::text('post_code', old('post_code'), [
             'class' => 'form-control',
             'onKeyUp'=>"AjaxZip3.zip2addr(this,'','address1','address2');",
@@ -94,7 +102,7 @@
         <hr>
 
         <div class="row">
-          <div class="col-sm-4">{{ Form::label('address1', '住所（都道府県）') }}</div>
+          <div class="col-sm-4">{{ Form::label('address1', '住所（都道府県）',['class' => 'form_required']) }}</div>
           <div class="col-sm-8">
             {{ Form::text('address1', old('address1'), ['placeholder' => '大阪府','class' => 'form-control search_address2']) }}
           </div>
@@ -103,7 +111,7 @@
         <hr>
 
         <div class="row">
-          <div class="col-sm-4">{{ Form::label('address2', '住所（市町村番地）') }}</div>
+          <div class="col-sm-4">{{ Form::label('address2', '住所（市町村番地）',['class' => 'form_required'])}}</div>
           <div class="col-sm-8">
             {{ Form::text('address2', old('address2'), ['placeholder' => '大阪市北堀江1-23-1','class' => 'form-control search_address3']) }}
           </div>
@@ -112,7 +120,7 @@
         <hr>
 
         <div class="row">
-          <div class="col-sm-4">{{ Form::label('address3', '住所（建物名）') }}</div>
+          <div class="col-sm-4">{{ Form::label('address3', '住所（建物名）',['class' => 'form_required']) }}</div>
           <div class="col-sm-8">
             {{ Form::text('address3', old('address3'), ['placeholder' => 'プレサンスビル703号室','class' => 'form-control']) }}
           </div>
@@ -147,7 +155,7 @@
         <span><i class="fas fa-suitcase-rolling"></i>荷物預かり</span>
 
         <div class="row">
-          <div class="col-sm-4">{{ Form::label('luggage_flag', '荷物預かり　有・無') }}</div>
+          <div class="col-sm-4">{{ Form::label('luggage_flag', '荷物預かり　有・無',['class' => 'form_required']) }}</div>
           <div class="col-sm-8">
             {{Form::select('luggage_flag', ['有り', '無し'],null,['placeholder' => '選択してください','class'=>'custom-select mr-sm-2'])}}
           </div>
@@ -155,7 +163,7 @@
         <hr>
 
         <div class="row">
-          <div class="col-sm-4">{{ Form::label('luggage_post_code', '送付先郵便番号') }}</div>
+          <div class="col-sm-4">{{ Form::label('luggage_post_code', '送付先郵便番号',['class' => 'form_required']) }}</div>
           <div class="col-sm-8"> {{ Form::text('luggage_post_code', old('luggage_post_code'), [
             'class' => 'form-control',
             'onKeyUp'=>"AjaxZip3.zip2addr(this,'','luggage_address1','luggage_address2');",
@@ -166,35 +174,35 @@
         <hr>
 
         <div class="row">
-          <div class="col-sm-4">{{ Form::label('luggage_address1', '住所（都道府県）') }}</div>
+          <div class="col-sm-4">{{ Form::label('luggage_address1', '住所（都道府県）',['class' => 'form_required']) }}</div>
           <div class="col-sm-8">
             {{ Form::text('luggage_address1', old('luggage_address1'), ['class' => 'form-control']) }}</div>
         </div>
         <hr>
 
         <div class="row">
-          <div class="col-sm-4">{{ Form::label('luggage_address2', '住所（市町村番地）') }}</div>
+          <div class="col-sm-4">{{ Form::label('luggage_address2', '住所（市町村番地）',['class' => 'form_required']) }}</div>
           <div class="col-sm-8">
             {{ Form::text('luggage_address2', old('luggage_address2'), ['class' => 'form-control']) }}</div>
         </div>
         <hr>
 
         <div class="row">
-          <div class="col-sm-4">{{ Form::label('luggage_address3', '住所（建物名）') }}</div>
+          <div class="col-sm-4">{{ Form::label('luggage_address3', '住所（建物名）',['class' => 'form_required']) }}</div>
           <div class="col-sm-8">
             {{ Form::text('luggage_address3', old('luggage_address3'), ['class' => 'form-control']) }}</div>
         </div>
         <hr>
 
         <div class="row">
-          <div class="col-sm-4">{{ Form::label('luggage_name', '送付先名') }}</div>
+          <div class="col-sm-4">{{ Form::label('luggage_name', '送付先名',['class' => 'form_required']) }}</div>
           <div class="col-sm-8">
             {{ Form::text('luggage_name', old('luggage_name'), ['class' => 'form-control']) }}</div>
         </div>
         <hr>
 
         <div class="row">
-          <div class="col-sm-4">{{ Form::label('luggage_tel', '電話番号') }}</div>
+          <div class="col-sm-4">{{ Form::label('luggage_tel', '電話番号',['class' => 'form_required']) }}</div>
           <div class="col-sm-8">
             {{ Form::text('luggage_tel', old('luggage_tel'), ['class' => 'form-control']) }}</div>
         </div>
@@ -310,9 +318,22 @@
         <span><i class="fas fa-utensils"></i>室内飲食</span>
 
         <div class="row">
-          <div class="col-sm-4">{{ Form::label('eat_in_flag', '室内飲食') }}</div>
+          <div class="col-sm-4">{{ Form::label('eat_in_flag', '室内飲食',['class' => 'form_required']) }}</div>
           <div class="col-sm-8">
             {{{Form::select('eat_in_flag', ['有り', '無し'],null,['placeholder' => '選択してください', 'class'=>'custom-select mr-sm-2'])}}}
+          </div>
+        </div>
+        <hr>
+      </div>
+
+
+      <div class="p-3 mb-2 bg-white text-dark">
+        <span>レイアウト変更</span>
+
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('layout', 'レイアウト変更',['class' => 'form_required']) }}</div>
+          <div class="col-sm-8">
+            {{{Form::select('layout', ['有り', '無し'],null,['placeholder' => '選択してください', 'class'=>'custom-select mr-sm-2'])}}}
           </div>
         </div>
         <hr>
@@ -359,7 +380,7 @@
 </div>
 
 <div class="mx-auto" style="width: 100px;">
-  {{ Form::submit('登録', ['class' => 'btn btn-primary']) }}
+  {{ Form::submit('登録', ['class' => 'btn btn-primary mb-5 mt-5']) }}
 </div>
 
 

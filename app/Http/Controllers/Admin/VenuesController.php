@@ -161,6 +161,7 @@ class VenuesController extends Controller
     $venues->smg_url = $request->smg_url;
     $venues->entrance_open_time = $request->entrance_open_time;
     $venues->backyard_open_time = $request->backyard_open_time;
+    $venues->layout = $request->layout;
     $venues->save();
 
     // 備品保存
@@ -188,7 +189,7 @@ class VenuesController extends Controller
         'venue_id' => $venues->id,
         'week_day' => $week_days,
         'start' => Carbon::parse('08:00'),
-        'finish' => Carbon::parse('22:00'),
+        'finish' => Carbon::parse('23:00'),
       ]);
     }
 
@@ -246,16 +247,16 @@ class VenuesController extends Controller
     $venue = Venue::find($id);
     $m_equipments = Equipment::all();
     $equipments = $venue->equipments()->get();
-    $r_emptys=[];
+    $r_emptys = [];
     foreach ($equipments as $equipment) {
-        $r_emptys[]=$equipment;
+      $r_emptys[] = $equipment;
     }
 
     $m_services = Service::all();
     $services = $venue->services()->get();
-    $s_emptys=[];
+    $s_emptys = [];
     foreach ($services as $service) {
-        $s_emptys[]=$service;
+      $s_emptys[] = $service;
     }
 
     return view('admin.venues.edit', [
