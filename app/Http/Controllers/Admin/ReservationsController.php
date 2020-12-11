@@ -40,7 +40,7 @@ class ReservationsController extends Controller
   }
 
   /*
-   * ajax 備品orサービス取得
+   * ajax 
    *
    */
   public function getpricesystem(Request $request)
@@ -76,10 +76,16 @@ class ReservationsController extends Controller
 
   public function getpricedetails(Request $request)
   {
-    $venue_id = Venue::find($request->venue_id);
+    $venue = Venue::find($request->venue_id);
     $status = $request->status;
     $start = $request->start;
     $finish = $request->finish;
+
+    // $statusは時間枠料金orアクセア料金か判別
+
+    $result = $venue->calculate_price($status, $start, $finish);
+
+    return [$result];
   }
 
 

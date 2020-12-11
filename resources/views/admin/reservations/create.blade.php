@@ -1,9 +1,10 @@
 @extends('layouts.admin.app')
 @section('content')
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <link href="{{ asset('/css/template.css') }}" rel="stylesheet">
 <script src="{{ asset('/js/template.js') }}"></script>
 <script src="{{ asset('/js/ajax.js') }}"></script>
+
 
 <style>
   #fullOverlay {
@@ -91,8 +92,7 @@
             <select id="venues_selector" class="hide">
               <option value=""></option>
               @foreach ($venues as $venue)
-              <option value="{{$venue->id}}">{{$venue->name_area}}
-                {{$venue->name_bldg}}{{$venue->name_venue}}</option>
+              <option value="{{$venue->id}}">{{$venue->name_area}}{{$venue->name_bldg}}{{$venue->name_venue}}</option>
               @endforeach
             </select>
             <div class="price_selector">
@@ -104,7 +104,11 @@
           <td>
             <div>
               <select name="sales_start" id="sales_start">
-                <option value="">選択してください</option>
+                <option selected disabled>選択してください</option>
+                @for ($start = 0*2; $start <=23*2; $start++) <option
+                  value="{{date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))}}">
+                  {{date("H時i分", strtotime("00:00 +". $start * 30 ." minute"))}}</option>
+                  @endfor
               </select>
             </div>
           </td>
@@ -114,7 +118,11 @@
           <td>
             <div>
               <select name="sales_finish" id="sales_finish">
-                <option value="">選択してください</option>
+                <option selected disabled>選択してください</option>
+                @for ($start = 0*2; $start <=23*2; $start++) <option
+                  value="{{date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))}}">
+                  {{date("H時i分", strtotime("00:00 +". $start * 30 ." minute"))}}</option>
+                  @endfor
               </select>
             </div>
           </td>
@@ -179,9 +187,16 @@
 
 
 
+
+
+
       <div class="price_details">
       </div>
       <button id='calculate' class="btn btn-primary">計算する！！！！</button>
+
+      <div class="carculete_result">
+
+      </div>
 
     </div>
 
