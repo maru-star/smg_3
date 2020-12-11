@@ -228,6 +228,8 @@ class Venue extends Model
         $judge_finish = in_array($finish_time, $between_time_list[$price_results]); //終了がカバーできてるか
         if ($judge_start && $judge_finish) {
           $cover_price_result[] = $price_arrays[$price_results];
+        } else {
+          $cover_price_result[] = 'false';
         }
       }
       /*|--------------------------------------------------------------------------
@@ -256,11 +258,25 @@ class Venue extends Model
         } else if ($extend_list_price == 0.5) {
           $extend_prices[] = ($price_arrays[0]->extend) / 2;
         } else {
-          $extend_prices[] = "延長はない";
+          $extend_prices[] = "false";
         }
       }
 
-      return $extend_prices; //1時間もしくは30分の延長料金が入ってる
+      // return $extend_prices; //1時間もしくは30分の延長料金が入ってる
+      // return $cover_price_result; //カバーできる枠の料金体系はいってる
+      // return [$extend_prices, $cover_price_result];
+
+      $extend_final_prices = [];
+      for ($extend_final = 0; $extend_final < count($price_arrays); $extend_final++) {
+        if ($extend_prices[$extend_final] != 'false') {
+          $extend_final_prices[] = ($price_arrays[$extend_final]->price) + ($extend_prices[$extend_final]);
+        } else if ($cover_price_result[$extend_final] != 'false') {
+          $extend_final_prices[] = $price_arrays[$extend_final]->price;
+        } else {
+          $extend_final_prices[] = 'false';
+        }
+      }
+      return $extend_final_prices;
     }
   }
 }
