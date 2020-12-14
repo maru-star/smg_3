@@ -79,5 +79,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
     Route::post('reservations/getsaleshours', 'ReservationsController@getsaleshours');
     // ajax 料金詳細所得
     Route::post('reservations/getpricedetails', 'ReservationsController@getpricedetails');
+    // ajax 備品＆サービス　料金取得
+    Route::post('reservations/geteitemsprices', 'ReservationsController@geteitemsprices');
   });
 });

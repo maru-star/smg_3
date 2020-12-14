@@ -26,12 +26,27 @@ $(function () {
     var radio_val = $('input:radio[name="price_system"]:checked').val();
     var start_time = $('#sales_start').val();
     var finish_time = $('#sales_finish').val();
-    ajaxGetPriceDetails(
-      venue_id,
-      radio_val,
-      start_time,
-      finish_time,
-    );
+    ajaxGetPriceDetails(venue_id, radio_val, start_time, finish_time); //料金計算
+
+
+    // 備品の数取得
+    var equipemnts_array = [];
+    var equipemnts_length = $('.equipemnts table tbody tr').length;
+    for (let equipemnts_index = 0; equipemnts_index < equipemnts_length; equipemnts_index++) {
+      var e_target = $('.equipemnts table tbody tr').eq(equipemnts_index).find('input').val();
+      equipemnts_array.push(e_target);
+    }
+
+    // サービスの数取得
+    var services_array = [];
+    var services_length = $('.services table tbody tr').length;
+    for (let services_index = 0; services_index < services_length; services_index++) {
+      var s_target = $('.services table tbody tr').eq(services_index).find("input:radio[name='" + 'service' + (services_index + 1) + "']:checked").val();
+      services_array.push(s_target);
+    }
+
+    ajaxGetItemsDetails(venue_id, equipemnts_array, services_array);
+
   });
 
   // 備品とサービス取得ajax
@@ -60,7 +75,7 @@ $(function () {
           // ココでサービス取得
           // 有り・無しに変更するため以下コメントアウト
           // $('.services table tbody').append("<tr><td>" + value['item'] + "</td>" + "<td><input type='number' value='0' max='1' min='0' name='" + value['id'] + "' class='form-control'></td></tr>");
-          $('.services table tbody').append("<tr><td>" + value['item'] + "</td>" + "<td><input type='radio' value='0' name='service" + value['id'] + "'>有り<input type='radio' value='1' name='service" + value['id'] + "' checked>無し</td></tr>");
+          $('.services table tbody').append("<tr><td>" + value['item'] + "</td>" + "<td><input type='radio' value='1' name='service" + value['id'] + "'>有り<input type='radio' value='0' name='service" + value['id'] + "' checked>無し</td></tr>");
         });
       })
       .fail(function (data) {
@@ -184,6 +199,34 @@ $(function () {
       .fail(function ($details) {
         $('#fullOverlay').css('display', 'none');
         console.log('失敗したよ');
+      });
+  };
+
+  // 備品＆サービス　料金取得
+  function ajaxGetItemsDetails($venue_id, $equipemnts, $services) {
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      url: '/admin/reservations/geteitemsprices',
+      type: 'POST',
+      data: {
+        'venue_id': $venue_id,
+        'equipemnts': $equipemnts,
+        'services': $services,
+      },
+      dataType: 'json',
+      beforeSend: function () {
+        $('#fullOverlay').css('display', 'block');
+      },
+    })
+      .done(function ($each) {
+        $('#fullOverlay').css('display', 'none');
+        console.log($each);
+      })
+      .fail(function ($each) {
+        $('#fullOverlay').css('display', 'none');
+        console.log('失敗した!!!!');
       });
   };
 });

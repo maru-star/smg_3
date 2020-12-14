@@ -343,7 +343,18 @@ class Venue extends Model
       }
 
 
-      return [$extend_final_prices, $min_result];
+      return [$min_result];
     }
+  }
+
+
+
+
+
+
+
+  public function calculate_items_price($status_id, $start_time, $finish_time)
+  {
+    return 'aaaaaaaaaaaaaaaaaaaaaa';
   }
 }

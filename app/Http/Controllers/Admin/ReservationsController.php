@@ -74,6 +74,10 @@ class ReservationsController extends Controller
     return [$sales_start, $sales_finish];
   }
 
+  /*
+   * ajax 料金取得
+   *
+   */
   public function getpricedetails(Request $request)
   {
     $venue = Venue::find($request->venue_id);
@@ -82,12 +86,24 @@ class ReservationsController extends Controller
     $finish = $request->finish;
 
     // $statusは時間枠料金orアクセア料金か判別
-
     $result = $venue->calculate_price($status, $start, $finish);
 
     return [$result];
   }
 
+  /*
+   * ajax 備品＆サービス　料金取得
+   *
+   */
+  public function geteitemsprices(Request $request)
+  {
+    $venue = Venue::find($request->venue_id);
+    $venue_equipments = $venue->equipments;
+    $venue_services = $venue->services;
+
+    $selected_equipments = $request->equipemnts;
+    $selected_services = $request->services;
+  }
 
 
 
