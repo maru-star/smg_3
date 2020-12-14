@@ -208,7 +208,6 @@ class Venue extends Model
         $generate_start_time = '13:00:00';
       }
 
-
       //料金計算に使う開始時間を計算用に変更
       // 終了時間
       if ($finish_time <= '22:00:00') {
@@ -216,7 +215,6 @@ class Venue extends Model
       } else if ($finish_time == '22:30:00' || $finish_time == '23:00:00') {
         $generate_finish_time = '22:00:00';
       }
-
 
       $price_arrays = $this->frame_prices()->get(); //料金体系判別　and　料金抽出
       $start_array = [];
@@ -289,7 +287,6 @@ class Venue extends Model
         }
       }
 
-
       /*|--------------------------------------------------------------------------
       | ↓↓↓一旦ここで、網羅できる料金体系と延長したら網羅できる料金体系の値段表示↓↓↓
       |--------------------------------------------------------------------------|*/
@@ -316,34 +313,52 @@ class Venue extends Model
       }
       $min_result = min($min_results);
 
+      // 延長料金抽出
+      $exted_specific_price = $extend_prices[array_search($min_result, $extend_final_prices)];
+      if ($exted_specific_price != 'false') {
+        $exted_specific_price;
+      } else if ($exted_specific_price == 'false') {
+        $exted_specific_price = 0;
+      }
+      // 延長料金抽出
+
 
       // 8時例外：8時から10時を選択すると時間に応じて延長料金適応
       if ($start_time == '08:00:00') {
         $min_result = $min_result + ($price_arrays[0]->extend) * 2;
+        $exted_specific_price = $exted_specific_price + ($price_arrays[0]->extend) * 2;
       } else if ($start_time == '08:30:00') {
         $min_result = $min_result + ($price_arrays[0]->extend) * 1.5;
+        $exted_specific_price = $exted_specific_price + ($price_arrays[0]->extend) * 1.5;
       } else if ($start_time == '09:00:00') {
         $min_result = $min_result + ($price_arrays[0]->extend) * 1.0;
+        $exted_specific_price = $exted_specific_price + ($price_arrays[0]->extend) * 1.0;
       } else if ($start_time == '09:30:00') {
         $min_result = $min_result + ($price_arrays[0]->extend) * 0.5;
+        $exted_specific_price = $exted_specific_price + ($price_arrays[0]->extend) * 0.5;
       }
 
       // // 23時例外：22時から23時を選択すると時間に応じて延長料金適応
       //17時以降は無条件で夜間料金適応
       if ($finish_time == '23:00:00' && $start_time < '17:00:00') {
         $min_result = $min_result + ($price_arrays[0]->extend) * 1;
+        $exted_specific_price = $exted_specific_price + ($price_arrays[0]->extend) * 1;
       } elseif ($finish_time == '22:30:00' && $start_time < '17:00:00') {
         $min_result = $min_result + ($price_arrays[0]->extend) * 0.5;
+        $exted_specific_price = $exted_specific_price + ($price_arrays[0]->extend) * 0.5;
       }
 
       if ($start_time == '12:00:00') {
         $min_result = $min_result + ($price_arrays[0]->extend) * 1;
+        $exted_specific_price = $exted_specific_price + ($price_arrays[0]->extend) * 1;
       } else if ($start_time == '12:30:00') {
         $min_result = $min_result + ($price_arrays[0]->extend) * 0.5;
+        $exted_specific_price = $exted_specific_price + ($price_arrays[0]->extend) * 0.5;
       }
 
-
-      return [$min_result];
+      // return $min_result; //延長含む最終料金抽出
+      // return $extend_prices;
+      return [$min_result, $exted_specific_price];
     }
   }
 
@@ -353,8 +368,37 @@ class Venue extends Model
 
 
 
-  public function calculate_items_price($status_id, $start_time, $finish_time)
+  public function calculate_items_price($selected_equipments, $selected_services)
   {
-    return 'aaaaaaaaaaaaaaaaaaaaaa';
+    // 備品料金×個数
+    $venue_equipments = $this->equipments()->get();
+    $equipments_total = 0;
+    $equipments_details = [];
+    for ($i = 0; $i < count($venue_equipments); $i++) {
+      $equipments_total = $equipments_total + ($venue_equipments[$i]->price) * ($selected_equipments[$i]);
+      if ($selected_equipments[$i] != 0) {
+        $selected_e_item = $venue_equipments[$i]->item;
+        $selected_e_price = $venue_equipments[$i]->price;
+        $selected_e_count = $selected_equipments[$i];
+        $equipments_details[] = [$selected_e_item, $selected_e_price, $selected_e_count];
+      }
+    }
+    // return $equipments_total;
+    // サービス料金×個数
+    $venue_services = $this->services()->get();
+    $services_total = 0;
+    $services_details = [];
+    for ($ii = 0; $ii < count($venue_services); $ii++) {
+      $services_total = $services_total + ($venue_services[$ii]->price) * ($selected_services[$ii]);
+      if ($selected_services[$ii] != 0) {
+        $selected_s_item = $venue_services[$ii]->item;
+        $selected_s_price = $venue_services[$ii]->price;
+        $selected_s_count = $selected_services[$ii];
+        $services_details[] = [$selected_s_item, $selected_s_price, $selected_s_count];
+      }
+    }
+
+    $total_items_price = $equipments_total + $services_total; //備品＆サービス合計金額
+    return [$total_items_price, $equipments_details, $services_details];
   }
 }

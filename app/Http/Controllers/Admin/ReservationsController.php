@@ -98,11 +98,12 @@ class ReservationsController extends Controller
   public function geteitemsprices(Request $request)
   {
     $venue = Venue::find($request->venue_id);
-    $venue_equipments = $venue->equipments;
-    $venue_services = $venue->services;
-
     $selected_equipments = $request->equipemnts;
     $selected_services = $request->services;
+
+    $result = $venue->calculate_items_price($selected_equipments, $selected_services);
+
+    return [$result];
   }
 
 

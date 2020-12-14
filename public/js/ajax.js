@@ -20,7 +20,9 @@ $(function () {
     // ajaxGetSalesHours(venue_id, dates);　管理者は24時間予約登録可能。そのため一旦、本機能停止
   });
 
+  /*--------------------------------------------------
   // 計算するボタン押下トリガー
+  --------------------------------------------------*/
   $('#calculate').on('click', function () {
     var venue_id = $('#venues_selector').val();
     var radio_val = $('input:radio[name="price_system"]:checked').val();
@@ -194,7 +196,12 @@ $(function () {
       .done(function ($details) {
         $('#fullOverlay').css('display', 'none');
         console.log($details);
-        $('.carculete_result').text($details);
+        $('.venue_extend').html('');
+        $('.extend').html('');
+        $('.venue_price').html('');
+        $('.venue_extend').text($details[0][0]);
+        $('.extend').text($details[0][1]);
+        $('.venue_price').text($details[0][0] - $details[0][1]);
       })
       .fail(function ($details) {
         $('#fullOverlay').css('display', 'none');
@@ -222,7 +229,21 @@ $(function () {
     })
       .done(function ($each) {
         $('#fullOverlay').css('display', 'none');
-        console.log($each);
+        // ※$eachの[0][0]には備品とサービスの合計料金
+        // ※$eachの[0][1]には連想配列で選択された備品の個数、単価、備品名
+        // ※$eachの[0][2]には連想配列で選択されたサービスの個数、単価、備品名
+        // console.log(($each[0][1]));
+        var count_equipments = ($each[0][1]).length;
+        $('.items_equipments table tbody').html('');
+        for (let counter = 0; counter < count_equipments; counter++) {
+          $('.items_equipments table tbody').append("<tr><td>" + $each[0][1][counter][0] + "</td><td>" + $each[0][1][counter][1] + "</td><td>" + $each[0][1][counter][2] + "</td><td>" + (($each[0][1][counter][1]) * ($each[0][1][counter][2])) + "</td></tr>");
+        }
+        var count_services = ($each[0][2]).length;
+        $('.items_services table tbody').html('');
+        for (let counter_s = 0; counter_s < count_services; counter_s++) {
+          $('.items_services table tbody').append("<tr><td>" + $each[0][2][counter_s][0] + "</td><td>" + $each[0][2][counter_s][1] + "</td><td>" + $each[0][2][counter_s][2] + "</td><td>" + (($each[0][2][counter_s][1]) * ($each[0][2][counter_s][2])) + "</td></tr>");
+        }
+        $('.items_total').text($each[0][0]);
       })
       .fail(function ($each) {
         $('#fullOverlay').css('display', 'none');

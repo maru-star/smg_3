@@ -195,7 +195,49 @@
       <button id='calculate' class="btn btn-primary">計算する！！！！</button>
 
       <div class="carculete_result">
-
+        <div class="venue">
+          会場料金：<p class="venue_price"></p>
+          延長料金：<p class="extend"></p>
+          会場＋延長料金：<p class="venue_extend"></p>
+        </div>
+        <div class="equipments_and_services">
+          <div class="items">
+            選択された備品一覧：
+            <div class="items_equipments">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <td>内容</td>
+                    <td>単価</td>
+                    <td>数量</td>
+                    <td>合計金額</td>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+            選択されたサービス一覧：
+            <div class="items_services">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <td>内容</td>
+                    <td>単価</td>
+                    <td>数量</td>
+                    <td>合計金額</td>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+            選択された備品＆サービス合計
+            <div>
+              <div class="items_total"></div>
+            </div>
+          </div>
+        </div>
       </div>
 
     </div>
@@ -213,7 +255,7 @@
   </div>
 
   {{-- 請求情報 --}}
-  <div class="container-field bg-white text-dark">
+  {{-- <div class="container-field bg-white text-dark">
     <span>請求情報：会場量</span>
     <div class="row">
       <div class="col">
@@ -257,7 +299,7 @@
         <div><input type="text" name="total" value="0"></div>
       </div>
     </div>
-  </div>
+  </div> --}}
 
 </div>
 
