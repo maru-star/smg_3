@@ -191,6 +191,33 @@ class Venue extends Model
   public function calculate_price($status_id, $start_time, $finish_time)
   {
     if ($status_id == 1) {
+
+      //料金計算に使う開始時間を計算用に変更
+      // 開始時間
+      if ($start_time >= '10:00:00' && $start_time <= '19:00:00') {
+        $generate_start_time = $start_time;
+      } else if ($start_time == '08:00:00' || $start_time == '08:30:00' || $start_time == '09:00:00' || $start_time == '09:30:00') {
+        $generate_start_time = '10:00:00';
+      }
+
+      //料金計算に使う開始時間を計算用に変更
+      // 開始時間
+      if ($start_time == '17:00:00' || $start_time == '17:30:00') {
+        $generate_start_time = '18:00:00';
+      } else if ($start_time == '12:00:00' || $start_time == '12:30:00') {
+        $generate_start_time = '13:00:00';
+      }
+
+
+      //料金計算に使う開始時間を計算用に変更
+      // 終了時間
+      if ($finish_time <= '22:00:00') {
+        $generate_finish_time = $finish_time;
+      } else if ($finish_time == '22:30:00' || $finish_time == '23:00:00') {
+        $generate_finish_time = '22:00:00';
+      }
+
+
       $price_arrays = $this->frame_prices()->get(); //料金体系判別　and　料金抽出
       $start_array = [];
       $finish_array = [];
@@ -224,8 +251,8 @@ class Venue extends Model
       $cover_price_result = []; //網羅できる料金体系が格納される
       for ($price_results = 0; $price_results < count($price_arrays); $price_results++) {
         // 以下、枠が開始・終了をカバーできるか判定
-        $judge_start = in_array($start_time, $between_time_list[$price_results]); //開始がカバーできてるか
-        $judge_finish = in_array($finish_time, $between_time_list[$price_results]); //終了がカバーできてるか
+        $judge_start = in_array($generate_start_time, $between_time_list[$price_results]); //開始がカバーできてるか
+        $judge_finish = in_array($generate_finish_time, $between_time_list[$price_results]); //終了がカバーできてるか
         if ($judge_start && $judge_finish) {
           $cover_price_result[] = $price_arrays[$price_results];
         } else {
@@ -240,11 +267,11 @@ class Venue extends Model
       $extend_lists = []; //延長可能な料金体系のindexと実際に延長する時間が配列で入ってる
       for ($judge_extend = 0; $judge_extend < count($price_arrays); $judge_extend++) {
         // 以下、枠に延長を足したらカバーできるか判定
-        $judge_start_extend = in_array($start_time, $between_time_list[$judge_extend]); //開始がカバーできてるか
-        $judge_finish_extend = in_array($finish_time, $between_time_list[$judge_extend]); //終了がカバーできてるか
+        $judge_start_extend = in_array($generate_start_time, $between_time_list[$judge_extend]); //開始がカバーできてるか
+        $judge_finish_extend = in_array($generate_finish_time, $between_time_list[$judge_extend]); //終了がカバーできてるか
         if ($judge_start_extend && !$judge_finish_extend) {
           // return "開始はカバーOK,終了は無理";
-          $selected_finish = strtotime($finish_time);
+          $selected_finish = strtotime($generate_finish_time);
           $specific_finish = strtotime($price_arrays[$judge_extend]->finish);
           $extend_lists[] = ($selected_finish - $specific_finish) / 60 / 60;
         } else {
@@ -262,21 +289,61 @@ class Venue extends Model
         }
       }
 
-      // return $extend_prices; //1時間もしくは30分の延長料金が入ってる
-      // return $cover_price_result; //カバーできる枠の料金体系はいってる
-      // return [$extend_prices, $cover_price_result];
 
-      $extend_final_prices = [];
+      /*|--------------------------------------------------------------------------
+      | ↓↓↓一旦ここで、網羅できる料金体系と延長したら網羅できる料金体系の値段表示↓↓↓
+      |--------------------------------------------------------------------------|*/
+      $extend_final_prices = []; //網羅した場合、延長した場合の料金が入ってる
       for ($extend_final = 0; $extend_final < count($price_arrays); $extend_final++) {
         if ($extend_prices[$extend_final] != 'false') {
           $extend_final_prices[] = ($price_arrays[$extend_final]->price) + ($extend_prices[$extend_final]);
         } else if ($cover_price_result[$extend_final] != 'false') {
           $extend_final_prices[] = $price_arrays[$extend_final]->price;
         } else {
-          $extend_final_prices[] = 'false';
+          $extend_final_prices[] = null;
         }
       }
-      return $extend_final_prices;
+      // return $extend_final_prices;
+      /*|--------------------------------------------------------------------------
+      | ↑↑↑一旦ここで、網羅できる料金体系と延長したら網羅できる料金体系の値段表示↑↑↑
+      |--------------------------------------------------------------------------|*/
+
+      $min_results = []; //抽出された料金から最小を取得
+      foreach ($extend_final_prices as $extend_final_price) {
+        if ($extend_final_price > 0) {
+          $min_results[] = $extend_final_price;
+        }
+      }
+      $min_result = min($min_results);
+
+
+      // 8時例外：8時から10時を選択すると時間に応じて延長料金適応
+      if ($start_time == '08:00:00') {
+        $min_result = $min_result + ($price_arrays[0]->extend) * 2;
+      } else if ($start_time == '08:30:00') {
+        $min_result = $min_result + ($price_arrays[0]->extend) * 1.5;
+      } else if ($start_time == '09:00:00') {
+        $min_result = $min_result + ($price_arrays[0]->extend) * 1.0;
+      } else if ($start_time == '09:30:00') {
+        $min_result = $min_result + ($price_arrays[0]->extend) * 0.5;
+      }
+
+      // // 23時例外：22時から23時を選択すると時間に応じて延長料金適応
+      //17時以降は無条件で夜間料金適応
+      if ($finish_time == '23:00:00' && $start_time < '17:00:00') {
+        $min_result = $min_result + ($price_arrays[0]->extend) * 1;
+      } elseif ($finish_time == '22:30:00' && $start_time < '17:00:00') {
+        $min_result = $min_result + ($price_arrays[0]->extend) * 0.5;
+      }
+
+      if ($start_time == '12:00:00') {
+        $min_result = $min_result + ($price_arrays[0]->extend) * 1;
+      } else if ($start_time == '12:30:00') {
+        $min_result = $min_result + ($price_arrays[0]->extend) * 0.5;
+      }
+
+
+      return [$extend_final_prices, $min_result];
     }
   }
 }
