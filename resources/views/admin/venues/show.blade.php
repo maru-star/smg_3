@@ -16,7 +16,8 @@
     </nav>
   </div>
   <h1 class="mt-3 mb-5">会場　詳細情報</h1>
-  <div class="d-flex justify-content-end ">{{ link_to_route('admin.venues.edit', '編集', $parameters = $venue->id, ['class' => 'btn btn-primary'])}}
+  <div class="d-flex justify-content-end ">
+    {{ link_to_route('admin.venues.edit', '編集', $parameters = $venue->id, ['class' => 'btn btn-primary'])}}
   </div>
   <hr>
 </div>
@@ -271,7 +272,6 @@
 
       <div class="p-3 mb-2 bg-white text-dark">
         <span><i class="fas fa-utensils"></i>室内飲食</span>
-
         <div class="row">
           <div class="col-sm-4">{{ Form::label('eat_in_flag', '室内飲食') }}</div>
           <div class="col-sm-8">{{ $venue->eat_in_flag==1?"有り":"無し"}}</div>
@@ -280,8 +280,17 @@
       </div>
 
       <div class="p-3 mb-2 bg-white text-dark">
-        <span><i class="fas fa-utensils"></i>支払データ</span>
+        <span><i class="fas fa-utensils"></i>レイアウト</span>
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('layout', 'レイアウト変更') }}</div>
+          <div class="col-sm-8">{{ $venue->layout==1?"有り":"無し"}}</div>
+        </div>
+        <hr>
+      </div>
 
+
+      <div class="p-3 mb-2 bg-white text-dark">
+        <span><i class="fas fa-utensils"></i>支払データ</span>
         <div class="row">
           <div class="col-sm-4">{{ Form::label('cost', '支払割合（原価）') }}</div>
           <div class="col-sm-8">{{ $venue->cost}}%</div>
@@ -294,27 +303,27 @@
 
 
 
-  <div class="p-3 mb-2 bg-white text-dark">
-    <span>有料備品</span>
-    <div>
-      <ul>
-        @foreach ($equipments as $equipment)
-            <li>{{$equipment->item}}</li>
-        @endforeach
-      </ul>
-    </div>
+<div class="p-3 mb-2 bg-white text-dark">
+  <span>有料備品</span>
+  <div>
+    <ul>
+      @foreach ($equipments as $equipment)
+      <li>{{$equipment->item}}</li>
+      @endforeach
+    </ul>
   </div>
+</div>
 
-  <div class="p-3 mb-2 bg-white text-dark">
-    <span>有料サービス</span>
-    <div>
-      <ul>
-        @foreach ($services as $service)
-            <li>{{$service->item}}</li>
-        @endforeach
-      </ul>
-    </div>
+<div class="p-3 mb-2 bg-white text-dark">
+  <span>有料サービス</span>
+  <div>
+    <ul>
+      @foreach ($services as $service)
+      <li>{{$service->item}}</li>
+      @endforeach
+    </ul>
   </div>
+</div>
 </div>
 
 
@@ -331,30 +340,30 @@
       <tbody>
         @foreach ($date_venues as $date_venue)
         <tr>
-        <td>
-        @if ($date_venue->week_day==1)
-          月曜
-          @elseif($date_venue->week_day==2)
-          火曜
-          @elseif($date_venue->week_day==3)
-          水曜
-          @elseif($date_venue->week_day==4)
-          木曜
-          @elseif($date_venue->week_day==5)
-          金曜
-          @elseif($date_venue->week_day==6)
-          土曜
-          @elseif($date_venue->week_day==7)
-          日曜
-        @endif
-      </td>
-        <td>{{$date_venue->start}}</td>
-        <td>{{$date_venue->finish}}</td>
+          <td>
+            @if ($date_venue->week_day==1)
+            月曜
+            @elseif($date_venue->week_day==2)
+            火曜
+            @elseif($date_venue->week_day==3)
+            水曜
+            @elseif($date_venue->week_day==4)
+            木曜
+            @elseif($date_venue->week_day==5)
+            金曜
+            @elseif($date_venue->week_day==6)
+            土曜
+            @elseif($date_venue->week_day==7)
+            日曜
+            @endif
+          </td>
+          <td>{{$date_venue->start}}</td>
+          <td>{{$date_venue->finish}}</td>
         </tr>
         @endforeach
       </tbody>
     </table>
-    
+
   </div>
 </div>
 
@@ -377,9 +386,9 @@
       <tbody>
         @foreach ($frame_prices as $frame_price)
         <tr>
-        <td>{{$frame_price->frame}}</td>
-        <td>{{$frame_price->start}} ~ {{$date_venue->finish}}</td>
-        <td>{{$frame_price->price}}</td>
+          <td>{{$frame_price->frame}}</td>
+          <td>{{$frame_price->start}} ~ {{$date_venue->finish}}</td>
+          <td>{{$frame_price->price}}</td>
         </tr>
         @endforeach
       </tbody>
@@ -402,9 +411,9 @@
       <tbody>
         @foreach ($time_prices as $time_price)
         <tr>
-        <td>{{$time_price->time}}</td>
-        <td>{{$time_price->price}} ~ {{$date_venue->finish}}</td>
-        <td>{{$time_price->extend}}</td>
+          <td>{{$time_price->time}}</td>
+          <td>{{$time_price->price}} ~ {{$date_venue->finish}}</td>
+          <td>{{$time_price->extend}}</td>
         </tr>
         @endforeach
       </tbody>

@@ -329,7 +329,7 @@
         <div class="row">
           <div class="col-sm-4">{{ Form::label('layout', 'レイアウト変更',['class' => 'form_required']) }}</div>
           <div class="col-sm-8">
-            {{{Form::select('layout', ['有り', '無し'],$venue->layout,['placeholder' => '選択してください', 'class'=>'custom-select mr-sm-2'])}}}
+            {{{Form::select('layout', ['無し', '有り'],$venue->layout,['placeholder' => '選択してください', 'class'=>'custom-select mr-sm-2'])}}}
           </div>
         </div>
         <hr>
