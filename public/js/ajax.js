@@ -213,7 +213,7 @@ $(function () {
           $('.venue_price_details table tbody').append("<tr><td>" + '会場料金' + "</td><td>" + (($details[0][0])) + "</td><td>" + '1' + "</td><td>" + (($details[0][0])) + "</td></tr>");
         } else {
           $('.venue_price_details table tbody').html('');
-          $('.venue_price_details table tbody').append("<tr><td>" + '会場料金' + "</td><td>" + (($details[0][0]) - ($details[0][1])) + "</td><td>" + '1' + "</td><td>" + (($details[0][0])) + "</td></tr>");
+          $('.venue_price_details table tbody').append("<tr><td>" + '会場料金' + "</td><td>" + (($details[0][0]) - ($details[0][1])) + "</td><td>" + '1' + "</td><td>" + (($details[0][0]) - ($details[0][1])) + "</td></tr>");
           $('.venue_price_details table tbody').append("<tr><td>" + '延長料金' + "</td><td>" + (($details[0][1])) + "</td><td>" + (($details[0][3])) + "H</td><td>" + (($details[0][1])) + "</td></tr>");
         }
       })
@@ -261,7 +261,7 @@ $(function () {
       })
       .fail(function ($each) {
         $('#fullOverlay').css('display', 'none');
-        console.log('失敗した!!!!');
+        console.log('備品又はサービスの料金取得に失敗しました。ページをリロードし再度試して下さい');
       });
   };
 

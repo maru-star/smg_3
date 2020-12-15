@@ -1310,15 +1310,18 @@
               <p>割引料金</p>
             </div>
             <div class="col-5 bill-box_cell">
-              <p class="text-right"><input type="text" name="price" class="form-control" id="price"></p>
+              <p class="text-right">
+                <input type="text" name="price" class="form-control venue_dicsount_number" id="price">
+              </p>
             </div>
             <div class="col-3 bill-box_cell">
-              <p class="text-right">割引率:0%</p>
+              <p class="text-right">割引率: <span class="number_result"></span>%</p>
             </div>
           </div>
         </div>
-        <div class="col-12 bill-box_cell">
-          <p class="text-right"><span class="font-weight-bold mr-3">割引後 会場料金合計</span>51,930円</p>
+        <div class="col-12 bill-box_cell d-flex justify-content-end">
+          <span class="font-weight-bold mr-3">割引後 会場料金合計</span>
+          <p class="text-right after_discount_price"></p>円
         </div>
       </dl>
 
