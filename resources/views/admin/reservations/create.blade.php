@@ -1265,7 +1265,7 @@
 
 <div class="carculete_result">
   <div class="venue">
-    会場料金：<p class="venue_price"></p>
+    {{-- 会場料金：<p class="venue_price"></p> --}}
     延長料金：<p class="extend"></p>
     会場＋延長料金：<p class="venue_extend"></p>
   </div>
@@ -1327,6 +1327,293 @@
 </div>
 
 
+
+
+{{-- 丸岡さんカスタム --}}
+<section class="bill-wrap section-wrap">
+  <div class="bill-bg">
+
+    <!-- 請求内容----------- -->
+    <div class="bill-box">
+      <h3 class="row">会場料</h3>
+      <dl class="row bill-box_wrap">
+        <div class="col-3 bill-box_cell">
+          <dt>会場料金</dt>
+          <dd class="venue_price"></dd>
+        </div>
+        <div class="col-3 bill-box_cell">
+          <dt>延長料金</dt>
+          <dd class="extend"></dd>
+        </div>
+        <div class="col-6 bill-box_cell">
+          <dt>会場料金合計</dt>
+          <dd class="text-right venue_extend" style="font-size: 20px"></dd>
+        </div>
+        <div class="col-6">
+          <div class="row">
+            <div class="col-4 bill-box_cell cell-gray">
+              <p>割引率</p>
+            </div>
+            <div class="col-5 bill-box_cell">
+              <dd class="text-right"><input type="text" name="price" class="form-control" id="price"></dd>
+            </div>
+            <div class="col-3 bill-box_cell">
+              <p class="text-right">割引金額:0</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="row">
+            <div class="col-4 bill-box_cell cell-gray">
+              <p>割引料金</p>
+            </div>
+            <div class="col-5 bill-box_cell">
+              <p class="text-right"><input type="text" name="price" class="form-control" id="price"></p>
+            </div>
+            <div class="col-3 bill-box_cell">
+              <p class="text-right">割引率:0%</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 bill-box_cell">
+          <p class="text-right"><span class="font-weight-bold mr-3">割引後 会場料金合計</span>51,930円</p>
+        </div>
+      </dl>
+
+      <!-- 料金内訳-------------------------------------------------------------- -->
+      <h3 class="row" style="background: #F3F3F3;color:black">料金内訳</h3>
+      <div class="row venue_price_details">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <td>内容</td>
+              <td>単価</td>
+              <td>数量</td>
+              <td>金額</td>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+
+      {{-- <div class="row bill-box_wrap bill-list-subttl">
+          <div class="col-6 bill-box_cell">
+            <p>内容</p>
+          </div>
+          <div class="col-2 bill-box_cell">
+            <p>単価</p>
+          </div>
+          <div class="col-1 bill-box_cell">
+            <p>数量</p>
+          </div>
+          <div class="col-3 bill-box_cell">
+            <p>金額</p>
+          </div>
+        </div> --}}
+      {{-- <div class="row bill-box_wrap">
+          <div class="col-6 bill-box_cell">
+            <p>会場料金</p>
+          </div>
+          <div class="col-2 bill-box_cell">
+            <p>52,400円</p>
+          </div>
+          <div class="col-1 bill-box_cell">
+            <p>1</p>
+          </div>
+          <div class="col-3 bill-box_cell">
+            <p>52,400円</p>
+          </div>
+        </div> --}}
+
+      {{-- <div class="row bill-box_wrap">
+          <div class="col-6 bill-box_cell">
+            <p>会場料金</p>
+          </div>
+          <div class="col-2 bill-box_cell">
+            <p>52,400円</p>
+          </div>
+          <div class="col-1 bill-box_cell">
+            <p>1</p>
+          </div>
+          <div class="col-3 bill-box_cell">
+            <p>52,400円</p>
+          </div>
+        </div> --}}
+
+      {{-- <div class="row bill-box_wrap">
+        <div class="col-6 bill-box_cell">
+          <p>会場料金</p>
+        </div>
+        <div class="col-2 bill-box_cell">
+          <p>52,400円</p>
+        </div>
+        <div class="col-1 bill-box_cell">
+          <p>1</p>
+        </div>
+        <div class="col-3 bill-box_cell">
+          <p>52,400円</p>
+        </div>
+      </div> --}}
+
+
+      <div class="row bill-box_wrap price-sum bill-box_cell flex-column">
+        <p class="text-right"><span class="font-weight-bold">小計</span>7,200円</p>
+        <p class="text-right"><span>消費税</span>720円</p>
+        <p class="text-right"><span class="font-weight-bold">請求総額</span>7,200円</p>
+      </div>
+    </div>
+    <!-- 料金内訳 終わり---------------------------- -->
+
+
+  </div>
+  <!-- 請求内容 終わり---------------------------- -->
+
+  <!-- 請求内容----------- -->
+  <div class="bill-box">
+    <h3 class="row">備品その他</h3>
+    <dl class="row bill-box_wrap">
+      <div class="col-3 bill-box_cell">
+        <dt>会場料金</dt>
+        <dd>52,400円</dd>
+      </div>
+      <div class="col-3 bill-box_cell">
+        <dt>延長料金</dt>
+        <dd>5,300円</dd>
+      </div>
+      <div class="col-3 bill-box_cell">
+        <dt>荷物預かり/返送</dt>
+        <dd class="d-flex align-items-center"><input class="form-control mr-3" name="package" type="text">円
+        </dd>
+      </div>
+      <div class="col-3 bill-box_cell">
+        <dt>会場料金合計</dt>
+        <dd class="text-right">57,700円</dd>
+      </div>
+
+      <div class="col-6">
+        <div class="row">
+          <div class="col-4 bill-box_cell cell-gray">
+            <p>割引料金</p>
+          </div>
+          <div class="col-5 bill-box_cell">
+            <p class="text-right"><input type="text" name="price" class="form-control" id="price"></p>
+          </div>
+          <div class="col-3 bill-box_cell text-right">
+            <p>割引率:0%</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 bill-box_cell text-right">
+        <p><span class="font-weight-bold mr-3">割引後 会場料金合計</span>51,930円</p>
+      </div>
+    </dl>
+
+
+    <!-- 料金内訳-------------------------------------------------------------- -->
+    <div class="bill-list">
+      <h3 class="row">料金内訳</h3>
+      <div class="row bill-box_wrap bill-list-subttl">
+        <div class="col-6 bill-box_cell">
+          <p>内容</p>
+        </div>
+        <div class="col-2 bill-box_cell">
+          <p>単価</p>
+        </div>
+        <div class="col-1 bill-box_cell">
+          <p>数量</p>
+        </div>
+        <div class="col-3 bill-box_cell">
+          <p>金額</p>
+        </div>
+      </div>
+
+      <div class="row bill-box_wrap">
+        <div class="col-6 bill-box_cell">
+          <p>会場料金</p>
+        </div>
+        <div class="col-2 bill-box_cell">
+          <p>52,400円</p>
+        </div>
+        <div class="col-1 bill-box_cell">
+          <p>1</p>
+        </div>
+        <div class="col-3 bill-box_cell">
+          <p>52,400円</p>
+        </div>
+      </div>
+
+      <div class="row bill-box_wrap">
+        <div class="col-6 bill-box_cell">
+          <p>会場料金</p>
+        </div>
+        <div class="col-2 bill-box_cell">
+          <p>52,400円</p>
+        </div>
+        <div class="col-1 bill-box_cell">
+          <p>1</p>
+        </div>
+        <div class="col-3 bill-box_cell">
+          <p>52,400円</p>
+        </div>
+      </div>
+
+      <div class="row bill-box_wrap">
+        <div class="col-6 bill-box_cell">
+          <p>会場料金</p>
+        </div>
+        <div class="col-2 bill-box_cell">
+          <p>52,400円</p>
+        </div>
+        <div class="col-1 bill-box_cell">
+          <p>1</p>
+        </div>
+        <div class="col-3 bill-box_cell">
+          <p>52,400円</p>
+        </div>
+      </div>
+
+
+      <div class="row bill-box_wrap price-sum bill-box_cell flex-column">
+        <p class="text-right"><span class="font-weight-bold">小計</span>7,200円</p>
+        <p class="text-right"><span>消費税</span>720円</p>
+        <p class="text-right"><span class="font-weight-bold">請求総額</span>7,200円</p>
+      </div>
+
+
+
+    </div>
+    <!-- 料金内訳 終わり---------------------------- -->
+
+
+  </div>
+  <!-- 請求内容 終わり---------------------------- -->
+
+
+  <dl class="row bill-box_wrap total-sum">
+    <div class="col-3 bill-box_cell">
+      <dt>合計請求総額</dt>
+    </div>
+    <div class="col-3 bill-box_cell">
+      <dt>会場料</dt>
+      <dd>5,300円</dd>
+    </div>
+    <div class="col-3 bill-box_cell">
+      <dt>追加請求料</dt>
+      <dd>5,300円</dd>
+    </div>
+    <div class="col-3 bill-box_cell">
+      <dt>請求総額</dt>
+      <dd class="text-right">57,700円</dd>
+    </div>
+  </dl>
+  </div>
+</section>
+
+<div class="btn_wrapper">
+  <p class="text-center"><a class="more_btn_lg" href="">予約登録する</a></p>
+</div>
 
 
 @endsection

@@ -199,6 +199,7 @@ $(function () {
       },
     })
       .done(function ($details) {
+        //[0]は合計料金, [1]は延長料金, [2]は利用時間, [3]は延長時間
         $('#fullOverlay').css('display', 'none');
         console.log($details);
         $('.venue_extend').html('');
@@ -207,10 +208,18 @@ $(function () {
         $('.venue_extend').text($details[0][0]);
         $('.extend').text($details[0][1]);
         $('.venue_price').text($details[0][0] - $details[0][1]);
+        if (($details[0][1]) == 0) {
+          $('.venue_price_details table tbody').html('');
+          $('.venue_price_details table tbody').append("<tr><td>" + '会場料金' + "</td><td>" + (($details[0][0])) + "</td><td>" + '1' + "</td><td>" + (($details[0][0])) + "</td></tr>");
+        } else {
+          $('.venue_price_details table tbody').html('');
+          $('.venue_price_details table tbody').append("<tr><td>" + '会場料金' + "</td><td>" + (($details[0][0]) - ($details[0][1])) + "</td><td>" + '1' + "</td><td>" + (($details[0][0])) + "</td></tr>");
+          $('.venue_price_details table tbody').append("<tr><td>" + '延長料金' + "</td><td>" + (($details[0][1])) + "</td><td>" + (($details[0][3])) + "H</td><td>" + (($details[0][1])) + "</td></tr>");
+        }
       })
       .fail(function ($details) {
         $('#fullOverlay').css('display', 'none');
-        console.log('失敗したよ');
+        swal('料金の取得に失敗しました。ページをリロードし条件を変えて再度計算してください');
       });
   };
 
@@ -317,9 +326,6 @@ $(function () {
         swal('レイアウトの金額取得に失敗しました。ページをリロードし再度試して下さい!!!!');
       });
   };
-
-
-
 
 
 

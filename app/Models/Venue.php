@@ -360,7 +360,17 @@ class Venue extends Model
 
       // return $min_result; //延長含む最終料金抽出
       // return $extend_prices;
-      return [$min_result, $exted_specific_price];
+
+      // 選択した時間取得
+      $f_start = Carbon::createFromTimeString($start_time, 'Asia/Tokyo');
+      $f_finish = Carbon::createFromTimeString($finish_time, 'Asia/Tokyo');
+      $diff = $f_finish->diffInMinutes($f_start);
+      $time_diff = $diff / 60;
+
+      // 延長した分の時間取得
+      $extend_original = ($price_arrays[0]->extend);
+      $extend_diff = $exted_specific_price / $extend_original;
+      return [$min_result, $exted_specific_price, $time_diff, $extend_diff];
     }
   }
 
