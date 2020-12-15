@@ -329,11 +329,29 @@
         <div class="row">
           <div class="col-sm-4">{{ Form::label('layout', 'レイアウト変更',['class' => 'form_required']) }}</div>
           <div class="col-sm-8">
-            {{{Form::select('layout', ['無し', '有り'],$venue->layout,['placeholder' => '選択してください', 'class'=>'custom-select mr-sm-2'])}}}
+            {{{Form::select('layout', ['無し', '有り'],null,['placeholder' => '選択してください', 'class'=>'custom-select mr-sm-2'])}}}
           </div>
         </div>
         <hr>
+        <div class="p-3 mb-2 bg-white text-dark">
+          <div class="row">
+            <div class="col-sm-4">{{ Form::label('layout_prepare', 'レイアウト準備料金',['class' => '']) }}</div>
+            <div class="col-sm-8">
+              {{ Form::number('layout_prepare', $venue->layout_prepare, ['class' => 'form-control']) }}</div>
+          </div>
+        </div>
+        <div class="p-3 mb-2 bg-white text-dark">
+          <div class="row">
+            <div class="col-sm-4">{{ Form::label('layout_clean', 'レイアウト変更料金',['class' => '']) }}</div>
+            <div class="col-sm-8">
+              {{ Form::number('layout_clean', $venue->layout_clean, ['class' => 'form-control']) }}</div>
+          </div>
+        </div>
       </div>
+
+
+
+
 
       <div class="p-3 mb-2 bg-white text-dark">
         <span><i class="fas fa-utensils"></i>支払データ</span>

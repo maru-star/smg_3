@@ -45,7 +45,9 @@ class Venue extends Model
     'mgmt_remark',
     'entrance_open_time',
     'backyard_open_time',
-    'layout'
+    'layout',
+    'layout_prepare',
+    'layout_clean',
   ];
 
   public function searchs(

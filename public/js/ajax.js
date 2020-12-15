@@ -10,6 +10,7 @@ $(function () {
     ajaxGetItems(venue_id);
     // ajaxGetSalesHours(venue_id, dates);　管理者は24時間予約登録可能。そのため一旦、本機能停止
     ajaxGetPriceStstem(venue_id);
+    ajaxGetLayout(venue_id); //レイアウトが存在するかしないか、　"0"か"1"でreturn
   });
 
   // 日付選択トリガー
@@ -46,9 +47,13 @@ $(function () {
       var s_target = $('.services table tbody tr').eq(services_index).find("input:radio[name='" + 'service' + (services_index + 1) + "']:checked").val();
       services_array.push(s_target);
     }
-
     ajaxGetItemsDetails(venue_id, equipemnts_array, services_array);
 
+
+    // レイアウト金額取得
+    var layout_prepare = $('input:radio[name="layout_prepare"]:checked').val();
+    var layout_clean = $('input:radio[name="layout_clean"]:checked').val();
+    ajaxGetLayoutPrice(venue_id, layout_prepare, layout_clean);
   });
 
   // 備品とサービス取得ajax
@@ -250,6 +255,121 @@ $(function () {
         console.log('失敗した!!!!');
       });
   };
+
+  // レイアウト有りなし判別
+  function ajaxGetLayout($venue_id) {
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      url: '/admin/reservations/getlayout',
+      type: 'POST',
+      data: {
+        'venue_id': $venue_id
+      },
+      dataType: 'json',
+      beforeSend: function () {
+        $('#fullOverlay').css('display', 'block');
+      },
+    })
+      .done(function ($result) {
+        $('#fullOverlay').css('display', 'none');
+        console.log($result);
+        $('.layouts table tbody').html(''); //初期化
+        $result == 1 ? $('.layouts table tbody').append("<tr><td>レイアウト変更</td><td> <input type='radio' name='layout' value='1'>有り<input type='radio' name='layout' value='0'checked>無し</td></tr><tr><td>レイアウト準備</td><td><input type='radio' name='layout_prepare' value='1'>有り<input type='radio' name='layout_prepare' value='0' checked >無し</td></tr><tr><td>レイアウト片付</td><td><input type='radio' name='layout_clean' value='1'>有り<input type='radio' name='layout_clean' value='0'checked>無し</td></tr>") : $('.layouts table tbody').append('<tr><td>該当会場はレイアウト変更を受け付けていません</td></tr>');
+      })
+      .fail(function ($result) {
+        $('#fullOverlay').css('display', 'none');
+        swal('レイアウトの取得に失敗しました。ページをリロードし再度試して下さい!!!!');
+      });
+  };
+
+  // レイアウト金額取得
+  function ajaxGetLayoutPrice($venue_id, $layout_prepare, $layout_clean) {
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      url: '/admin/reservations/getlayoutprice',
+      type: 'POST',
+      data: {
+        'venue_id': $venue_id,
+        'layout_prepare': $layout_prepare,
+        'layout_clean': $layout_clean,
+      },
+      dataType: 'json',
+      beforeSend: function () {
+        $('#fullOverlay').css('display', 'block');
+      },
+    })
+      .done(function ($result) {
+        $('#fullOverlay').css('display', 'none');
+        console.log($result[0]);
+        $('.selected_layouts table tbody').html('');
+        for (let s_layout = 0; s_layout < $result[0].length; s_layout++) {
+          if ($result[0][s_layout] != '') {
+            $('.selected_layouts table tbody').append("<tr><td>" + $result[0][s_layout][1] + "</td><td>" + $result[0][s_layout][0] + "</td><td>1</td><td>" + $result[0][s_layout][0] + "</td></tr>")
+          }
+        }
+      })
+      .fail(function ($result) {
+        $('#fullOverlay').css('display', 'none');
+        swal('レイアウトの金額取得に失敗しました。ページをリロードし再度試して下さい!!!!');
+      });
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 });
 
 

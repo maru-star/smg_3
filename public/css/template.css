@@ -141,3 +141,394 @@ table.dataTable thead .sorting_desc:after {
   padding: 1px 5px;
   border-radius: 15%;
 }
+
+
+/****************************
+//////////////////
+//////////////////
+↓↓↓以下丸岡さん↓↓↓
+//////////////////
+//////////////////
+****************************/
+
+ul {
+    margin-bottom: 0;
+}
+
+li {
+    list-style: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+p {
+    margin: 0;
+}
+
+dl {
+    margin-bottom: 0;
+}
+
+/* 共通--------------------------------------- */
+
+.content-wrapper {
+    background: #fff;
+    padding-bottom: 100px;
+}
+
+.breadcrumb {
+    background: #fff;
+}
+
+.breadcrumb-item.active {
+    color: #35a7a7;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.table-box th,.table-box td {
+    text-align: center;
+}
+
+
+main {
+color: #35a7a7;
+}
+
+.btn_wrapper {
+    margin: 50px 0;
+}
+
+.more_btn {
+    background: #007BFF;
+    padding: 5px 15px;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+}
+
+.more_btn_lg {
+    background: #007BFF;
+    padding: 15px 80px;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+}
+
+.bg-blue {
+    background: #007BFF;
+    }
+
+.bg-red {
+    background:#EF6243 !important;
+    }
+
+
+.bg-green {
+    background:#35a7a7 !important;
+    }
+
+.bg-black {
+        background: #707070 !important;
+    }
+
+
+.cell-gray {
+        background: #F3F3F3 !important;
+    }
+
+.bg-alert {
+    background: rgba(255, 0, 24, 0.18);
+}
+
+.pd0 {
+    padding: 0;
+}
+
+.section-wrap {
+    margin: 0 3%;
+}
+
+
+
+/* 検索--------------------------------------- */
+
+
+.form-group dd {
+    margin-bottom: 0;
+    width: 100%;
+}
+
+
+.search-wrap tr td:first-child{
+    width: 300px;
+}
+
+.search_box {
+    margin-bottom: 50px;
+}
+
+
+.search_box .form-group {
+    display: flex;
+    margin-bottom: 1px;
+    align-items: center;
+    border-radius: 0;
+}
+
+.search_item_name{
+    width: 200px;
+    background: #35a7a7;
+    margin-bottom: 0;
+    color: #fff;
+    text-align: center;
+    padding: 7px 0;
+}
+
+.search_box ul li {
+    width: 120px;
+}
+
+.btn_box {
+    width: 500px;
+    margin: 30px auto;
+}
+
+.btn_box .btn {
+    width: 100px;
+    margin-right: 30px;
+    font-weight: bold;
+}
+
+.reset_btn {
+    background: #EEEEEE;
+}
+
+.search_btn {
+    background: #007BFF;
+    color: #fff;
+}
+
+
+/* 予約一覧------------------------------------------------------------ */
+
+.reservation_list {
+    margin-bottom: 20px;
+}
+
+.reservation_list li{
+    margin-right: 10px;
+}
+
+table td.table_column {
+    padding: 0;
+    align-items: stretch;
+    margin: 0;
+    height: 100%;
+}
+
+table td.table_column p {
+    border-bottom: 1px solid #ccc;
+    margin: 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    padding: 5px 0;
+}
+
+table td.table_column1 p {
+    margin: 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+}
+
+/* 
+table td.table_column .colum1 p {
+    height: 100%;
+    padding: 0;
+    border-bottom: 0;
+}
+
+table td.table_column .colum2 p {
+    height: 50%;
+}
+
+table td.table_column .colum3 p {
+    height: 33%;
+}
+
+table td.table_column .colum4 p {
+    height: 25%;
+} */
+
+
+/* 予約新規 -----------------------------------------------------*/
+
+.agent_box {
+    font-size: 18px;
+    margin: 0 3%;
+}
+
+.register-wrap {
+    border: 2px solid #35A7A7;
+    padding: 30px;
+}
+
+.title-icon {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+}
+
+.title-icon img {
+    margin-right: 10px;
+}
+
+.radio-box {
+    display: flex;
+    justify-content: space-around;
+    width: 60%;
+    margin-top: 10px;
+}
+
+
+.table-bordered .table-active {
+    border: 1px solid #fff;
+}
+
+.note-table textarea {
+    width: 100%;
+}
+
+.caution {
+    color:#DC3545;
+}
+
+.caution textarea {
+    border: 1px solid #DC3545;
+}
+
+
+/* 請求内容------------------------------------------------------------------ */
+
+.bill-wrap {
+    margin-top: 200px;
+}
+
+.bill-bg {
+    /* background: #F4F6F9; */
+}
+
+
+.bill-box {
+    margin-bottom: 60px;
+}
+
+
+.bill-box h3 {
+    font-weight: bold;
+    font-size: 16px;
+    background: #35A7A7;
+    color: #fff;
+    margin-bottom: 0;
+    padding: 0.8em;
+}
+
+.bill-box_wrap {
+    border-top:1px solid #ccc;
+    border-left:1px solid #ccc;
+  }
+
+
+/* .bill-box_wrap .price-sum {
+    padding: 20px;
+    border: 1px solid #ccc;
+  } */
+
+
+  .bill-list .price-sum p {
+      padding-right: 1em;
+  }
+
+  .price-sum p:last-child {
+    font-size: 16px;
+    border-top: 1px solid #DBDBDB;
+    margin-top: 1em;
+    padding-top: 1em;
+  }
+
+  .price-sum span {
+      margin-right: 1em;
+  }
+  
+  .bill-box_cell {
+    border-right:1px solid #ccc;
+    border-bottom:1px solid #ccc;
+    padding-top: 1em;
+    padding-bottom: 1em;
+  }
+  
+  .bill-box_cell dt {
+    font-weight: bold;
+  }
+  
+  .bill-box_cell dd {
+    margin-bottom:0;
+  }
+
+  .bill-box_wrap .col-4 {
+      background: #F3F3F3;
+  }
+
+  .bill-list h3 {
+    font-weight: bold;
+    font-size: 16px;
+    background: #F3F3F3;
+    color: #333;
+    margin-bottom: 0;
+    padding: 0.8em;
+}
+
+.bill-list-subttl p{
+    font-weight: bold;
+}
+
+/* .bill-list .bill-box_cell {    
+    border-bottom: 0 solid #ccc;
+} */
+
+.total-sum {
+    padding-bottom: 100px;
+}
+
+.total-sum .col-3 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.total-sum .col-3 dd {
+    font-size: 20px;
+}
+
+.total-sum .col-3:first-child {
+    background: #35A7A7;
+    color: #fff;
+    font-size: 18px;
+}
+
+.total-sum  .bill-box_cell {
+    border:1px solid #35A7A7;
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered{
+  padding-left: 5px;
+}
+
+.select2-container--default .select2-selection--single{
+  padding: 0px;
+}

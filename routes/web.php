@@ -81,5 +81,9 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
     Route::post('reservations/getpricedetails', 'ReservationsController@getpricedetails');
     // ajax 備品＆サービス　料金取得
     Route::post('reservations/geteitemsprices', 'ReservationsController@geteitemsprices');
+    // ajax レイアウト取得
+    Route::post('reservations/getlayout', 'ReservationsController@getlayout');
+    // ajax レイアウト金額取得
+    Route::post('reservations/getlayoutprice', 'ReservationsController@getlayoutprice');
   });
 });

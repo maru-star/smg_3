@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Reservation;
 use App\Models\Venue;
+use App\Models\User;
 
 use Carbon\Carbon;
 
@@ -26,9 +27,9 @@ class ReservationsController extends Controller
     ]);
   }
 
-  /*
+  /***********************
    * ajax 備品orサービス取得
-   *
+   **********************
    */
   public function geteitems(Request $request)
   {
@@ -39,9 +40,9 @@ class ReservationsController extends Controller
     return [$venue_equipments, $venue_services];
   }
 
-  /*
+  /***********************
    * ajax 
-   *
+   ***********************
    */
   public function getpricesystem(Request $request)
   {
@@ -59,9 +60,9 @@ class ReservationsController extends Controller
     return [$frame_price, $time_price, $date];
   }
 
-  /*
+  /***********************
    * ajax 営業時間取得
-   *
+   ***********************
    */
   public function getsaleshours(Request $request)
   {
@@ -74,9 +75,9 @@ class ReservationsController extends Controller
     return [$sales_start, $sales_finish];
   }
 
-  /*
+  /***********************
    * ajax 料金取得
-   *
+   ***********************
    */
   public function getpricedetails(Request $request)
   {
@@ -91,9 +92,9 @@ class ReservationsController extends Controller
     return [$result];
   }
 
-  /*
+  /***********************
    * ajax 備品＆サービス　料金取得
-   *
+   ***********************
    */
   public function geteitemsprices(Request $request)
   {
@@ -106,19 +107,36 @@ class ReservationsController extends Controller
     return [$result];
   }
 
+  /***********************
+   * ajax レイアウト有り無し判別取得
+   ***********************
+   */
+  public function getlayout(Request $request)
+  {
+    $venue = Venue::find($request->venue_id);
+    $result = $venue->layout;
 
+    return [$result];
+  }
 
+  /***********************
+   * ajax レイアウト金額
+   ***********************
+   */
+  public function getlayoutprice(Request $request)
+  {
+    $venue = Venue::find($request->venue_id);
 
+    $layout_prepare = $request->layout_prepare;
+    $layout_clean = $request->layout_clean;
 
+    $result = [];
 
+    $layout_prepare == 1 ? $result[] = [$venue->layout_prepare, 'レイアウト準備'] : $result[] = '';
+    $layout_clean == 1 ? $result[] = [$venue->layout_clean, 'レイアウト片付'] : $result[] = '';
 
-
-
-
-
-
-
-
+    return [$result];
+  }
 
 
   /**
@@ -129,8 +147,10 @@ class ReservationsController extends Controller
   public function create()
   {
     $venues = Venue::select('name_area', 'name_bldg', 'name_venue', 'id')->get();
+    $users = User::all();
     return view('admin.reservations.create', [
-      'venues' => $venues
+      'venues' => $venues,
+      'users' => $users,
     ]);
   }
 

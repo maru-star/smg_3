@@ -11,6 +11,13 @@ $(function () {
   });
 });
 
+$(function () {
+  // 日付選択画面にてボックス内、検索機能
+  $('#user_select').select2({
+    // placeholder: 'Select an option'
+  });
+});
+
 // datepicker
 $(function () {
   $('#datepicker1').datepicker({
@@ -49,8 +56,8 @@ $(function () {
       $('#venues_selector').removeClass('hide');
     }
   })
-
 });
+
 
 // 会場管理　新規登録validation
 $(function () {

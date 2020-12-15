@@ -58,6 +58,9 @@ class CreateVenuesTable extends Migration
       $table->string('backyard_open_time')->nullable();
       // 2020/12/9 追加
       $table->string('layout');
+      // 12/15追加
+      $table->integer('layout_prepare')->nullable();
+      $table->integer('layout_clean')->nullable();
       $table->timestamps();
     });
   }

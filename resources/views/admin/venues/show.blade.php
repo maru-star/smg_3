@@ -286,6 +286,14 @@
           <div class="col-sm-8">{{ $venue->layout==1?"有り":"無し"}}</div>
         </div>
         <hr>
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('layout', 'レイアウト準備料金') }}</div>
+          <div class="col-sm-8">{{ $venue->layout_prepare}}</div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">{{ Form::label('layout', 'レイアウト変更料金') }}</div>
+          <div class="col-sm-8">{{ $venue->layout_clean}}</div>
+        </div>
       </div>
 
 

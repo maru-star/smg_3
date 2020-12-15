@@ -184,7 +184,17 @@
           <tbody></tbody>
         </table>
       </div>
-
+      <div class='layouts'>
+        <table class='table table-bordered'>
+          <thead>
+            <tr>
+              <th colspan='2'>レイアウト</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
 
 
 
@@ -194,51 +204,7 @@
       </div>
       <button id='calculate' class="btn btn-primary">計算する！！！！</button>
 
-      <div class="carculete_result">
-        <div class="venue">
-          会場料金：<p class="venue_price"></p>
-          延長料金：<p class="extend"></p>
-          会場＋延長料金：<p class="venue_extend"></p>
-        </div>
-        <div class="equipments_and_services">
-          <div class="items">
-            選択された備品一覧：
-            <div class="items_equipments">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <td>内容</td>
-                    <td>単価</td>
-                    <td>数量</td>
-                    <td>合計金額</td>
-                  </tr>
-                </thead>
-                <tbody>
-                </tbody>
-              </table>
-            </div>
-            選択されたサービス一覧：
-            <div class="items_services">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <td>内容</td>
-                    <td>単価</td>
-                    <td>数量</td>
-                    <td>合計金額</td>
-                  </tr>
-                </thead>
-                <tbody>
-                </tbody>
-              </table>
-            </div>
-            選択された備品＆サービス合計
-            <div>
-              <div class="items_total"></div>
-            </div>
-          </div>
-        </div>
-      </div>
+
 
     </div>
 
@@ -250,8 +216,137 @@
 
 
 
+    {{-- 右側 --}}
+    <div class="col">
+      <table class="table table-bordered name-table">
+        <tr>
+          <td colspan="2">
+            <div class="d-flex align-items-center justify-content-between">
+              <p class="title-icon">
+                <i class="far fa-id-card fa-2x fa-fw"></i>顧客情報
+              </p>
+              <p><a class="more_btn bg-green" href="">顧客詳細</a></p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="table-active"><label for="company">会社名・団体名</label></td>
+          <td>
+            <select class="form-control" name="company" id="user_select">
+              <option disabled selected>選択してください</option>
+              @foreach ($users as $user)
+              <option value="{{$user->id}}">
+                {{$user->company}} | {{$user->first_name}}{{$user->last_name}} | {{$user->email}}</option>
+              @endforeach
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td class="table-active"><label for="name">担当者氏名</label></td>
+          <td>
+            <select class="form-control select2" name="name">
+              <option>山田太郎</option>
+              <option>山田太郎</option>
+              <option>山田太郎</option>
+            </select>
+          </td>
+        </tr>
+      </table>
 
-    <div class="col">col2</div>
+      <table class="table table-bordered oneday-table">
+        <tr>
+          <td colspan="2">
+            <p class="title-icon">
+              <i class="fas fa-user-check fa-2x fa-fw"></i>当日の連絡できる担当者
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td class="table-active"><label for="ondayName">氏名</label></td>
+          <td><input class="form-control" name="ondayName" type="text" id="ondayName"></td>
+        </tr>
+        <tr>
+          <td class="table-active"><label for="mobilePhone">携帯番号</label></td>
+          <td><input class="form-control" name="mobilePhone" type="text" id="mobilePhone"></td>
+        </tr>
+      </table>
+
+      <table class="table table-bordered mail-table">
+        <tr>
+          <td colspan="2">
+            <p class="title-icon">
+              <i class="fas fa-envelope fa-2x fa-fw"></i>利用後の送信メール
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td class="table-active"><label for="sendMail">送信メール</label></td>
+          <td>
+            <div class="radio-box">
+              <div class="icheck-primary">
+                <input type="radio" id="sendMail" name="sendMail" checked>
+                <label for="sendMail">あり</label>
+              </div>
+              <div class="icheck-primary">
+                <input type="radio" id="sendMail" name="sendMail" checked>
+                <label for="sendMail">なし</label>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+
+      <table class="table table-bordered sale-table">
+        <tr>
+          <td colspan="2">
+            <p class="title-icon">
+              <i class="fas fa-yen-sign fa-2x fa-fw"></i>売上原価
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td class="table-active"><label for="sale">原価率</label></td>
+          <td class="d-flex align-items-center"><input class="form-control" name="sale" type="text" id="sale">%</td>
+        </tr>
+      </table>
+
+      <table class="table table-bordered note-table">
+        <tr>
+          <td colspan="2">
+            <p class="title-icon">
+              <i class="fas fa-envelope fa-2x fa-fw"></i>備考
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p>
+              <input type="checkbox" id="discount" checked>
+              <label for="discount">割引条件</label>
+            </p>
+            <textarea name="discount" rows="5"></textarea>
+          </td>
+        </tr>
+        <tr class="caution">
+          <td>
+            <label for="caution">注意事項</label>
+            <textarea name="caution" rows="10"></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="userNote">顧客情報の備考</label>
+            <textarea name="userNote" rows="10"></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="adminNote">管理者備考</label>
+            <textarea name="adminNote" rows="10"></textarea>
+          </td>
+        </tr>
+      </table>
+    </div>
   </div>
 
   {{-- 請求情報 --}}
@@ -1166,6 +1261,71 @@
     </form>
   </div>
 </div> --}}
+
+
+<div class="carculete_result">
+  <div class="venue">
+    会場料金：<p class="venue_price"></p>
+    延長料金：<p class="extend"></p>
+    会場＋延長料金：<p class="venue_extend"></p>
+  </div>
+  <div class="equipments_and_services">
+    <div class="items">
+      選択された備品一覧：
+      <div class="items_equipments">
+        <table class="table">
+          <thead>
+            <tr>
+              <td>内容</td>
+              <td>単価</td>
+              <td>数量</td>
+              <td>合計金額</td>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+      選択されたサービス一覧：
+      <div class="items_services">
+        <table class="table">
+          <thead>
+            <tr>
+              <td>内容</td>
+              <td>単価</td>
+              <td>数量</td>
+              <td>合計金額</td>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+      選択された備品＆サービス合計
+      <div>
+        <div class="items_total"></div>
+      </div>
+      選択されたレイアウト
+      <div>
+        <div class="selected_layouts">
+          <table class="table">
+            <thead>
+              <tr>
+                <td>内容</td>
+                <td>単価</td>
+                <td>数量</td>
+                <td>合計金額</td>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
 

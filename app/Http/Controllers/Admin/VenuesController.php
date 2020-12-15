@@ -349,6 +349,9 @@ class VenuesController extends Controller
     $venue->smg_url = $request->smg_url;
     $venue->entrance_open_time = $request->entrance_open_time;
     $venue->backyard_open_time = $request->backyard_open_time;
+    $venue->layout = $request->layout;
+    $venue->layout_prepare = $request->layout_prepare;
+    $venue->layout_clean = $request->layout_clean;
     $venue->save();
 
     $e_selects = $request->equipment_id;

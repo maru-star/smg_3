@@ -328,8 +328,7 @@
 
 
       <div class="p-3 mb-2 bg-white text-dark">
-        <span>レイアウト変更</span>
-
+        <span>レイアウト</span>
         <div class="row">
           <div class="col-sm-4">{{ Form::label('layout', 'レイアウト変更',['class' => 'form_required']) }}</div>
           <div class="col-sm-8">
@@ -337,20 +336,37 @@
           </div>
         </div>
         <hr>
-      </div>
-
-      <div class="p-3 mb-2 bg-white text-dark">
-        <span><i class="fas fa-utensils"></i>支払データ</span>
-
-        <div class="row">
-          <div class="col-sm-4">{{ Form::label('cost', '支払割合（原価）') }}</div>
-          <div class="col-sm-8">
-            {{ Form::number('cost', old('cost'), ['class' => 'form-control']) }}</div>
+        <div class="p-3 mb-2 bg-white text-dark">
+          <div class="row">
+            <div class="col-sm-4">{{ Form::label('layout_prepare', 'レイアウト準備料金',['class' => '']) }}</div>
+            <div class="col-sm-8">
+              {{ Form::number('layout_prepare', old('layout_prepare'), ['class' => 'form-control']) }}</div>
+          </div>
+        </div>
+        <div class="p-3 mb-2 bg-white text-dark">
+          <div class="row">
+            <div class="col-sm-4">{{ Form::label('layout_clean', 'レイアウト変更料金',['class' => '']) }}</div>
+            <div class="col-sm-8">
+              {{ Form::number('layout_clean', old('layout_clean'), ['class' => 'form-control']) }}</div>
+          </div>
         </div>
       </div>
-      <hr>
     </div>
   </div>
+
+
+  <div class="p-3 mb-2 bg-white text-dark">
+    <span><i class="fas fa-utensils"></i>支払データ</span>
+
+    <div class="row">
+      <div class="col-sm-4">{{ Form::label('cost', '支払割合（原価）') }}</div>
+      <div class="col-sm-8">
+        {{ Form::number('cost', old('cost'), ['class' => 'form-control']) }}</div>
+    </div>
+  </div>
+  <hr>
+</div>
+</div>
 </div>
 
 
