@@ -59,3 +59,33 @@ $(function () {
 });
 
 
+// reservation create 会場の割引入力　制御
+$(function () {
+  $('.venue_discount_percent').on('change', function () {
+    var input_percent = ($(this).val() / 100);
+    var calc_target = $('.venue_extend').text();
+
+    if (input_percent != 0 || input_percent != '') {
+      $('.percent_result').text(calc_target * input_percent);
+      var input_target = "<tr class='discount_input'><td>割引料金</td><td style='color:red;'>" + (calc_target * -input_percent) + "</td><td>1</td><td style='color:red;'>" + (calc_target * -input_percent) + "</td></tr>"
+      if ($('.venue_price_details table tbody tr').hasClass('discount_input')) {
+        $('.discount_input').remove(); //初期化
+        $('.venue_price_details table tbody').append(input_target);
+      } else {
+        $('.venue_price_details table tbody').append(input_target);
+      }
+    } else {
+      $('.percent_result').text('');
+      if ($('.venue_price_details table tbody tr').hasClass('discount_input')) {
+        $('.discount_input').remove();
+      } else {
+        $('.venue_price_details table tbody').append(input_target);
+      }
+    }
+  })
+})
+
+
+$(function () {
+  console.log($('.venue_price_details table tbody').length);
+})

@@ -1263,68 +1263,7 @@
 </div> --}}
 
 
-<div class="carculete_result">
-  <div class="venue">
-    {{-- 会場料金：<p class="venue_price"></p> --}}
-    延長料金：<p class="extend"></p>
-    会場＋延長料金：<p class="venue_extend"></p>
-  </div>
-  <div class="equipments_and_services">
-    <div class="items">
-      選択された備品一覧：
-      <div class="items_equipments">
-        <table class="table">
-          <thead>
-            <tr>
-              <td>内容</td>
-              <td>単価</td>
-              <td>数量</td>
-              <td>合計金額</td>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
-      </div>
-      選択されたサービス一覧：
-      <div class="items_services">
-        <table class="table">
-          <thead>
-            <tr>
-              <td>内容</td>
-              <td>単価</td>
-              <td>数量</td>
-              <td>合計金額</td>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
-      </div>
-      選択された備品＆サービス合計
-      <div>
-        <div class="items_total"></div>
-      </div>
-      選択されたレイアウト
-      <div>
-        <div class="selected_layouts">
-          <table class="table">
-            <thead>
-              <tr>
-                <td>内容</td>
-                <td>単価</td>
-                <td>数量</td>
-                <td>合計金額</td>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+
 
 
 
@@ -1355,10 +1294,13 @@
               <p>割引率</p>
             </div>
             <div class="col-5 bill-box_cell">
-              <dd class="text-right"><input type="text" name="price" class="form-control" id="price"></dd>
+              <dd class="text-right d-flex">
+                <input type="number" name="price" class="form-control venue_discount_percent" id="price"
+                  value="0"><span>%</span>
+              </dd>
             </div>
             <div class="col-3 bill-box_cell">
-              <p class="text-right">割引金額:0</p>
+              <p class="text-right">割引金額: <span class="percent_result"></span></p>
             </div>
           </div>
         </div>
@@ -1392,8 +1334,7 @@
               <td>金額</td>
             </tr>
           </thead>
-          <tbody>
-          </tbody>
+          <tbody></tbody>
         </table>
       </div>
 
