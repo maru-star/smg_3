@@ -318,7 +318,7 @@
         <div class="row">
           <div class="col-sm-4">{{ Form::label('eat_in_flag', '室内飲食',['class' => 'form_required']) }}</div>
           <div class="col-sm-8">
-            {{{Form::select('eat_in_flag', ['有り', '無し'],$venue->eat_in_flag,['placeholder' => '選択してください', 'class'=>'custom-select mr-sm-2'])}}}
+            {{{Form::select('eat_in_flag', ['無し', '有り'],$venue->eat_in_flag,['placeholder' => '選択してください', 'class'=>'custom-select mr-sm-2'])}}}
           </div>
         </div>
         <hr>

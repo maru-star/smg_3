@@ -215,8 +215,24 @@ $(function () {
 // numeric マイナス制御
 // フォーカスアウトしたら全角を半角に
 $(function () {
-  $(".venue_discount_percent, .venue_dicsount_number, .discount_item").numeric({ negative: false, });
-  $(".venue_discount_percent, .venue_dicsount_number, .discount_item").on('change', function () {
+  $(".venue_discount_percent,.venue_dicsount_number, .discount_item, input[name^='equipemnt']").numeric({ negative: false, });
+  $(".venue_discount_percent, .venue_dicsount_number, .discount_item, input[name^='equipemnt']").on('change', function () {
+    charactersChange($(this));
+  })
+
+  charactersChange = function (ele) {
+    var val = ele.val();
+    var han = val.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function (s) { return String.fromCharCode(s.charCodeAt(0) - 0xFEE0) });
+
+    if (val.match(/[Ａ-Ｚａ-ｚ０-９]/g)) {
+      $(ele).val(han);
+    }
+  }
+});
+
+$(function () {
+  $("input[name^='equipemnt']").numeric({ negative: false, });
+  $("input[name^='equipemnt']").on('change', function () {
     charactersChange($(this));
   })
 
