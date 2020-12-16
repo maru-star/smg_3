@@ -60,8 +60,15 @@ $(function () {
 
 
 // reservation create 会場の割引入力　制御
+// 割引率
 $(function () {
   $('.venue_discount_percent').on('change', function () {
+    // 割引率が入力されたら割引額を初期化
+    $('.venue_dicsount_number').val(''); //割引料金
+    $('.number_result').text(''); //割引料金に紐づく割引率
+    $('.after_discount_price').text(''); //割引後 会場料金合計
+    $('.discount_input_number').remove(); //料金内訳に追記されたもの
+
     var input_percent = ($(this).val() / 100);
     var calc_target = $('.venue_extend').text();
     var minus_result = calc_target * -input_percent;
@@ -93,9 +100,17 @@ $(function () {
   })
 })
 
-
+// reservation create 会場の割引入力　制御
+// 割引料金
 $(function () {
   $('.venue_dicsount_number').on('change', function () {
+    // 割引料金が入力されたら割引率を初期化
+    $('.venue_discount_percent').val(''); //割引料金
+    $('.percent_result').text(''); //割引料金に紐づく割引率
+    $('.after_discount_price').text(''); //割引後 会場料金合計
+    $('.discount_input').remove(); //料金内訳に追記されたもの
+
+
     var input_number = $(this).val();
     var calc_target = $('.venue_extend').text();
     var minus_result = Number(calc_target) - Number(input_number);
