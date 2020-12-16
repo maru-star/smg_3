@@ -215,7 +215,7 @@ $(function () {
 // numeric マイナス制御
 // フォーカスアウトしたら全角を半角に
 $(function () {
-  $(".venue_discount_percent,.venue_dicsount_number, .discount_item, input[name^='equipemnt']").numeric({ negative: false, });
+  // $(".venue_discount_percent,.venue_dicsount_number, .discount_item, input[name^='equipemnt']").numeric({ negative: false, });
   $(".venue_discount_percent, .venue_dicsount_number, .discount_item, input[name^='equipemnt']").on('change', function () {
     charactersChange($(this));
   })
@@ -231,7 +231,7 @@ $(function () {
 });
 
 $(function () {
-  $("input[name^='equipemnt']").numeric({ negative: false, });
+  // $("input[name^='equipemnt']").numeric({ negative: false, });
   $("input[name^='equipemnt']").on('change', function () {
     charactersChange($(this));
   })

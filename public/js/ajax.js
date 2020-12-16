@@ -81,7 +81,7 @@ $(function () {
           $('.equipemnts table tbody').append("<tr><td>" + value['item'] + "</td>" + "<td><input type='text' value='0' min=0 name='equipemnt" + value['id'] + "' class='form-control'></td></tr>");
         });
         // ***********マイナス、全角制御用
-        $("input[name^='equipemnt']").numeric({ negative: false, });
+        // $("input[name^='equipemnt']").numeric({ negative: false, });
         $("input[name^='equipemnt']").on('change', function () {
           charactersChange($(this));
         })
@@ -397,7 +397,7 @@ $(function () {
           $('.luggage table tbody').html('');
           $('.luggage table tbody').append("<tr> <td>事前に預かる荷物<br>（個数）</td> <td class=''><input type='text' class='form-control luggage_count' placeholder='個数入力' name='luggage_count'></td> </tr> <tr> <td>事前荷物の到着日<br>午前指定のみ</td> <td class=''> <input id='datepicker3' type='text' class='form-control' placeholder='年-月-日' name='luggage_arrive'> </td> </tr> <tr> <td>事後返送する荷物</td> <td class=''><input type='text' class='form-control luggage_return' placeholder='個数入力' name='luggage_return'></td> </tr> <tr> </tr><script>$('#datepicker3').datepicker({ dateFormat: 'yy-mm-dd', minDate: 0, });</script>");
           // ***********マイナス、全角制御用
-          $(".luggage_count, .luggage_return").numeric({ negative: false, });
+          // $(".luggage_count, .luggage_return").numeric({ negative: false, });
           $(".luggage_count, .luggage_return").on('change', function () {
             charactersChange($(this));
           })

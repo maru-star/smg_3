@@ -60,6 +60,12 @@
   <link href="https://cdn.jsdelivr.net/npm/wickedpicker@0.4.3/dist/wickedpicker.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/wickedpicker@0.4.3/dist/wickedpicker.min.js"></script>
 
+  {{-- swal alert --}}
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+  {{-- numeric --}}
+  <script src="{{ asset('/js/numeric.js') }}"></script>
 
 </head>
 

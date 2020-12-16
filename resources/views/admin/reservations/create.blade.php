@@ -1,9 +1,7 @@
 @extends('layouts.admin.app')
 @section('content')
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <link href="{{ asset('/css/template.css') }}" rel="stylesheet">
-<script src="{{ asset('/js/numeric.js') }}"></script>
 <script src="{{ asset('/js/template.js') }}"></script>
 <script src="{{ asset('/js/ajax.js') }}"></script>
 
