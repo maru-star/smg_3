@@ -65,7 +65,7 @@
 
 
   {{-- numeric --}}
-  <script src="{{ asset('/js/numeric.js') }}"></script>
+  {{-- <script src="{{ asset('/js/numeric.js') }}"></script> --}}
 
 </head>
 
