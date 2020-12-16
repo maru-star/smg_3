@@ -1402,9 +1402,9 @@
 
 
       <div class="row bill-box_wrap price-sum bill-box_cell flex-column">
-        <p class="text-right"><span class="font-weight-bold">小計</span>7,200円</p>
-        <p class="text-right"><span>消費税</span>720円</p>
-        <p class="text-right"><span class="font-weight-bold">請求総額</span>7,200円</p>
+        <p class="text-right"><span class="font-weight-bold">小計</span> <span class="venue_subtotal"></span>円</p>
+        <p class="text-right"><span>消費税</span> <span class="venue_tax"></span> 円</p>
+        <p class="text-right"><span class="font-weight-bold">請求総額</span> <span class="venue_total"></span> 円</p>
       </div>
     </div>
     <!-- 料金内訳 終わり---------------------------- -->

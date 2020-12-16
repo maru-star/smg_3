@@ -200,21 +200,37 @@ $(function () {
     })
       .done(function ($details) {
         //[0]は合計料金, [1]は延長料金, [2]は利用時間, [3]は延長時間
+        var venue_extend_price = ($details[0][0]);
+        var extend_price = ($details[0][1]);
+        var usage = ($details[0][2]);
+        var extend_time = ($details[0][3]);
         $('#fullOverlay').css('display', 'none');
         console.log($details);
         $('.venue_extend').html('');
         $('.extend').html('');
         $('.venue_price').html('');
-        $('.venue_extend').text($details[0][0]);
-        $('.extend').text($details[0][1]);
-        $('.venue_price').text($details[0][0] - $details[0][1]);
-        if (($details[0][1]) == 0) {
+        $('.after_discount_price').text('');
+        $('.venue_subtotal').text(''); //小計
+        $('.venue_tax').text(''); //消費税
+        $('.venue_total').text(''); //会場合計料金
+        $('.venue_extend').text(venue_extend_price);
+        $('.extend').text(extend_price);
+        $('.venue_price').text(venue_extend_price - extend_price);
+        if ((extend_price) == 0) {
           $('.venue_price_details table tbody').html('');
-          $('.venue_price_details table tbody').append("<tr><td>" + '会場料金' + "</td><td>" + (($details[0][0])) + "</td><td>" + '1' + "</td><td>" + (($details[0][0])) + "</td></tr>");
+          $('.venue_price_details table tbody').append("<tr><td>" + '会場料金' + "</td><td>" + venue_extend_price + "</td><td>" + '1' + "</td><td>" + venue_extend_price + "</td></tr>");
+          $('.after_discount_price').text(venue_extend_price);
+          $('.venue_subtotal').text(venue_extend_price); //小計
+          $('.venue_tax').text(Number((venue_extend_price)) * 0.1); //消費税
+          $('.venue_total').text(Number((venue_extend_price)) + (Number(venue_extend_price * 0.1))); //会場合計料金
         } else {
           $('.venue_price_details table tbody').html('');
-          $('.venue_price_details table tbody').append("<tr><td>" + '会場料金' + "</td><td>" + (($details[0][0]) - ($details[0][1])) + "</td><td>" + '1' + "</td><td>" + (($details[0][0]) - ($details[0][1])) + "</td></tr>");
-          $('.venue_price_details table tbody').append("<tr><td>" + '延長料金' + "</td><td>" + (($details[0][1])) + "</td><td>" + (($details[0][3])) + "H</td><td>" + (($details[0][1])) + "</td></tr>");
+          $('.venue_price_details table tbody').append("<tr><td>" + '会場料金' + "</td><td>" + ((venue_extend_price) - (extend_price)) + "</td><td>" + '1' + "</td><td>" + ((venue_extend_price) - (extend_price)) + "</td></tr>");
+          $('.venue_price_details table tbody').append("<tr><td>" + '延長料金' + "</td><td>" + extend_price + "</td><td>" + extend_time + "H</td><td>" + extend_price + "</td></tr>");
+          $('.after_discount_price').text(venue_extend_price);
+          $('.venue_subtotal').text(venue_extend_price); //小計
+          $('.venue_tax').text(Number(venue_extend_price) * 0.1); //消費税
+          $('.venue_total').text(Number(venue_extend_price) + (Number(venue_extend_price * 0.1))); //会場合計料金
         }
       })
       .fail(function ($details) {
