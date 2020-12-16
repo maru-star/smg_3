@@ -27,6 +27,9 @@ $(function () {
   $('#datepicker2').datepicker({
     dateFormat: 'yy-mm-dd',
   });
+  // datepicker3は直接埋め込んだ
+  // *** datepicker3は使わないように ****
+
 });
 
 // reservatiosn create の時間取得
@@ -206,8 +209,6 @@ $(function () {
     }
   })
 })
-
-
 
 
 

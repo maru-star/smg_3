@@ -138,6 +138,18 @@ class ReservationsController extends Controller
     return [$result];
   }
 
+  /***********************
+   * ajax 荷物預かり　有り無し　判別
+   ***********************
+   */
+  public function getluggage(Request $request)
+  {
+    $venue = Venue::find($request->venue_id);
+    $result = $venue->luggage_flag;
+
+    return [$result];
+  }
+
 
   /**
    * Show the form for creating a new resource.

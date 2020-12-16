@@ -209,6 +209,17 @@
           </tbody>
         </table>
       </div>
+      <div class='luggage'>
+        <table class='table table-bordered'>
+          <thead>
+            <tr>
+              <th colspan='2'>荷物預かり</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
 
 
 

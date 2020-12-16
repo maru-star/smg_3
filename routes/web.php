@@ -85,5 +85,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
     Route::post('reservations/getlayout', 'ReservationsController@getlayout');
     // ajax レイアウト金額取得
     Route::post('reservations/getlayoutprice', 'ReservationsController@getlayoutprice');
+    // ajax 荷物有り、無し　判別
+    Route::post('reservations/getluggage', 'ReservationsController@getluggage');
   });
 });

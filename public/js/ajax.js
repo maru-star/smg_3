@@ -13,6 +13,7 @@ $(function () {
     // ajaxGetSalesHours(venue_id, dates);　管理者は24時間予約登録可能。そのため一旦、本機能停止
     ajaxGetPriceStstem(venue_id);
     ajaxGetLayout(venue_id); //レイアウトが存在するかしないか、　"0"か"1"でreturn
+    ajaxGetLuggage(venue_id); //会場に荷物預かりが存在するかしないか、　"0"か"1"でreturn
   });
 
   // 日付選択トリガー
@@ -317,7 +318,7 @@ $(function () {
         $('#fullOverlay').css('display', 'none');
         console.log($result);
         $('.layouts table tbody').html(''); //初期化
-        $result == 1 ? $('.layouts table tbody').append("<tr><td>レイアウト変更</td><td> <input type='radio' name='layout' value='1'>有り<input type='radio' name='layout' value='0'checked>無し</td></tr><tr><td>レイアウト準備</td><td><input type='radio' name='layout_prepare' value='1'>有り<input type='radio' name='layout_prepare' value='0' checked >無し</td></tr><tr><td>レイアウト片付</td><td><input type='radio' name='layout_clean' value='1'>有り<input type='radio' name='layout_clean' value='0'checked>無し</td></tr>") : $('.layouts table tbody').append('<tr><td>該当会場はレイアウト変更を受け付けていません</td></tr>');
+        $result == 1 ? $('.layouts table tbody').append("<tr><td>レイアウト準備</td><td><input type='radio' name='layout_prepare' value='1'>有り<input type='radio' name='layout_prepare' value='0' checked >無し</td></tr><tr><td>レイアウト片付</td><td><input type='radio' name='layout_clean' value='1'>有り<input type='radio' name='layout_clean' value='0'checked>無し</td></tr>") : $('.layouts table tbody').append('<tr><td>該当会場はレイアウト変更を受け付けていません</td></tr>');
       })
       .fail(function ($result) {
         $('#fullOverlay').css('display', 'none');
@@ -360,6 +361,37 @@ $(function () {
   };
 
 
+  // 荷物預かり　有りなし判別
+  function ajaxGetLuggage($venue_id) {
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      url: '/admin/reservations/getluggage',
+      type: 'POST',
+      data: {
+        'venue_id': $venue_id
+      },
+      dataType: 'json',
+      beforeSend: function () {
+        $('#fullOverlay').css('display', 'block');
+      },
+    })
+      .done(function ($luggage) {
+        if ($luggage == 1) {
+          console.log('荷物', "ある");
+          $('.luggage table tbody').html('');
+          $('.luggage table tbody').append("<tr> <td>事前に預かる荷物<br>（個数）</td> <td class=''><input type='text' class='form-control' placeholder='個数入力' name='luggage_count'></td> </tr> <tr> <td>事前荷物の到着日<br>午前指定のみ</td> <td class=''> <input id='datepicker3' type='text' class='form-control' placeholder='年-月-日' name='luggage_arrive'> </td> </tr> <tr> <td>事後返送する荷物</td> <td class=''><input type='text' class='form-control' placeholder='個数入力' name='luggage_return'></td> </tr> <tr> </tr><script>$('#datepicker3').datepicker({ dateFormat: 'yy-mm-dd', minDate: 0, });</script>");
+        } else {
+          $('.luggage table tbody').html('');
+          $('.luggage table tbody').append("<tr><td class='colspan='2''>該当会場は荷物預かりを受け付けていません</td></tr>");
+        }
+      })
+      .fail(function ($luggage) {
+        $('#fullOverlay').css('display', 'none');
+        swal('荷物預かりの取得に失敗しました。ページをリロードし再度試して下さい!!!!');
+      });
+  };
 
 
 
