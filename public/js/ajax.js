@@ -7,6 +7,8 @@ $(function () {
   $('#venues_selector').on('change', function () {
     var dates = $('#datepicker1').val();
     var venue_id = $('#venues_selector').val();
+    $('#sales_start').val(0);
+    $('#sales_finish').val(0);
     ajaxGetItems(venue_id);
     // ajaxGetSalesHours(venue_id, dates);　管理者は24時間予約登録可能。そのため一旦、本機能停止
     ajaxGetPriceStstem(venue_id);
@@ -17,7 +19,7 @@ $(function () {
   $('#datepicker1').on('change', function () {
     var dates = $('#datepicker1').val();
     var venue_id = $('#venues_selector').val();
-    ajaxGetItems(venue_id);
+    // ajaxGetItems(venue_id);
     // ajaxGetSalesHours(venue_id, dates);　管理者は24時間予約登録可能。そのため一旦、本機能停止
   });
 
@@ -89,6 +91,7 @@ $(function () {
         $('#fullOverlay').css('display', 'none');
         $('.equipemnts table tbody').html('');
         $('.services table tbody').html('');
+        console.log("item失敗");
       });
   };
 
@@ -262,18 +265,31 @@ $(function () {
         // ※$eachの[0][0]には備品とサービスの合計料金
         // ※$eachの[0][1]には連想配列で選択された備品の個数、単価、備品名
         // ※$eachの[0][2]には連想配列で選択されたサービスの個数、単価、備品名
-        // console.log(($each[0][1]));
+        // ※$eachの[0][3]には備品の合計金額
+        // ※$eachの[0][4]にはサービスの合計金額
         var count_equipments = ($each[0][1]).length;
-        $('.items_equipments table tbody').html('');
+        $('.items_equipments table tbody').html(''); //テーブル初期化
+        $('.selected_equipments_price').text(''); //有料備品料金初期化
+        $('.selected_services_price').text(''); //有料サービス料金初期化
+        $('.selected_items_total').text(''); //有料備品＆有料サービス合計初期化
+        $('.items_discount_price').text(''); //割引後 会場料金合計初期化
+        $('.items_subtotal').text(''); //小計初期化
+        $('.items_tax').text(''); //消費税初期化
+        $('.all_items_total').text('');　//請求総額初期化
         for (let counter = 0; counter < count_equipments; counter++) {
           $('.items_equipments table tbody').append("<tr><td>" + $each[0][1][counter][0] + "</td><td>" + $each[0][1][counter][1] + "</td><td>" + $each[0][1][counter][2] + "</td><td>" + (($each[0][1][counter][1]) * ($each[0][1][counter][2])) + "</td></tr>");
         }
         var count_services = ($each[0][2]).length;
-        $('.items_services table tbody').html('');
         for (let counter_s = 0; counter_s < count_services; counter_s++) {
-          $('.items_services table tbody').append("<tr><td>" + $each[0][2][counter_s][0] + "</td><td>" + $each[0][2][counter_s][1] + "</td><td>" + $each[0][2][counter_s][2] + "</td><td>" + (($each[0][2][counter_s][1]) * ($each[0][2][counter_s][2])) + "</td></tr>");
+          $('.items_equipments table tbody').append("<tr><td>" + $each[0][2][counter_s][0] + "</td><td>" + $each[0][2][counter_s][1] + "</td><td>" + $each[0][2][counter_s][2] + "</td><td>" + (($each[0][2][counter_s][1]) * ($each[0][2][counter_s][2])) + "</td></tr>");
         }
-        $('.items_total').text($each[0][0]);
+        $('.selected_equipments_price').text($each[0][3]);
+        $('.selected_services_price').text($each[0][4]);
+        $('.selected_items_total').text($each[0][0]);
+        $('.items_discount_price').text($each[0][0]);
+        $('.items_subtotal').text($each[0][0]);
+        $('.items_tax').text(Number($each[0][0]) * 0.1);
+        $('.all_items_total').text(Number(Number($each[0][0]) * 0.1) + Number($each[0][0]));
       })
       .fail(function ($each) {
         $('#fullOverlay').css('display', 'none');

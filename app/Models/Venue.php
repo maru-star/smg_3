@@ -324,7 +324,6 @@ class Venue extends Model
       }
       // 延長料金抽出
 
-
       // 8時例外：8時から10時を選択すると時間に応じて延長料金適応
       if ($start_time == '08:00:00') {
         $min_result = $min_result + ($price_arrays[0]->extend) * 2;
@@ -374,12 +373,6 @@ class Venue extends Model
     }
   }
 
-
-
-
-
-
-
   public function calculate_items_price($selected_equipments, $selected_services)
   {
     // 備品料金×個数
@@ -411,6 +404,6 @@ class Venue extends Model
     }
 
     $total_items_price = $equipments_total + $services_total; //備品＆サービス合計金額
-    return [$total_items_price, $equipments_details, $services_details];
+    return [$total_items_price, $equipments_details, $services_details, $equipments_total, $services_total];
   }
 }

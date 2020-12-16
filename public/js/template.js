@@ -117,6 +117,7 @@ $(function () {
 // 割引料金
 $(function () {
   $('.venue_dicsount_number').on('change', function () {
+
     // 割引料金が入力されたら割引率を初期化
     $('.venue_discount_percent').val(''); //割引料金
     $('.percent_result').text(''); //割引料金に紐づく割引率
@@ -164,3 +165,91 @@ $(function () {
 })
 
 
+// reservation create 備品&サービス
+// 割引料金
+$(function () {
+  $('.discount_item').on('change', function () {
+
+    var input_number = $(this).val();
+    var calc_target = $('.selected_items_total').text();
+    var minus_result = Number(calc_target) - Number(input_number); //割引後の料金
+    var result_percent = (Number(input_number) / Number(calc_target)) * 100;　//割引した割合を算出
+    if (input_number != 0 || input_number != '') {
+      var input_target = "<tr class='discount_input_number_items'><td>割引料金</td><td style='color:red;'>" + (-input_number) + "</td><td>" + '1' + "</td><td style='color:red;'>" + (-input_number) + "</td></tr>"
+      $('.item_discount_percent').text('');
+      $('.item_discount_percent').text(Math.round(result_percent));
+      $('.items_discount_price').text('');
+      $('.items_discount_price').text(minus_result);
+      if ($('.items_equipments table tbody tr').hasClass('discount_input_number_items')) {
+        $('.discount_input_number_items').remove(); //初期化
+        $('.items_equipments table tbody').append(input_target);
+      } else {
+        $('.items_equipments table tbody').append(input_target);
+      }
+      // 小計、消費税、最終の請求総額に反映
+      $('.items_subtotal').text(minus_result);
+      $('.items_tax').text((Number(minus_result) * 0.1));
+      $('.all_items_total').text(Number(minus_result) + (Number(minus_result) * 0.1));
+    } else {
+      $('.item_discount_percent').text('');
+      $('.after_discount_price').text('');
+      $('.items_discount_price').text(calc_target);
+      if ($('.items_equipments table tbody tr').hasClass('discount_input_number_items')) {
+        $('.discount_input_number_items').remove(); //初期化
+      } else {
+        $('.discount_input_number_items').remove(); //初期化
+      }
+      // 小計、消費税、最終の請求総額に反映
+      $('.items_subtotal').text($('.items_discount_price').text());
+      $('.items_tax').text((Number($('.items_discount_price').text())) * 0.1);
+      $('.all_items_total').text(Number($('.items_discount_price').text()) + (Number($('.items_discount_price').text())) * 0.1);
+    }
+  })
+})
+
+
+
+
+
+// numeric マイナス制御
+// フォーカスアウトしたら全角を半角に
+$(function () {
+  $(".venue_discount_percent, .venue_dicsount_number, .discount_item").numeric({ negative: false, });
+  $(".venue_discount_percent, .venue_dicsount_number, .discount_item").on('change', function () {
+    charactersChange($(this));
+  })
+
+  charactersChange = function (ele) {
+    var val = ele.val();
+    var han = val.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function (s) { return String.fromCharCode(s.charCodeAt(0) - 0xFEE0) });
+
+    if (val.match(/[Ａ-Ｚａ-ｚ０-９]/g)) {
+      $(ele).val(han);
+    }
+  }
+});
+
+// プラスマイナスボタン
+$(function () {
+  $('.equipemnts .icon_minus').on('click', function () {
+    $('.equipemnts table tbody').slideUp();
+    $('.equipemnts .icon_minus').addClass('hide');
+    $('.equipemnts .icon_plus').removeClass('hide');
+  })
+  $('.equipemnts .icon_plus').on('click', function () {
+    $('.equipemnts table tbody').slideDown();
+    $('.equipemnts .icon_plus').addClass('hide');
+    $('.equipemnts .icon_minus').removeClass('hide');
+  })
+  $('.services .icon_minus').on('click', function () {
+    $('.services table tbody').slideUp();
+    $('.services .icon_minus').addClass('hide');
+    $('.services .icon_plus').removeClass('hide');
+  })
+  $('.services .icon_plus').on('click', function () {
+    $('.services table tbody').slideDown();
+    $('.services .icon_plus').addClass('hide');
+    $('.services .icon_minus').removeClass('hide');
+  })
+
+})
