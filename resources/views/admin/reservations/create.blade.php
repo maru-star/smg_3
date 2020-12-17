@@ -562,20 +562,12 @@
   </div>
   {{-- レイアウト --}}
 
-
-
-
-
-
-
-
-
   <dl class="row bill-box_wrap total-sum">
     <div class="col-3 bill-box_cell">
       <dt>合計請求総額</dt>
     </div>
     <div class="col-3 bill-box_cell">
-      <dt>税抜　合計額</dt>
+      <dt>合計額</dt>
       <dd> <span class="all-total-without-tax"></span> 円</dd>
     </div>
     <div class="col-3 bill-box_cell">
@@ -583,7 +575,7 @@
       <dd> <span class="all-total-tax"></span> 円</dd>
     </div>
     <div class="col-3 bill-box_cell">
-      <dt>総請求額</dt>
+      <dt>税込総請求額</dt>
       <dd class="text-right"> <span class="all-total-amout"></span> 円</dd>
     </div>
   </dl>
@@ -591,8 +583,9 @@
 </section>
 
 
-<div class="btn_wrapper">
-  <p class="text-center"><a class="more_btn_lg" href="">予約登録する</a></p>
+<div class="btn_wrapper text-center">
+  {{-- <p class="text-center"><a class="more_btn_lg" href="">予約登録する</a></p> --}}
+  <button class="btn btn-primary more_btn_lg">予約登録する</button>
 </div>
 
 

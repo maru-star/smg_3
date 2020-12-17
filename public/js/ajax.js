@@ -54,6 +54,20 @@ $(function () {
     var layout_prepare = $('input:radio[name="layout_prepare"]:checked').val();
     var layout_clean = $('input:radio[name="layout_clean"]:checked').val();
     ajaxGetLayoutPrice(venue_id, layout_prepare, layout_clean);
+
+
+    // 関数処理の順番にばらつきがあるので、１秒後に実行
+    setTimeout(function () {
+      // 総請求額反映用
+      var all_total_venue = Number($('.venue_extend').text()); //会場料　税抜　料金　（割引反映前）
+      var all_total_items = Number($('.selected_items_total').text()); //備品　その他　税抜　料金　（割引反映前）
+      var all_total_layouts = Number($('.layout_total').text()); //備品　その他　税抜　料金　（割引反映前）
+      var all_totals = all_total_venue + all_total_items + all_total_layouts;
+      var only_tax = Number(all_totals) * 0.1;
+      $('.all-total-without-tax').text(all_totals);
+      $('.all-total-tax').text(only_tax);
+      $('.all-total-amout').text(Number(all_totals) + Number(only_tax));
+    }, 1000);
   });
 
   // 備品とサービス取得ajax
