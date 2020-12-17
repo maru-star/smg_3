@@ -135,7 +135,17 @@ class ReservationsController extends Controller
     $layout_prepare == 1 ? $result[] = [$venue->layout_prepare, 'レイアウト準備'] : $result[] = '';
     $layout_clean == 1 ? $result[] = [$venue->layout_clean, 'レイアウト片付'] : $result[] = '';
 
-    return [$result];
+    if ($layout_prepare == 1 && $layout_clean == 1) {
+      $total = $venue->layout_prepare + $venue->layout_clean;
+    } else if ($layout_prepare == 1 && $layout_clean == 0) {
+      $total = $venue->layout_prepare;
+    } else if ($layout_prepare == 0 && $layout_clean == 1) {
+      $total = $venue->layout_clean;
+    } else {
+      $total = 0;
+    }
+
+    return [$result, $total];
   }
 
   /***********************

@@ -472,7 +472,7 @@
       <div class="col-3 bill-box_cell">
         <dt>荷物預かり/返送</dt>
         <dd class="d-flex align-items-center">
-          <input class="form-control mr-3" name="package" type="text">円
+        <dd><span class="selected_luggage_price"></span>円</dd>
         </dd>
       </div>
       <div class="col-3 bill-box_cell">
@@ -530,25 +530,66 @@
   <!-- 請求内容 終わり---------------------------- -->
 
 
+
+  {{-- レイアウト --}}
+  <div class="layout_price_list" style="margin-bottom: 100px">
+    <div>
+      レイアウト準備料金： <p class="layout_prepare_result"></p>
+      レイアウト片付料金： <p class="layout_clean_result"></p>
+      レイアウト変更合計： <p class="layout_total"></p>
+      割引料金 <input type="text" class="layout_discount d-block">
+      割引率：<p class="layout_discount_percent"><span>%</span></p>
+      割引後レイアウト変更合計：<p class="after_duscount_layouts"></p>
+    </div>
+    <div class="selected_layouts">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <td>内容</td>
+            <td>単価</td>
+            <td>数量</td>
+            <td>金額</td>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div style="margin-top: 50px;">
+      小計：<p class="layout_subtotal"></p>
+      消費税：<p class="layout_tax"></p>
+      合計金額：<p class="layout_total_amount"></p>
+    </div>
+  </div>
+  {{-- レイアウト --}}
+
+
+
+
+
+
+
+
+
   <dl class="row bill-box_wrap total-sum">
     <div class="col-3 bill-box_cell">
       <dt>合計請求総額</dt>
     </div>
     <div class="col-3 bill-box_cell">
-      <dt>会場料</dt>
-      <dd>5,300円</dd>
+      <dt>税抜　合計額</dt>
+      <dd> <span class="all-total-without-tax"></span> 円</dd>
     </div>
     <div class="col-3 bill-box_cell">
-      <dt>追加請求料</dt>
-      <dd>5,300円</dd>
+      <dt>消費税</dt>
+      <dd> <span class="all-total-tax"></span> 円</dd>
     </div>
     <div class="col-3 bill-box_cell">
-      <dt>請求総額</dt>
-      <dd class="text-right">57,700円</dd>
+      <dt>総請求額</dt>
+      <dd class="text-right"> <span class="all-total-amout"></span> 円</dd>
     </div>
   </dl>
   </div>
 </section>
+
 
 <div class="btn_wrapper">
   <p class="text-center"><a class="more_btn_lg" href="">予約登録する</a></p>
