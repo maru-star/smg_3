@@ -113,6 +113,20 @@ $(function () {
       $('.venue_tax').text((Number($('.venue_extend').text())) * 0.1);
       $('.venue_total').text(Number($('.venue_extend').text()) + (Number($('.venue_extend').text())) * 0.1);
     }
+
+    // 総請求額　反映
+    var base_venue = $('.after_discount_price').text();//会場の割引後の料金
+    var base_items = $('.items_discount_price').text();//サービスr＆備品の料金
+    var base_layout = $('.after_duscount_layouts').text();//レイアウトの料金
+    var base_total = Number(base_venue) + Number(base_items) + Number(base_layout);
+    var base_tax = base_total * 0.1;
+    var base_total_amout = base_total + base_tax;
+    $('.all-total-without-tax').text(''); //初期化
+    $('.all-total-tax').text(''); //初期化
+    $('.all-total-amout').text(''); //初期化
+    $('.all-total-without-tax').text(base_total);
+    $('.all-total-tax').text(base_tax);
+    $('.all-total-amout').text(base_total_amout);
   })
 })
 
@@ -164,6 +178,19 @@ $(function () {
       $('.venue_tax').text((Number($('.venue_extend').text())) * 0.1);
       $('.venue_total').text(Number($('.venue_extend').text()) + (Number($('.venue_extend').text())) * 0.1);
     }
+    // 総請求額　反映
+    var base_venue = $('.after_discount_price').text();//会場の割引後の料金
+    var base_items = $('.items_discount_price').text();//サービスr＆備品の料金
+    var base_layout = $('.after_duscount_layouts').text();//レイアウトの料金
+    var base_total = Number(base_venue) + Number(base_items) + Number(base_layout);
+    var base_tax = base_total * 0.1;
+    var base_total_amout = base_total + base_tax;
+    $('.all-total-without-tax').text(''); //初期化
+    $('.all-total-tax').text(''); //初期化
+    $('.all-total-amout').text(''); //初期化
+    $('.all-total-without-tax').text(base_total);
+    $('.all-total-tax').text(base_tax);
+    $('.all-total-amout').text(base_total_amout);
   })
 })
 
@@ -194,7 +221,6 @@ $(function () {
       $('.all_items_total').text(Number(minus_result) + (Number(minus_result) * 0.1));
     } else {
       $('.item_discount_percent').text('');
-      $('.after_discount_price').text('');
       $('.items_discount_price').text(calc_target);
       if ($('.items_equipments table tbody tr').hasClass('discount_input_number_items')) {
         $('.discount_input_number_items').remove(); //初期化
@@ -206,6 +232,21 @@ $(function () {
       $('.items_tax').text((Number($('.items_discount_price').text())) * 0.1);
       $('.all_items_total').text(Number($('.items_discount_price').text()) + (Number($('.items_discount_price').text())) * 0.1);
     }
+
+    // 総請求額　反映
+    var base_venue = $('.after_discount_price').text();//会場の割引後の料金
+    var base_items = $('.items_discount_price').text();//サービスr＆備品の料金
+    var base_layout = $('.after_duscount_layouts').text();//レイアウトの料金
+    var base_total = Number(base_venue) + Number(base_items) + Number(base_layout);
+    var base_tax = base_total * 0.1;
+    var base_total_amout = base_total + base_tax;
+    $('.all-total-without-tax').text(''); //初期化
+    $('.all-total-tax').text(''); //初期化
+    $('.all-total-amout').text(''); //初期化
+    $('.all-total-without-tax').text(base_total);
+    $('.all-total-tax').text(base_tax);
+    $('.all-total-amout').text(base_total_amout);
+
   })
 })
 
@@ -310,7 +351,19 @@ $(function () {
       $('.layout_tax').text((Number($('.after_duscount_layouts').text())) * 0.1);
       $('.layout_total_amount').text(Number($('.after_duscount_layouts').text()) + (Number($('.after_duscount_layouts').text())) * 0.1);
     }
-
+    // 総請求額　反映
+    var base_venue = $('.after_discount_price').text();//会場の割引後の料金
+    var base_items = $('.items_discount_price').text();//サービスr＆備品の料金
+    var base_layout = $('.after_duscount_layouts').text();//レイアウトの料金
+    var base_total = Number(base_venue) + Number(base_items) + Number(base_layout);
+    var base_tax = base_total * 0.1;
+    var base_total_amout = base_total + base_tax;
+    $('.all-total-without-tax').text(''); //初期化
+    $('.all-total-tax').text(''); //初期化
+    $('.all-total-amout').text(''); //初期化
+    $('.all-total-without-tax').text(base_total);
+    $('.all-total-tax').text(base_tax);
+    $('.all-total-amout').text(base_total_amout);
   })
 })
 

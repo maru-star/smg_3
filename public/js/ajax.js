@@ -56,6 +56,13 @@ $(function () {
     ajaxGetLayoutPrice(venue_id, layout_prepare, layout_clean);
 
 
+    // 割引入力部分、全部初期化
+    $('.venue_discount_percent').val('');
+    $('.venue_dicsount_number').val('');
+    $('.discount_item').val('');
+    $('.layout_discount').val('');
+
+
     // 関数処理の順番にばらつきがあるので、１秒後に実行
     setTimeout(function () {
       // 総請求額反映用
@@ -245,6 +252,7 @@ $(function () {
         $('.venue_extend').text(venue_extend_price);
         $('.extend').text(extend_price);
         $('.venue_price').text(venue_extend_price - extend_price);
+        $('.after_discount_price').text(venue_extend_price);
         if ((extend_price) == 0) {
           $('.venue_price_details table tbody').html('');
           $('.venue_price_details table tbody').append("<tr><td>" + '会場料金' + "</td><td>" + venue_extend_price + "</td><td>" + '1' + "</td><td>" + venue_extend_price + "</td></tr>");
@@ -404,7 +412,7 @@ $(function () {
         $('.layout_subtotal').text($result[1]);
         $('.layout_tax').text(Number($result[1]) * 0.1);
         $('.layout_total_amount').text((Number($result[1]) * 0.1) + (Number($result[1])));
-
+        $('.after_duscount_layouts').text($result[1]);
       })
       .fail(function ($result) {
         $('#fullOverlay').css('display', 'none');
