@@ -5,7 +5,7 @@
 <script src="{{ asset('/js/template.js') }}"></script>
 <script src="{{ asset('/js/ajax.js') }}"></script>
 
-
+{{-- ajax画面変遷時の待機画面 --}}
 <style>
   #fullOverlay {
     position: absolute;
@@ -52,38 +52,6 @@
 </div>
 
 <div class="container-field bg-white text-dark">
-  {{-- <div class="border border border-success">
-    <table class="table mb-0">
-      <tr>
-        <td class="">予約概要 ID : 00010</td>
-        <td class="">編集</td>
-      </tr>
-    </table>
-  </div> --}}
-
-  {{-- <div class="mt-2">
-    <div class="d-flex ml-2">
-      <table class="table mr-2 border border-light col-10">
-        <tr>
-          <td class="bg-success text-white">予約状況</td>
-          <td>予約確認中</td>
-          <td class="bg-success text-white">チェック</td>
-          <td>未</td>
-          <td>
-            <div class="btn btn-primary">チェックする</div>
-          </td>
-        </tr>
-      </table>
-    </div>
-  </div> --}}
-  <div class="">
-    <table>
-      <tr>
-        <td>仲介会社</td>
-        <td><input type="checkbox" class="cust_check"></td>
-      </tr>
-    </table>
-  </div>
 
   <div class="row">
     <div class="col">
@@ -227,27 +195,10 @@
           </tbody>
         </table>
       </div>
-
-
-
-
-
       <div class="price_details">
       </div>
       <button id='calculate' class="btn btn-primary">計算する！！！！</button>
-
-
-
     </div>
-
-
-
-
-
-
-
-
-
     {{-- 右側 --}}
     <div class="col">
       {{-- デフォルトでは、こちらが表示。顧客選択 --}}
@@ -286,7 +237,6 @@
             </td>
           </tr>
         </table>
-
         <table class="table table-bordered oneday-table">
           <tr>
             <td colspan="2">
@@ -302,100 +252,6 @@
           <tr>
             <td class="table-active"><label for="mobilePhone">携帯番号</label></td>
             <td><input class="form-control" name="mobilePhone" type="text" id="mobilePhone"></td>
-          </tr>
-        </table>
-
-      </div>
-
-      {{-- 仲介会社選択時、こちらが表示 --}}
-      <div class="agent_master" style="border: solid 2px red;">
-        <table class="table table-bordered name-table">
-          <tr>
-            <td colspan="2">
-              <div class="d-flex align-items-center justify-content-between">
-                <p class="title-icon">
-                  <i class="far fa-id-card fa-2x fa-fw" aria-hidden="true"></i>仲介会社情報
-                </p>
-                <p><a class="more_btn" href="">仲介会社詳細</a></p>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td class="table-active"><label for="agency">サービス名称</label></td>
-            <td>
-              <select class="form-control select2" name="agency">
-                <option>スペースマーケット</option>
-                <option>スペースマーケット</option>
-                <option>スペースマーケット</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td class="table-active"><label for="agencyName">担当者氏名</label></td>
-            <td>
-              <select class="form-control select2" name="agencyName">
-                <option>山田太郎</option>
-                <option>山田太郎</option>
-                <option>山田太郎</option>
-              </select>
-            </td>
-          </tr>
-        </table>
-
-        <table class="table table-bordered oneday-table">
-          <tr>
-            <td colspan="2">
-              <p class="title-icon">
-                <i class="fas fa-user-check fa-2x fa-fw" aria-hidden="true"></i>仲介会社の顧客
-              </p>
-            </td>
-          </tr>
-          <tr>
-            <td class="table-active"><label for="agencyCustermergroup">会社名・団体名</label></td>
-            <td><input class="form-control" name="agencyCustermergroup" type="text" id="agencyCustermergroup"></td>
-          </tr>
-          <tr>
-            <td class="table-active"><label for="agencyCustermerName">担当者氏名</label></td>
-            <td><input class="form-control" name="agencyCustermerName" type="text" id="agencyCustermerName"></td>
-          </tr>
-          <tr>
-            <td class="table-active"><label for="agencyCustermerAddress">住所</label></td>
-            <td><input class="form-control" name="agencyCustermerAddress" type="text" id="agencyCustermerAddress"></td>
-          </tr>
-          <tr>
-          <tr>
-            <td class="table-active"><label for="agencyCustermerPhone">電話番号</label></td>
-            <td><input class="form-control" name="agencyCustermerPhone" type="text" id="agencyCustermerPhone"></td>
-          </tr>
-          <tr>
-            <td class="table-active"><label for="agencyCustermerMail">メールアドレス</label></td>
-            <td><input class="form-control" name="agencyCustermerMail" type="text" id="agencyCustermerMail"></td>
-          </tr>
-          <tr>
-            <td class="table-active"><label for="agencyCustermerType">利用者属性</label></td>
-            <td>
-              <select class="form-control select2" style="width: 100%;">
-                <option>インターネット</option>
-                <option>インターネット</option>
-                <option>インターネット</option>
-              </select>
-            </td>
-          </tr>
-        </table>
-
-        <table class="table table-bordered sale-table">
-          <tr>
-            <td colspan="2">
-              <p class="title-icon">
-                <i class="fas fa-yen-sign fa-2x fa-fw" aria-hidden="true"></i>仲介会社顧客の支払い料
-              </p>
-            </td>
-          </tr>
-          <tr>
-            <td class="table-active"><label for="sale">支払い料</label><br>
-              <small>※※あとで入力※※</small>
-            </td>
-            <td class="d-flex align-items-center"><input class="form-control" name="sale" type="text" id="sale">円</td>
           </tr>
         </table>
       </div>
@@ -436,7 +292,6 @@
           <td class="d-flex align-items-center"><input class="form-control" name="sale" type="text" id="sale">%</td>
         </tr>
       </table>
-
       <table class="table table-bordered note-table">
         <tr>
           <td colspan="2">
@@ -475,14 +330,10 @@
       </table>
     </div>
   </div>
-
 </div>
-
-
 {{-- 丸岡さんカスタム --}}
 <section class="bill-wrap section-wrap">
   <div class="bill-bg">
-
     <!-- 請求内容----------- -->
     <div class="bill-box">
       <h3 class="row">会場料</h3>
@@ -535,7 +386,6 @@
           <p class="text-right after_discount_price"></p>円
         </div>
       </dl>
-
       <!-- 料金内訳-------------------------------------------------------------- -->
       <h3 class="row" style="background: #F3F3F3;color:black">料金内訳</h3>
       <div class="row venue_price_details">
@@ -560,7 +410,6 @@
     <!-- 料金内訳 終わり---------------------------- -->
   </div>
   <!-- 請求内容 終わり---------------------------- -->
-
   <!-- 請求内容----------- -->
   <div class="bill-box">
     <h3 class="row">備品その他</h3>
@@ -600,7 +449,6 @@
         <p><span class="font-weight-bold mr-3">割引後 会場料金合計</span> <span class="items_discount_price"></span> 円</p>
       </div>
     </dl>
-
     <!-- 料金内訳-------------------------------------------------------------- -->
     <div class="bill-list">
       <h3 class="row">料金内訳</h3>
@@ -623,18 +471,10 @@
         <p class="text-right"><span>消費税</span> <span class="items_tax"></span> 円</p>
         <p class="text-right"><span class="font-weight-bold">請求総額</span> <span class="all_items_total"></span> 円</p>
       </div>
-
-
-
     </div>
     <!-- 料金内訳 終わり---------------------------- -->
-
-
   </div>
   <!-- 請求内容 終わり---------------------------- -->
-
-
-
   {{-- レイアウト --}}
   <div class="layout_price_list" style="margin-bottom: 100px">
     <div>
@@ -665,7 +505,6 @@
     </div>
   </div>
   {{-- レイアウト --}}
-
   <dl class="row bill-box_wrap total-sum">
     <div class="col-3 bill-box_cell">
       <dt>合計請求総額</dt>
@@ -685,8 +524,6 @@
   </dl>
   </div>
 </section>
-
-
 <div class="btn_wrapper text-center">
   {{-- <p class="text-center"><a class="more_btn_lg" href="">予約登録する</a></p> --}}
   <button class="btn btn-primary more_btn_lg">予約登録する</button>
