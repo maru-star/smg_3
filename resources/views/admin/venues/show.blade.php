@@ -33,7 +33,7 @@
       <div class="p-3 mb-2 bg-white text-dark">
         <span><i class="fas fa-info-circle"></i>ビル情報</span>
         <div class="mt-2 mb-2">
-          <div>{{$venue->alliance_flag==1?"直営":'提携'}}</div>
+          <div>{{$venue->alliance_flag==0?"直営":'提携'}}</div>
         </div>
 
         <div class="row">
