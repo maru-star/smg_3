@@ -1,6 +1,18 @@
 @extends('layouts.admin.app')
-
 @section('content')
+<script src="{{ asset('/js/template.js') }}"></script>
+<script src="{{ asset('/js/validation.js') }}"></script>
+<link href="{{ asset('/css/template.css') }}" rel="stylesheet">
+@if ($errors->any())
+<div class="alert alert-danger">
+  <ul>
+    @foreach ($errors->all() as $error)
+    <li>{{ $error }}</li>
+    @endforeach
+  </ul>
+</div>
+@endif
+
 <div class="float-right">
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -15,18 +27,15 @@
 </div>
 
 
-
-
-
-{{ Form::model($eqipment, ['route' => ['admin.equipments.update', $eqipment->id], 'method' => 'put']) }}
+{{ Form::model($eqipment, ['route' => ['admin.equipments.update', $eqipment->id], 'method' => 'put', 'id'=>'EquipmentsUpdateForm']) }}
 <table class="table table-striped table-bordered">
   <thead>
     <tr>
       <th>id</th>
       <th>登録日</th>
-      <th>有料備品名</th>
-      <th>料金</th>
-      <th>数量</th>
+      <th class="form_required">有料備品名</th>
+      <th class="form_required">料金</th>
+      <th class="form_required">数量</th>
       <th>備考</th>
       <th>詳細(編集)・削除</th>
     </tr>

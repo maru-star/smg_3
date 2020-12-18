@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;     
+use Illuminate\Http\Request;
 
 use App\Models\Equipment;
 
@@ -52,6 +52,12 @@ class EquipmentsController extends Controller
    */
   public function store(Request $request)
   {
+    $this->validate($request, [
+      'item' => ['required', 'max:191'],
+      'price' => ['required', 'max:191'],
+      'stock' => ['required', 'max:191'],
+    ]);
+
     $eqipments = new Equipment;
     $eqipments->item = $request->item;
     $eqipments->price = $request->price;
@@ -99,6 +105,12 @@ class EquipmentsController extends Controller
    */
   public function update(Request $request, $id)
   {
+    $this->validate($request, [
+      'item' => ['required', 'max:191'],
+      'price' => ['required', 'max:191'],
+      'stock' => ['required', 'max:191'],
+    ]);
+
     $eqipment = Equipment::find($id);
 
     $eqipment->item = $request->item;

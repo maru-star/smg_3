@@ -313,3 +313,135 @@ $(function () {
     // }
   });
 });
+
+$(function () {
+  $("#ServiceCreateForm").validate({
+    errorClass: "alert alert-danger", //エラー表示classをbootstrapのアラートに変える
+    rules: {
+      item: {
+        required: true,
+      },
+      price: {
+        required: true,
+      }
+    },
+    messages: {
+      item: {
+        required: "※必須項目です",
+      },
+      price: {
+        required: "※必須項目です",
+      }
+    },
+    // errorPlacement: function (err, element) {
+    //   if (element.attr("alliance_flag")) {
+    //     element.parent().before(err);
+    //   } else {
+    //     element.before(err);
+    //   }
+    // }
+  });
+})
+// サービスアップデート
+$(function () {
+  $("#ServiceUpdateForm").validate({
+    errorClass: "alert alert-danger", //エラー表示classをbootstrapのアラートに変える
+    rules: {
+      item: {
+        required: true,
+      },
+      price: {
+        required: true,
+      }
+    },
+    messages: {
+      item: {
+        required: "※必須項目です",
+      },
+      price: {
+        required: "※必須項目です",
+      }
+    },
+    // errorPlacement: function (err, element) {
+    //   if (element.attr("alliance_flag")) {
+    //     element.parent().before(err);
+    //   } else {
+    //     element.before(err);
+    //   }
+    // }
+  });
+})
+// 備品作成
+$(function () {
+  $("#EquipmentsCreateForm").validate({
+    errorClass: "alert alert-danger", //エラー表示classをbootstrapのアラートに変える
+    rules: {
+      item: {
+        required: true,
+      },
+      price: {
+        required: true,
+      },
+      stock: {
+        required: true,
+      }
+    },
+    messages: {
+      item: {
+        required: "※必須項目です",
+      },
+      price: {
+        required: "※必須項目です",
+      },
+      stock: {
+        required: "※必須項目です",
+      }
+    },
+    // errorPlacement: function (err, element) {
+    //   if (element.attr("alliance_flag")) {
+    //     element.parent().before(err);
+    //   } else {
+    //     element.before(err);
+    //   }
+    // }
+  });
+})
+// 備品アップデート
+$(function () {
+  $("#EquipmentsUpdateForm").validate({
+    errorClass: "alert alert-danger", //エラー表示classをbootstrapのアラートに変える
+    rules: {
+      item: {
+        required: true,
+      },
+      price: {
+        required: true,
+        number: true,
+      },
+      stock: {
+        required: true,
+        number: true,
+      }
+    },
+    messages: {
+      item: {
+        required: "※必須項目です",
+      },
+      price: {
+        required: "※必須項目です",
+        number: '数値で入力してください',
+      },
+      stock: {
+        required: "※必須項目です",
+        number: '数値で入力してください',
+      }
+    },
+    // errorPlacement: function (err, element) {
+    //   if (element.attr("alliance_flag")) {
+    //     element.parent().before(err);
+    //   } else {
+    //     element.before(err);
+    //   }
+    // }
+  });
+})

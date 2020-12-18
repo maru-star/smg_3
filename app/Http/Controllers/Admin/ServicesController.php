@@ -50,6 +50,11 @@ class ServicesController extends Controller
    */
   public function store(Request $request)
   {
+    $this->validate($request, [
+      'item' => ['required', 'max:191'],
+      'price' => ['required', 'max:191'],
+    ]);
+
     $services = new Service;
     $services->item = $request->item;
     $services->price = $request->price;
@@ -96,6 +101,11 @@ class ServicesController extends Controller
    */
   public function update(Request $request, $id)
   {
+    $this->validate($request, [
+      'item' => ['required', 'max:191'],
+      'price' => ['required', 'max:191'],
+    ]);
+
     $service = Service::find($id);
 
     $service->item = $request->item;

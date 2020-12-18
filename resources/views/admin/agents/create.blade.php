@@ -40,7 +40,7 @@
     </ul>
   </div>
   @endif
-  {{ Form::open(['url' => 'admin/agents', 'method'=>'psot', 'id'=>'agents_create_form']) }}
+  {{ Form::open(['url' => 'admin/agents', 'method'=>'POST', 'id'=>'agents_create_form']) }}
   @csrf
   <div class="row">
     <div class="col-sm">

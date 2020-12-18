@@ -58,7 +58,7 @@
         </tr>
         @foreach ($date_venues as $date_venue)
         @if ($date_venue->week_day==$weekday_id)
-        {{ Form::open(['url' => 'admin/dates', 'method'=>'psot']) }}
+        {{ Form::open(['url' => 'admin/dates', 'method'=>'POST']) }}
         @csrf
         <tr>
           <td>

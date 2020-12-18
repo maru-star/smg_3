@@ -1,9 +1,9 @@
 @extends('layouts.admin.app')
-
 @section('content')
 <script src="{{ asset('/js/template.js') }}"></script>
 <script src="{{ asset('/js/validation.js') }}"></script>
 <link href="{{ asset('/css/template.css') }}" rel="stylesheet">
+
 <div class="container-field mt-3">
   <div class="float-right">
     <nav aria-label="breadcrumb">
@@ -27,7 +27,7 @@
   @endif
 </div>
 <div class="container-field">
-  {{ Form::open(['url' => 'admin/venues', 'method'=>'PSOT', 'id'=>'VenuesCreateForm']) }}
+  {{ Form::open(['url' => 'admin/venues', 'method'=>'POST', 'id'=>'VenuesCreateForm']) }}
   @csrf
   <div class="p-3 mb-2 bg-white text-dark">
     {{ Form::label('smg_url', '会場SMG URL',['class' => 'form_required']) }}
