@@ -2,6 +2,7 @@
 
 @section('content')
 <script src="{{ asset('/js/template.js') }}"></script>
+<script src="{{ asset('/js/validation.js') }}"></script>
 <link href="{{ asset('/css/template.css') }}" rel="stylesheet">
 
 
@@ -18,9 +19,17 @@
   <h1 class="mt-3 mb-5">会場　詳細情報</h1>
   <hr>
 </div>
-
-
-
+<div class="errors">
+  @if ($errors->any())
+  <div class="alert alert-danger">
+    <ul>
+      @foreach ($errors->all() as $error)
+      <li>{{ $error }}</li>
+      @endforeach
+    </ul>
+  </div>
+  @endif
+</div>
 <div class="container-field">
   {{ Form::model($venue, ['route' => ['admin.venues.update', $venue->id], 'method' => 'put','id'=>'VenuesEditForm']) }}
 

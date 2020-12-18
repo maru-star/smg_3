@@ -2,6 +2,8 @@
 
 @section('content')
 <script src="{{ asset('/js/template.js') }}"></script>
+<link href="{{ asset('/css/template.css') }}" rel="stylesheet">
+
 
 <div class="container-field mt-3">
   <div class="float-right">

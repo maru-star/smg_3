@@ -533,4 +533,6 @@ table td.table_column .colum4 p {
   padding: 0px;
 }
 
-
+.select2-container--default .select2-selection--single{
+  padding: 0px;
+}

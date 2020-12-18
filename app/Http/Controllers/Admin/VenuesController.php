@@ -90,35 +90,29 @@ class VenuesController extends Controller
    */
   public function store(Request $request)
   {
-
-    //************バリデーションルールは後日追加************
-    // $this->validate($request, [
-    //     'alliance_flag' => 'required',
-    //     'name_area' => 'required|max:191',
-    //     'name_bldg' => 'required|max:191',
-    //     'name_venue' => 'required|max:191',
-    //     'size1' => 'required|max:191',
-    //     'size2' => 'required|max:191',
-    //     'capacity' => 'required|max:191',
-    //     'eat_in_flag' => 'required|max:191',
-    //     'post_code' => 'required|max:191',
-    //     'address1' => 'required|max:191',
-    //     'address2' => 'required|max:191',
-    //     'address3' => 'required|max:191',
-    //     'remark' => 'required|max:191',
-    //     'first_name' => 'required|max:191',
-    //     'last_name' => 'required|max:191',
-    //     'first_name_kana' => 'required|max:191',
-    //     'last_name_kana' => 'required|max:191',
-    //     'person_tel' => 'required|max:191',
-    //     'person_email' => 'required|max:191',
-    //     'luggage_flag' => 'required|max:191',
-    //     'luggage_info' => 'required|max:191',
-    //     'luggage_tel' => 'required|max:191',
-    //     'cost' => 'required|max:191',
-    // ]);
-    //************バリデーションルールは後日追加************
-
+    $this->validate($request, [
+      'alliance_flag' => ['required', 'max:191'],
+      'name_area' => ['required', 'max:191'],
+      'name_bldg' => ['required', 'max:191'],
+      'name_venue' => ['required', 'max:191'],
+      'size1' => ['required', 'max:191', 'numeric'],
+      'size2' => ['required', 'max:191', 'numeric'],
+      'capacity' => ['required', 'max:191', 'numeric'],
+      'eat_in_flag' => ['required', 'max:191', 'numeric'],
+      'post_code' => ['required', 'max:191'],
+      'address1' => 'required',
+      'address2' => 'required',
+      'address3' => 'required',
+      'luggage_flag' => ['required', 'max:191', 'numeric'],
+      'luggage_post_code' => ['required', 'max:191'],
+      'luggage_address1' => 'required',
+      'luggage_address2' => 'required',
+      'luggage_address3' => 'required',
+      'luggage_name' => 'required',
+      'luggage_tel' => ['required', 'max:191'],
+      'smg_url' => 'required',
+      'layout' => 'required',
+    ]);
 
     $venues = new Venue;
     $venues->alliance_flag = $request->alliance_flag;
@@ -280,33 +274,29 @@ class VenuesController extends Controller
   public function update(Request $request, $id)
   {
 
-    //************バリデーションルールは後日追加************
-    // $this->validate($request, [
-    //     'alliance_flag' => 'required',
-    //     'name_area' => 'required|max:191',
-    //     'name_bldg' => 'required|max:191',
-    //     'name_venue' => 'required|max:191',
-    //     'size1' => 'required|max:191',
-    //     'size2' => 'required|max:191',
-    //     'capacity' => 'required|max:191',
-    //     'eat_in_flag' => 'required|max:191',
-    //     'post_code' => 'required|max:191',
-    //     'address1' => 'required|max:191',
-    //     'address2' => 'required|max:191',
-    //     'address3' => 'required|max:191',
-    //     'remark' => 'required|max:191',
-    //     'first_name' => 'required|max:191',
-    //     'last_name' => 'required|max:191',
-    //     'first_name_kana' => 'required|max:191',
-    //     'last_name_kana' => 'required|max:191',
-    //     'person_tel' => 'required|max:191',
-    //     'person_email' => 'required|max:191',
-    //     'luggage_flag' => 'required|max:191',
-    //     'luggage_info' => 'required|max:191',
-    //     'luggage_tel' => 'required|max:191',
-    //     'cost' => 'required|max:191',
-    // ]);
-    //************バリデーションルールは後日追加************
+    $this->validate($request, [
+      'alliance_flag' => ['required', 'max:191'],
+      'name_area' => ['required', 'max:191'],
+      'name_bldg' => ['required', 'max:191'],
+      'name_venue' => ['required', 'max:191'],
+      'size1' => ['required', 'max:191', 'numeric'],
+      'size2' => ['required', 'max:191', 'numeric'],
+      'capacity' => ['required', 'max:191', 'numeric'],
+      'eat_in_flag' => ['required', 'max:191', 'numeric'],
+      'post_code' => ['required', 'max:191'],
+      'address1' => 'required',
+      'address2' => 'required',
+      'address3' => 'required',
+      'luggage_flag' => ['required', 'max:191', 'numeric'],
+      'luggage_post_code' => ['required', 'max:191'],
+      'luggage_address1' => 'required',
+      'luggage_address2' => 'required',
+      'luggage_address3' => 'required',
+      'luggage_name' => 'required',
+      'luggage_tel' => ['required', 'max:191'],
+      'smg_url' => 'required',
+      'layout' => 'required',
+    ]);
 
     $venue = Venue::find($id);
     $venue->alliance_flag = $request->alliance_flag;
