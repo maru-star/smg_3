@@ -235,6 +235,16 @@ $(function () {
       },
     })
       .done(function ($details) {
+        // 手入力部分は初期化
+        $('#handinput_venue').val('');
+        $('#handinput_extend').val('');
+        $('#handinput_discount').val('');
+        $('#handinput_subtotal').text('');
+        $('#handinput_tax').text('');
+        $('#handinput_total').text('');
+        $('.hand_input').hasClass('hide') ? '' : $('.hand_input').addClass('hide');
+        $('.bill-bg').hasClass('hide') ? $('.bill-bg').removeClass('hide') : '';
+
         //[0]は合計料金, [1]は延長料金, [2]は利用時間, [3]は延長時間
         var venue_extend_price = ($details[0][0]);
         var extend_price = ($details[0][1]);
@@ -242,9 +252,9 @@ $(function () {
         var extend_time = ($details[0][3]);
         $('#fullOverlay').css('display', 'none');
         console.log($details);
-        $('.venue_extend').html('');
-        $('.extend').html('');
-        $('.venue_price').html('');
+        $('.venue_extend').text('');
+        $('.extend').text('');
+        $('.venue_price').text('');
         $('.after_discount_price').text('');
         $('.venue_subtotal').text(''); //小計
         $('.venue_tax').text(''); //消費税
@@ -272,7 +282,23 @@ $(function () {
       })
       .fail(function ($details) {
         $('#fullOverlay').css('display', 'none');
-        swal('料金の取得に失敗しました。ページをリロードし条件を変えて再度計算してください');
+        swal('料金の取得に失敗しました', '入退室時間が08:00~23:00で入力した場合はページをリロードし再度条件を変え再計算してください。もし08:00~23:00以外で入力した場合は、そのまま進み会場料金を手入力してください');
+        $('.venue_extend').text('');
+        $('.extend').text('');
+        $('.venue_price').text('');
+        $('.after_discount_price').text('');
+        $('.venue_subtotal').text(''); //小計
+        $('.venue_tax').text(''); //消費税
+        $('.venue_total').text(''); //会場合計料金
+        $('.venue_price_details table tbody').html('');
+        $('.bill-bg').addClass('hide');
+        $('.hand_input').removeClass('hide');
+        $('#handinput_venue').val('');
+        $('#handinput_extend').val('');
+        $('#handinput_discount').val('');
+        $('#handinput_subtotal').text('');
+        $('#handinput_tax').text('');
+        $('#handinput_total').text('');
       });
   };
 

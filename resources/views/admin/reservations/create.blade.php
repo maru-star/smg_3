@@ -269,11 +269,11 @@
             <div class="radio-box">
               <div class="icheck-primary">
                 <input type="radio" id="sendMail" name="sendMail" checked>
-                <label for="sendMail">あり</label>
+                <label for="sendMail">無し</label>
               </div>
               <div class="icheck-primary">
                 <input type="radio" id="sendMail" name="sendMail" checked>
-                <label for="sendMail">なし</label>
+                <label for="sendMail">有り</label>
               </div>
             </div>
           </td>
@@ -334,7 +334,6 @@
 {{-- 丸岡さんカスタム --}}
 <section class="bill-wrap section-wrap">
   <div class="bill-bg">
-    <!-- 請求内容----------- -->
     <div class="bill-box">
       <h3 class="row">会場料</h3>
       <dl class="row bill-box_wrap">
@@ -407,8 +406,51 @@
         <p class="text-right"><span class="font-weight-bold">請求総額</span> <span class="venue_total"></span> 円</p>
       </div>
     </div>
-    <!-- 料金内訳 終わり---------------------------- -->
   </div>
+
+  {{-- 手打ち --}}
+  <div class="hand_input hide">
+    <h3 style="font-weight: bold;font-size: 16px;background: #840A01;color: #fff;margin-bottom: 0;padding: 0.8em;">
+      会場料（手入力）</h3>
+    <div class="hand_input_details">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <td>内容</td>
+            <td>単価</td>
+            <td>数量</td>
+            <td>金額</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>会場料</td>
+            <td><input type="text" class="form-control"></td>
+            <td><input type="text" class="form-control"></td>
+            <td><input type="text" class="form-control" id='handinput_venue'></td>
+          </tr>
+          <tr>
+            <td>延長料金</td>
+            <td><input type="text" class="form-control"></td>
+            <td><input type="text" class="form-control"></td>
+            <td><input type="text" class="form-control" id="handinput_extend"></td>
+          </tr>
+          <tr>
+            <td>割引</td>
+            <td><input type="text" class="form-control"></td>
+            <td><input type="text" class="form-control"></td>
+            <td><input type="text" class="form-control" id="handinput_discount"></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="text-right">
+        <p>小計 <span id="handinput_subtotal"></span></p>
+        <p>消費税<span id="handinput_tax"></span></p>
+        <p>請求総額<span id="handinput_total"></span></p>
+      </div>
+    </div>
+  </div>
+
   <!-- 請求内容 終わり---------------------------- -->
   <!-- 請求内容----------- -->
   <div class="bill-box">
@@ -477,13 +519,24 @@
   <!-- 請求内容 終わり---------------------------- -->
   {{-- レイアウト --}}
   <div class="layout_price_list" style="margin-bottom: 100px">
-    <div>
-      レイアウト準備料金： <p class="layout_prepare_result"></p>
-      レイアウト片付料金： <p class="layout_clean_result"></p>
-      レイアウト変更合計： <p class="layout_total"></p>
-      割引料金 <input type="text" class="layout_discount d-block">
-      割引率：<p class="layout_discount_percent"><span>%</span></p>
-      割引後レイアウト変更合計：<p class="after_duscount_layouts"></p>
+    <h3 style="font-weight: bold;font-size: 16px;background: #35A7A7;color: #fff;margin-bottom: 0;padding: 0.8em;">レイアウト
+    </h3>
+    <div class="border">
+      <div class="d-flex" style="height: 70px">
+        <div style="width: 33%">レイアウト準備料金： <p class="layout_prepare_result"></p>
+        </div>
+        <div style="width: 33%">レイアウト片付料金： <p class="layout_clean_result"></p>
+        </div>
+        <div style="width:34px%">レイアウト変更合計： <p class="layout_total"></p>
+        </div>
+      </div>
+      <div class="d-flex" style="height: 70px">
+        <div style="width: 33%">割引料金 <input type="text" class="layout_discount d-block"></div>
+        <div style="width: 33%">割引率：<p class="layout_discount_percent"><span>%</span></p>
+        </div>
+        <div style="width: 34%">割引後レイアウト変更合計：<p class="after_duscount_layouts"></p>
+        </div>
+      </div>
     </div>
     <div class="selected_layouts">
       <table class="table table-bordered">
@@ -498,7 +551,7 @@
         <tbody></tbody>
       </table>
     </div>
-    <div style="margin-top: 50px;">
+    <div style="margin-top: 50px;" class="text-right">
       小計：<p class="layout_subtotal"></p>
       消費税：<p class="layout_tax"></p>
       合計金額：<p class="layout_total_amount"></p>
