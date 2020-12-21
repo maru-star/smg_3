@@ -420,33 +420,36 @@ class Venue extends Model
       $f_finish2 = Carbon::createFromTimeString($finish_time, 'Asia/Tokyo');
 
 
+
       $usage_time = $f_start2->diffInMinutes($f_finish2); //時差
       $usage_time /= 60; //分に変換
-      $target_time_index_in_array = array_search($usage_time, $times_arrays); //配列のどこに該当があるか
-      $empty_arrays3 = [];
-      for ($results_lists = 0; $results_lists < count($time_price); $results_lists++) { //⑤回ループ
-        $empty_arrays3[] = $time_price_results[$results_lists][$target_time_index_in_array];
-      }
-      $empty_arrays3result = [];
-      foreach ($empty_arrays3 as $empty_array3key => $empty_array3value) {
-        if ($empty_array3value > 0) {
-          $empty_arrays3result[] = $empty_array3value;
+
+      if ($usage_time <= 15) {
+
+        $target_time_index_in_array = array_search($usage_time, $times_arrays); //配列のどこに該当があるか
+        $empty_arrays3 = [];
+        for ($results_lists = 0; $results_lists < count($time_price); $results_lists++) { //⑤回ループ
+          $empty_arrays3[] = $time_price_results[$results_lists][$target_time_index_in_array];
         }
+        $empty_arrays3result = [];
+        foreach ($empty_arrays3 as $empty_array3key => $empty_array3value) {
+          if ($empty_array3value > 0) {
+            $empty_arrays3result[] = $empty_array3value;
+          }
+        }
+        $time_min_result = min($empty_arrays3result); //■■■■■■■算出した会場＋延長料金■■■■■■■
+
+        $witch_array_in_result = array_search($time_min_result, $empty_arrays3); //どのパターンの結果を参照したのか？ここではパターン１（3H利用）
+        $base_result_price = $time_price[$witch_array_in_result]->price; //料金パターン
+
+        $specific_extend_timeprice = $time_min_result - $base_result_price; //specificな延長料金
+
+        $specific_extend_time = $specific_extend_timeprice / ($time_price[$witch_array_in_result]->extend); //speficな延長　時間
+
+        return [$time_min_result, $specific_extend_timeprice, $specific_extend_time, $specific_extend_time];
+      } else {
+        return fail;
       }
-      $time_min_result = min($empty_arrays3result); //■■■■■■■算出した会場＋延長料金■■■■■■■
-
-      $witch_array_in_result = array_search($time_min_result, $empty_arrays3); //どのパターンの結果を参照したのか？ここではパターン１（3H利用）
-      $base_result_price = $time_price[$witch_array_in_result]->price; //料金パターン
-
-      $specific_extend_timeprice = $time_min_result - $base_result_price; //specificな延長料金
-
-      $specific_extend_time = $specific_extend_timeprice / ($time_price[$witch_array_in_result]->extend); //speficな延長　時間
-
-      return [$time_min_result, $specific_extend_timeprice, $specific_extend_time, $specific_extend_time];
-      // return $diff_time_arrays[$witch_array_in_result];　//一旦、ここにおいておく
-      // return array_search($time_min_result, $time_price_results[$witch_array_in_result]);
-
-      // return 結果は算出した料金、延長料金、延長した時間、延長した時間
     }
   }
 
