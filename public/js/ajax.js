@@ -235,6 +235,7 @@ $(function () {
       },
     })
       .done(function ($details) {
+        console.log('$details', $details);
         // 手入力部分は初期化
         $('#handinput_venue').val('');
         $('#handinput_extend').val('');
@@ -244,7 +245,6 @@ $(function () {
         $('#handinput_total').text('');
         $('.hand_input').hasClass('hide') ? '' : $('.hand_input').addClass('hide');
         $('.bill-bg').hasClass('hide') ? $('.bill-bg').removeClass('hide') : '';
-
         //[0]は合計料金, [1]は延長料金, [2]は利用時間, [3]は延長時間
         var venue_extend_price = ($details[0][0]);
         var extend_price = ($details[0][1]);
