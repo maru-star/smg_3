@@ -468,7 +468,6 @@ class Venue extends Model
         $equipments_details[] = [$selected_e_item, $selected_e_price, $selected_e_count];
       }
     }
-    // return $equipments_total;
     // サービス料金×個数
     $venue_services = $this->services()->get();
     $services_total = 0;
