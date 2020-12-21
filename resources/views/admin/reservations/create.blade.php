@@ -283,13 +283,14 @@
         <tr>
           <td colspan="2">
             <p class="title-icon">
-              <i class="fas fa-yen-sign fa-2x fa-fw"></i>売上原価
+              <i class="fas fa-yen-sign fa-2x fa-fw"></i>売上原価（提携会場を選択した場合、提携会場で設定した原価率が適応されます）
             </p>
           </td>
         </tr>
         <tr>
           <td class="table-active"><label for="sale">原価率</label></td>
-          <td class="d-flex align-items-center"><input class="form-control" name="sale" type="text" id="sale">%</td>
+          <td class="d-flex align-items-center">
+            <input class="form-control sales_percentage" name="sale" type="text" id="sale">%</td>
         </tr>
       </table>
       <table class="table table-bordered note-table">

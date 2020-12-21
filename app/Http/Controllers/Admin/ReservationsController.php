@@ -165,6 +165,22 @@ class ReservationsController extends Controller
     return [$result];
   }
 
+  /***********************
+   * ajax 直営　or　提携　判別
+   ***********************
+   */
+  public function getoperation(Request $request)
+  {
+    $venue = Venue::find($request->venue_id);
+    $flag = $venue->alliance_flag;
+    $percentage = $venue->cost;
+    if ($flag == 0) {
+      return 0;
+    } else {
+      return $percentage;
+    }
+  }
+
 
   /**
    * Show the form for creating a new resource.

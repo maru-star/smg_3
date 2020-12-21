@@ -13,6 +13,7 @@ $(function () {
     ajaxGetPriceStstem(venue_id);
     ajaxGetLayout(venue_id); //レイアウトが存在するかしないか、　"0"か"1"でreturn
     ajaxGetLuggage(venue_id); //会場に荷物預かりが存在するかしないか、　"0"か"1"でreturn
+    ajaxGetOperatinSystem(venue_id); //会場形態の判別 直営 or　提携
   });
 
   // 日付選択トリガー
@@ -382,7 +383,6 @@ $(function () {
         $('.items_tax').text(''); //消費税初期化
         $('.all_items_total').text('');　//請求総額初期化
         $('.selected_luggage_price').text('');　//荷物アヅカリ
-
       });
   };
 
@@ -504,6 +504,31 @@ $(function () {
       .fail(function ($luggage) {
         $('#fullOverlay').css('display', 'none');
         swal('荷物預かりの取得に失敗しました。ページをリロードし再度試して下さい!!!!');
+      });
+  };
+
+  // 直営 or 提携会場　判別
+  function ajaxGetOperatinSystem($venue_id) {
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      url: '/admin/reservations/getoperation',
+      type: 'POST',
+      data: {
+        'venue_id': $venue_id
+      },
+      dataType: 'json',
+      beforeSend: function () {
+        $('#fullOverlay').css('display', 'block');
+      },
+    })
+      .done(function ($operaions) {
+        $('.sales_percentage').val($operaions);
+      })
+      .fail(function ($operaions) {
+        $('#fullOverlay').css('display', 'none');
+        swal('会場の運営形態の取得に失敗しました');
       });
   };
 
