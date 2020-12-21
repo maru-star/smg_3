@@ -6,6 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Agent extends Model
 {
+  /*
+|--------------------------------------------------------------------------
+| 会場と仲介の多対多
+|--------------------------------------------------------------------------|
+*/
+  // public function venues()
+  // {
+  //   return $this->belongsToMany('App\Models\Venue')->withTimestamps();
+  // }
+
+  // public function users()
+  // {
+  //   return $this->belongsToMany('App\Models\User')->withTimestamps();
+  // }
+
   public function searchs($freeword, $id, $name, $person_tel)
   {
     if (isset($freeword)) {

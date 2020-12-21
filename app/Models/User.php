@@ -67,6 +67,22 @@ class User extends Authenticatable
     'email_verified_at' => 'datetime',
   ];
 
+  /*
+|--------------------------------------------------------------------------
+| 会場と予約の多対多
+|--------------------------------------------------------------------------|
+*/
+
+  public function reservations()
+  {
+    return $this->hasMany(Reservation::class);
+  }
+
+  // public function agents()
+  // {
+  //   return $this->belongsToMany('App\Models\Agent')->withTimestamps();
+  // }
+
   public function searchs(
     $freeword,
     $id,
