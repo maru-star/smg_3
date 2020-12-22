@@ -14,6 +14,10 @@ $(function () {
     ajaxGetLayout(venue_id); //レイアウトが存在するかしないか、　"0"か"1"でreturn
     ajaxGetLuggage(venue_id); //会場に荷物預かりが存在するかしないか、　"0"か"1"でreturn
     ajaxGetOperatinSystem(venue_id); //会場形態の判別 直営 or　提携
+    var hidden_venue = $('input[name="bill_company"]');
+    var target_venue_id = $(this).val();
+    hidden_venue.val(target_venue_id);
+
 
 
   });
@@ -579,18 +583,23 @@ $(function () {
           var three_days_before = dt.setDate(dt.getDate() - 3); //営業日前
           three_days_before = new Date(three_days_before);
           var target_name = $('input[name="payment_limit"]');
+          var target_name2 = $('input[name="bill_pay_limit"]');
           target_name.val(three_days_before.getFullYear() + '-' + (('0' + (three_days_before.getMonth() + 1)).slice(-2)) + '-' + (('0' + three_days_before.getDate()).slice(-2)));
+          target_name2.val(three_days_before.getFullYear() + '-' + (('0' + (three_days_before.getMonth() + 1)).slice(-2)) + '-' + (('0' + three_days_before.getDate()).slice(-2)));
         } else if ($user_results == 2) {
           var dt = new Date(s_date);
           var end_of_month = new Date(dt.getFullYear(), dt.getMonth() + 1, 0);　//当月末日
           var target_name = $('input[name="payment_limit"]');
+          var target_name2 = $('input[name="bill_pay_limit"]');
           target_name.val(end_of_month.getFullYear() + '-' + (('0' + (end_of_month.getMonth() + 1)).slice(-2)) + '-' + (('0' + end_of_month.getDate()).slice(-2)));
+          target_name2.val(end_of_month.getFullYear() + '-' + (('0' + (end_of_month.getMonth() + 1)).slice(-2)) + '-' + (('0' + end_of_month.getDate()).slice(-2)));
         } else if ($user_results == 3) {
           var dt = new Date(s_date);
           var end_of_next_month = new Date(dt.getFullYear(), dt.getMonth() + 2, 0);
           var target_name = $('input[name="payment_limit"]');
+          var target_name2 = $('input[name="bill_pay_limit"]');
           target_name.val(end_of_next_month.getFullYear() + '-' + (('0' + (end_of_next_month.getMonth() + 1)).slice(-2)) + '-' + (('0' + end_of_next_month.getDate()).slice(-2)));
-
+          target_name2.val(end_of_next_month.getFullYear() + '-' + (('0' + (end_of_next_month.getMonth() + 1)).slice(-2)) + '-' + (('0' + end_of_next_month.getDate()).slice(-2)));
         };
       })
       .fail(function ($user_results) {

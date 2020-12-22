@@ -199,9 +199,62 @@ class ReservationsController extends Controller
 
   public function check(Request $request)
   {
+    $reserve_date = $request->enter_time;
+    $venue_id = $request->venue_id;
     $enter_time = $request->enter_time;
+    $leave_time = $request->leave_time;
+    $board_flag = $request->board_flag;
+    $event_start = $request->event_start;
+    $event_finish = $request->event_finish;
+    $event_name1 = $request->event_name1;
+    $event_name2 = $request->event_name2;
+    $event_owner = $request->event_owner;
+    $user_id = $request->user_id;
+    $in_charge = $request->in_charge;
+    $tel = $request->tel;
+    $email_flag = $request->email_flag;
+    $cost = $request->cost;
+    $discount_condition = $request->discount_condition;
+    $attention = $request->attention;
+    $user_details = $request->user_details;
+    $admin_details = $request->admin_details;
+    $payment_limit = $request->payment_limit;
+    $paid = $request->paid;
+    $reservation_status = $request->reservation_status;
+    $double_check_status = $request->double_check_status;
+    $bill_company = $request->bill_company;
+    $bill_person = $request->bill_person;
+    $bill_created_at = $request->bill_created_at;
+    $bill_pay_limit = $request->bill_pay_limit;
     return view('admin.reservations.check', [
-      'enter_time' => $enter_time
+      'reserve_date' => $reserve_date,
+      'venue_id' => $venue_id,
+      'enter_time' => $enter_time,
+      'enter_time' => $enter_time,
+      'leave_time' => $leave_time,
+      'board_flag' => $board_flag,
+      'event_start' => $event_start,
+      'event_finish' => $event_finish,
+      'event_name1' => $event_name1,
+      'event_name2' => $event_name2,
+      'event_owner' => $event_owner,
+      'user_id' => $user_id,
+      'in_charge' => $in_charge,
+      'tel' => $tel,
+      'email_flag' => $email_flag,
+      'cost' => $cost,
+      'discount_condition' => $discount_condition,
+      'attention' => $attention,
+      'user_details' => $user_details,
+      'admin_details' => $admin_details,
+      'payment_limit' => $payment_limit,
+      'paid' => $paid,
+      'reservation_status' => $reservation_status,
+      'double_check_status' => $double_check_status,
+      'bill_company' => $bill_company,
+      'bill_person' => $bill_person,
+      'bill_created_at' => $bill_created_at,
+      'bill_pay_limit' => $bill_pay_limit,
     ]);
   }
 

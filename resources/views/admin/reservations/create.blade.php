@@ -609,14 +609,14 @@
 
 
 
-{{ Form::hidden('payment_limit', old('payment_limit'),)}}
+{{ Form::hidden('payment_limit',)}}
 {{ Form::hidden('paid', 0, ) }} {{--デフォ0で未入金--}}
 {{ Form::hidden('reservation_status', 0, ) }}
 {{ Form::hidden('double_check_status', 0, ) }}
 
 {{ Form::hidden('bill_company', old('bill_company'), ) }}
 {{ Form::hidden('bill_person', old('bill_person'), ) }}
-{{ Form::hidden('bill_created_at', old('bill_created_at'), ) }}
+{{ Form::hidden('bill_created_at', date('Y-m-d'), ) }}
 {{ Form::hidden('bill_pay_limit', old('bill_pay_limit'), ) }}
 
 {{Form::submit('送信', ['class'=>'btn btn-primary btn-block'])}}
