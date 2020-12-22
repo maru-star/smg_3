@@ -197,6 +197,14 @@ class ReservationsController extends Controller
     ]);
   }
 
+  public function check(Request $request)
+  {
+    $enter_time = $request->enter_time;
+    return view('admin.reservations.check', [
+      'enter_time' => $enter_time
+    ]);
+  }
+
   /**
    * Store a newly created resource in storage.
    *

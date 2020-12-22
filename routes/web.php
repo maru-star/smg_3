@@ -71,6 +71,9 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('clients', 'ClientsController');
     // 予約
     Route::resource('reservations', 'ReservationsController');
+    // 予約　（確認）
+    Route::get('reservations/create/check', 'ReservationsController@check')->name('reservations.check');
+
     // ajax アイテム
     Route::post('reservations/geteitems', 'ReservationsController@geteitems');
     // ajax 料金体系

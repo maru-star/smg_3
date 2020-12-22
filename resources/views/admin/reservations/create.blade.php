@@ -51,8 +51,9 @@
   <hr>
 </div>
 
+{{Form::open(['url' => 'admin/reservations/create/check', 'method' => 'GET'])}}
+@csrf
 <div class="container-field bg-white text-dark">
-
   <div class="row">
     <div class="col">
       <table class="table table-bordered">
@@ -61,12 +62,15 @@
         </tr>
         <tr>
           <td class="table-active">利用日</td>
-          <td><input id="datepicker1" type="text"></td>
+          <td>
+            {{-- <input id="datepicker1" type="text"> --}}
+            {{ Form::text('reserve_date', old('reserve_date'),['class'=>'form-control', 'id'=>'datepicker1', 'placeholder'=>'入力してください'] ) }}
+          </td>
         </tr>
         <tr>
           <td class="table-active">会場</td>
           <td>
-            <select id="venues_selector" class="hide">
+            <select id="venues_selector" class="hide form-control" name='venue_id'>
               <option value=""></option>
               @foreach ($venues as $venue)
               <option value="{{$venue->id}}">{{$venue->name_area}}{{$venue->name_bldg}}{{$venue->name_venue}}</option>
@@ -80,7 +84,7 @@
           <td class="table-active">入室時間</td>
           <td>
             <div>
-              <select name="sales_start" id="sales_start">
+              <select name="enter_time" id="enter_time" class="form-control">
                 <option selected disabled>選択してください</option>
                 @for ($start = 0*2; $start <=23*2; $start++) <option
                   value="{{date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))}}">
@@ -94,7 +98,7 @@
           <td class="table-active">退室時間</td>
           <td>
             <div>
-              <select name="sales_finish" id="sales_finish">
+              <select name="leave_time" id="leave_time" class="form-control">
                 <option selected disabled>選択してください</option>
                 @for ($start = 0*2; $start <=23*2; $start++) <option
                   value="{{date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))}}">
@@ -106,14 +110,21 @@
         </tr>
         <tr>
           <td>案内板</td>
-          <td>要作成</td>
+          <td>
+            <input type="radio" name="board_flag" value="0" checked="checked">無し
+            <input type="radio" name="board_flag" value="1">有り
+          </td>
         </tr>
         <tr>
           <td class="table-active">イベント開始時間</td>
           <td>
             <div>
-              <select name="event_start" id="event_start">
-                <option value="">選択してください</option>
+              <select name="event_start" id="event_start" class="form-control">
+                <option selected disabled>選択してください</option>
+                @for ($start = 0*2; $start <=23*2; $start++) <option
+                  value="{{date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))}}">
+                  {{date("H時i分", strtotime("00:00 +". $start * 30 ." minute"))}}</option>
+                  @endfor
               </select>
             </div>
           </td>
@@ -122,23 +133,36 @@
           <td class="table-active">イベント終了時間</td>
           <td>
             <div>
-              <select name="event_finish" id="event_finish">
-                <option value="">選択してください</option>
+              <select name="event_finish" id="event_finish" class="form-control">
+                <option selected disabled>選択してください</option>
+                @for ($start = 0*2; $start <=23*2; $start++) <option
+                  value="{{date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))}}">
+                  {{date("H時i分", strtotime("00:00 +". $start * 30 ." minute"))}}</option>
+                  @endfor
               </select>
             </div>
           </td>
         </tr>
         <tr>
           <td class="table-active">イベント名称1</td>
-          <td><input type="text" name="event_name1"></td>
+          <td>
+            {{-- <input type="text" name="event_name1"> --}}
+            {{ Form::text('event_name1', old('event_name1'),['class'=>'form-control', 'placeholder'=>'入力してください'] ) }}
+          </td>
         </tr>
         <tr>
           <td class="table-active">イベント名称2</td>
-          <td><input type="text" name="event_name2"></td>
+          <td>
+            {{-- <input type="text" name="event_name2"> --}}
+            {{ Form::text('event_name2', old('event_name2'),['class'=>'form-control', 'placeholder'=>'入力してください'] ) }}
+          </td>
         </tr>
         <tr>
           <td class="table-active">主催者名</td>
-          <td><input type="text" name="event_owner"></td>
+          <td>
+            {{-- <input type="text" name="event_owner"> --}}
+            {{ Form::text('event_owner', old('event_owner'),['class'=>'form-control', 'placeholder'=>'入力してください'] ) }}
+          </td>
         </tr>
       </table>
       <div class="equipemnts">
@@ -201,7 +225,6 @@
     </div>
     {{-- 右側 --}}
     <div class="col">
-      {{-- デフォルトでは、こちらが表示。顧客選択 --}}
       <div class="client_mater">　
         <table class="table table-bordered name-table">
           <tr>
@@ -215,9 +238,9 @@
             </td>
           </tr>
           <tr>
-            <td class="table-active"><label for="company">会社名・団体名</label></td>
+            <td class="table-active"><label for="user_id">会社名・団体名</label></td>
             <td>
-              <select class="form-control" name="company" id="user_select">
+              <select class="form-control" name="user_id" id="user_select">
                 <option disabled selected>選択してください</option>
                 @foreach ($users as $user)
                 <option value="{{$user->id}}">
@@ -229,11 +252,6 @@
           <tr>
             <td class="table-active"><label for="name">担当者氏名</label></td>
             <td>
-              <select class="form-control select2" name="name">
-                <option>山田太郎</option>
-                <option>山田太郎</option>
-                <option>山田太郎</option>
-              </select>
             </td>
           </tr>
         </table>
@@ -247,11 +265,17 @@
           </tr>
           <tr>
             <td class="table-active"><label for="ondayName">氏名</label></td>
-            <td><input class="form-control" name="ondayName" type="text" id="ondayName"></td>
+            <td>
+              {{-- <input class="form-control" name="ondayName" type="text" id="ondayName"> --}}
+              {{ Form::text('in_charge', old('in_charge'),['class'=>'form-control', 'placeholder'=>'入力してください'] ) }}
+            </td>
           </tr>
           <tr>
             <td class="table-active"><label for="mobilePhone">携帯番号</label></td>
-            <td><input class="form-control" name="mobilePhone" type="text" id="mobilePhone"></td>
+            <td>
+              {{-- <input class="form-control" name="mobilePhone" type="text" id="mobilePhone"> --}}
+              {{ Form::text('tel', old('tel'),['class'=>'form-control', 'placeholder'=>'入力してください'] ) }}
+            </td>
           </tr>
         </table>
       </div>
@@ -267,14 +291,8 @@
           <td class="table-active"><label for="sendMail">送信メール</label></td>
           <td>
             <div class="radio-box">
-              <div class="icheck-primary">
-                <input type="radio" id="sendMail" name="sendMail" checked>
-                <label for="sendMail">無し</label>
-              </div>
-              <div class="icheck-primary">
-                <input type="radio" id="sendMail" name="sendMail" checked>
-                <label for="sendMail">有り</label>
-              </div>
+              <input type="radio" name="email_flag" value="0" checked="checked">無し
+              <input type="radio" name="email_flag" value="1">有り
             </div>
           </td>
         </tr>
@@ -290,7 +308,8 @@
         <tr>
           <td class="table-active"><label for="sale">原価率</label></td>
           <td class="d-flex align-items-center">
-            <input class="form-control sales_percentage" name="sale" type="text" id="sale">%</td>
+            {{-- <input class="form-control sales_percentage" name="sale" type="text" id="sale">%</td> --}}
+            {{ Form::number('cost', old('cost'),['class'=>'form-control sales_percentage', 'placeholder'=>'入力してください'] ) }}%
         </tr>
       </table>
       <table class="table table-bordered note-table">
@@ -307,32 +326,35 @@
               <input type="checkbox" id="discount" checked>
               <label for="discount">割引条件</label>
             </p>
-            <textarea name="discount" rows="5"></textarea>
+            {{-- <textarea name="discount" rows="5"></textarea> --}}
+            {{ Form::textarea('discount_condition', old('discount_condition'),['class'=>'form-control', 'placeholder'=>'入力してください'] ) }}
           </td>
         </tr>
         <tr class="caution">
           <td>
             <label for="caution">注意事項</label>
-            <textarea name="caution" rows="10"></textarea>
+            {{-- <textarea name="caution" rows="10"></textarea> --}}
+            {{ Form::textarea('attention', old('attention'),['class'=>'form-control', 'placeholder'=>'入力してください'] ) }}
           </td>
         </tr>
         <tr>
           <td>
             <label for="userNote">顧客情報の備考</label>
-            <textarea name="userNote" rows="10"></textarea>
+            {{-- <textarea name="userNote" rows="10"></textarea> --}}
+            {{ Form::textarea('user_details', old('user_details'),['class'=>'form-control', 'placeholder'=>'入力してください'] ) }}
           </td>
         </tr>
         <tr>
           <td>
             <label for="adminNote">管理者備考</label>
-            <textarea name="adminNote" rows="10"></textarea>
+            {{-- <textarea name="adminNote" rows="10"></textarea> --}}
+            {{ Form::textarea('admin_details', old('admin_details'),['class'=>'form-control', 'placeholder'=>'入力してください'] ) }}
           </td>
         </tr>
       </table>
     </div>
   </div>
 </div>
-
 
 
 {{-- 丸岡さんカスタム --}}
@@ -581,10 +603,27 @@
   </dl>
   </div>
 </section>
-<div class="btn_wrapper text-center">
-  {{-- <p class="text-center"><a class="more_btn_lg" href="">予約登録する</a></p> --}}
-  <button class="btn btn-primary more_btn_lg">予約登録する</button>
-</div>
+{{-- <div class="btn_wrapper text-center"> --}}
+{{-- <button class="btn btn-primary more_btn_lg">予約登録する</button> --}}
+{{-- </div> --}}
+
+
+
+{{ Form::hidden('payment_limit', old('payment_limit'),)}}
+{{ Form::hidden('paid', 0, ) }} {{--デフォ0で未入金--}}
+{{ Form::hidden('reservation_status', 0, ) }}
+{{ Form::hidden('double_check_status', 0, ) }}
+
+{{ Form::hidden('bill_company', old('bill_company'), ) }}
+{{ Form::hidden('bill_person', old('bill_person'), ) }}
+{{ Form::hidden('bill_created_at', old('bill_created_at'), ) }}
+{{ Form::hidden('bill_pay_limit', old('bill_pay_limit'), ) }}
+
+{{Form::submit('送信', ['class'=>'btn btn-primary btn-block'])}}
+
+{{Form::close()}}
+
+
 
 
 

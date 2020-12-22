@@ -9,7 +9,6 @@ class Reservation extends Model
   protected $fillable = [
     'venue_id',
     'user_id',
-    'name',
     'reserve_date',
     'enter_time',
     'leave_time',
@@ -27,13 +26,25 @@ class Reservation extends Model
     'attention',
     'user_details',
     'admin_details',
+    'payment_limit',
+    'paid',
     'reservation_status',
     'double_check_status',
     'double_check1_name',
     'double_check2_name',
-    'payment_limit'
+    'bill_company',
+    'bill_person',
+    'bill_created_at',
+    'bill_pay_limit',
+    'bill_remark',
   ];
-  protected $dates = ['reserve_date', 'payment_limit']; //formatで使用できるようにするため 参考https://readouble.com/laravel/6.x/ja/eloquent-mutators.html
+  protected $dates = [
+    'reserve_date',
+    'payment_limit',
+    'bill_created_at',
+    'bill_pay_limit',
+  ];
+  //formatで使用できるようにするため 参考https://readouble.com/laravel/6.x/ja/eloquent-mutators.html
 
 
   /*
