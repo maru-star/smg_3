@@ -7,8 +7,34 @@ use Illuminate\Database\Eloquent\Model;
 class Reservation extends Model
 {
   protected $fillable = [
-    'venue_id', 'user_id', 'name',
+    'venue_id',
+    'user_id',
+    'name',
+    'reserve_date',
+    'enter_time',
+    'leave_time',
+    'event_start',
+    'event_finish',
+    'event_name1',
+    'event_name2',
+    'event_owner',
+    'email_flag',
+    'in_charge',
+    'tel',
+    'email_send',
+    'cost',
+    'discount_condition',
+    'attention',
+    'user_details',
+    'admin_details',
+    'reservation_status',
+    'double_check_status',
+    'double_check1_name',
+    'double_check2_name',
+    'payment_limit'
   ];
+  protected $dates = ['reserve_date', 'payment_limit']; //formatで使用できるようにするため 参考https://readouble.com/laravel/6.x/ja/eloquent-mutators.html
+
 
   /*
 |--------------------------------------------------------------------------

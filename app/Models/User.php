@@ -69,7 +69,7 @@ class User extends Authenticatable
 
   /*
 |--------------------------------------------------------------------------
-| 会場と予約の多対多
+| 会場と予約の一対多
 |--------------------------------------------------------------------------|
 */
 
@@ -78,10 +78,8 @@ class User extends Authenticatable
     return $this->hasMany(Reservation::class);
   }
 
-  // public function agents()
-  // {
-  //   return $this->belongsToMany('App\Models\Agent')->withTimestamps();
-  // }
+
+
 
   public function searchs(
     $freeword,

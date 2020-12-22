@@ -89,5 +89,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
     Route::post('reservations/getluggage', 'ReservationsController@getluggage');
     // ajax 会場　直営 or 提携　判別
     Route::post('reservations/getoperation', 'ReservationsController@getoperation');
+    // ajax 会場　直営 or 提携　判別
+    Route::post('clients/getclients', 'ClientsController@getclients');
   });
 });

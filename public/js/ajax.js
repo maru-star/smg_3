@@ -22,7 +22,25 @@ $(function () {
     var venue_id = $('#venues_selector').val();
     // ajaxGetItems(venue_id);
     // ajaxGetSalesHours(venue_id, dates);　管理者は24時間予約登録可能。そのため一旦、本機能停止
+
+    if ($('.select2-hidden-accessible').val() != null) { //顧客が選択されていたら、支払い期日抽出
+      var user_id = $('.select2-hidden-accessible').val();
+      ajaxGetClients(user_id);
+    }
   });
+
+  // 顧客選択トリガー
+  $('.select2-hidden-accessible').on('change', function () {
+    var user_id = $(this).val();//user_idを取得
+    if ($('#datepicker1').val() == '') {
+      swal('予約の支払期日設定に失敗しました。必ず【利用日】を選択してください');
+      $('.select2-hidden-accessible').val('');
+      $('.select2-selection__rendered').text('');
+      alert(user_id);
+    } else {
+      ajaxGetClients(user_id);
+    }
+  })
 
   /*--------------------------------------------------
   // 計算するボタン押下トリガー
@@ -524,11 +542,54 @@ $(function () {
       },
     })
       .done(function ($operaions) {
+        $('.sales_percentage').val('');
         $('.sales_percentage').val($operaions);
       })
       .fail(function ($operaions) {
         $('#fullOverlay').css('display', 'none');
         swal('会場の運営形態の取得に失敗しました');
+      });
+  };
+
+
+  // 顧客　情報　取得
+  function ajaxGetClients($user_id) {
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      url: '/admin/clients/getclients',
+      type: 'POST',
+      data: {
+        'user_id': $user_id
+      },
+      dataType: 'json',
+      beforeSend: function () {
+        $('#fullOverlay').css('display', 'block');
+      },
+    })
+      .done(function ($user_results) {
+        $('#fullOverlay').css('display', 'none');
+        // 1. ３営業日前　2. 当月末　3. 翌月末 のいずれかで返ってくる
+        var s_date = $('#datepicker1').val();
+        if ($user_results == 1) {
+          var dt = new Date(s_date);
+          var three_days_before = dt.setDate(dt.getDate() - 3); //営業日前
+          three_days_before = new Date(three_days_before);
+          alert(three_days_before);
+        } else if ($user_results == 2) {
+          var dt = new Date(s_date);
+          var end_of_month = new Date(dt.getFullYear(), dt.getMonth() + 1, 0);　//当月末日
+          alert(end_of_month);
+        } else if ($user_results == 3) {
+          var dt = new Date(s_date);
+          var end_of_next_month = new Date(dt.getFullYear(), dt.getMonth() + 2, 0);
+          alert(end_of_next_month);
+        };
+      })
+      .fail(function ($user_results) {
+        $('#fullOverlay').css('display', 'none');
+        swal('顧客情報の取得に失敗しました。');
       });
   };
 

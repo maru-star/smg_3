@@ -187,4 +187,15 @@ class ClientsController extends Controller
 
     return redirect('admin/clients');
   }
+
+  /***********************
+   * ajax 顧客情報　取得
+   **********************
+   */
+  public function getclients(Request $request)
+  {
+    $user_id = $request->user_id;
+    $user = User::find($user_id);
+    return $user->pay_limit; //1. ３営業日前　2. 当月末　3. 翌月末
+  }
 }
