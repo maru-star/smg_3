@@ -1,6 +1,4 @@
-// reservation create　会場選択からの備品取得
-// 以下参考
-// https://niwacan.com/1619-laravel-ajax/
+// reservation create　会場選択からの備品取得// 以下参考// https://niwacan.com/1619-laravel-ajax/
 $(function () {
   // 会場選択トリガー
   $('#venues_selector').on('change', function () {
@@ -17,9 +15,6 @@ $(function () {
     var hidden_venue = $('input[name="bill_company"]');
     var target_venue_id = $(this).val();
     hidden_venue.val(target_venue_id);
-
-
-
   });
 
   // 日付選択トリガー
@@ -210,33 +205,36 @@ $(function () {
     })
       .done(function ($prices) {
         $('#fullOverlay').css('display', 'none');
-        $('.price_selector').html(''); //一旦初期化
-        // if ($prices[0] != 0 && $prices[1] != 0) {
-        //   $('.price_selector').append("<div> <small>※料金体系を選択してください</small> </div> <div class='form-inline'> <small class='mr-4'><input type='radio' name='price_system' value='1' checked='checked'>通常(枠貸し)</small> <small><input type='radio' name='price_system' value=' 2'>アクセア(時間貸し)</small> </div>")
-        // } else if ($prices[0] == 0 && $prices[1] == 0) {
-        //   swal('登録された料金体系がありません。会場管理/料金管理 にて作成してください');
-        // }
-        // else {
-        //   $('.price_selector').html('');
-        // }
         if ($prices[0].length > 0 && $prices[1].length > 0) { //配列の空チェック
           //どちらも配列ある
-          $('.price_selector').append("<div> <small>※料金体系を選択してください</small> </div> <div class='form-inline'> <small class='mr-4'><input type='radio' name='price_system' value='1'>通常(枠貸し)</small> <small><input type='radio' name='price_system' value=' 2'>アクセア(時間貸し)</small> </div>")
+          $('#price_system_radio1').prop('checked', false).prop('disabled', false); //初期化
+          $('#price_system_radio2').prop('checked', false).prop('disabled', false); //初期化
         } else if ($prices[0].length > 0 && $prices[1].length == 0) {
           //時間枠がある・アクセアがない
-          $('.price_selector').append("<div> <small>※料金体系</small> </div> <div class='form-inline'> <small class='mr-4'><input type='radio' name='price_system' value='1' checked='checked'>通常(枠貸し)</small></div>")
+          $('#price_system_radio1').prop('checked', false).prop('disabled', false); //初期化
+          $('#price_system_radio2').prop('checked', false).prop('disabled', false); //初期化
+          $('#price_system_radio1').prop('checked', true);
+          $('#price_system_radio2').prop('disabled', true);
         } else if ($prices[0].length == 0 && $prices[1].length > 0) {
           //時間枠がない・アクセアがある
-          $('.price_selector').append("<div> <small>※料金体系</small> </div> <div class='form-inline'> <small class='mr-4'><input type='radio' name='price_system' value='2' checked='checked'>アクセア(時間貸し)</small></div>")
+          $('#price_system_radio1').prop('checked', false).prop('disabled', false); //初期化
+          $('#price_system_radio2').prop('checked', false).prop('disabled', false); //初期化
+          $('#price_system_radio2').prop('checked', true);
+          $('#price_system_radio1').prop('disabled', true);
         } else {
           // どちらも配列がない
           swal('選択した会場は登録された料金体系がありません。会場管理/料金管理 にて作成してください');
+          $('#price_system_radio1').prop('checked', false).prop('disabled', true); //初期化
+          $('#price_system_radio2').prop('checked', false).prop('disabled', true); //初期化
         }
       })
       .fail(function ($prices) {
         $('#fullOverlay').css('display', 'none');
-        $('.price_selector').html('');
+        // $('.price_selector').html('');
         console.log('失敗したよ');
+        $('#price_system_radio1').prop('checked', false).prop('disabled', true); //初期化
+        $('#price_system_radio2').prop('checked', false).prop('disabled', true); //初期化
+
       });
   };
 
@@ -612,50 +610,17 @@ $(function () {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 });
+
+
+
+
+
+
+
+
+
+
 
 
 

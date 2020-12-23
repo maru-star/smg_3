@@ -199,7 +199,7 @@ class ReservationsController extends Controller
 
   public function check(Request $request)
   {
-    $reserve_date = $request->enter_time;
+    $reserve_date = $request->reserve_date;
     $venue_id = $request->venue_id;
     $enter_time = $request->enter_time;
     $leave_time = $request->leave_time;
@@ -265,7 +265,61 @@ class ReservationsController extends Controller
    */
   public function store(Request $request)
   {
-    //
+    // $this->validate($request, [
+    //   'reserve_date' => ['required', 'max:191'],
+    //   'venue_id' => ['required', 'max:191'],
+    //   'enter_time' => ['required', 'max:191'],
+    //   'leave_time' => ['required', 'max:191'],
+    //   'board_flag' => ['required', 'max:191'],
+    //   'event_start' => ['required', 'max:191'],
+    //   'event_finish' => ['required', 'max:191'],
+    //   'event_name1' => ['required', 'max:191'],
+    //   'event_name2' => ['required', 'max:191'],
+    //   'event_owner' => 'required',
+    //   'user_id' => 'required',
+    //   'in_charge' => 'required',
+    //   'tel' => ['required', 'max:191'],
+    //   'email_flag' => ['required', 'max:191'],
+    //   'cost' => 'required',
+    //   'payment_limit' => 'required',
+    //   'paid' => 'required',
+    //   'reservation_status' => 'required',
+    //   'double_check_status' => ['required', 'max:191'],
+    //   'bill_company' => 'required',
+    //   'bill_person' => 'required',
+    //   'bill_created_at' => 'required',
+    //   'bill_pay_limit' => 'required',
+    // ]);
+
+    var_dump($request->all());
+
+    $reservation = new Reservation;
+    $reservation->reserve_date = $request->reserve_date;
+    $reservation->venue_id = $request->venue_id;
+    $reservation->enter_time = $request->enter_time;
+    $reservation->leave_time = $request->leave_time;
+    $reservation->board_flag = $request->board_flag;
+    $reservation->event_start = $request->event_start;
+    $reservation->event_start = $request->event_start;
+    $reservation->event_finish = $request->event_finish;
+    $reservation->event_name1 = $request->event_name1;
+    $reservation->event_name2 = $request->event_name2;
+    $reservation->event_owner = $request->event_owner;
+    $reservation->user_id = $request->user_id;
+    $reservation->in_charge = $request->in_charge;
+    $reservation->tel = $request->tel;
+    $reservation->email_flag = $request->email_flag;
+    $reservation->cost = $request->cost;
+    $reservation->payment_limit = $request->payment_limit;
+    $reservation->paid = $request->paid;
+    $reservation->reservation_status = $request->reservation_status;
+    $reservation->double_check_status = $request->double_check_status;
+    $reservation->bill_company = $request->bill_company;
+    $reservation->bill_person = $request->bill_person;
+    $reservation->bill_created_at = $request->bill_created_at;
+    $reservation->bill_pay_limit = $request->bill_pay_limit;
+
+    $reservation->save();
   }
 
   /**

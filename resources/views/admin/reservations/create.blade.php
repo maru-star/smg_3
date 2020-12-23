@@ -1,6 +1,8 @@
 @extends('layouts.admin.app')
 @section('content')
 
+{{var_dump(old())}}
+
 <link href="{{ asset('/css/template.css') }}" rel="stylesheet">
 <script src="{{ asset('/js/template.js') }}"></script>
 <script src="{{ asset('/js/ajax.js') }}"></script>
@@ -51,7 +53,7 @@
   <hr>
 </div>
 
-{{Form::open(['url' => 'admin/reservations/create/check', 'method' => 'GET'])}}
+{{Form::open(['url' => 'admin/reservations/create/check', 'method' => 'POST'])}}
 @csrf
 <div class="container-field bg-white text-dark">
   <div class="row">
@@ -70,13 +72,30 @@
         <tr>
           <td class="table-active">会場</td>
           <td>
-            <select id="venues_selector" class="hide form-control" name='venue_id'>
-              <option value=""></option>
+            <select id="venues_selector" class=" form-control" name='venue_id'>
+              <option value="#" disabled selected>選択してください</option>
               @foreach ($venues as $venue)
               <option value="{{$venue->id}}">{{$venue->name_area}}{{$venue->name_bldg}}{{$venue->name_venue}}</option>
               @endforeach
             </select>
             <div class="price_selector">
+              <div>
+                <small>※料金体系を選択してください</small>
+              </div>
+              <div class='price_radio_selector'>
+                {{-- <input type='radio' name='price_system' value='1'>通常(枠貸し) --}}
+                <div class="d-flex justfy-content-start align-items-center">
+                  {{ Form::radio('price_system', 1, old('price_system')==1?true:false, ['class'=>'mr-2', 'id'=>'price_system_radio1']) }}
+                  {{Form::label('price_system_radio1','通常（枠貸）')}}
+                </div>
+                <div class="d-flex justfy-content-start align-items-center">
+                  {{ Form::radio('price_system', 2, old('price_system')==2?true:false, ['class'=>'mr-2','id'=>'price_system_radio2']) }}
+                  {{Form::label('price_system_radio2','アクセア（時間貸）')}}
+                </div>
+
+                {{-- <input type='radio' name='price_system' value=' 2'>アクセア(時間貸し) --}}
+                {{-- {{Form::radio('price_system', 'アクセア(時間貸し)', false, ['class'=>''])}} --}}
+              </div>
             </div>
           </td>
         </tr>
@@ -84,7 +103,7 @@
           <td class="table-active">入室時間</td>
           <td>
             <div>
-              <select name="enter_time" id="enter_time" class="form-control">
+              <select name="enter_time" id="sales_start" class="form-control">
                 <option selected disabled>選択してください</option>
                 @for ($start = 0*2; $start <=23*2; $start++) <option
                   value="{{date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))}}">
@@ -98,7 +117,7 @@
           <td class="table-active">退室時間</td>
           <td>
             <div>
-              <select name="leave_time" id="leave_time" class="form-control">
+              <select name="leave_time" id="sales_finish" class="form-control">
                 <option selected disabled>選択してください</option>
                 @for ($start = 0*2; $start <=23*2; $start++) <option
                   value="{{date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))}}">
@@ -221,7 +240,7 @@
       </div>
       <div class="price_details">
       </div>
-      <button id='calculate' class="btn btn-primary">計算する！！！！</button>
+      <div id='calculate' class="btn btn-primary">計算する！！！！</div>
     </div>
     {{-- 右側 --}}
     <div class="col">
