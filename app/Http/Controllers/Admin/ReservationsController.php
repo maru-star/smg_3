@@ -8,8 +8,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Reservation;
 use App\Models\Venue;
 use App\Models\User;
+use App\Models\Bill;
 
 use Carbon\Carbon;
+
+use Illuminate\Support\Facades\DB; //トランザクション用
+
 
 
 class ReservationsController extends Controller
@@ -226,6 +230,12 @@ class ReservationsController extends Controller
     $bill_person = $request->bill_person;
     $bill_created_at = $request->bill_created_at;
     $bill_pay_limit = $request->bill_pay_limit;
+    // test
+    $reservation_id = 1;
+    $sub_total = 5000;
+    $tax = 500;
+    $total = 5500;
+    // test
     return view('admin.reservations.check', [
       'reserve_date' => $reserve_date,
       'venue_id' => $venue_id,
@@ -254,6 +264,11 @@ class ReservationsController extends Controller
       'bill_person' => $bill_person,
       'bill_created_at' => $bill_created_at,
       'bill_pay_limit' => $bill_pay_limit,
+
+      'reservation_id' => $reservation_id,
+      'sub_total' => $sub_total,
+      'tax' => $tax,
+      'total' => $total,
     ]);
   }
 
@@ -290,36 +305,42 @@ class ReservationsController extends Controller
     //   'bill_created_at' => 'required',
     //   'bill_pay_limit' => 'required',
     // ]);
+    return DB::transaction(function () use ($request) {
+      $reservation = new Reservation;
+      $reservation->reserve_date = $request->reserve_date;
+      $reservation->venue_id = $request->venue_id;
+      $reservation->enter_time = $request->enter_time;
+      $reservation->leave_time = $request->leave_time;
+      $reservation->board_flag = $request->board_flag;
+      $reservation->event_start = $request->event_start;
+      $reservation->event_start = $request->event_start;
+      $reservation->event_finish = $request->event_finish;
+      $reservation->event_name1 = $request->event_name1;
+      $reservation->event_name2 = $request->event_name2;
+      $reservation->event_owner = $request->event_owner;
+      $reservation->user_id = $request->user_id;
+      $reservation->in_charge = $request->in_charge;
+      $reservation->tel = $request->tel;
+      $reservation->email_flag = $request->email_flag;
+      $reservation->cost = $request->cost;
+      $reservation->payment_limit = $request->payment_limit;
+      $reservation->paid = $request->paid;
+      $reservation->reservation_status = $request->reservation_status;
+      $reservation->double_check_status = $request->double_check_status;
+      $reservation->bill_company = $request->bill_company;
+      $reservation->bill_person = $request->bill_person;
+      $reservation->bill_created_at = $request->bill_created_at;
+      $reservation->bill_pay_limit = $request->bill_pay_limit;
 
-    var_dump($request->all());
+      $reservation->save();
 
-    $reservation = new Reservation;
-    $reservation->reserve_date = $request->reserve_date;
-    $reservation->venue_id = $request->venue_id;
-    $reservation->enter_time = $request->enter_time;
-    $reservation->leave_time = $request->leave_time;
-    $reservation->board_flag = $request->board_flag;
-    $reservation->event_start = $request->event_start;
-    $reservation->event_start = $request->event_start;
-    $reservation->event_finish = $request->event_finish;
-    $reservation->event_name1 = $request->event_name1;
-    $reservation->event_name2 = $request->event_name2;
-    $reservation->event_owner = $request->event_owner;
-    $reservation->user_id = $request->user_id;
-    $reservation->in_charge = $request->in_charge;
-    $reservation->tel = $request->tel;
-    $reservation->email_flag = $request->email_flag;
-    $reservation->cost = $request->cost;
-    $reservation->payment_limit = $request->payment_limit;
-    $reservation->paid = $request->paid;
-    $reservation->reservation_status = $request->reservation_status;
-    $reservation->double_check_status = $request->double_check_status;
-    $reservation->bill_company = $request->bill_company;
-    $reservation->bill_person = $request->bill_person;
-    $reservation->bill_created_at = $request->bill_created_at;
-    $reservation->bill_pay_limit = $request->bill_pay_limit;
-
-    $reservation->save();
+      $reservation->bills()->create([
+        'reservation_id' => $request->reservation_id,
+        'sub_total' => $request->sub_total,
+        'tax' => $request->tax,
+        'total' => $request->total,
+      ]);
+    });
   }
 
   /**

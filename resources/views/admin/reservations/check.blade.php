@@ -193,6 +193,14 @@
 
 </div>
 
+
+{{-- test --}}
+{{ Form::text('reservation_id', $reservation_id,['class'=>''] ) }}
+{{ Form::text('sub_total', $sub_total,['class'=>''] ) }}
+{{ Form::text('tax', $tax,['class'=>''] ) }}
+{{ Form::text('total', $total,['class'=>''] ) }}
+{{-- test --}}
+
 <a href="#" class="btn btn-danger">戻る</a>
 {!! Form::submit('登録', ['class' => 'btn btn-primary']) !!}
 {{ Form::close() }}

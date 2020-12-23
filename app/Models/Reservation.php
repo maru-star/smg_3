@@ -66,4 +66,14 @@ class Reservation extends Model
   {
     return $this->belongsTo(Venue::class);
   }
+
+  /*
+|--------------------------------------------------------------------------
+| Billsとの一対多
+|--------------------------------------------------------------------------|
+*/
+  public function bills()
+  {
+    return $this->hasMany(Bill::class);
+  }
 }
