@@ -288,7 +288,7 @@
           </td>
         </tr>
         <tr>
-          <td class="table-active"><label for="sendMail">送信メール</label></td>
+          <td class="table-active"><label for="email_flag">送信メール</label></td>
           <td>
             <div class="radio-box">
               <input type="radio" name="email_flag" value="0" checked="checked">無し
@@ -306,7 +306,7 @@
           </td>
         </tr>
         <tr>
-          <td class="table-active"><label for="sale">原価率</label></td>
+          <td class="table-active"><label for="cost">原価率</label></td>
           <td class="d-flex align-items-center">
             {{-- <input class="form-control sales_percentage" name="sale" type="text" id="sale">%</td> --}}
             {{ Form::number('cost', old('cost'),['class'=>'form-control sales_percentage', 'placeholder'=>'入力してください'] ) }}%

@@ -230,7 +230,6 @@ class ReservationsController extends Controller
       'reserve_date' => $reserve_date,
       'venue_id' => $venue_id,
       'enter_time' => $enter_time,
-      'enter_time' => $enter_time,
       'leave_time' => $leave_time,
       'board_flag' => $board_flag,
       'event_start' => $event_start,
