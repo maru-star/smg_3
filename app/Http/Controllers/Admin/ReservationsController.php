@@ -191,14 +191,33 @@ class ReservationsController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function create()
+  public function create(Request $request)
   {
     $venues = Venue::select('name_area', 'name_bldg', 'name_venue', 'id')->get();
     $users = User::all();
-    return view('admin.reservations.create', [
-      'venues' => $venues,
-      'users' => $users,
-    ]);
+
+    $target = $request->all();
+
+    if ($target != null) {
+      return view('admin.reservations.create', [
+        'venues' => $venues,
+        'users' => $users,
+        'request' => $request,
+      ]);
+    } else {
+      return view('admin.reservations.create', [
+        'venues' => $venues,
+        'users' => $users,
+      ]);
+    }
+
+
+    // return view('admin.reservations.create', [
+    //   'venues' => $venues,
+    //   'users' => $users,
+    //   'reserve_date' => $reserve_date,
+    //   'venue_id' => $venue_id,
+    // ]);
   }
 
   public function check(Request $request)
@@ -231,7 +250,7 @@ class ReservationsController extends Controller
     $bill_created_at = $request->bill_created_at;
     $bill_pay_limit = $request->bill_pay_limit;
     // test
-    $reservation_id = 1;
+    // $reservation_id = new Reservation;
     $sub_total = 5000;
     $tax = 500;
     $total = 5500;
@@ -265,7 +284,7 @@ class ReservationsController extends Controller
       'bill_created_at' => $bill_created_at,
       'bill_pay_limit' => $bill_pay_limit,
 
-      'reservation_id' => $reservation_id,
+      // 'reservation_id' => $reservation_id,
       'sub_total' => $sub_total,
       'tax' => $tax,
       'total' => $total,
@@ -335,7 +354,7 @@ class ReservationsController extends Controller
       $reservation->save();
 
       $reservation->bills()->create([
-        'reservation_id' => $request->reservation_id,
+        'reservation_id' => $reservation->id,
         'sub_total' => $request->sub_total,
         'tax' => $request->tax,
         'total' => $request->total,

@@ -1,11 +1,14 @@
 // reservation create　会場選択からの備品取得// 以下参考// https://niwacan.com/1619-laravel-ajax/
 $(function () {
-  // 会場選択トリガー
-  $('#venues_selector').on('change', function () {
-    var dates = $('#datepicker1').val();
-    var venue_id = $('#venues_selector').val();
-    $('#sales_start').val(0);
-    $('#sales_finish').val(0);
+  ////////////////////
+  // ロードトリガー
+  ////////////////////
+  var venue_id = $('#venues_selector').val();
+
+  // requestに会場が入っていれば
+  if (venue_id) { //空じゃなければ
+    $('#sales_start').val();
+    $('#sales_finish').val();
     ajaxGetItems(venue_id);
     // ajaxGetSalesHours(venue_id, dates);　管理者は24時間予約登録可能。そのため一旦、本機能停止
     ajaxGetPriceStstem(venue_id);
@@ -15,6 +18,55 @@ $(function () {
     var hidden_venue = $('input[name="bill_company"]');
     var target_venue_id = $(this).val();
     hidden_venue.val(target_venue_id);
+  }
+
+  //requestに顧客情報があれば
+  var client_id=$('#user_select').val();
+  var date=$('#datepicker1').val();
+
+  if (client_id == 1) {
+    var dt = new Date(date);
+    var three_days_before = dt.setDate(dt.getDate() - 3); //営業日前
+    three_days_before = new Date(three_days_before);
+    var target_name = $('input[name="payment_limit"]');
+    var target_name2 = $('input[name="bill_pay_limit"]');
+    target_name.val(three_days_before.getFullYear() + '-' + (('0' + (three_days_before.getMonth() + 1)).slice(-2)) + '-' + (('0' + three_days_before.getDate()).slice(-2)));
+    target_name2.val(three_days_before.getFullYear() + '-' + (('0' + (three_days_before.getMonth() + 1)).slice(-2)) + '-' + (('0' + three_days_before.getDate()).slice(-2)));
+  } else if (client_id == 2) {
+    var dt = new Date(date);
+    var end_of_month = new Date(dt.getFullYear(), dt.getMonth() + 1, 0);　//当月末日
+    var target_name = $('input[name="payment_limit"]');
+    var target_name2 = $('input[name="bill_pay_limit"]');
+    target_name.val(end_of_month.getFullYear() + '-' + (('0' + (end_of_month.getMonth() + 1)).slice(-2)) + '-' + (('0' + end_of_month.getDate()).slice(-2)));
+    target_name2.val(end_of_month.getFullYear() + '-' + (('0' + (end_of_month.getMonth() + 1)).slice(-2)) + '-' + (('0' + end_of_month.getDate()).slice(-2)));
+  } else if (client_id == 3) {
+    var dt = new Date(date);
+    var end_of_next_month = new Date(dt.getFullYear(), dt.getMonth() + 2, 0);
+    var target_name = $('input[name="payment_limit"]');
+    var target_name2 = $('input[name="bill_pay_limit"]');
+    target_name.val(end_of_next_month.getFullYear() + '-' + (('0' + (end_of_next_month.getMonth() + 1)).slice(-2)) + '-' + (('0' + end_of_next_month.getDate()).slice(-2)));
+    target_name2.val(end_of_next_month.getFullYear() + '-' + (('0' + (end_of_next_month.getMonth() + 1)).slice(-2)) + '-' + (('0' + end_of_next_month.getDate()).slice(-2)));
+  };
+
+
+
+
+
+  // 会場選択トリガー
+  $('#venues_selector').on('change', function () {
+    var dates = $('#datepicker1').val();
+    var venue_id = $('#venues_selector').val();
+    $('#sales_start').val();
+    $('#sales_finish').val();
+    ajaxGetItems(venue_id);
+    // ajaxGetSalesHours(venue_id, dates);　管理者は24時間予約登録可能。そのため一旦、本機能停止
+    ajaxGetPriceStstem(venue_id);
+    ajaxGetLayout(venue_id); //レイアウトが存在するかしないか、　"0"か"1"でreturn
+    ajaxGetLuggage(venue_id); //会場に荷物預かりが存在するかしないか、　"0"か"1"でreturn
+    ajaxGetOperatinSystem(venue_id); //会場形態の判別 直営 or　提携
+    // var hidden_venue = $('input[name="bill_company"]');
+    // var target_venue_id = $(this).val();
+    // hidden_venue.val(target_venue_id);
   });
 
   // 日付選択トリガー
@@ -40,6 +92,10 @@ $(function () {
       alert(user_id);
     } else {
       ajaxGetClients(user_id);
+      var hidden_venue = $('input[name="bill_company"]');
+      var target_venue_id = $(this).val();
+      hidden_venue.val(target_venue_id);
+      
     }
   })
 
@@ -94,6 +150,11 @@ $(function () {
       $('.all-total-without-tax').text(all_totals);
       $('.all-total-tax').text(only_tax);
       $('.all-total-amout').text(Number(all_totals) + Number(only_tax));
+
+      // 以下hidden
+      $('#sub_total').val(all_totals);
+      $('#tax').val(only_tax);
+      $('#total').val(Number(all_totals) + Number(only_tax));
     }, 1000);
   });
 

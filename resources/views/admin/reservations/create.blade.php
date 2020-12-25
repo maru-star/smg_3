@@ -65,16 +65,21 @@
           <td class="table-active">利用日</td>
           <td>
             {{-- <input id="datepicker1" type="text"> --}}
-            {{ Form::text('reserve_date', old('reserve_date'),['class'=>'form-control', 'id'=>'datepicker1', 'placeholder'=>'入力してください'] ) }}
+            {{ Form::text('reserve_date', isset($request)?$request->reserve_date:'' ,['class'=>'form-control', 'id'=>'datepicker1', 'placeholder'=>'入力してください'] ) }}
           </td>
         </tr>
         <tr>
           <td class="table-active">会場</td>
           <td>
             <select id="venues_selector" class=" form-control" name='venue_id'>
-              <option value="#" disabled selected>選択してください</option>
+              <option value='#'>選択してください</option>
               @foreach ($venues as $venue)
-              <option value="{{$venue->id}}">{{$venue->name_area}}{{$venue->name_bldg}}{{$venue->name_venue}}</option>
+              <option value="{{$venue->id}}" @if (isset($request->venue_id)) 
+                @if ($request->venue_id==$venue->id)
+                selected
+                @endif
+                @endif
+                >{{$venue->name_area}}{{$venue->name_bldg}}{{$venue->name_venue}}</option>
               @endforeach
             </select>
             <div class="price_selector">
@@ -82,18 +87,14 @@
                 <small>※料金体系を選択してください</small>
               </div>
               <div class='price_radio_selector'>
-                {{-- <input type='radio' name='price_system' value='1'>通常(枠貸し) --}}
                 <div class="d-flex justfy-content-start align-items-center">
-                  {{ Form::radio('price_system', 1, old('price_system')==1?true:false, ['class'=>'mr-2', 'id'=>'price_system_radio1']) }}
+                  {{ Form::radio('price_system', 1, isset($request->price_system)?$request->price_system==1?true:false:'', ['class'=>'mr-2', 'id'=>'price_system_radio1']) }}
                   {{Form::label('price_system_radio1','通常（枠貸）')}}
                 </div>
                 <div class="d-flex justfy-content-start align-items-center">
-                  {{ Form::radio('price_system', 2, old('price_system')==2?true:false, ['class'=>'mr-2','id'=>'price_system_radio2']) }}
+                  {{ Form::radio('price_system', 2, isset($request->price_system)?$request->price_system==2?true:false:'', ['class'=>'mr-2','id'=>'price_system_radio2']) }}
                   {{Form::label('price_system_radio2','アクセア（時間貸）')}}
                 </div>
-
-                {{-- <input type='radio' name='price_system' value=' 2'>アクセア(時間貸し) --}}
-                {{-- {{Form::radio('price_system', 'アクセア(時間貸し)', false, ['class'=>''])}} --}}
               </div>
             </div>
           </td>
@@ -103,10 +104,17 @@
           <td>
             <div>
               <select name="enter_time" id="sales_start" class="form-control">
-                <option selected disabled>選択してください</option>
+                <option disabled>選択してください</option>
                 @for ($start = 0*2; $start <=23*2; $start++) <option
-                  value="{{date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))}}">
-                  {{date("H時i分", strtotime("00:00 +". $start * 30 ." minute"))}}</option>
+                  value="{{date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))}}" 
+                  @if (isset($request)) 
+                  @if($request->enter_time==(date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))))
+                   selected
+                  @endif
+                  @endif
+                  >
+                  {{date("H時i分", strtotime("00:00 +". $start * 30 ." minute"))}}
+                  </option>
                   @endfor
               </select>
             </div>
@@ -117,9 +125,15 @@
           <td>
             <div>
               <select name="leave_time" id="sales_finish" class="form-control">
-                <option selected disabled>選択してください</option>
+                <option  disabled>選択してください</option>
                 @for ($start = 0*2; $start <=23*2; $start++) <option
-                  value="{{date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))}}">
+                  value="{{date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))}}"
+                  @if (isset($request)) 
+                  @if($request->leave_time==(date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))))
+                   selected
+                  @endif
+                  @endif
+                  >
                   {{date("H時i分", strtotime("00:00 +". $start * 30 ." minute"))}}</option>
                   @endfor
               </select>
@@ -129,8 +143,8 @@
         <tr>
           <td>案内板</td>
           <td>
-            <input type="radio" name="board_flag" value="0" checked="checked">無し
-            <input type="radio" name="board_flag" value="1">有り
+            <input type="radio" name="board_flag" value="0" {{isset($request->board_flag)?$request->board_flag==0?'checked':'':'',}}>無し
+            <input type="radio" name="board_flag" value="1" {{isset($request->board_flag)?$request->board_flag==1?'checked':'':'',}} >有り
           </td>
         </tr>
         <tr>
@@ -140,7 +154,13 @@
               <select name="event_start" id="event_start" class="form-control">
                 <option selected disabled>選択してください</option>
                 @for ($start = 0*2; $start <=23*2; $start++) <option
-                  value="{{date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))}}">
+                  value="{{date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))}}"
+                  @if (isset($request)) 
+                  @if($request->event_start==(date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))))
+                   selected
+                  @endif
+                  @endif
+                  >
                   {{date("H時i分", strtotime("00:00 +". $start * 30 ." minute"))}}</option>
                   @endfor
               </select>
@@ -154,7 +174,13 @@
               <select name="event_finish" id="event_finish" class="form-control">
                 <option selected disabled>選択してください</option>
                 @for ($start = 0*2; $start <=23*2; $start++) <option
-                  value="{{date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))}}">
+                  value="{{date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))}}"
+                  @if (isset($request)) 
+                  @if($request->event_finish==(date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))))
+                   selected
+                  @endif
+                  @endif
+                  >
                   {{date("H時i分", strtotime("00:00 +". $start * 30 ." minute"))}}</option>
                   @endfor
               </select>
@@ -164,22 +190,21 @@
         <tr>
           <td class="table-active">イベント名称1</td>
           <td>
-            {{-- <input type="text" name="event_name1"> --}}
-            {{ Form::text('event_name1', old('event_name1'),['class'=>'form-control', 'placeholder'=>'入力してください'] ) }}
+            {{ Form::text('event_name1',isset($request)?$request->event_name1:'',['class'=>'form-control', 'placeholder'=>'入力してください'] ) }}
           </td>
         </tr>
         <tr>
           <td class="table-active">イベント名称2</td>
           <td>
             {{-- <input type="text" name="event_name2"> --}}
-            {{ Form::text('event_name2', old('event_name2'),['class'=>'form-control', 'placeholder'=>'入力してください'] ) }}
+            {{ Form::text('event_name2', isset($request)?$request->event_name2:'',['class'=>'form-control', 'placeholder'=>'入力してください'] ) }}
           </td>
         </tr>
         <tr>
           <td class="table-active">主催者名</td>
           <td>
             {{-- <input type="text" name="event_owner"> --}}
-            {{ Form::text('event_owner', old('event_owner'),['class'=>'form-control', 'placeholder'=>'入力してください'] ) }}
+            {{ Form::text('event_owner', isset($request)?$request->event_owner:'',['class'=>'form-control', 'placeholder'=>'入力してください'] ) }}
           </td>
         </tr>
       </table>
@@ -261,8 +286,14 @@
               <select class="form-control" name="user_id" id="user_select">
                 <option disabled selected>選択してください</option>
                 @foreach ($users as $user)
-                <option value="{{$user->id}}">
-                  {{$user->company}} | {{$user->first_name}}{{$user->last_name}} | {{$user->email}}</option>
+                <option value="{{$user->id}}"
+                  @if (isset($request)) 
+                  @if($request->user_id==$user->id)
+                   selected
+                  @endif
+                  @endif
+
+                  >{{$user->company}} | {{$user->first_name}}{{$user->last_name}} | {{$user->email}}</option>
                 @endforeach
               </select>
             </td>
@@ -627,17 +658,23 @@
 
 
 
-{{ Form::hidden('payment_limit',)}}
-{{ Form::hidden('paid', 0, ) }} {{--デフォ0で未入金--}}
-{{ Form::hidden('reservation_status', 0, ) }}
-{{ Form::hidden('double_check_status', 0, ) }}
+{{ Form::hidden('payment_limit',isset($request)?$request->payment_limit:'')}}
+{{ Form::hidden('paid', isset($request)?$request->paid:'' ) }} {{--デフォ0で未入金--}}
+{{ Form::hidden('reservation_status', isset($request)?$request->reservation_status:'' ) }}
+{{ Form::hidden('double_check_status', isset($request)?$request->double_check_status:'' ) }}
 
-{{ Form::hidden('bill_company', old('bill_company'), ) }}
-{{ Form::hidden('bill_person', old('bill_person'), ) }}
-{{ Form::hidden('bill_created_at', date('Y-m-d'), ) }}
-{{ Form::hidden('bill_pay_limit', old('bill_pay_limit'), ) }}
+{{ Form::hidden('bill_company', isset($request)?$request->bill_company:'' ) }}
+{{ Form::hidden('bill_person', isset($request)?$request->bill_person:'' ) }}
+{{ Form::hidden('bill_created_at', isset($request)?$request->bill_created_at:date('Y-m-d')) }}
+{{ Form::hidden('bill_pay_limit', isset($request)?$request->bill_pay_limit:'' ) }}
 
-{{Form::submit('送信', ['class'=>'btn btn-primary btn-block'])}}
+{{ Form::hidden('sub_total', isset($request)?$request->sub_total:'', ['id'=>'sub_total']) }}
+{{ Form::hidden('tax', isset($request)?$request->tax:'', ['id'=>'tax']) }}
+{{ Form::hidden('total', isset($request)?$request->total:'', ['id'=>'total']) }}
+
+
+
+{{Form::submit('送信', ['class'=>'btn btn-primary mx-auto'])}}
 
 {{Form::close()}}
 

@@ -195,15 +195,49 @@
 
 
 {{-- test --}}
-{{ Form::text('reservation_id', $reservation_id,['class'=>''] ) }}
+{{-- {{ Form::text('reservation_id', $reservation_id,['class'=>''] ) }} --}}
 {{ Form::text('sub_total', $sub_total,['class'=>''] ) }}
 {{ Form::text('tax', $tax,['class'=>''] ) }}
 {{ Form::text('total', $total,['class'=>''] ) }}
 {{-- test --}}
 
-<a href="#" class="btn btn-danger">戻る</a>
+<a href="{{ url('/admin/reservations/create'.
+'?reserve_date='.$reserve_date.
+'&venue_id='.$venue_id.
+'&enter_time='.$enter_time.
+'&leave_time='.$leave_time.
+'&board_flag='.$board_flag.
+'&event_start='.$event_start.
+'&event_finish='.$event_finish.
+'&event_name1='.$event_name1.
+'&event_name2='.$event_name2.
+'&event_owner='.$event_owner.
+'&user_id='.$user_id.
+'&in_charge='.$in_charge.
+'&tel='.$tel.
+'&email_flag='.$email_flag.
+'&cost='.$cost.
+'&discount_condition='.$discount_condition.
+'&attention='.$attention.
+'&user_details='.$user_details.
+'&admin_details='.$admin_details.
+'&payment_limit='.$payment_limit.
+'&paid='.$paid.
+'&reservation_status='.$reservation_status.
+'&double_check_status='.$double_check_status.
+'&bill_company='.$bill_company.
+'&bill_person='.$bill_person.
+'&bill_created_at='.$bill_created_at.
+'&bill_pay_limit='.$bill_pay_limit.
+// '&reservation_id='.$reservation_id.
+'&sub_total='.$sub_total.
+'&tax='.$tax.
+'&total='.$total
+)}}" class="btn btn-danger">戻る</a>
+
 {!! Form::submit('登録', ['class' => 'btn btn-primary']) !!}
 {{ Form::close() }}
+
 
 
 
