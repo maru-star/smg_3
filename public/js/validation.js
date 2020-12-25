@@ -1,7 +1,7 @@
 // 会場管理　新規登録validation
 $(function () {
   $("#VenuesCreateForm").validate({
-    errorClass: "alert alert-danger", //エラー表示classをbootstrapのアラートに変える
+    // errorClass: "validate_danger", //エラー表示classをbootstrapのアラートに変える
     rules: {
       smg_url: {
         required: true,
@@ -146,15 +146,27 @@ $(function () {
         required: "※必須項目です",
       },
     },
-    // errorPlacement: function (err, element) {
-    //   if (element.attr("alliance_flag")) {
-    //     element.parent().before(err);
-    //   } else {
-    //     element.before(err);
-    //   }
-    // }
+    errorPlacement: function (error, element) {
+      var name = element.attr('name');
+      if (element.attr('name') === 'category[]') {
+        error.appendTo($('.is-error-category'));
+      } else if (element.attr('name') === name) {
+        error.appendTo($('.is-error-' + name));
+      }
+    },
+    errorElement: "span",
+    errorClass: "is-error",
   });
+  $('input').on('blur', function () {
+    $(this).valid();
+    if ($('span').hasClass('is-error')) {
+      $('span').css('background', 'white');
+    }
+  });
+
 });
+
+
 
 // 会場管理　編集画面validation
 $(function () {

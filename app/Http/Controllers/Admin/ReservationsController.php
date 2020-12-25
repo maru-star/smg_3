@@ -305,7 +305,7 @@ class ReservationsController extends Controller
     //   'bill_created_at' => 'required',
     //   'bill_pay_limit' => 'required',
     // ]);
-    return DB::transaction(function () use ($request) {
+    return DB::transaction(function () use ($request) { //トランザクションさせる
       $reservation = new Reservation;
       $reservation->reserve_date = $request->reserve_date;
       $reservation->venue_id = $request->venue_id;

@@ -142,6 +142,10 @@ table.dataTable thead .sorting_desc:after {
   border-radius: 15%;
 }
 
+.is-error{
+  background: pink;
+}
+
 
 /****************************
 //////////////////

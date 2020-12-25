@@ -71,7 +71,6 @@
     </div>
   </div>
 </div>
-
 <table class="table table-striped table-bordered">
   <thead>
     <tr>
@@ -87,7 +86,7 @@
     @foreach ($querys as $query)
     <tr>
       <td>{{ $query->id }}</td>
-      <td>{{ $query->created_at }}</td>
+      <td>{{ date('Y/m/d',strtotime($query->created_at)) }}</td>
       <td>{{ $query->item }}</td>
       <td>{{ $query->price }}</td>
       <td>{{ $query->remark }}</td>

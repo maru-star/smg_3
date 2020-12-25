@@ -31,7 +31,8 @@
   @csrf
   <div class="p-3 mb-2 bg-white text-dark">
     {{ Form::label('smg_url', '会場SMG URL',['class' => 'form_required']) }}
-    {{ Form::text('smg_url', old('smg_url'), ['class' => 'form-control']) }}
+    {{ Form::text('smg_url', old('smg_url'), ['class' => 'form-control', 'required']) }}
+    <p class="is-error-smg_url" style="color: red"></p>
   </div>
   <div class="row">
     <div class="col">
@@ -49,7 +50,9 @@
         <div class="row">
           <div class="col-sm-4">{{ Form::label('name_area', 'エリア名',['class' => 'form_required']) }}
           </div>
-          <div class="col-sm-8">{{ Form::text('name_area', old('name_area'), ['class' => 'form-control']) }}</div>
+          <div class="col-sm-8">{{ Form::text('name_area', old('name_area'), ['class' => 'form-control','required']) }}
+            <p class="is-error-name_area" style="color: red;"></p>
+          </div>
         </div>
         <hr>
         <div class="row">
