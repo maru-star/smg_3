@@ -28,6 +28,8 @@ class VenuesController extends Controller
     $search_name_venue = $request->name_venue;
     $search_capacity1 = $request->capacity1;
     $search_capacity2 = $request->capacity2;
+    $counter = $request->counter;
+    $counter != '' ? $counter : $counter = 30; //デフォルト30
 
     $venue = new Venue;
     $querys = $venue->searchs(
@@ -39,10 +41,12 @@ class VenuesController extends Controller
       $search_name_venue,
       $search_capacity1,
       $search_capacity2,
+      $counter
     );
 
     return view('admin.venues.index', [
       'querys' => $querys,
+      'counter' => $counter,
     ]);
   }
 

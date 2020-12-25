@@ -32,7 +32,13 @@
   </div>
   <hr>
   <div class="d-flex justify-content-between mt-3 mb-5">
-    <span>{{$querys->count()}}件表示</span>
+    <span>
+      <select name="page_counter" id="page_counter">
+        <option value="ten">10</option>
+        <option value="thirty">30</option>
+        <option value="fifty">50</option>
+      </select>件表示
+    </span>
     <div>
       <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"

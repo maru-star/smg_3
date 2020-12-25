@@ -58,7 +58,8 @@ class Venue extends Model
     $name_bldg,
     $name_venue,
     $capacity1,
-    $capacity2
+    $capacity2,
+    $counter
   ) {
     if (isset($freeword)) {
       return $this->where('id', 'LIKE', "%$freeword%")
@@ -68,25 +69,25 @@ class Venue extends Model
         ->orWhere('name_bldg', 'LIKE', "%$freeword%")
         ->orWhere('name_venue', 'LIKE', "%$freeword%")
         ->orWhere('capacity', 'LIKE', "%$freeword%")
-        ->orWhere('capacity', 'LIKE', "%$freeword%")->paginate(10);
+        ->orWhere('capacity', 'LIKE', "%$freeword%")->paginate($counter);
     } else if (isset($id)) {
-      return $this->where('id', 'LIKE', "%$id%")->paginate(10);
+      return $this->where('id', 'LIKE', "%$id%")->paginate($counter);
     } else if (isset($alliance_flag)) {
-      return $this->where('alliance_flag', 'LIKE', "%$alliance_flag%")->paginate(10);
+      return $this->where('alliance_flag', 'LIKE', "%$alliance_flag%")->paginate($counter);
     } else if (isset($name_area)) {
-      return $this->where('name_area', 'LIKE', "%$name_area%")->paginate(10);
+      return $this->where('name_area', 'LIKE', "%$name_area%")->paginate($counter);
     } else if (isset($name_bldg)) {
-      return $this->where('name_bldg', 'LIKE', "%$name_bldg%")->paginate(10);
+      return $this->where('name_bldg', 'LIKE', "%$name_bldg%")->paginate($counter);
     } else if (isset($name_venue)) {
-      return $this->where('name_venue', 'LIKE', "%$name_venue%")->paginate(10);
+      return $this->where('name_venue', 'LIKE', "%$name_venue%")->paginate($counter);
     } else if (isset($capacity1) && isset($capacity2)) {
-      return $this->whereBetween('capacity', $capacity1, $capacity2)->paginate(10);;
+      return $this->whereBetween('capacity', $capacity1, $capacity2)->paginate($counter);;
     } else if (isset($capacity1)) {
-      return $this->where('capacity', '>=', $capacity1)->paginate(10);;
+      return $this->where('capacity', '>=', $capacity1)->paginate($counter);;
     } else if (isset($capacity2)) {
-      return $this->where('capacity', '<=', $capacity2)->paginate(10);;
+      return $this->where('capacity', '<=', $capacity2)->paginate($counter);;
     } else {
-      return $this->query()->paginate(10);
+      return $this->query()->paginate($counter);
     }
   }
 

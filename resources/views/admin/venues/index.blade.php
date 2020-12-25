@@ -4,6 +4,7 @@
 <link href="{{ asset('/css/template.css') }}" rel="stylesheet">
 
 <script>
+  // テーブルソーと
   $(function(){
     $(".table").DataTable({
     lengthChange: false,// 件数切替機能 無効
@@ -13,9 +14,13 @@
     paging: false,// ページング機能 無効
     aoColumnDefs: [{"bSortable": false, "aTargets": [7]}],
     });
+
+    $('select').on('change',function(){
+      var counter=$(this).val();
+      window.location.href = "/admin/venues?counter="+counter;
+    })
   })
 </script>
-
 <div class="container-field mt-3">
   <div class="float-right">
     <nav aria-label="breadcrumb">
@@ -26,17 +31,24 @@
   </div>
   <h1 class="mt-3 mb-5">会場一覧</h1>
   <hr>
-  <div class="d-flex justify-content-between mt-3 mb-5">
-    <span>{{$querys->count()}}件表示</span>
-    <div>
-      <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false" data-offset="-320,5">
-          検索
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <form class="" action="{{url('/admin/venues')}}">
-            @csrf
+  <form class="" action="{{url('/admin/venues')}}">
+    @csrf
+    <div class="d-flex justify-content-between mt-3 mb-5">
+      <span>
+        <select name="counter" id="counter">
+          <option value="10" {{$counter==10?'selected':''}}>10</option>
+          <option value="30" {{$counter==30?'selected':''}}>30</option>
+          <option value="50" {{$counter==50?'selected':''}}>50</option>
+        </select>
+        件表示
+      </span>
+      <div>
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false" data-offset="-320,5">
+            検索
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <div class="d-flex justify-content-around">
               <div class="form-group">
                 <label for="freeword">フリーワード検索</label>
@@ -80,11 +92,11 @@
             <div class="mx-auto" style="width: 50px;">
               <input type="submit" value="検索" class="btn btn-info">
             </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+  </form>
+</div>
+</div>
+</div>
+</div>
 </div>
 <table class="table table-striped table-bordered">
   <thead>
@@ -103,7 +115,7 @@
     @foreach ($querys as $query)
     <tr>
       <td>{{ $query->id }}</td>
-      <td>{{ $query->created_at }}</td>
+      <td>{{ date('Y/m/d',strtotime($query->created_at)) }}</td>
       <td>{{ $query->alliance_flag==0?'直営':'提携' }}</td>
       <td>{{ $query->name_area }}{{ $query->name_bldg }}{{ $query->name_venue }}</td>
       <td>{{ $query->size1 }}</td>
