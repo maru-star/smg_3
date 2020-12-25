@@ -17,8 +17,41 @@
 
     $('select').on('change',function(){
       var counter=$(this).val();
-      window.location.href = "/admin/venues?counter="+counter;
-    })
+      var freeword=$('#freeword').val();
+      var s_id=$('#id').val();
+      var s_alliance=$('#alliance_flag').val();
+      var s_area=$('#name_area').val();
+      var s_buil=$('#name_bldg').val();
+      var s_venue=$('#name_venue').val();
+      var s_from=$('#capacity').val();
+      var s_to=$('#capacity2').val();
+      var s_counter=$('#counter').val();
+      window.location.href = "/admin/venues?counter="+counter+"&freeword="+freeword+"&id="+s_id+"&alliance_flag="+s_alliance+"&name_area="+s_area+"&name_bldg="+s_buil+"&name_venue="+s_venue+"&capacity1="+s_from+"&capacity2="+s_to;
+    });
+
+    console.log($('.page-item a').length);
+
+      var freeword=$('#freeword').val();
+      var s_id=$('#id').val();
+      var s_alliance=$('#alliance_flag').val();
+      var s_area=$('#name_area').val();
+      var s_buil=$('#name_bldg').val();
+      var s_venue=$('#name_venue').val();
+      var s_from=$('#capacity').val();
+      var s_to=$('#capacity2').val();
+      var s_counter=$('#counter').val();
+
+    // console.log($('.page-item a').eq(0).attr('href'));
+    // console.log($('.page-item a').eq(1).attr('href'));
+    // console.log($('.page-item a').eq(2).attr('href'));
+    // console.log($('.page-item a').eq(3).attr('href'));
+    for (let index = 0; index < $('.page-item a').length; index++) {
+      $('.page-item a').eq(index).attr('href',$('.page-item a').eq(index).attr('href')+"&counter="+s_counter+"&freeword="+freeword+"&id="+s_id+"&alliance_flag="+s_alliance+"&name_area="+s_area+"&name_bldg="+s_buil+"&name_venue="+s_venue+"&capacity1="+s_from+"&capacity2="+s_to);
+    }
+
+
+
+
   })
 </script>
 <div class="container-field mt-3">
@@ -52,41 +85,42 @@
             <div class="d-flex justify-content-around">
               <div class="form-group">
                 <label for="freeword">フリーワード検索</label>
-                <input type="text" name="freeword" class="form-control" id="freeword">
+                <input type="text" name="freeword" class="form-control" id="freeword" value={{$search_freeword}}>
               </div>
               <div class="form-group">
                 <label for="id">ID</label>
-                <input type="text" name="id" class="form-control" id="id">
+                <input type="text" name="id" class="form-control" id="id" value={{$search_id}}>
               </div>
             </div>
             <div class="d-flex justify-content-around">
               <div class="form-group">
                 <label for="alliance_flag">直営・提携</label>
-                <input type="text" name="alliance_flag" class="form-control" id="alliance_flag">
+                <input type="text" name="alliance_flag" class="form-control" id="alliance_flag"
+                  value={{$search_alliance_flag}}>
               </div>
               <div class="form-group">
                 <label for="name_area">エリア別</label>
-                <input type="text" name="name_area" class="form-control" id="name_area">
+                <input type="text" name="name_area" class="form-control" id="name_area" value={{$search_name_area}}>
               </div>
             </div>
             <div class="d-flex justify-content-around">
               <div class="form-group">
                 <label for="name_bldg">ビル名</label>
-                <input type="text" name="name_bldg" class="form-control" id="name_bldg">
+                <input type="text" name="name_bldg" class="form-control" id="name_bldg" value={{$search_name_bldg}}>
               </div>
               <div class="form-group">
                 <label for="name_venue">会場名</label>
-                <input type="text" name="name_venue" class="form-control" id="name_venue">
+                <input type="text" name="name_venue" class="form-control" id="name_venue" value={{$search_name_venue}}>
               </div>
             </div>
             <div class="d-flex justify-content-around col-md-12">
               <div class="form-group">
                 <label for="name_bldg">収容人数（~名以上）</label>
-                <input type="number" name="capacity1" class="form-control" id="capacity">
+                <input type="number" name="capacity1" class="form-control" id="capacity" value={{$search_capacity1}}>
               </div>
               <div class="form-group">
                 <label for="name_venue">収容人数（~名以下）</label>
-                <input type="number" name="capacity2" class="form-control">
+                <input type="number" name="capacity2" class="form-control" id="capacity2" value={{$search_capacity2}}>
               </div>
             </div>
             <div class="mx-auto" style="width: 50px;">

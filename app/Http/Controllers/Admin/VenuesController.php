@@ -29,7 +29,7 @@ class VenuesController extends Controller
     $search_capacity1 = $request->capacity1;
     $search_capacity2 = $request->capacity2;
     $counter = $request->counter;
-    $counter != '' ? $counter : $counter = 30; //デフォルト30
+    $counter != '' ? $counter : $counter = 10; //デフォルト30
 
     $venue = new Venue;
     $querys = $venue->searchs(
@@ -47,6 +47,14 @@ class VenuesController extends Controller
     return view('admin.venues.index', [
       'querys' => $querys,
       'counter' => $counter,
+      'search_freeword' => $search_freeword,
+      'search_id' => $search_id,
+      'search_alliance_flag' => $search_alliance_flag,
+      'search_name_area' => $search_name_area,
+      'search_name_bldg' => $search_name_bldg,
+      'search_name_venue' => $search_name_venue,
+      'search_capacity1' => $search_capacity1,
+      'search_capacity2' => $search_capacity2,
     ]);
   }
 
