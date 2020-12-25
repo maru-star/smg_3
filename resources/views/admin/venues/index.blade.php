@@ -15,7 +15,7 @@
     aoColumnDefs: [{"bSortable": false, "aTargets": [7]}],
     });
 
-    $('select').on('change',function(){
+    $('#counter').on('change',function(){
       var counter=$(this).val();
       var freeword=$('#freeword').val();
       var s_id=$('#id').val();
@@ -29,8 +29,6 @@
       window.location.href = "/admin/venues?counter="+counter+"&freeword="+freeword+"&id="+s_id+"&alliance_flag="+s_alliance+"&name_area="+s_area+"&name_bldg="+s_buil+"&name_venue="+s_venue+"&capacity1="+s_from+"&capacity2="+s_to;
     });
 
-    console.log($('.page-item a').length);
-
       var freeword=$('#freeword').val();
       var s_id=$('#id').val();
       var s_alliance=$('#alliance_flag').val();
@@ -41,16 +39,9 @@
       var s_to=$('#capacity2').val();
       var s_counter=$('#counter').val();
 
-    // console.log($('.page-item a').eq(0).attr('href'));
-    // console.log($('.page-item a').eq(1).attr('href'));
-    // console.log($('.page-item a').eq(2).attr('href'));
-    // console.log($('.page-item a').eq(3).attr('href'));
     for (let index = 0; index < $('.page-item a').length; index++) {
       $('.page-item a').eq(index).attr('href',$('.page-item a').eq(index).attr('href')+"&counter="+s_counter+"&freeword="+freeword+"&id="+s_id+"&alliance_flag="+s_alliance+"&name_area="+s_area+"&name_bldg="+s_buil+"&name_venue="+s_venue+"&capacity1="+s_from+"&capacity2="+s_to);
     }
-
-
-
 
   })
 </script>
