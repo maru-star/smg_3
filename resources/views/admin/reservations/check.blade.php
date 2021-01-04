@@ -440,7 +440,7 @@
                     </div>
                     <div class="col-3 bill-box_cell text-right">
                       <p>割引金額</p>
-                      <p class=""><span>円</span></p>
+                      <p class="">{{$request->percent_result}}<span>円</span></p>
                     </div>
                   </div>
                 </div>
