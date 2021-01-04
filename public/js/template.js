@@ -115,10 +115,10 @@ $(function () {
     }
 
     // 総請求額　反映
-    var base_venue = $('.after_discount_price').text();//会場の割引後の料金
-    var base_items = $('.items_discount_price').text();//サービスr＆備品の料金
-    var base_layout = $('.after_duscount_layouts').text();//レイアウトの料金
-    var base_handinput = $('#handinput_subtotal').text();
+    var base_venue = $('.after_discount_price').eq(0).text();//会場の割引後の料金
+    var base_items = $('.items_discount_price').eq(0).text();//サービスr＆備品の料金
+    var base_layout = $('.after_duscount_layouts').eq(0).text();//レイアウトの料金
+    var base_handinput = $('#handinput_subtotal').eq(0).text();
     var base_total = Number(base_venue) + Number(base_items) + Number(base_layout) + Number(base_handinput);
     var base_tax = Math.floor(base_total * 0.1);
     var base_total_amout = base_total + base_tax;
@@ -128,6 +128,42 @@ $(function () {
     $('.all-total-without-tax').text(base_total);
     $('.all-total-tax').text(Math.floor(base_tax));
     $('.all-total-amout').text(base_total_amout);
+
+    // hiddenの内訳に反映
+    setTimeout(function () {
+      //詳細内訳初期化
+      $('input[name^="venue_breakdowns"]').remove();
+      $('input[name^="equipment_breakdowns"]').remove();
+      $('input[name^="layout_breakdowns"]').remove();
+
+      // 以下、料金詳細内訳
+      var target_v = $('.venue_price_details tbody tr').length;
+      for (let c_v = 0; c_v < target_v; c_v++) {
+        // 内訳に入るtdは固定で4つ（内容、単価、数量、金額）
+        for (let counter = 0; counter < 4; counter++) {
+          var unit_venue = $('.venue_price_details tbody tr').eq(c_v).find('td').eq(counter).text();
+          $('form').append("<input type='hidden' name='venue_breakdowns" + c_v + "_" + counter + "' value='" + unit_venue + "'>");
+        }
+      }
+      // 以下、備品・サービス詳細内訳
+      var target_e = $('.items_equipments tbody tr').length;
+      for (let c_e = 0; c_e < target_e; c_e++) {
+        // 内訳に入るtdは固定で4つ（内容、単価、数量、金額）
+        for (let counter = 0; counter < 4; counter++) {
+          var unit_equipment = $('.items_equipments tbody tr').eq(c_e).find('td').eq(counter).text();
+          $('form').append("<input type='hidden' name='equipment_breakdowns" + c_e + "_" + counter + "' value='" + unit_equipment + "'>");
+        }
+      }
+      // 以下、レイアウト詳細内訳
+      var target_l = $('.selected_layouts tbody tr').length;
+      for (let c_l = 0; c_l < target_l; c_l++) {
+        // 内訳に入るtdは固定で4つ（内容、単価、数量、金額）
+        for (let counter = 0; counter < 4; counter++) {
+          var unit_layout = $('.selected_layouts tbody tr').eq(c_l).find('td').eq(counter).text();
+          $('form').append("<input type='hidden' name='layout_breakdowns" + c_l + "_" + counter + "' value='" + unit_layout + "'>");
+        }
+      }
+    }, 1000);
   })
 })
 
@@ -180,10 +216,10 @@ $(function () {
       $('.venue_total').text(Math.floor(Number($('.venue_extend').text()) + (Number($('.venue_extend').text())) * 0.1));
     }
     // 総請求額　反映
-    var base_venue = $('.after_discount_price').text();//会場の割引後の料金
-    var base_items = $('.items_discount_price').text();//サービスr＆備品の料金
-    var base_layout = $('.after_duscount_layouts').text();//レイアウトの料金
-    var base_handinput = $('#handinput_subtotal').text();
+    var base_venue = $('.after_discount_price').eq(0).text();//会場の割引後の料金
+    var base_items = $('.items_discount_price').eq(0).text();//サービスr＆備品の料金
+    var base_layout = $('.after_duscount_layouts').eq(0).text();//レイアウトの料金
+    var base_handinput = $('#handinput_subtotal').eq(0).text();
     var base_total = Number(base_venue) + Number(base_items) + Number(base_layout) + Number(base_handinput);
 
     var base_tax = Math.floor(base_total * 0.1);
@@ -194,6 +230,43 @@ $(function () {
     $('.all-total-without-tax').text(base_total);
     $('.all-total-tax').text(Math.floor(base_tax));
     $('.all-total-amout').text(base_total_amout);
+
+    // hiddenの内訳に反映
+    setTimeout(function () {
+      //詳細内訳初期化
+      $('input[name^="venue_breakdowns"]').remove();
+      $('input[name^="equipment_breakdowns"]').remove();
+      $('input[name^="layout_breakdowns"]').remove();
+
+      // 以下、料金詳細内訳
+      var target_v = $('.venue_price_details tbody tr').length;
+      for (let c_v = 0; c_v < target_v; c_v++) {
+        // 内訳に入るtdは固定で4つ（内容、単価、数量、金額）
+        for (let counter = 0; counter < 4; counter++) {
+          var unit_venue = $('.venue_price_details tbody tr').eq(c_v).find('td').eq(counter).text();
+          $('form').append("<input type='hidden' name='venue_breakdowns" + c_v + "_" + counter + "' value='" + unit_venue + "'>");
+        }
+      }
+      // 以下、備品・サービス詳細内訳
+      var target_e = $('.items_equipments tbody tr').length;
+      for (let c_e = 0; c_e < target_e; c_e++) {
+        // 内訳に入るtdは固定で4つ（内容、単価、数量、金額）
+        for (let counter = 0; counter < 4; counter++) {
+          var unit_equipment = $('.items_equipments tbody tr').eq(c_e).find('td').eq(counter).text();
+          $('form').append("<input type='hidden' name='equipment_breakdowns" + c_e + "_" + counter + "' value='" + unit_equipment + "'>");
+        }
+      }
+      // 以下、レイアウト詳細内訳
+      var target_l = $('.selected_layouts tbody tr').length;
+      for (let c_l = 0; c_l < target_l; c_l++) {
+        // 内訳に入るtdは固定で4つ（内容、単価、数量、金額）
+        for (let counter = 0; counter < 4; counter++) {
+          var unit_layout = $('.selected_layouts tbody tr').eq(c_l).find('td').eq(counter).text();
+          $('form').append("<input type='hidden' name='layout_breakdowns" + c_l + "_" + counter + "' value='" + unit_layout + "'>");
+        }
+      }
+    }, 1000);
+
   })
 })
 
@@ -237,10 +310,10 @@ $(function () {
     }
 
     // 総請求額　反映
-    var base_venue = $('.after_discount_price').text();//会場の割引後の料金
-    var base_items = $('.items_discount_price').text();//サービスr＆備品の料金
-    var base_layout = $('.after_duscount_layouts').text();//レイアウトの料金
-    var base_handinput = $('#handinput_subtotal').text();
+    var base_venue = $('.after_discount_price').eq(0).text();//会場の割引後の料金
+    var base_items = $('.items_discount_price').eq(0).text();//サービスr＆備品の料金
+    var base_layout = $('.after_duscount_layouts').eq(0).text();//レイアウトの料金
+    var base_handinput = $('#handinput_subtotal').eq(0).text();
     var base_total = Number(base_venue) + Number(base_items) + Number(base_layout) + Number(base_handinput);
 
     var base_tax = Math.floor(base_total * 0.1);
@@ -252,6 +325,56 @@ $(function () {
     $('.all-total-tax').text(Math.floor(base_tax));
     $('.all-total-amout').text(base_total_amout);
 
+    setTimeout(function () {
+      // 総請求額反映用
+      var all_total_venue = Number($('.venue_extend').text()); //会場料　税抜　料金　（割引反映前）
+      var all_total_items = Number($('.selected_items_total').text()); //備品　その他　税抜　料金　（割引反映前）
+      var all_total_layouts = Number($('.layout_total').text()); //備品　その他　税抜　料金　（割引反映前）
+      var all_totals = all_total_venue + all_total_items + all_total_layouts;
+      var only_tax = Math.floor(Number(all_totals) * 0.1);
+      $('.all-total-without-tax').text(all_totals);
+      $('.all-total-tax').text(only_tax);
+      $('.all-total-amout').text(Number(all_totals) + Number(only_tax));
+      // 以下hidden
+      $('#sub_total').val(all_totals);
+      $('#tax').val(only_tax);
+      $('#total').val(Number(all_totals) + Number(only_tax));
+
+
+      //詳細内訳初期化
+      $('input[name^="venue_breakdowns"]').remove();
+      $('input[name^="equipment_breakdowns"]').remove();
+      $('input[name^="layout_breakdowns"]').remove();
+
+      // 以下、料金詳細内訳
+      var target_v = $('.venue_price_details tbody tr').length;
+      for (let c_v = 0; c_v < target_v; c_v++) {
+        // 内訳に入るtdは固定で4つ（内容、単価、数量、金額）
+        for (let counter = 0; counter < 4; counter++) {
+          var unit_venue = $('.venue_price_details tbody tr').eq(c_v).find('td').eq(counter).text();
+          $('form').append("<input type='hidden' name='venue_breakdowns" + c_v + "_" + counter + "' value='" + unit_venue + "'>");
+        }
+      }
+      // 以下、備品・サービス詳細内訳
+      var target_e = $('.items_equipments tbody tr').length;
+      for (let c_e = 0; c_e < target_e; c_e++) {
+        // 内訳に入るtdは固定で4つ（内容、単価、数量、金額）
+        for (let counter = 0; counter < 4; counter++) {
+          var unit_equipment = $('.items_equipments tbody tr').eq(c_e).find('td').eq(counter).text();
+          $('form').append("<input type='hidden' name='equipment_breakdowns" + c_e + "_" + counter + "' value='" + unit_equipment + "'>");
+        }
+      }
+      // 以下、レイアウト詳細内訳
+      var target_l = $('.selected_layouts tbody tr').length;
+      for (let c_l = 0; c_l < target_l; c_l++) {
+        // 内訳に入るtdは固定で4つ（内容、単価、数量、金額）
+        for (let counter = 0; counter < 4; counter++) {
+          var unit_layout = $('.selected_layouts tbody tr').eq(c_l).find('td').eq(counter).text();
+          $('form').append("<input type='hidden' name='layout_breakdowns" + c_l + "_" + counter + "' value='" + unit_layout + "'>");
+        }
+      }
+
+    }, 1000);
   })
 })
 
@@ -357,10 +480,10 @@ $(function () {
       $('.layout_total_amount').text(Math.floor(Number($('.after_duscount_layouts').text()) + (Number($('.after_duscount_layouts').text())) * 0.1));
     }
     // 総請求額　反映
-    var base_venue = $('.after_discount_price').text();//会場の割引後の料金
-    var base_items = $('.items_discount_price').text();//サービスr＆備品の料金
-    var base_layout = $('.after_duscount_layouts').text();//レイアウトの料金
-    var base_handinput = $('#handinput_subtotal').text();
+    var base_venue = $('.after_discount_price').eq(0).text();//会場の割引後の料金
+    var base_items = $('.items_discount_price').eq(0).text();//サービスr＆備品の料金
+    var base_layout = $('.after_duscount_layouts').eq(0).text();//レイアウトの料金
+    var base_handinput = $('#handinput_subtotal').eq(0).text();
     var base_total = Number(base_venue) + Number(base_items) + Number(base_layout) + Number(base_handinput);
     var base_tax = Math.floor(base_total * 0.1);
     var base_total_amout = base_total + base_tax;
@@ -370,6 +493,43 @@ $(function () {
     $('.all-total-without-tax').text(base_total);
     $('.all-total-tax').text(Math.floor(base_tax));
     $('.all-total-amout').text(base_total_amout);
+
+    // hiddenの内訳に反映
+    setTimeout(function () {
+      //詳細内訳初期化
+      $('input[name^="venue_breakdowns"]').remove();
+      $('input[name^="equipment_breakdowns"]').remove();
+      $('input[name^="layout_breakdowns"]').remove();
+
+      // 以下、料金詳細内訳
+      var target_v = $('.venue_price_details tbody tr').length;
+      for (let c_v = 0; c_v < target_v; c_v++) {
+        // 内訳に入るtdは固定で4つ（内容、単価、数量、金額）
+        for (let counter = 0; counter < 4; counter++) {
+          var unit_venue = $('.venue_price_details tbody tr').eq(c_v).find('td').eq(counter).text();
+          $('form').append("<input type='hidden' name='venue_breakdowns" + c_v + "_" + counter + "' value='" + unit_venue + "'>");
+        }
+      }
+      // 以下、備品・サービス詳細内訳
+      var target_e = $('.items_equipments tbody tr').length;
+      for (let c_e = 0; c_e < target_e; c_e++) {
+        // 内訳に入るtdは固定で4つ（内容、単価、数量、金額）
+        for (let counter = 0; counter < 4; counter++) {
+          var unit_equipment = $('.items_equipments tbody tr').eq(c_e).find('td').eq(counter).text();
+          $('form').append("<input type='hidden' name='equipment_breakdowns" + c_e + "_" + counter + "' value='" + unit_equipment + "'>");
+        }
+      }
+      // 以下、レイアウト詳細内訳
+      var target_l = $('.selected_layouts tbody tr').length;
+      for (let c_l = 0; c_l < target_l; c_l++) {
+        // 内訳に入るtdは固定で4つ（内容、単価、数量、金額）
+        for (let counter = 0; counter < 4; counter++) {
+          var unit_layout = $('.selected_layouts tbody tr').eq(c_l).find('td').eq(counter).text();
+          $('form').append("<input type='hidden' name='layout_breakdowns" + c_l + "_" + counter + "' value='" + unit_layout + "'>");
+        }
+      }
+    }, 1000);
+
   })
 })
 
@@ -382,7 +542,6 @@ $(function () {
     }
   })
 })
-
 
 
 // 手打ち
@@ -402,10 +561,10 @@ $(function () {
     $('#handinput_total').text(handinput_total + handinput_tax);
 
     // 総請求額　反映
-    var base_venue = $('.after_discount_price').text();//会場の割引後の料金
-    var base_items = $('.items_discount_price').text();//サービスr＆備品の料金
-    var base_layout = $('.after_duscount_layouts').text();//レイアウトの料金
-    var base_handinput = $('#handinput_subtotal').text();
+    var base_venue = $('.after_discount_price').eq(0).text();//会場の割引後の料金
+    var base_items = $('.items_discount_price').eq(0).text();//サービスr＆備品の料金
+    var base_layout = $('.after_duscount_layouts').eq(0).text();//レイアウトの料金
+    var base_handinput = $('#handinput_subtotal').eq(0).text();
     var base_total = Number(base_venue) + Number(base_items) + Number(base_layout) + Number(base_handinput);
     var base_tax = Math.floor(base_total * 0.1);
     var base_total_amout = base_total + base_tax;
@@ -414,7 +573,7 @@ $(function () {
     $('.all-total-amout').text(''); //初期化
     $('.all-total-without-tax').text(base_total);
     $('.all-total-tax').text(Math.floor(base_tax));
-    $('.all-total-amout').text(base_total_amout);
+    $('.all-total-amout').text(Math.floor(base_total_amout));
 
   })
   $('#handinput_extend').on('change', function () {
@@ -431,10 +590,10 @@ $(function () {
     var handinput_total = handinput_subtotal;
     $('#handinput_total').text(handinput_total + handinput_tax);
     // 総請求額　反映
-    var base_venue = $('.after_discount_price').text();//会場の割引後の料金
-    var base_items = $('.items_discount_price').text();//サービスr＆備品の料金
-    var base_layout = $('.after_duscount_layouts').text();//レイアウトの料金
-    var base_handinput = $('#handinput_subtotal').text();
+    var base_venue = $('.after_discount_price').eq(0).text();//会場の割引後の料金
+    var base_items = $('.items_discount_price').eq(0).text();//サービスr＆備品の料金
+    var base_layout = $('.after_duscount_layouts').eq(0).text();//レイアウトの料金
+    var base_handinput = $('#handinput_subtotal').eq(0).text();
     var base_total = Number(base_venue) + Number(base_items) + Number(base_layout) + Number(base_handinput);
     var base_tax = Math.floor(base_total * 0.1);
     var base_total_amout = base_total + base_tax;
@@ -460,10 +619,10 @@ $(function () {
     var handinput_total = handinput_subtotal;
     $('#handinput_total').text(handinput_total + handinput_tax);
     // 総請求額　反映
-    var base_venue = $('.after_discount_price').text();//会場の割引後の料金
-    var base_items = $('.items_discount_price').text();//サービスr＆備品の料金
-    var base_layout = $('.after_duscount_layouts').text();//レイアウトの料金
-    var base_handinput = $('#handinput_subtotal').text();
+    var base_venue = $('.after_discount_price').eq(0).text();//会場の割引後の料金
+    var base_items = $('.items_discount_price').eq(0).text();//サービスr＆備品の料金
+    var base_layout = $('.after_duscount_layouts').eq(0).text();//レイアウトの料金
+    var base_handinput = $('#handinput_subtotal').eq(0).text();
     var base_total = Number(base_venue) + Number(base_items) + Number(base_layout) + Number(base_handinput);
     var base_tax = Math.floor(base_total * 0.1);
     var base_total_amout = base_total + base_tax;
@@ -473,7 +632,6 @@ $(function () {
     $('.all-total-without-tax').text(base_total);
     $('.all-total-tax').text(Math.floor(base_tax));
     $('.all-total-amout').text(base_total_amout);
-
   })
 })
 
@@ -506,3 +664,5 @@ $(function () {
     }
   })
 })
+
+// submit確認

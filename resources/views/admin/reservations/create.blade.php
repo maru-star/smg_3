@@ -74,7 +74,7 @@
             <select id="venues_selector" class=" form-control" name='venue_id'>
               <option value='#'>選択してください</option>
               @foreach ($venues as $venue)
-              <option value="{{$venue->id}}" @if (isset($request->venue_id)) 
+              <option value="{{$venue->id}}" @if (isset($request->venue_id))
                 @if ($request->venue_id==$venue->id)
                 selected
                 @endif
@@ -106,10 +106,9 @@
               <select name="enter_time" id="sales_start" class="form-control">
                 <option disabled>選択してください</option>
                 @for ($start = 0*2; $start <=23*2; $start++) <option
-                  value="{{date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))}}" 
-                  @if (isset($request)) 
+                  value="{{date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))}}" @if (isset($request))
                   @if($request->enter_time==(date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))))
-                   selected
+                  selected
                   @endif
                   @endif
                   >
@@ -125,12 +124,11 @@
           <td>
             <div>
               <select name="leave_time" id="sales_finish" class="form-control">
-                <option  disabled>選択してください</option>
+                <option disabled>選択してください</option>
                 @for ($start = 0*2; $start <=23*2; $start++) <option
-                  value="{{date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))}}"
-                  @if (isset($request)) 
+                  value="{{date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))}}" @if (isset($request))
                   @if($request->leave_time==(date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))))
-                   selected
+                  selected
                   @endif
                   @endif
                   >
@@ -143,8 +141,10 @@
         <tr>
           <td>案内板</td>
           <td>
-            <input type="radio" name="board_flag" value="0" {{isset($request->board_flag)?$request->board_flag==0?'checked':'':'',}}>無し
-            <input type="radio" name="board_flag" value="1" {{isset($request->board_flag)?$request->board_flag==1?'checked':'':'',}} >有り
+            <input type="radio" name="board_flag" value="0"
+              {{isset($request->board_flag)?$request->board_flag==0?'checked':'':'',}}>無し
+            <input type="radio" name="board_flag" value="1"
+              {{isset($request->board_flag)?$request->board_flag==1?'checked':'':'',}}>有り
           </td>
         </tr>
         <tr>
@@ -154,10 +154,9 @@
               <select name="event_start" id="event_start" class="form-control">
                 <option selected disabled>選択してください</option>
                 @for ($start = 0*2; $start <=23*2; $start++) <option
-                  value="{{date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))}}"
-                  @if (isset($request)) 
+                  value="{{date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))}}" @if (isset($request))
                   @if($request->event_start==(date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))))
-                   selected
+                  selected
                   @endif
                   @endif
                   >
@@ -174,10 +173,9 @@
               <select name="event_finish" id="event_finish" class="form-control">
                 <option selected disabled>選択してください</option>
                 @for ($start = 0*2; $start <=23*2; $start++) <option
-                  value="{{date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))}}"
-                  @if (isset($request)) 
+                  value="{{date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))}}" @if (isset($request))
                   @if($request->event_finish==(date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))))
-                   selected
+                  selected
                   @endif
                   @endif
                   >
@@ -286,10 +284,8 @@
               <select class="form-control" name="user_id" id="user_select">
                 <option disabled selected>選択してください</option>
                 @foreach ($users as $user)
-                <option value="{{$user->id}}"
-                  @if (isset($request)) 
-                  @if($request->user_id==$user->id)
-                   selected
+                <option value="{{$user->id}}" @if (isset($request)) @if($request->user_id==$user->id)
+                  selected
                   @endif
                   @endif
 
@@ -405,7 +401,6 @@
   </div>
 </div>
 
-
 {{-- 丸岡さんカスタム --}}
 <section class="bill-wrap section-wrap">
   <div class="bill-bg">
@@ -415,10 +410,12 @@
         <div class="col-3 bill-box_cell">
           <dt>会場料金</dt>
           <dd class="venue_price"></dd>
+          {{ Form::hidden('venue_price', '', ['class'=>'venue_price']) }}
         </div>
         <div class="col-3 bill-box_cell">
           <dt>延長料金</dt>
           <dd class="extend"></dd>
+          {{ Form::hidden('extend', '', ['class'=>'extend']) }}
         </div>
         <div class="col-6 bill-box_cell">
           <dt>会場料金合計</dt>
@@ -431,12 +428,13 @@
             </div>
             <div class="col-5 bill-box_cell">
               <dd class="text-right d-flex">
-                <input type="text" name="price" class="form-control venue_discount_percent" id="price" value="0"
-                  min=0><span>%</span>
+                <input type="text" name="venue_discount_percent" class="form-control venue_discount_percent"
+                  id="venue_discount_percent" value="0" min=0><span>%</span>
               </dd>
             </div>
             <div class="col-3 bill-box_cell">
               <p class="text-right">割引金額: <span class="percent_result"></span></p>
+              {{ Form::hidden('percent_result', '', ['class'=>'percent_result']) }}
             </div>
           </div>
         </div>
@@ -447,17 +445,21 @@
             </div>
             <div class="col-5 bill-box_cell">
               <p class="text-right">
-                <input type="text" name="price" class="form-control venue_dicsount_number" id="price" min=0>
+                <input type="text" name="venue_dicsount_number" class="form-control venue_dicsount_number"
+                  id="venue_dicsount_number" min=0>
               </p>
             </div>
             <div class="col-3 bill-box_cell">
               <p class="text-right">割引率: <span class="number_result"></span>%</p>
+              {{ Form::hidden('number_result', '', ['class'=>'number_result']) }}
             </div>
           </div>
         </div>
         <div class="col-12 bill-box_cell d-flex justify-content-end">
           <span class="font-weight-bold mr-3">割引後 会場料金合計</span>
           <p class="text-right after_discount_price"></p>円
+          {{ Form::hidden('after_discount_price', '', ['class'=>'after_discount_price']) }}
+
         </div>
       </dl>
       <!-- 料金内訳-------------------------------------------------------------- -->
@@ -534,15 +536,18 @@
       <div class="col-3 bill-box_cell">
         <dt>有料備品料金</dt>
         <dd><span class="selected_equipments_price"></span>円</dd>
+        {{ Form::hidden('selected_equipments_price', '', ['class'=>'selected_equipments_price']) }}
       </div>
       <div class="col-3 bill-box_cell">
         <dt>有料サービス料金</dt>
         <dd><span class="selected_services_price"></span>円</dd>
+        {{ Form::hidden('selected_services_price', '', ['class'=>'selected_services_price']) }}
       </div>
       <div class="col-3 bill-box_cell">
         <dt>荷物預かり/返送</dt>
         <dd class="d-flex align-items-center">
         <dd><span class="selected_luggage_price"></span>円</dd>
+        {{ Form::hidden('selected_luggage_price', '', ['class'=>'selected_luggage_price']) }}
         </dd>
       </div>
       <div class="col-3 bill-box_cell">
@@ -555,15 +560,19 @@
             <p>割引料金</p>
           </div>
           <div class="col-5 bill-box_cell">
-            <p class="text-right"><input type="text" name="price" class="form-control discount_item" id="price"></p>
+            <p class="text-right">
+              <input type="text" name="discount_item" class="form-control discount_item" id="price">
+            </p>
           </div>
           <div class="col-3 bill-box_cell text-right">
             <p>割引率:<span class="item_discount_percent"></span>%</p>
+            {{ Form::hidden('item_discount_percent', '', ['class'=>'item_discount_percent']) }}
           </div>
         </div>
       </div>
       <div class="col-6 bill-box_cell text-right">
-        <p><span class="font-weight-bold mr-3">割引後 会場料金合計</span> <span class="items_discount_price"></span> 円</p>
+        <p><span class="font-weight-bold mr-3">割引後 有料備品＆有料サービス合計</span> <span class="items_discount_price"></span> 円</p>
+        {{ Form::hidden('items_discount_price', '', ['class'=>'items_discount_price']) }}
       </div>
     </dl>
     <!-- 料金内訳-------------------------------------------------------------- -->
@@ -599,17 +608,21 @@
     <div class="border">
       <div class="d-flex" style="height: 70px">
         <div style="width: 33%">レイアウト準備料金： <p class="layout_prepare_result"></p>
+          {{ Form::hidden('layout_prepare_result', '', ['class'=>'layout_prepare_result']) }}
         </div>
         <div style="width: 33%">レイアウト片付料金： <p class="layout_clean_result"></p>
+          {{ Form::hidden('layout_clean_result', '', ['class'=>'layout_clean_result']) }}
         </div>
         <div style="width:34px%">レイアウト変更合計： <p class="layout_total"></p>
         </div>
       </div>
       <div class="d-flex" style="height: 70px">
-        <div style="width: 33%">割引料金 <input type="text" class="layout_discount d-block"></div>
+        <div style="width: 33%">割引料金 <input type="text" class="layout_discount d-block" name="layout_discount"></div>
         <div style="width: 33%">割引率：<p class="layout_discount_percent"><span>%</span></p>
+          {{ Form::hidden('layout_discount_percent', '', ['class'=>'layout_discount_percent']) }}
         </div>
         <div style="width: 34%">割引後レイアウト変更合計：<p class="after_duscount_layouts"></p>
+          {{ Form::hidden('after_duscount_layouts', '', ['class'=>'after_duscount_layouts']) }}
         </div>
       </div>
     </div>
@@ -652,10 +665,6 @@
   </dl>
   </div>
 </section>
-{{-- <div class="btn_wrapper text-center"> --}}
-{{-- <button class="btn btn-primary more_btn_lg">予約登録する</button> --}}
-{{-- </div> --}}
-
 
 
 {{ Form::hidden('payment_limit',isset($request)?$request->payment_limit:'')}}
@@ -668,13 +677,15 @@
 {{ Form::hidden('bill_created_at', isset($request)?$request->bill_created_at:date('Y-m-d')) }}
 {{ Form::hidden('bill_pay_limit', isset($request)?$request->bill_pay_limit:'' ) }}
 
+{{-- 小計 --}}
 {{ Form::hidden('sub_total', isset($request)?$request->sub_total:'', ['id'=>'sub_total']) }}
+{{-- 税金 --}}
 {{ Form::hidden('tax', isset($request)?$request->tax:'', ['id'=>'tax']) }}
+{{-- 総合計 --}}
 {{ Form::hidden('total', isset($request)?$request->total:'', ['id'=>'total']) }}
 
 
-
-{{Form::submit('送信', ['class'=>'btn btn-primary mx-auto'])}}
+{{Form::submit('送信', ['class'=>'btn btn-primary mx-auto', 'id'=>'check_submit'])}}
 
 {{Form::close()}}
 
