@@ -142,9 +142,9 @@ $(function () {
     // 関数処理の順番にばらつきがあるので、１秒後に実行
     setTimeout(function () {
       // 総請求額反映用
-      var all_total_venue = Number($('.venue_extend').text()); //会場料　税抜　料金　（割引反映前）
-      var all_total_items = Number($('.selected_items_total').text()); //備品　その他　税抜　料金　（割引反映前）
-      var all_total_layouts = Number($('.layout_total').text()); //備品　その他　税抜　料金　（割引反映前）
+      var all_total_venue = Number($('.venue_extend').eq(0).text()); //会場料　税抜　料金　（割引反映前）
+      var all_total_items = Number($('.selected_items_total').eq(0).text()); //備品　その他　税抜　料金　（割引反映前）
+      var all_total_layouts = Number($('.layout_total').eq(0).text()); //備品　その他　税抜　料金　（割引反映前）
       var all_totals = all_total_venue + all_total_items + all_total_layouts;
       var only_tax = Math.floor(Number(all_totals) * 0.1);
       $('.all-total-without-tax').text(all_totals);
@@ -376,6 +376,7 @@ $(function () {
         $('.venue_price').text('');
         $('.venue_price').val('');
         $('.after_discount_price').text('');
+        $('.after_discount_price').val('');
         $('.venue_subtotal').text(''); //小計
         $('.venue_tax').text(''); //消費税
         $('.venue_total').text(''); //会場合計料金
@@ -385,10 +386,12 @@ $(function () {
         $('.venue_price').text(venue_extend_price - extend_price);
         $('.venue_price').val(venue_extend_price - extend_price);
         $('.after_discount_price').text(venue_extend_price);
+        $('.after_discount_price').val(venue_extend_price);
         if ((extend_price) == 0) {
           $('.venue_price_details table tbody').html('');
           $('.venue_price_details table tbody').append("<tr><td>" + '会場料金' + "</td><td>" + venue_extend_price + "</td><td>" + '1' + "</td><td>" + venue_extend_price + "</td></tr>");
           $('.after_discount_price').text(venue_extend_price);
+          $('.after_discount_price').val(venue_extend_price);
           $('.venue_subtotal').text(venue_extend_price); //小計
           $('.venue_tax').text(Math.floor(Number((venue_extend_price)) * 0.1)); //消費税
           $('.venue_total').text(Number((venue_extend_price)) + (Math.floor(Number(venue_extend_price * 0.1)))); //会場合計料金
@@ -397,6 +400,7 @@ $(function () {
           $('.venue_price_details table tbody').append("<tr><td>" + '会場料金' + "</td><td>" + ((venue_extend_price) - (extend_price)) + "</td><td>" + '1' + "</td><td>" + ((venue_extend_price) - (extend_price)) + "</td></tr>");
           $('.venue_price_details table tbody').append("<tr><td>" + '延長料金' + "</td><td>" + extend_price + "</td><td>" + extend_time + "H</td><td>" + extend_price + "</td></tr>");
           $('.after_discount_price').text(venue_extend_price);
+          $('.after_discount_price').val(venue_extend_price);
           $('.venue_subtotal').text(venue_extend_price); //小計
           $('.venue_tax').text(Math.floor(Number(venue_extend_price) * 0.1)); //消費税
           $('.venue_total').text(Number(venue_extend_price) + (Math.floor(Number(venue_extend_price * 0.1)))); //会場合計料金
@@ -415,6 +419,7 @@ $(function () {
         $('.venue_price').text('');
         $('.venue_price').val('');
         $('.after_discount_price').text('');
+        $('.after_discount_price').val('');
         $('.venue_subtotal').text(''); //小計
         $('.venue_tax').text(''); //消費税
         $('.venue_total').text(''); //会場合計料金
@@ -458,13 +463,18 @@ $(function () {
         var count_equipments = ($each[0][1]).length;
         $('.items_equipments table tbody').html(''); //テーブル初期化
         $('.selected_equipments_price').text(''); //有料備品料金初期化
+        $('.selected_equipments_price').val(''); //有料備品料金初期化
         $('.selected_services_price').text(''); //有料サービス料金初期化
+        $('.selected_services_price').val(''); //有料サービス料金初期化
         $('.selected_items_total').text(''); //有料備品＆有料サービス合計初期化
+        $('.selected_items_total').val(''); //有料備品＆有料サービス合計初期化
         $('.items_discount_price').text(''); //割引後 会場料金合計初期化
+        $('.items_discount_price').val(''); //割引後 会場料金合計初期化
         $('.items_subtotal').text(''); //小計初期化
         $('.items_tax').text(''); //消費税初期化
         $('.all_items_total').text('');　//請求総額初期化
         $('.selected_luggage_price').text('');　//請求総額初期化
+        $('.selected_luggage_price').val('');　//請求総額初期化
         for (let counter = 0; counter < count_equipments; counter++) {
           $('.items_equipments table tbody').append("<tr><td>" + $each[0][1][counter][0] + "</td><td>" + $each[0][1][counter][1] + "</td><td>" + $each[0][1][counter][2] + "</td><td>" + (($each[0][1][counter][1]) * ($each[0][1][counter][2])) + "</td></tr>");
         }
@@ -486,10 +496,15 @@ $(function () {
           $('.luggage_input_price').remove();
         }
         $('.selected_equipments_price').text($each[0][3]);
+        $('.selected_equipments_price').val($each[0][3]);
         $('.selected_services_price').text($each[0][4]);
+        $('.selected_services_price').val($each[0][4]);
         $('.selected_luggage_price').text(luggage_target);
+        $('.selected_luggage_price').val(luggage_target);
         $('.selected_items_total').text(Number($each[0][0]) + Number(luggage_target));
+        $('.selected_items_total').val(Number($each[0][0]) + Number(luggage_target));
         $('.items_discount_price').text(Number($each[0][0]) + Number(luggage_target));
+        $('.items_discount_price').val(Number($each[0][0]) + Number(luggage_target));
         $('.items_subtotal').text(Number($each[0][0]) + Number(luggage_target));
         $('.items_tax').text(Math.floor((Number($each[0][0]) + Number(luggage_target)) * 0.1));
         $('.all_items_total').text((Math.floor((Number($each[0][0]) + Number(luggage_target)) * 0.1)) + (Number($each[0][0]) + Number(luggage_target)));
@@ -499,13 +514,18 @@ $(function () {
         console.log('備品又はサービスの料金取得に失敗しました。ページをリロードし再度試して下さい');
         $('.items_equipments table tbody').html(''); //テーブル初期化
         $('.selected_equipments_price').text(''); //有料備品料金初期化
+        $('.selected_equipments_price').val(''); //有料備品料金初期化
         $('.selected_services_price').text(''); //有料サービス料金初期化
+        $('.selected_services_price').val(''); //有料サービス料金初期化
         $('.selected_items_total').text(''); //有料備品＆有料サービス合計初期化
+        $('.selected_items_total').val(''); //有料備品＆有料サービス合計初期化
         $('.items_discount_price').text(''); //割引後 会場料金合計初期化
+        $('.items_discount_price').val(''); //割引後 会場料金合計初期化
         $('.items_subtotal').text(''); //小計初期化
         $('.items_tax').text(''); //消費税初期化
         $('.all_items_total').text('');　//請求総額初期化
         $('.selected_luggage_price').text('');　//荷物アヅカリ
+        $('.selected_luggage_price').val('');　//荷物アヅカリ
       });
   };
 

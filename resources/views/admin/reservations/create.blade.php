@@ -553,6 +553,7 @@
       <div class="col-3 bill-box_cell">
         <dt>有料備品＆有料サービス合計</dt>
         <dd class="text-right"><span class="selected_items_total"></span>円</dd>
+        {{ Form::hidden('selected_items_total', '', ['class'=>'selected_items_total']) }}
       </div>
       <div class="col-6">
         <div class="row">

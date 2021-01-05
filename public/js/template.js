@@ -71,6 +71,7 @@ $(function () {
     $('.venue_dicsount_number').val(''); //割引料金
     $('.number_result').text(''); //割引料金に紐づく割引率
     $('.after_discount_price').text(''); //割引後 会場料金合計
+    $('.after_discount_price').val(''); //割引後 会場料金合計
     $('.discount_input_number').remove(); //料金内訳に追記されたもの
 
     $('.venue_subtotal').text(''); //小計初期化
@@ -84,15 +85,19 @@ $(function () {
     var after_discounts = (Number(calc_target) + Number(minus_result));
     if (input_percent != 0 || input_percent != '') {
       $('.percent_result').text(calc_target * input_percent);
+      $('.percent_result').val(calc_target * input_percent);
       var input_target = "<tr class='discount_input'><td>割引料金</td><td style='color:red;'>" + (calc_target * -input_percent) + "</td><td>" + ($(this).val()) + "%</td><td style='color:red;'>" + (calc_target * -input_percent) + "</td></tr>"
       if ($('.venue_price_details table tbody tr').hasClass('discount_input')) {
         $('.discount_input').remove(); //初期化
         $('.venue_price_details table tbody').append(input_target);
         $('.after_discount_price').text('');
+        $('.after_discount_price').val('');
         $('.after_discount_price').text(after_discounts);
+        $('.after_discount_price').val(after_discounts);
       } else {
         $('.venue_price_details table tbody').append(input_target);
         $('.after_discount_price').text(after_discounts);
+        $('.after_discount_price').val(after_discounts);
       }
       // 小計、消費税、最終の請求総額に反映
       $('.venue_subtotal').text(after_discounts);
@@ -100,14 +105,19 @@ $(function () {
       $('.venue_total').text(Number(after_discounts) + (Math.floor(Number(after_discounts) * 0.1)));
     } else {
       $('.percent_result').text('');
+      $('.percent_result').val('');
       if ($('.venue_price_details table tbody tr').hasClass('discount_input')) {
         $('.discount_input').remove();
         $('.after_discount_price').text('');
+        $('.after_discount_price').val('');
         $('.after_discount_price').text(after_discounts);
+        $('.after_discount_price').val(after_discounts);
       } else {
         $('.venue_price_details table tbody').append(input_target);
         $('.after_discount_price').text('');
+        $('.after_discount_price').val('');
         $('.after_discount_price').text(after_discounts);
+        $('.after_discount_price').val(after_discounts);
       }
       // 小計、消費税、最終の請求総額に反映
       $('.venue_subtotal').text($('.venue_extend').text());
@@ -176,7 +186,9 @@ $(function () {
     // 割引料金が入力されたら割引率を初期化
     $('.venue_discount_percent').val(''); //割引料金
     $('.percent_result').text(''); //割引料金に紐づく割引率
+    $('.percent_result').val(''); //割引料金に紐づく割引率
     $('.after_discount_price').text(''); //割引後 会場料金合計
+    $('.after_discount_price').val(''); //割引後 会場料金合計
     $('.discount_input').remove(); //料金内訳に追記されたもの
     $('.venue_subtotal').text(''); //小計初期化
     $('.venue_tax').text(''); //消費税初期化
@@ -191,7 +203,9 @@ $(function () {
       $('.number_result').text('');
       $('.number_result').text(Math.floor(result_percent));
       $('.after_discount_price').text('');
+      $('.after_discount_price').val('');
       $('.after_discount_price').text(minus_result);
+      $('.after_discount_price').val(minus_result);
       if ($('.venue_price_details table tbody tr').hasClass('discount_input_number')) {
         $('.discount_input_number').remove(); //初期化
         $('.venue_price_details table tbody').append(input_target);
@@ -205,7 +219,9 @@ $(function () {
     } else {
       $('.number_result').text('');
       $('.after_discount_price').text('');
+      $('.after_discount_price').val('');
       $('.after_discount_price').text(calc_target);
+      $('.after_discount_price').val(calc_target);
       if ($('.venue_price_details table tbody tr').hasClass('discount_input_number')) {
         $('.discount_input_number').remove(); //初期化
       } else {
@@ -277,15 +293,19 @@ $(function () {
 $(function () {
   $('.discount_item').on('change', function () {
     var input_number = $(this).val();
-    var calc_target = $('.selected_items_total').text();
+    var calc_target = $('.selected_items_total').eq(0).text();
     var minus_result = Number(calc_target) - Number(input_number); //割引後の料金
     var result_percent = (Number(input_number) / Number(calc_target)) * 100;　//割引した割合を算出
     if (input_number != 0 || input_number != '') {
       var input_target = "<tr class='discount_input_number_items'><td>割引料金</td><td style='color:red;'>" + (-input_number) + "</td><td>" + '1' + "</td><td style='color:red;'>" + (-input_number) + "</td></tr>"
       $('.item_discount_percent').text('');
+      $('.item_discount_percent').val('');
       $('.item_discount_percent').text(Math.floor(result_percent));
+      $('.item_discount_percent').val(Math.floor(result_percent));
       $('.items_discount_price').text('');
+      $('.items_discount_price').val('');
       $('.items_discount_price').text(minus_result);
+      $('.items_discount_price').val(minus_result);
       if ($('.items_equipments table tbody tr').hasClass('discount_input_number_items')) {
         $('.discount_input_number_items').remove(); //初期化
         $('.items_equipments table tbody').append(input_target);
@@ -298,7 +318,9 @@ $(function () {
       $('.all_items_total').text(Number(minus_result) + (Number(minus_result) * 0.1));
     } else {
       $('.item_discount_percent').text('');
+      $('.item_discount_percent').val('');
       $('.items_discount_price').text(calc_target);
+      $('.items_discount_price').val(calc_target);
       if ($('.items_equipments table tbody tr').hasClass('discount_input_number_items')) {
         $('.discount_input_number_items').remove(); //初期化
       } else {

@@ -433,10 +433,9 @@
                   <div class="row">
                     <div class="col-4 bill-box_cell cell-gray">
                       <p>割引率</p>
-                      {{$request->venue_discount_percent}}
                     </div>
                     <div class="col-5 bill-box_cell">
-                      <p class="text-right"></p>
+                      <p class="text-right">{{$request->venue_discount_percent}}%</p>
                     </div>
                     <div class="col-3 bill-box_cell text-right">
                       <p>割引金額</p>
@@ -451,18 +450,18 @@
                       <p>割引料金</p>
                     </div>
                     <div class="col-5 bill-box_cell">
-                      <p class="text-right"></p>
+                      <p class="text-right">{{$request->venue_dicsount_number}}</p>
                     </div>
                     <div class="col-3 bill-box_cell text-right">
                       <p>割引率</p>
-                      <p class=""><span>%</span></p>
+                      <p class="">{{$request->number_result}}<span>%</span></p>
                     </div>
                   </div>
                 </div>
 
                 <div class="col-12 bill-box_cell text-right">
                   <p class="font-weight-bold">割引後会場料金合計</p>
-                  <p class=""></p>
+                  <p class="">{{$request->after_discount_price}}</p>
                 </div>
               </dl>
 
@@ -485,9 +484,9 @@
                 </div>
 
                 <div class="row bill-box_wrap price-sum bill-box_cell flex-column">
-                  <p class="text-right"><span class="font-weight-bold">小計</span></p>
-                  <p class="text-right"><span>消費税</span></p>
-                  <p class="text-right"><span class="font-weight-bold">合計金額</span></p>
+                  <p class="text-right"><span class="font-weight-bold">小計</span>>############円</p>
+                  <p class="text-right"><span>消費税</span>>############円</p>
+                  <p class="text-right"><span class="font-weight-bold">合計金額</span>>############円</p>
                 </div>
               </div>
               <!-- 料金内訳 終わり---------------------------- -->
@@ -502,20 +501,20 @@
               <dl class="row bill-box_wrap">
                 <div class="col-3 bill-box_cell">
                   <dt>有料備品料金</dt>
-                  <dd>52,400円</dd>
+                  <dd>{{$request->selected_equipments_price}}</dd>
                 </div>
                 <div class="col-3 bill-box_cell">
                   <dt>有料サービス料金</dt>
-                  <dd>5,300円</dd>
+                  <dd>{{$request->selected_services_price}}</dd>
                 </div>
                 <div class="col-3 bill-box_cell">
                   <dt>荷物預かり/返送</dt>
-                  <dd class="d-flex align-items-center">円
+                  <dd class="d-flex align-items-center">{{$request->selected_luggage_price}}
                   </dd>
                 </div>
                 <div class="col-3 bill-box_cell">
                   <dt>備品その他合計</dt>
-                  <dd class="text-right">57,700円</dd>
+                  <dd class="text-right">{{$request->selected_items_total}}</dd>
                 </div>
 
                 <div class="col-6">
@@ -524,18 +523,18 @@
                       <p>割引料金</p>
                     </div>
                     <div class="col-5 bill-box_cell">
-                      <p class="text-right"></p>
+                      <p class="text-right">{{$request->discount_item}}</p>
                     </div>
                     <div class="col-3 bill-box_cell text-right">
                       <p>割引率</p>
-                      <p class=""><span>%</span></p>
+                      <p class="">{{$request->item_discount_percent}}<span>%</span></p>
                     </div>
                   </div>
                 </div>
 
                 <div class="col-6 bill-box_cell text-right">
                   <p class="font-weight-bold">割引後備品その他合計</p>
-                  <p class=""></p>
+                  <p class="">{{$request->items_discount_price}}</p>
                 </div>
               </dl>
 
@@ -559,9 +558,9 @@
                 </div>
 
                 <div class="row bill-box_wrap price-sum bill-box_cell flex-column">
-                  <p class="text-right"><span class="font-weight-bold">小計</span>7,200円</p>
-                  <p class="text-right"><span>消費税</span>720円</p>
-                  <p class="text-right"><span class="font-weight-bold">合計金額</span>7,200円</p>
+                  <p class="text-right"><span class="font-weight-bold">小計</span>############円</p>
+                  <p class="text-right"><span>消費税</span>>############円</p>
+                  <p class="text-right"><span class="font-weight-bold">合計金額</span>>############円</p>
                 </div>
 
 
