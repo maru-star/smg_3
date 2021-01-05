@@ -156,13 +156,17 @@ table.dataTable thead .sorting_desc:after {
 //////////////////
 ****************************/
 
+
 ul {
   margin-bottom: 0;
+  padding:0;
+  
 }
 
 li {
   list-style: none;
 }
+
 
 a:hover {
   text-decoration: none;
@@ -179,9 +183,15 @@ label {
   margin-bottom: 0;
 }
 
-h3 {
+h1,h2,h3,h4,h5 {
   margin-bottom: 0;
 }
+
+.content-wrapper {
+  min-width: 1200px;
+}
+
+
 
 /* 共通--------------------------------------- */
 
@@ -207,12 +217,12 @@ h3 {
 }
 
 
-main {
-color: #35a7a7;
-}
-
 .btn_wrapper {
   margin: 50px 0;
+}
+.btn-wrapper2 {
+  padding: 0 3%;
+  margin-bottom: 3%;
 }
 
 .more_btn {
@@ -286,6 +296,14 @@ color: #35a7a7;
   font-weight: bold;
 }
 
+.more_btn4_lg {
+  background: #DC3545;
+  padding: 15px 80px;
+  border-radius: 5px;
+  color: #fff;
+  font-weight: bold;
+}
+
 .bg-blue {
   background: #007BFF;
   }
@@ -329,14 +347,14 @@ color: #35a7a7;
 /* アコーディオン ------------------------------------------*/
 
 
-.accodion-ttl .title-icon {
+.accordion-ttl .title-icon {
   display: block;
   position: relative;
 }
 
 /* 二本の横棒を作成する */
-.accodion-ttl .title-icon::before,
-.accodion-ttl .title-icon::after {
+.accordion-ttl .title-icon::before,
+.accordion-ttl .title-icon::after {
   content: '';
   display: block;
   width: 15px;
@@ -350,7 +368,7 @@ color: #35a7a7;
 }
 
 /* 2本の横棒のうち一本は縦棒にする */
-.accodion-ttl .title-icon::after {
+.title-icon::after {
   background: #35a7a7;
   /* 横棒を縦にするために90℃回転させる */
   transform: translateY(-50%) rotate(90deg);
@@ -362,7 +380,42 @@ color: #35a7a7;
 プラスがクリックされたら縦棒を横にしてマイナスにする疑似要素
 jQueryで付け外しを行う
 */
-.accodion-ttl.title-icon.active::after {
+.title-icon.active::after {
+  transform: rotate(0);
+  /* transition: 0.5s; */
+}
+
+.plus_icon {
+  display: block;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  margin-left: 5%;
+}
+
+.plus_icon::before,
+.plus_icon::after {
+content: '';
+display: block;
+width: 15px;
+height: 3px;
+border-radius: 5px;
+background:#35a7a7;
+position: absolute;
+right: 0;
+top: 50%;
+transform: translateY(-50%);
+}
+
+.plus_icon::after {
+  background: #35a7a7;
+  /* 横棒を縦にするために90℃回転させる */
+  transform: translateY(-50%) rotate(90deg);
+  /* プラスからマイナスへの切り替えをゆっくり行いアニメーションさせる */
+  /* transition: 0.5s; */
+}
+
+.plus_icon.active::after {
   transform: rotate(0);
   /* transition: 0.5s; */
 }
@@ -383,8 +436,9 @@ jQueryで付け外しを行う
 
 .search_box {
   margin-bottom: 50px;
+  padding: 30px;
+  border: 1px solid #DBDBDB;
 }
-
 
 .search_box .form-group {
   display: flex;
@@ -403,7 +457,7 @@ jQueryで付け外しを行う
 }
 
 .search_box ul li {
-  width: 120px;
+  width: 100%;
 }
 
 .btn_box {
@@ -426,6 +480,11 @@ jQueryで付け外しを行う
   color: #fff;
 }
 
+.search_box .table td{
+  padding: 0.01rem;
+
+}
+
 
 /* 予約一覧------------------------------------------------------------ */
 
@@ -446,6 +505,15 @@ table td.table_column {
 
 table td.table_column p {
   border-bottom: 1px solid #ccc;
+  margin: 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  padding: 5px 0;
+}
+
+table td.table_column p:last-child {
+  border-bottom: none;
   margin: 0;
   box-sizing: border-box;
   display: flex;
@@ -527,9 +595,17 @@ table td.table_column .colum4 p {
   border: 1px solid #DC3545;
 }
 
+.ttl-box {
+  border: 2px solid #35a7a7;
+  color: #333;
+  padding: 0.8em;
+  background: #fff;
+  border-bottom: none;
+}
+
 
 .section-ttl-box {
-  border: 1px solid #35a7a7;
+  border: 2px solid #35a7a7;
   color: #333;
   padding: 0.8em;
   background: #fff;
@@ -584,11 +660,15 @@ table td.table_column .colum4 p {
 }
 
 
-/* .bill-box_wrap .price-sum {
-  padding: 20px;
-  border: 1px solid #ccc;
-} */
 
+/* .bill-box_wrap .price-sum {
+    padding: 20px;
+    border: 1px solid #ccc;
+  } */
+  
+  .bill-list .col-12 {
+      padding: 0;
+  }
 
 .bill-list .price-sum p {
     padding-right: 1em;
@@ -642,7 +722,7 @@ table td.table_column .colum4 p {
 } */
 
 .total-sum {
-  padding: 100px 0;
+  padding: 10% 3%;
 }
 
 .total-sum .col-3 {
@@ -706,7 +786,6 @@ table td.table_column .colum4 p {
   border: none;
 }
 
-
 /* =============予約チェックボックス================================================ */
 
 .checkbox {
@@ -737,6 +816,8 @@ table td.table_column .colum4 p {
 }
 
 
+
+
 /* =============予約追加請求================================================ */
 
 .extra-bill-table {
@@ -748,8 +829,6 @@ table td.table_column .colum4 p {
 }
 
 
-
-
 /* =============仮押さえ================================================ */
 
 .calender-wrap {
@@ -759,4 +838,50 @@ table td.table_column .colum4 p {
 
 .choose-table tr td:last-child {
   width: 200px;
+}
+
+.register-list-header {
+  display: flex;
+  padding: 20px 0;
+  align-items: center;
+}
+
+.register-list-header li:nth-of-type(n+2) {
+  margin-left: 1em;
+}
+
+
+
+.register-list-item {
+  display: flex;
+  /* align-items: center; */
+  margin-bottom: 0;
+}
+
+.register-list-item dl {
+  width: 100%;
+}
+
+.alert-box {
+  color:#EF6243;
+  margin:0 auto;
+  width: 600px;
+  font-weight: bold;
+  padding: 2em;
+  border: 1px solid #EF6243;
+  margin-bottom: 50px;
+}
+.alert-icon {
+  font-size: 4em;
+}
+
+
+/* =============仮押さえ　一覧================================================ */
+
+.table th,.table td {
+  vertical-align: top;
+}
+
+.btn-cell {
+  min-width: 85px;
 }
