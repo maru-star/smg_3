@@ -263,9 +263,9 @@ class ReservationsController extends Controller
     $luggage_price = $request->luggage_price;
 
     // $reservation_id = new Reservation;
-    $sub_total = 5000;
-    $tax = 500;
-    $total = 5500;
+    $sub_total = $request->sub_total;
+    $tax = $request->tax;
+    $total = $request->total;
 
     // 備品の個別入力input
     $simple_v_input = [];
@@ -282,7 +282,6 @@ class ReservationsController extends Controller
         $simple_s_input[] = $value;
       }
     }
-
 
     // 会場の内訳列×４カラム（内容、単価、数量、小計）
     $v_d_counts = [];

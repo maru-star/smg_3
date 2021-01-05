@@ -478,9 +478,18 @@
         </table>
       </div>
       <div class="row bill-box_wrap price-sum bill-box_cell flex-column">
-        <p class="text-right"><span class="font-weight-bold">小計</span> <span class="venue_subtotal"></span>円</p>
-        <p class="text-right"><span>消費税</span> <span class="venue_tax"></span> 円</p>
-        <p class="text-right"><span class="font-weight-bold">請求総額</span> <span class="venue_total"></span> 円</p>
+        <p class="text-right"><span class="font-weight-bold">小計</span>
+          <span class="venue_subtotal"></span>円
+          {{ Form::hidden('venue_subtotal', '', ['class'=>'venue_subtotal']) }}
+        </p>
+        <p class="text-right"><span>消費税</span>
+          <span class="venue_tax"></span>
+          {{ Form::hidden('venue_tax', '', ['class'=>'venue_tax']) }}
+          円</p>
+        <p class="text-right"><span class="font-weight-bold">請求総額</span>
+          <span class="venue_total"></span>
+          {{ Form::hidden('venue_total', '', ['class'=>'venue_total']) }}
+          円</p>
       </div>
     </div>
   </div>
@@ -594,9 +603,17 @@
         </table>
       </div>
       <div class="row bill-box_wrap price-sum bill-box_cell flex-column">
-        <p class="text-right"><span class="font-weight-bold">小計</span><span class="items_subtotal"></span>円</p>
-        <p class="text-right"><span>消費税</span> <span class="items_tax"></span> 円</p>
-        <p class="text-right"><span class="font-weight-bold">請求総額</span> <span class="all_items_total"></span> 円</p>
+        <p class="text-right"><span class="font-weight-bold">小計</span>
+          <span class="items_subtotal"></span>
+          {{ Form::hidden('items_subtotal', '', ['class'=>'items_subtotal']) }}
+          円</p>
+        <p class="text-right"><span>消費税</span> <span class="items_tax"></span>
+          {{ Form::hidden('items_tax', '', ['class'=>'items_tax']) }}
+          円</p>
+        <p class="text-right"><span class="font-weight-bold">請求総額</span>
+          <span class="all_items_total"></span>
+          {{ Form::hidden('all_items_total', '', ['class'=>'all_items_total']) }}
+          円</p>
       </div>
     </div>
     <!-- 料金内訳 終わり---------------------------- -->
@@ -615,6 +632,7 @@
           {{ Form::hidden('layout_clean_result', '', ['class'=>'layout_clean_result']) }}
         </div>
         <div style="width:34px%">レイアウト変更合計： <p class="layout_total"></p>
+          {{ Form::hidden('layout_total', '', ['class'=>'layout_total']) }}
         </div>
       </div>
       <div class="d-flex" style="height: 70px">
@@ -642,26 +660,35 @@
     </div>
     <div style="margin-top: 50px;" class="text-right">
       小計：<p class="layout_subtotal"></p>
+      {{ Form::hidden('layout_subtotal', '', ['class'=>'layout_subtotal']) }}
       消費税：<p class="layout_tax"></p>
+      {{ Form::hidden('layout_tax', '', ['class'=>'layout_tax']) }}
       合計金額：<p class="layout_total_amount"></p>
+      {{ Form::hidden('layout_total_amount', '', ['class'=>'layout_total_amount']) }}
     </div>
   </div>
-  {{-- レイアウト --}}
+  {{-- レイアウト終わり --}}
   <dl class="row bill-box_wrap total-sum">
     <div class="col-3 bill-box_cell">
       <dt>合計請求総額</dt>
     </div>
     <div class="col-3 bill-box_cell">
       <dt>合計額</dt>
-      <dd> <span class="all-total-without-tax"></span> 円</dd>
+      <dd> <span class="all-total-without-tax"></span>
+        {{ Form::hidden('sub_total', '', ['class'=>'all-total-without-tax']) }}
+        円</dd>
     </div>
     <div class="col-3 bill-box_cell">
       <dt>消費税</dt>
-      <dd> <span class="all-total-tax"></span> 円</dd>
+      <dd> <span class="all-total-tax"></span>
+        {{ Form::hidden('tax', '', ['class'=>'all-total-tax']) }}
+        円</dd>
     </div>
     <div class="col-3 bill-box_cell">
       <dt>税込総請求額</dt>
-      <dd class="text-right"> <span class="all-total-amout"></span> 円</dd>
+      <dd class="text-right"> <span class="all-total-amout"></span>
+        {{ Form::hidden('total', '', ['class'=>'all-total-amout']) }}
+        円</dd>
     </div>
   </dl>
   </div>
@@ -679,11 +706,11 @@
 {{ Form::hidden('bill_pay_limit', isset($request)?$request->bill_pay_limit:'' ) }}
 
 {{-- 小計 --}}
-{{ Form::hidden('sub_total', isset($request)?$request->sub_total:'', ['id'=>'sub_total']) }}
+{{-- {{ Form::hidden('sub_total', isset($request)?$request->sub_total:'', ['id'=>'sub_total']) }} --}}
 {{-- 税金 --}}
-{{ Form::hidden('tax', isset($request)?$request->tax:'', ['id'=>'tax']) }}
+{{-- {{ Form::hidden('tax', isset($request)?$request->tax:'', ['id'=>'tax']) }} --}}
 {{-- 総合計 --}}
-{{ Form::hidden('total', isset($request)?$request->total:'', ['id'=>'total']) }}
+{{-- {{ Form::hidden('total', isset($request)?$request->total:'', ['id'=>'total']) }} --}}
 
 
 {{Form::submit('送信', ['class'=>'btn btn-primary mx-auto', 'id'=>'check_submit'])}}

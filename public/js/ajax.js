@@ -148,8 +148,11 @@ $(function () {
       var all_totals = all_total_venue + all_total_items + all_total_layouts;
       var only_tax = Math.floor(Number(all_totals) * 0.1);
       $('.all-total-without-tax').text(all_totals);
+      $('.all-total-without-tax').val(all_totals);
       $('.all-total-tax').text(only_tax);
+      $('.all-total-tax').val(only_tax);
       $('.all-total-amout').text(Number(all_totals) + Number(only_tax));
+      $('.all-total-amout').val(Number(all_totals) + Number(only_tax));
       // 以下hidden
       $('#sub_total').val(all_totals);
       $('#tax').val(only_tax);
@@ -378,8 +381,11 @@ $(function () {
         $('.after_discount_price').text('');
         $('.after_discount_price').val('');
         $('.venue_subtotal').text(''); //小計
+        $('.venue_subtotal').val(''); //小計
         $('.venue_tax').text(''); //消費税
+        $('.venue_tax').val(''); //消費税
         $('.venue_total').text(''); //会場合計料金
+        $('.venue_total').val(''); //会場合計料金
         $('.venue_extend').text(venue_extend_price);
         $('.extend').text(extend_price);
         $('.extend').val(extend_price);
@@ -393,8 +399,11 @@ $(function () {
           $('.after_discount_price').text(venue_extend_price);
           $('.after_discount_price').val(venue_extend_price);
           $('.venue_subtotal').text(venue_extend_price); //小計
+          $('.venue_subtotal').val(venue_extend_price); //小計
           $('.venue_tax').text(Math.floor(Number((venue_extend_price)) * 0.1)); //消費税
+          $('.venue_tax').val(Math.floor(Number((venue_extend_price)) * 0.1)); //消費税
           $('.venue_total').text(Number((venue_extend_price)) + (Math.floor(Number(venue_extend_price * 0.1)))); //会場合計料金
+          $('.venue_total').val(Number((venue_extend_price)) + (Math.floor(Number(venue_extend_price * 0.1)))); //会場合計料金
         } else {
           $('.venue_price_details table tbody').html('');
           $('.venue_price_details table tbody').append("<tr><td>" + '会場料金' + "</td><td>" + ((venue_extend_price) - (extend_price)) + "</td><td>" + '1' + "</td><td>" + ((venue_extend_price) - (extend_price)) + "</td></tr>");
@@ -402,8 +411,11 @@ $(function () {
           $('.after_discount_price').text(venue_extend_price);
           $('.after_discount_price').val(venue_extend_price);
           $('.venue_subtotal').text(venue_extend_price); //小計
+          $('.venue_subtotal').val(venue_extend_price); //小計
           $('.venue_tax').text(Math.floor(Number(venue_extend_price) * 0.1)); //消費税
+          $('.venue_tax').val(Math.floor(Number(venue_extend_price) * 0.1)); //消費税
           $('.venue_total').text(Number(venue_extend_price) + (Math.floor(Number(venue_extend_price * 0.1)))); //会場合計料金
+          $('.venue_total').val(Number(venue_extend_price) + (Math.floor(Number(venue_extend_price * 0.1)))); //会場合計料金
         }
       })
       .fail(function ($details) {
@@ -421,8 +433,11 @@ $(function () {
         $('.after_discount_price').text('');
         $('.after_discount_price').val('');
         $('.venue_subtotal').text(''); //小計
+        $('.venue_subtotal').val(''); //小計
         $('.venue_tax').text(''); //消費税
+        $('.venue_tax').val(''); //消費税
         $('.venue_total').text(''); //会場合計料金
+        $('.venue_total').val(''); //会場合計料金
         $('.venue_price_details table tbody').html('');
         $('.bill-bg').addClass('hide');
         $('.hand_input').removeClass('hide');
@@ -471,8 +486,11 @@ $(function () {
         $('.items_discount_price').text(''); //割引後 会場料金合計初期化
         $('.items_discount_price').val(''); //割引後 会場料金合計初期化
         $('.items_subtotal').text(''); //小計初期化
+        $('.items_subtotal').val(''); //小計初期化
         $('.items_tax').text(''); //消費税初期化
+        $('.items_tax').val(''); //消費税初期化
         $('.all_items_total').text('');　//請求総額初期化
+        $('.all_items_total').val('');　//請求総額初期化
         $('.selected_luggage_price').text('');　//請求総額初期化
         $('.selected_luggage_price').val('');　//請求総額初期化
         for (let counter = 0; counter < count_equipments; counter++) {
@@ -506,8 +524,11 @@ $(function () {
         $('.items_discount_price').text(Number($each[0][0]) + Number(luggage_target));
         $('.items_discount_price').val(Number($each[0][0]) + Number(luggage_target));
         $('.items_subtotal').text(Number($each[0][0]) + Number(luggage_target));
+        $('.items_subtotal').val(Number($each[0][0]) + Number(luggage_target));
         $('.items_tax').text(Math.floor((Number($each[0][0]) + Number(luggage_target)) * 0.1));
+        $('.items_tax').val(Math.floor((Number($each[0][0]) + Number(luggage_target)) * 0.1));
         $('.all_items_total').text((Math.floor((Number($each[0][0]) + Number(luggage_target)) * 0.1)) + (Number($each[0][0]) + Number(luggage_target)));
+        $('.all_items_total').val((Math.floor((Number($each[0][0]) + Number(luggage_target)) * 0.1)) + (Number($each[0][0]) + Number(luggage_target)));
       })
       .fail(function ($each) {
         $('#fullOverlay').css('display', 'none');
@@ -522,7 +543,9 @@ $(function () {
         $('.items_discount_price').text(''); //割引後 会場料金合計初期化
         $('.items_discount_price').val(''); //割引後 会場料金合計初期化
         $('.items_subtotal').text(''); //小計初期化
+        $('.items_subtotal').val(''); //小計初期化
         $('.items_tax').text(''); //消費税初期化
+        $('.items_tax').val(''); //消費税初期化
         $('.all_items_total').text('');　//請求総額初期化
         $('.selected_luggage_price').text('');　//荷物アヅカリ
         $('.selected_luggage_price').val('');　//荷物アヅカリ
@@ -585,18 +608,31 @@ $(function () {
           }
         }
         $('.layout_prepare_result').text('');
+        $('.layout_prepare_result').val('');
         $('.layout_clean_result').text('');
+        $('.layout_clean_result').val('');
         $('.layout_total').text('');
+        $('.layout_total').val('');
         $('.layout_subtotal').text('');
+        $('.layout_subtotal').val('');
         $('.layout_tax').text('');
+        $('.layout_tax').val('');
         $('.layout_total_amount').text('');
+        $('.layout_total_amount').val('');
         $('.layout_prepare_result').text($result[0][0][0]); //レイアウト準備
+        $('.layout_prepare_result').val($result[0][0][0]); //レイアウト準備
         $('.layout_clean_result').text($result[0][1][0]); //レイアウト片付け
+        $('.layout_clean_result').val($result[0][1][0]); //レイアウト片付け
         $('.layout_total').text($result[1]);
+        $('.layout_total').val($result[1]);
         $('.layout_subtotal').text($result[1]);
+        $('.layout_subtotal').val($result[1]);
         $('.layout_tax').text(Math.floor(Number($result[1]) * 0.1));
+        $('.layout_tax').val(Math.floor(Number($result[1]) * 0.1));
         $('.layout_total_amount').text((Math.floor(Number($result[1]) * 0.1)) + (Number($result[1])));
+        $('.layout_total_amount').val((Math.floor(Number($result[1]) * 0.1)) + (Number($result[1])));
         $('.after_duscount_layouts').text($result[1]);
+        $('.after_duscount_layouts').val($result[1]);
       })
       .fail(function ($result) {
         $('#fullOverlay').css('display', 'none');

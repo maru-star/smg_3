@@ -75,8 +75,11 @@ $(function () {
     $('.discount_input_number').remove(); //料金内訳に追記されたもの
 
     $('.venue_subtotal').text(''); //小計初期化
+    $('.venue_subtotal').val(''); //小計初期化
     $('.venue_tax').text(''); //消費税初期化
+    $('.venue_tax').val(''); //消費税初期化
     $('.venue_total').text(''); //請求総額初期化
+    $('.venue_total').val(''); //請求総額初期化
 
 
     var input_percent = ($(this).val() / 100);
@@ -101,8 +104,11 @@ $(function () {
       }
       // 小計、消費税、最終の請求総額に反映
       $('.venue_subtotal').text(after_discounts);
+      $('.venue_subtotal').val(after_discounts);
       $('.venue_tax').text(Math.floor((Number(after_discounts) * 0.1)));
+      $('.venue_tax').val(Math.floor((Number(after_discounts) * 0.1)));
       $('.venue_total').text(Number(after_discounts) + (Math.floor(Number(after_discounts) * 0.1)));
+      $('.venue_total').val(Number(after_discounts) + (Math.floor(Number(after_discounts) * 0.1)));
     } else {
       $('.percent_result').text('');
       $('.percent_result').val('');
@@ -121,8 +127,11 @@ $(function () {
       }
       // 小計、消費税、最終の請求総額に反映
       $('.venue_subtotal').text($('.venue_extend').text());
+      $('.venue_subtotal').val($('.venue_extend').text());
       $('.venue_tax').text(Math.floor((Number($('.venue_extend').text())) * 0.1));
+      $('.venue_tax').val(Math.floor((Number($('.venue_extend').text())) * 0.1));
       $('.venue_total').text(Math.floor(Number($('.venue_extend').text()) + (Number($('.venue_extend').text())) * 0.1));
+      $('.venue_total').val(Math.floor(Number($('.venue_extend').text()) + (Number($('.venue_extend').text())) * 0.1));
     }
 
     // 総請求額　反映
@@ -134,11 +143,17 @@ $(function () {
     var base_tax = Math.floor(base_total * 0.1);
     var base_total_amout = base_total + base_tax;
     $('.all-total-without-tax').text(''); //初期化
+    $('.all-total-without-tax').val(''); //初期化
     $('.all-total-tax').text(''); //初期化
+    $('.all-total-tax').val(''); //初期化
     $('.all-total-amout').text(''); //初期化
+    $('.all-total-amout').val(''); //初期化
     $('.all-total-without-tax').text(base_total);
+    $('.all-total-without-tax').val(base_total);
     $('.all-total-tax').text(Math.floor(base_tax));
+    $('.all-total-tax').val(Math.floor(base_tax));
     $('.all-total-amout').text(base_total_amout);
+    $('.all-total-amout').val(base_total_amout);
 
     // hiddenの内訳に反映
     setTimeout(function () {
@@ -191,8 +206,11 @@ $(function () {
     $('.after_discount_price').val(''); //割引後 会場料金合計
     $('.discount_input').remove(); //料金内訳に追記されたもの
     $('.venue_subtotal').text(''); //小計初期化
+    $('.venue_subtotal').val(''); //小計初期化
     $('.venue_tax').text(''); //消費税初期化
+    $('.venue_tax').val(''); //消費税初期化
     $('.venue_total').text(''); //請求総額初期化
+    $('.venue_total').val(''); //請求総額初期化
 
     var input_number = $(this).val();
     var calc_target = $('.venue_extend').text();
@@ -214,8 +232,11 @@ $(function () {
       }
       // 小計、消費税、最終の請求総額に反映
       $('.venue_subtotal').text(minus_result);
+      $('.venue_subtotal').val(minus_result);
       $('.venue_tax').text(Math.floor((Number(minus_result) * 0.1)));
+      $('.venue_tax').val(Math.floor((Number(minus_result) * 0.1)));
       $('.venue_total').text(Number(minus_result) + (Math.floor(Number(minus_result) * 0.1)));
+      $('.venue_total').val(Number(minus_result) + (Math.floor(Number(minus_result) * 0.1)));
     } else {
       $('.number_result').text('');
       $('.after_discount_price').text('');
@@ -229,8 +250,10 @@ $(function () {
       }
       // 小計、消費税、最終の請求総額に反映
       $('.venue_subtotal').text($('.venue_extend').text());
+      $('.venue_subtotal').val($('.venue_extend').val());
       $('.venue_tax').text(Math.floor((Number($('.venue_extend').text())) * 0.1));
       $('.venue_total').text(Math.floor(Number($('.venue_extend').text()) + (Number($('.venue_extend').text())) * 0.1));
+      $('.venue_total').val(Math.floor(Number($('.venue_extend').text()) + (Number($('.venue_extend').text())) * 0.1));
     }
     // 総請求額　反映
     var base_venue = $('.after_discount_price').eq(0).text();//会場の割引後の料金
@@ -242,11 +265,17 @@ $(function () {
     var base_tax = Math.floor(base_total * 0.1);
     var base_total_amout = base_total + base_tax;
     $('.all-total-without-tax').text(''); //初期化
+    $('.all-total-without-tax').val(''); //初期化
     $('.all-total-tax').text(''); //初期化
+    $('.all-total-tax').val(''); //初期化
     $('.all-total-amout').text(''); //初期化
+    $('.all-total-amout').val(''); //初期化
     $('.all-total-without-tax').text(base_total);
+    $('.all-total-without-tax').val(base_total);
     $('.all-total-tax').text(Math.floor(base_tax));
+    $('.all-total-tax').val(Math.floor(base_tax));
     $('.all-total-amout').text(base_total_amout);
+    $('.all-total-amout').val(base_total_amout);
 
     // hiddenの内訳に反映
     setTimeout(function () {
@@ -314,8 +343,11 @@ $(function () {
       }
       // 小計、消費税、最終の請求総額に反映
       $('.items_subtotal').text(minus_result);
+      $('.items_subtotal').val(minus_result);
       $('.items_tax').text(Math.floor((Number(minus_result) * 0.1)));
+      $('.items_tax').val(Math.floor((Number(minus_result) * 0.1)));
       $('.all_items_total').text(Number(minus_result) + (Number(minus_result) * 0.1));
+      $('.all_items_total').val(Number(minus_result) + (Number(minus_result) * 0.1));
     } else {
       $('.item_discount_percent').text('');
       $('.item_discount_percent').val('');
@@ -328,8 +360,11 @@ $(function () {
       }
       // 小計、消費税、最終の請求総額に反映
       $('.items_subtotal').text($('.items_discount_price').text());
+      $('.items_subtotal').val($('.items_discount_price').text());
       $('.items_tax').text(Math.floor((Number($('.items_discount_price').text())) * 0.1));
+      $('.items_tax').val(Math.floor((Number($('.items_discount_price').text())) * 0.1));
       $('.all_items_total').text(Math.floor(Number($('.items_discount_price').text()) + (Number($('.items_discount_price').text())) * 0.1));
+      $('.all_items_total').val(Math.floor(Number($('.items_discount_price').text()) + (Number($('.items_discount_price').text())) * 0.1));
     }
 
     // 総請求額　反映
@@ -342,11 +377,17 @@ $(function () {
     var base_tax = Math.floor(base_total * 0.1);
     var base_total_amout = base_total + base_tax;
     $('.all-total-without-tax').text(''); //初期化
+    $('.all-total-without-tax').val(''); //初期化
     $('.all-total-tax').text(''); //初期化
+    $('.all-total-tax').val(''); //初期化
     $('.all-total-amout').text(''); //初期化
+    $('.all-total-amout').val(''); //初期化
     $('.all-total-without-tax').text(base_total);
+    $('.all-total-without-tax').val(base_total);
     $('.all-total-tax').text(Math.floor(base_tax));
+    $('.all-total-tax').val(Math.floor(base_tax));
     $('.all-total-amout').text(base_total_amout);
+    $('.all-total-amout').val(base_total_amout);
 
     setTimeout(function () {
 
@@ -454,16 +495,20 @@ $(function () {
 $(function () {
   $('.layout_discount').on('change', function () {
     var input_number = $(this).val();
-    var calc_target = $('.layout_total').text();
+    var calc_target = $('.layout_total').val();
     var minus_result = Number(calc_target) - Number(input_number); //割引後の料金
     var result_percent = (Number(input_number) / Number(calc_target)) * 100;　//割引した割合を算出
 
     if (input_number != 0 || input_number != '') {
       var input_target = "<tr class='discount_input_layouts'><td>割引料金</td><td style='color:red;'>" + (-input_number) + "</td><td>" + '1' + "</td><td style='color:red;'>" + (-input_number) + "</td></tr>"
       $('.layout_discount_percent').text('');
+      $('.layout_discount_percent').val('');
       $('.layout_discount_percent').text(Math.floor(result_percent));
+      $('.layout_discount_percent').val(Math.floor(result_percent));
       $('.after_duscount_layouts').text('');
+      $('.after_duscount_layouts').val('');
       $('.after_duscount_layouts').text(minus_result);
+      $('.after_duscount_layouts').val(minus_result);
       if ($('.selected_layouts table tbody tr').hasClass('discount_input_layouts')) {
         $('.discount_input_layouts').remove(); //初期化
         $('.selected_layouts table tbody').append(input_target);
@@ -472,21 +517,30 @@ $(function () {
       }
       // 小計、消費税、最終の請求総額に反映
       $('.layout_subtotal').text(minus_result);
+      $('.layout_subtotal').val(minus_result);
       $('.layout_tax').text((Math.floor(Number(minus_result) * 0.1)));
+      $('.layout_tax').val((Math.floor(Number(minus_result) * 0.1)));
       $('.layout_total_amount').text(Math.floor(Number(minus_result) + (Number(minus_result) * 0.1)));
+      $('.layout_total_amount').val(Math.floor(Number(minus_result) + (Number(minus_result) * 0.1)));
     } else {
       $('.layout_discount_percent').text('');
+      $('.layout_discount_percent').val('');
       $('.after_duscount_layouts').text('');
+      $('.after_duscount_layouts').val('');
       $('.after_duscount_layouts').text(calc_target);
+      $('.after_duscount_layouts').val(calc_target);
       if ($('.selected_layouts table tbody tr').hasClass('discount_input_layouts')) {
         $('.discount_input_layouts').remove(); //初期化
       } else {
         $('.discount_input_layouts').remove(); //初期化
       }
       // 小計、消費税、最終の請求総額に反映
-      $('.layout_subtotal').text($('.after_duscount_layouts').text());
-      $('.layout_tax').text(Math.floor((Number($('.after_duscount_layouts').text())) * 0.1));
-      $('.layout_total_amount').text(Math.floor(Number($('.after_duscount_layouts').text()) + (Number($('.after_duscount_layouts').text())) * 0.1));
+      $('.layout_subtotal').text($('.after_duscount_layouts').val());
+      $('.layout_subtotal').val($('.after_duscount_layouts').val());
+      $('.layout_tax').text(Math.floor((Number($('.after_duscount_layouts').val())) * 0.1));
+      $('.layout_tax').val(Math.floor((Number($('.after_duscount_layouts').val())) * 0.1));
+      $('.layout_total_amount').text(Math.floor(Number($('.after_duscount_layouts').val()) + (Number($('.after_duscount_layouts').val())) * 0.1));
+      $('.layout_total_amount').val(Math.floor(Number($('.after_duscount_layouts').val()) + (Number($('.after_duscount_layouts').val())) * 0.1));
     }
     // 総請求額　反映
     var base_venue = $('.after_discount_price').eq(0).text();//会場の割引後の料金
@@ -497,11 +551,17 @@ $(function () {
     var base_tax = Math.floor(base_total * 0.1);
     var base_total_amout = base_total + base_tax;
     $('.all-total-without-tax').text(''); //初期化
+    $('.all-total-without-tax').val(''); //初期化
     $('.all-total-tax').text(''); //初期化
+    $('.all-total-tax').val(''); //初期化
     $('.all-total-amout').text(''); //初期化
+    $('.all-total-amout').val(''); //初期化
     $('.all-total-without-tax').text(base_total);
+    $('.all-total-without-tax').val(base_total);
     $('.all-total-tax').text(Math.floor(base_tax));
+    $('.all-total-tax').val(Math.floor(base_tax));
     $('.all-total-amout').text(base_total_amout);
+    $('.all-total-amout').val(base_total_amout);
 
     // hiddenの内訳に反映
     setTimeout(function () {
@@ -578,11 +638,17 @@ $(function () {
     var base_tax = Math.floor(base_total * 0.1);
     var base_total_amout = base_total + base_tax;
     $('.all-total-without-tax').text(''); //初期化
+    $('.all-total-without-tax').val(''); //初期化
     $('.all-total-tax').text(''); //初期化
+    $('.all-total-tax').val(''); //初期化
     $('.all-total-amout').text(''); //初期化
+    $('.all-total-amout').val(''); //初期化
     $('.all-total-without-tax').text(base_total);
+    $('.all-total-without-tax').val(base_total);
     $('.all-total-tax').text(Math.floor(base_tax));
+    $('.all-total-tax').val(Math.floor(base_tax));
     $('.all-total-amout').text(Math.floor(base_total_amout));
+    $('.all-total-amout').val(Math.floor(base_total_amout));
 
   })
   $('#handinput_extend').on('change', function () {
@@ -607,11 +673,17 @@ $(function () {
     var base_tax = Math.floor(base_total * 0.1);
     var base_total_amout = base_total + base_tax;
     $('.all-total-without-tax').text(''); //初期化
+    $('.all-total-without-tax').val(''); //初期化
     $('.all-total-tax').text(''); //初期化
+    $('.all-total-tax').val(''); //初期化
     $('.all-total-amout').text(''); //初期化
+    $('.all-total-amout').val(''); //初期化
     $('.all-total-without-tax').text(base_total);
+    $('.all-total-without-tax').val(base_total);
     $('.all-total-tax').text(Math.floor(base_tax));
+    $('.all-total-tax').val(Math.floor(base_tax));
     $('.all-total-amout').text(base_total_amout);
+    $('.all-total-amout').val(base_total_amout);
 
   })
   $('#handinput_discount').on('change', function () {
@@ -636,11 +708,17 @@ $(function () {
     var base_tax = Math.floor(base_total * 0.1);
     var base_total_amout = base_total + base_tax;
     $('.all-total-without-tax').text(''); //初期化
+    $('.all-total-without-tax').val(''); //初期化
     $('.all-total-tax').text(''); //初期化
+    $('.all-total-tax').val(''); //初期化
     $('.all-total-amout').text(''); //初期化
+    $('.all-total-amout').val(''); //初期化
     $('.all-total-without-tax').text(base_total);
+    $('.all-total-without-tax').val(base_total);
     $('.all-total-tax').text(Math.floor(base_tax));
+    $('.all-total-tax').val(Math.floor(base_tax));
     $('.all-total-amout').text(base_total_amout);
+    $('.all-total-amout').val(base_total_amout);
   })
 })
 

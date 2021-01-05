@@ -479,14 +479,25 @@
                         <td>金額</td>
                       </tr>
                     </thead>
-                    <tbody></tbody>
+                    <tbody>
+                  @if ($v_d_counts)
+                  @for ($i = 0; $i < (count($v_d_counts)/4); $i++) 
+                  <tr>
+                    <td>{{$v_d_counts[$i*4]}}</td>
+                    <td>{{$v_d_counts[($i*4)+1]}}</td>
+                    <td>{{$v_d_counts[($i*4+2)]}}</td>
+                    <td>{{$v_d_counts[($i*4+3)]}}</td>
+                  </tr>
+                  @endfor 
+                  @endif 
+                </tbody>
                   </table>
                 </div>
 
                 <div class="row bill-box_wrap price-sum bill-box_cell flex-column">
-                  <p class="text-right"><span class="font-weight-bold">小計</span>>############円</p>
-                  <p class="text-right"><span>消費税</span>>############円</p>
-                  <p class="text-right"><span class="font-weight-bold">合計金額</span>>############円</p>
+                  <p class="text-right"><span class="font-weight-bold">小計</span>{{$request->venue_subtotal}}</p>
+                  <p class="text-right"><span>消費税</span>{{$request->venue_tax}}円</p>
+                  <p class="text-right"><span class="font-weight-bold">合計金額</span>{{$request->venue_total}}円</p>
                 </div>
               </div>
               <!-- 料金内訳 終わり---------------------------- -->
@@ -553,14 +564,24 @@
                       </tr>
                     </thead>
                     <tbody>
+                      @if ($e_d_counts)
+                      @for ($i = 0; $i < (count($e_d_counts)/4); $i++) 
+                      <tr>
+                        <td>{{$e_d_counts[$i*4]}}</td>
+                        <td>{{$e_d_counts[($i*4)+1]}}</td>
+                        <td>{{$e_d_counts[($i*4+2)]}}</td>
+                        <td>{{$e_d_counts[($i*4+3)]}}</td>
+                      </tr>
+                      @endfor 
+                      @endif     
                     </tbody>
                   </table>
                 </div>
 
                 <div class="row bill-box_wrap price-sum bill-box_cell flex-column">
-                  <p class="text-right"><span class="font-weight-bold">小計</span>############円</p>
-                  <p class="text-right"><span>消費税</span>>############円</p>
-                  <p class="text-right"><span class="font-weight-bold">合計金額</span>>############円</p>
+                  <p class="text-right"><span class="font-weight-bold">小計</span>{{$request->items_subtotal}}円</p>
+                  <p class="text-right"><span>消費税</span>{{$request->items_tax}}円</p>
+                  <p class="text-right"><span class="font-weight-bold">合計金額</span>{{$request->all_items_total}}円</p>
                 </div>
 
 
@@ -579,19 +600,19 @@
                 <div class="col-4 bill-box_cell">
                   <dt>レイアウト準備料金</dt>
                   <dd>
-                    <p class="layout_prepare_result"></p>
+                    <p class="layout_prepare_result">{{$request->layout_prepare_result}}</p>
                   </dd>
                 </div>
                 <div class="col-4 bill-box_cell">
                   <dt>レイアウト片付料金</dt>
                   <dd>
-                    <p class="layout_clean_result"></p>
+                    <p class="layout_clean_result">{{$request->layout_clean_result}}</p>
                   </dd>
                 </div>
                 <div class="col-4 bill-box_cell">
                   <dt>レイアウト変更合計</dt>
                   <dd class="text-right">
-                    <p class="layout_total"></p>
+                    <p class="layout_total">{{$request->layout_total}}</p>
                   </dd>
                 </div>
 
@@ -601,18 +622,18 @@
                       <p>割引料金</p>
                     </div>
                     <div class="col-5 bill-box_cell">
-                      <p class="text-right"></p>
+                      <p class="text-right">{{$request->layout_discount}}</p>
                     </div>
                     <div class="col-3 bill-box_cell text-right">
                       <p>割引率</p>
-                      <p class="layout_discount_percent"><span>%</span></p>
+                      <p class="layout_discount_percent">{{$request->layout_discount_percent}}<span>%</span></p>
                     </div>
                   </div>
                 </div>
 
                 <div class="col-6 bill-box_cell text-right">
                   <p class="font-weight-bold">割引後レイアウト変更合計</p>
-                  <p class="after_duscount_layouts"></p>
+                  <p class="after_duscount_layouts">{{$request->after_duscount_layouts}}</p>
                 </div>
               </dl>
 
@@ -631,14 +652,30 @@
                       </tr>
                     </thead>
                     <tbody>
+                      @if ($l_d_counts)
+                      @for ($i = 0; $i < (count($l_d_counts)/4); $i++) 
+                      <tr>
+                        <td>{{$l_d_counts[$i*4]}}</td>
+                        <td>{{$l_d_counts[($i*4)+1]}}</td>
+                        <td>{{$l_d_counts[($i*4+2)]}}</td>
+                        <td>{{$l_d_counts[($i*4+3)]}}</td>
+                      </tr>
+                      @endfor 
+                      @endif     
                     </tbody>
                   </table>
                 </div>
 
                 <div class="row bill-box_wrap price-sum bill-box_cell flex-column">
-                  <p class="text-right"><span class="font-weight-bold">小計</span>7,200円</p>
-                  <p class="text-right"><span>消費税</span>720円</p>
-                  <p class="text-right"><span class="font-weight-bold">合計金額</span>7,200円</p>
+                  <p class="text-right"><span class="font-weight-bold">小計</span>
+                    {{$request->layout_subtotal}}
+                    円</p>
+                  <p class="text-right"><span>消費税</span>
+                    {{$request->layout_tax}}
+                  </p>
+                  <p class="text-right"><span class="font-weight-bold">合計金額</span>
+                    {{$request->layout_total_amount}}
+                  </p>
                 </div>
 
 
@@ -675,35 +712,41 @@
           <tr>
             <td class="table-active"><label for="venueFee">会場料</label></td>
             <td class="text-right">
-              5,300円
+              {{$request->after_discount_price}}
             </td>
           </tr>
           <tr>
             <td class="table-active"><label for="serviceFee">備品その他</label></td>
             <td class="text-right">
-              5,300円
+              {{$request->items_discount_price}}
             </td>
           </tr>
           <tr>
             <td class="table-active"><label for="layoutFee">レイアウト変更</label></td>
             <td class="text-right">
-              5,300円
+              {{$request->after_duscount_layouts}}
             </td>
           </tr>
           <tr>
             <td colspan="2" class="text-right">
-              <p><span class="font-weight-bold">小計</span>7,200円</p>
-              <p><span>消費税</span>720円</p>
+              <p><span class="font-weight-bold">小計</span>
+                {{$sub_total}}
+              </p>
+              <p><span>消費税</span>
+                {{$tax}}
+              </p>
             </td>
           </tr>
           <tr>
-            <td colspan="2" class="text-right"><span class="font-weight-bold">請求総額</span>7,200円</td>
+            <td colspan="2" class="text-right"><span class="font-weight-bold">請求総額</span>
+              {{$total}}
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
     <!-- チェックボックス ----------------------------------------------------------------------------->
-    <div class="confirm-box section-wrap">
+    {{-- <div class="confirm-box section-wrap">
       <p class="text-center">上記の内容で、登録してもいいでしょうか。</p>
       <dl>
         <dd>
@@ -713,9 +756,52 @@
           <p><a class="more_btn" href="">登録する</a></p>
         </dd>
       </dl>
-    </div>
+    </div> --}}
   </div>
 </div>
+
+{{ Form::hidden('payment_limit', $payment_limit,['class'=>''] ) }}
+{{ Form::hidden('paid', $paid,['class'=>''] ) }}
+{{ Form::hidden('reservation_status', $reservation_status,['class'=>''] ) }}
+{{ Form::hidden('double_check_status', $double_check_status,['class'=>''] ) }}
+{{ Form::hidden('bill_company', $bill_company,['class'=>''] ) }}
+{{ Form::hidden('bill_person', $bill_person,['class'=>''] ) }}
+{{ Form::hidden('bill_created_at', $bill_created_at,['class'=>''] ) }}
+{{ Form::hidden('bill_pay_limit', $bill_pay_limit,['class'=>''] ) }}
+
+<a href="{{ url('/admin/reservations/create'.
+'?reserve_date='.$reserve_date.
+'&venue_id='.$venue_id.
+'&enter_time='.$enter_time.
+'&leave_time='.$leave_time.
+'&board_flag='.$board_flag.
+'&event_start='.$event_start.
+'&event_finish='.$event_finish.
+'&event_name1='.$event_name1.
+'&event_name2='.$event_name2.
+'&event_owner='.$event_owner.
+'&user_id='.$user_id.
+'&in_charge='.$in_charge.
+'&tel='.$tel.
+'&email_flag='.$email_flag.
+'&cost='.$cost.
+'&discount_condition='.$discount_condition.
+'&attention='.$attention.
+'&user_details='.$user_details.
+'&admin_details='.$admin_details.
+'&payment_limit='.$payment_limit.
+'&paid='.$paid.
+'&reservation_status='.$reservation_status.
+'&double_check_status='.$double_check_status.
+'&bill_company='.$bill_company.
+'&bill_person='.$bill_person.
+'&bill_created_at='.$bill_created_at.
+'&bill_pay_limit='.$bill_pay_limit.
+'&sub_total='.$sub_total.
+'&tax='.$tax.
+'&total='.$total
+)}}" class="btn btn-danger">戻る</a>
+
 {!! Form::submit('登録', ['class' => 'btn btn-primary']) !!}
 {{ Form::close() }}
 
@@ -752,7 +838,7 @@
 
 
 {{-- 以下工藤 --}}
-
+{{-- 
 
 {{ Form::open(['url' => 'admin/reservations', 'method'=>'POST']) }}
 @csrf
@@ -938,19 +1024,8 @@
   <div>{{$bill_pay_limit}}</div>
   bill_pay_limit
   {{ Form::text('bill_pay_limit', $bill_pay_limit,['class'=>''] ) }}
-
 </div>
 
-
-{{-- test --}}
-{{-- {{ Form::text('reservation_id', $reservation_id,['class'=>''] ) }} --}}
-{{ Form::text('sub_total', $sub_total,['class'=>''] ) }}
-{{ Form::text('tax', $tax,['class'=>''] ) }}
-{{ Form::text('total', $total,['class'=>''] ) }}
-{{-- test --}}
-
-
-{{-- {{$v_d_count}} --}}
 
 
 <a href="{{ url('/admin/reservations/create'.
@@ -987,7 +1062,7 @@
 )}}" class="btn btn-danger">戻る</a>
 
 {!! Form::submit('登録', ['class' => 'btn btn-primary']) !!}
-{{ Form::close() }}
+{{ Form::close() }} --}}
 
 
 
