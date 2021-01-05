@@ -288,7 +288,6 @@
                   selected
                   @endif
                   @endif
-
                   >{{$user->company}} | {{$user->first_name}}{{$user->last_name}} | {{$user->email}}</option>
                 @endforeach
               </select>
@@ -296,7 +295,7 @@
           </tr>
           <tr>
             <td class="table-active"><label for="name">担当者氏名</label></td>
-            <td>
+            <td><p class="selected_person"></p>
             </td>
           </tr>
         </table>
@@ -696,9 +695,9 @@
 
 
 {{ Form::hidden('payment_limit',isset($request)?$request->payment_limit:'')}}
-{{ Form::hidden('paid', isset($request)?$request->paid:'' ) }} {{--デフォ0で未入金--}}
-{{ Form::hidden('reservation_status', isset($request)?$request->reservation_status:'' ) }}
-{{ Form::hidden('double_check_status', isset($request)?$request->double_check_status:'' ) }}
+{{ Form::hidden('paid', isset($request)?$request->paid:0 ) }} {{--デフォ0で未入金--}}
+{{ Form::hidden('reservation_status', isset($request)?$request->reservation_status:0 ) }}
+{{ Form::hidden('double_check_status', isset($request)?$request->double_check_status:0 ) }}
 
 {{ Form::hidden('bill_company', isset($request)?$request->bill_company:'' ) }}
 {{ Form::hidden('bill_person', isset($request)?$request->bill_person:'' ) }}

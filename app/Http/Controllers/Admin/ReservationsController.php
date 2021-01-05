@@ -9,6 +9,7 @@ use App\Models\Reservation;
 use App\Models\Venue;
 use App\Models\User;
 use App\Models\Bill;
+use App\Models\Breakdown;
 
 use Carbon\Carbon;
 
@@ -418,12 +419,20 @@ class ReservationsController extends Controller
 
       $reservation->save();
 
-      $reservation->bills()->create([
+      $bills=$reservation->bills()->create([
         'reservation_id' => $reservation->id,
         'sub_total' => $request->sub_total,
         'tax' => $request->tax,
         'total' => $request->total,
       ]);
+
+      $bills->breakdowns()->create([
+        'unit_item'=>$request->unit_item,
+        'unit_cost'=>$request->unit_cost,
+        'unit_count'=>$request->unit_count,
+        'unit_subtotal'=>$request->unit_subtotal,
+      ]);
+
     });
   }
 

@@ -16,7 +16,7 @@ class CreateBreakdownsTable extends Migration
     Schema::create('breakdowns', function (Blueprint $table) {
       $table->bigIncrements('id');
       $table->bigInteger('bill_id')->unsigned()->index();
-      $table->integer('unit_item');
+      $table->string('unit_item');
       $table->integer('unit_cost');
       $table->integer('unit_count');
       $table->integer('unit_subtotal');

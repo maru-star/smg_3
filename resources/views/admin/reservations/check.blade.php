@@ -493,7 +493,6 @@
                 </tbody>
                   </table>
                 </div>
-
                 <div class="row bill-box_wrap price-sum bill-box_cell flex-column">
                   <p class="text-right"><span class="font-weight-bold">小計</span>{{$request->venue_subtotal}}</p>
                   <p class="text-right"><span>消費税</span>{{$request->venue_tax}}円</p>
@@ -731,15 +730,18 @@
             <td colspan="2" class="text-right">
               <p><span class="font-weight-bold">小計</span>
                 {{$sub_total}}
+                {{ Form::hidden('sub_total', $sub_total,['class'=>''] ) }}
               </p>
               <p><span>消費税</span>
                 {{$tax}}
+                {{ Form::hidden('tax', $tax,['class'=>''] ) }}
               </p>
             </td>
           </tr>
           <tr>
             <td colspan="2" class="text-right"><span class="font-weight-bold">請求総額</span>
               {{$total}}
+              {{ Form::hidden('total', $total,['class'=>''] ) }}
             </td>
           </tr>
         </tbody>
@@ -759,6 +761,12 @@
     </div> --}}
   </div>
 </div>
+
+{{-- 内訳の配列 --}}
+{{-- {{ Form::hidden('v_d_counts[]', $v_d_counts,['class'=>''] ) }}
+{{ Form::hidden('e_d_counts[]', $e_d_counts,['class'=>''] ) }}
+{{ Form::hidden('l_d_counts[]', $l_d_counts,['class'=>''] ) }} --}}
+
 
 {{ Form::hidden('payment_limit', $payment_limit,['class'=>''] ) }}
 {{ Form::hidden('paid', $paid,['class'=>''] ) }}

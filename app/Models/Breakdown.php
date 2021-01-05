@@ -6,6 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Breakdown extends Model
 {
+  protected $fillable = [
+    'unit_item',
+    'unit_cost',
+    'unit_count',
+    'unit_subtotal'
+  ];
+
   /*
 |--------------------------------------------------------------------------
 | Billsとの一対多

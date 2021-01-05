@@ -733,7 +733,7 @@ $(function () {
         $('#fullOverlay').css('display', 'none');
         // 1. ３営業日前　2. 当月末　3. 翌月末 のいずれかで返ってくる
         var s_date = $('#datepicker1').val();
-        if ($user_results == 1) {
+        if ($user_results[0] == 1) {
           var dt = new Date(s_date);
           var three_days_before = dt.setDate(dt.getDate() - 3); //営業日前
           three_days_before = new Date(three_days_before);
@@ -741,20 +741,33 @@ $(function () {
           var target_name2 = $('input[name="bill_pay_limit"]');
           target_name.val(three_days_before.getFullYear() + '-' + (('0' + (three_days_before.getMonth() + 1)).slice(-2)) + '-' + (('0' + three_days_before.getDate()).slice(-2)));
           target_name2.val(three_days_before.getFullYear() + '-' + (('0' + (three_days_before.getMonth() + 1)).slice(-2)) + '-' + (('0' + three_days_before.getDate()).slice(-2)));
-        } else if ($user_results == 2) {
+        $('.selected_person').text('');
+        $('.selected_person').text($user_results[1]);
+        $('input[name="bill_person"]').val(''); //hiddenのbill_personに挿入
+        $('input[name="bill_person"]').val($user_results[1]);//hiddenのbill_personに挿入
+        } else if ($user_results[0] == 2) {
           var dt = new Date(s_date);
           var end_of_month = new Date(dt.getFullYear(), dt.getMonth() + 1, 0);　//当月末日
           var target_name = $('input[name="payment_limit"]');
           var target_name2 = $('input[name="bill_pay_limit"]');
           target_name.val(end_of_month.getFullYear() + '-' + (('0' + (end_of_month.getMonth() + 1)).slice(-2)) + '-' + (('0' + end_of_month.getDate()).slice(-2)));
           target_name2.val(end_of_month.getFullYear() + '-' + (('0' + (end_of_month.getMonth() + 1)).slice(-2)) + '-' + (('0' + end_of_month.getDate()).slice(-2)));
-        } else if ($user_results == 3) {
+          $('.selected_person').text('');
+          $('.selected_person').text($user_results[1]);  
+          $('input[name="bill_person"]').val(''); //hiddenのbill_personに挿入
+          $('input[name="bill_person"]').val($user_results[1]);//hiddenのbill_personに挿入
+
+        } else if ($user_results[0] == 3) {
           var dt = new Date(s_date);
           var end_of_next_month = new Date(dt.getFullYear(), dt.getMonth() + 2, 0);
           var target_name = $('input[name="payment_limit"]');
           var target_name2 = $('input[name="bill_pay_limit"]');
           target_name.val(end_of_next_month.getFullYear() + '-' + (('0' + (end_of_next_month.getMonth() + 1)).slice(-2)) + '-' + (('0' + end_of_next_month.getDate()).slice(-2)));
           target_name2.val(end_of_next_month.getFullYear() + '-' + (('0' + (end_of_next_month.getMonth() + 1)).slice(-2)) + '-' + (('0' + end_of_next_month.getDate()).slice(-2)));
+          $('.selected_person').text('');
+          $('.selected_person').text($user_results[1]);  
+          $('input[name="bill_person"]').val(''); //hiddenのbill_personに挿入
+          $('input[name="bill_person"]').val($user_results[1]);//hiddenのbill_personに挿入  
         };
       })
       .fail(function ($user_results) {
