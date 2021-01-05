@@ -18,8 +18,9 @@ class CreateBreakdownsTable extends Migration
       $table->bigInteger('bill_id')->unsigned()->index();
       $table->string('unit_item');
       $table->integer('unit_cost');
-      $table->integer('unit_count');
+      $table->string('unit_count');
       $table->integer('unit_subtotal');
+      $table->integer('unit_type');
       $table->timestamps();
     });
   }

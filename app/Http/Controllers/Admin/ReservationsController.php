@@ -390,6 +390,9 @@ class ReservationsController extends Controller
     //   'bill_created_at' => 'required',
     //   'bill_pay_limit' => 'required',
     // ]);
+
+    var_dump($request->v_breakdowns);
+
     return DB::transaction(function () use ($request) { //トランザクションさせる
       $reservation = new Reservation;
       $reservation->reserve_date = $request->reserve_date;
@@ -419,20 +422,47 @@ class ReservationsController extends Controller
 
       $reservation->save();
 
-      $bills=$reservation->bills()->create([
+      $bills = $reservation->bills()->create([
         'reservation_id' => $reservation->id,
         'sub_total' => $request->sub_total,
         'tax' => $request->tax,
         'total' => $request->total,
       ]);
 
-      $bills->breakdowns()->create([
-        'unit_item'=>$request->unit_item,
-        'unit_cost'=>$request->unit_cost,
-        'unit_count'=>$request->unit_count,
-        'unit_subtotal'=>$request->unit_subtotal,
-      ]);
 
+      if ($request->v_breakdowns) {
+        foreach ($request->v_breakdowns as $key => $value) {
+          $bills->breakdowns()->create([
+            'unit_item' => $value['unit_item'],
+            'unit_cost' => $value['unit_cost'],
+            'unit_count' => $value['unit_count'],
+            'unit_subtotal' => $value['unit_subtotal'],
+            'unit_type' => $value['unit_type'],
+          ]);
+        }
+      };
+      if ($request->e_breakdowns) {
+        foreach ($request->e_breakdowns as $key => $value) {
+          $bills->breakdowns()->create([
+            'unit_item' => $value['unit_item'],
+            'unit_cost' => $value['unit_cost'],
+            'unit_count' => $value['unit_count'],
+            'unit_subtotal' => $value['unit_subtotal'],
+            'unit_type' => $value['unit_type'],
+          ]);
+        }
+      }
+      if ($request->l_breakdowns) {
+        foreach ($request->l_breakdowns as $key => $value) {
+          $bills->breakdowns()->create([
+            'unit_item' => $value['unit_item'],
+            'unit_cost' => $value['unit_cost'],
+            'unit_count' => $value['unit_count'],
+            'unit_subtotal' => $value['unit_subtotal'],
+            'unit_type' => $value['unit_type'],
+          ]);
+        }
+      }
     });
   }
 

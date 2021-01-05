@@ -10,7 +10,8 @@ class Breakdown extends Model
     'unit_item',
     'unit_cost',
     'unit_count',
-    'unit_subtotal'
+    'unit_subtotal',
+    'unit_type'
   ];
 
   /*
