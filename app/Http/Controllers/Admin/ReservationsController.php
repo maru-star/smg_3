@@ -26,9 +26,21 @@ class ReservationsController extends Controller
    */
   public function index()
   {
-    $reservations = Reservation::all();
+    $reservations = Reservation::select(
+      'id',
+      'reserve_date',
+      'enter_time',
+      'leave_time',
+      'venue_id',
+      'user_id',
+      'tel',
+    )->get();
+    $venue = Venue::select('id', 'name_area', 'name_bldg', 'name_venue')->get();
+    $user = User::select('id', 'company', 'first_name', 'last_name', 'mobile', 'tel')->get();
     return view('admin.reservations.index', [
       'reservations' => $reservations,
+      'venue' => $venue,
+      'user' => $user,
     ]);
   }
 

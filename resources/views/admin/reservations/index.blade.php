@@ -42,7 +42,6 @@
                 <input type="text" name="bulkid" class="form-control" id="bulkid">
               </dd>
             </dl>
-
             <dl class="form-group flex-fill">
               <dt>
                 <label class="search_item_name" for="id">予約ID</label>
@@ -52,10 +51,8 @@
               </dd>
             </dl>
           </div>
-
           <div class="row">
             <div class="col-12">
-
               <!-- Date range -->
               <dl class="form-group">
                 <dt>
@@ -74,7 +71,6 @@
                 <!-- /.input group -->
               </dl>
               <!-- /.form group -->
-
               <dl class="form-group">
                 <dt>
                   <label class="search_item_name">入室・退室</label>
@@ -320,6 +316,37 @@
           </tr>
         </thead>
         <tbody>
+          @foreach ($reservations as $reservation)
+          <tr>
+            <td>※後ほど修正</td>
+            <td>{{$reservation->id}}</td>
+            <td>{{$reservation->reserve_date}}</td>
+            <td>{{$reservation->enter_time}}</td>
+            <td>{{$reservation->leave_time}}</td>
+            <td>
+              {{$venue->find($reservation->venue_id)->name_area}}{{$venue->find($reservation->venue_id)->name_bldg}}{{$venue->find($reservation->venue_id)->name_venue}}
+            </td>
+            <td>{{$user->find($reservation->venue_id)->company}}</td>
+            <td>{{$user->find($reservation->venue_id)->first_name}}{{$user->find($reservation->venue_id)->last_name}}
+            </td>
+            <td>{{$user->find($reservation->venue_id)->mobile}}</td>
+            <td>{{$user->find($reservation->venue_id)->tel}}</td>
+            <td>-※後ほど修正</td>
+            <td class="table_column1">
+              <p>※後ほど修正　会場</p>
+            </td>
+            <td class="table_column1">
+              <p>※後ほど修正　会場</p>
+            </td>
+            <td>
+              {{-- <a class="more_btn" href="http://staging-smg2.herokuapp.com/admin/venues/1">詳細</a> --}}
+              <a href="{{ url('admin/reservations', $reservation->id) }}" class="more_btn">詳細</a>
+
+            </td>
+            <td><a class="more_btn" href="http://staging-smg2.herokuapp.com/admin/venues/1">詳細</a></td>
+          </tr>
+          @endforeach
+          {{-- 
           <tr>
             <td>00000</td>
             <td>00000</td>
@@ -415,7 +442,7 @@
             </td>
             <td><a class="more_btn" href="http://staging-smg2.herokuapp.com/admin/venues/1">詳細</a></td>
             <td><a class="more_btn" href="http://staging-smg2.herokuapp.com/admin/venues/1">詳細</a></td>
-          </tr>
+          </tr> --}}
         </tbody>
       </table>
     </div>
