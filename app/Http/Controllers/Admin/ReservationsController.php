@@ -486,7 +486,10 @@ class ReservationsController extends Controller
    */
   public function show($id)
   {
-    //
+    $reservation = Reservation::find($id);
+    return view('admin.reservations.show', [
+      'reservation' => $reservation
+    ]);
   }
 
   /**
