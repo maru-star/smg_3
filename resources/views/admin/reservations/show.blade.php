@@ -13,7 +13,8 @@
       <div class="float-right">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
-            <li class="breadcrumb-item active"><a href="http://staging-smg2.herokuapp.com/admin/home">ホーム</a> >
+            <li class="breadcrumb-item active">
+              <a href="http://staging-smg2.herokuapp.com/admin/home">ホーム</a>
               予約 詳細
             </li>
           </ol>
@@ -37,8 +38,8 @@
       <div class="ttl-box d-flex align-items-center">
         <div class="col-9 d-flex justify-content-between">
           <h2>予約概要</h2>
-          <p>予約ID:00001</p>
-          <p>予約一括ID:00001</p>
+          <p>予約ID: {{$reservation->id}}</p>
+          <p>予約一括ID:</p>
         </div>
         <div class="col-3">
           <p class="text-right"><a class="more_btn" href="">編集</a></p>
@@ -51,18 +52,18 @@
             <div class="d-flex col-10 flex-wrap">
               <dl>
                 <dt>予約状況</dt>
-                <dd>予約確認中</dd>
+                <dd>{{ReservationHelper::judgeStatus($reservation->reservation_status)}}</dd>
               </dl>
               <dl>
                 <dt>一人目チェック</dt>
                 <dd>
-                  <p>山田太郎</p>
+                  <p>※後ほど修正※　山田太郎</p>
                 </dd>
               </dl>
               <dl>
                 <dt>二人目チェック</dt>
                 <dd class="d-flex">
-                  <p>未</p>
+                  <p>※後ほど修正※　未</p>
                   <p class="ml-2"><a class="more_btn" href="">チェックをする</a></p>
                 </dd>
               </dl>
@@ -70,10 +71,10 @@
 
             <div class="col-2">
               <p>
-                申込日：2020/10/15(木)
+                <dd>申込日：{{ReservationHelper::formatDate($reservation->created_at)}}</dd>
               </p>
               <p>
-                予約確定日：2020/10/15(木)
+                ※後ほど修正※　予約確定日：2020/10/15(木)
               </p>
             </div>
           </div>
@@ -112,63 +113,67 @@
               </tr>
               <tr>
                 <td class="table-active"><label for="date">利用日</label></td>
-                <td>2020/12/21(月)</td>
+                <dd>{{ReservationHelper::formatDate($reservation->reserve_date)}}</dd>
               </tr>
               <tr>
                 <td class="table-active"><label for="venue">会場</label></td>
                 <td>
-                  <p> 四ツ橋サンワールドビル</p>
+                  <p>
+                    {{ReservationHelper::getVenue($reservation->venue_id)[0]}}
+                    {{ReservationHelper::getVenue($reservation->venue_id)[1]}}
+                    {{ReservationHelper::getVenue($reservation->venue_id)[2]}}
+                  </p>
                   <p>アクセア仕様</p>
                 </td>
               </tr>
               <tr>
                 <td class="table-active"><label for="start">入室時間</label></td>
                 <td>
-                  9:00
+                  {{$reservation->enter_time}}
                 </td>
               </tr>
               <tr>
                 <td class="table-active"><label for="finish">退室時間</label></td>
                 <td>
-                  18:00
+                  {{$reservation->leave_time}}
                 </td>
               </tr>
               <tr>
                 <td class="table-active"><label for="direction">案内板</label></td>
                 <td class="d-flex justify-content-between">
-                  <p>要作成</p>
-                  <p><a class="more_btn" href="">案内板出力(PDF)</a></p>
+                  <p>{{$reservation->board_flag==0?'無し':"要作成"}}</p>
+                  <p><a class="more_btn" href="">※後ほど修正※案内板出力(PDF)</a></p>
                 </td>
               </tr>
               <tr>
                 <td class="table-active"><label for="eventTime">イベント時間記載</label></td>
                 <td>
-                  あり
+                  {{isset($reservation->event_start)&&isset($reservation->event_finish)?"有り":"無し"}}
                 </td>
               </tr>
               <tr>
                 <td class="table-active"><label for="eventStart">イベント開始時間</label></td>
                 <td>
-                  10:00
+                  {{$reservation->event_start}}
                 </td>
               </tr>
               <tr>
                 <td class="table-active"><label for="eventFinish">イベント終了時間</label></td>
                 <td>
-                  16:00
+                  {{$reservation->event_finish}}
                 </td>
               </tr>
               <tr>
                 <td class="table-active"><label for="eventName1">イベント名称1</label></td>
-                <td>テキストテキストテキストテキスト</td>
+                <td>{{$reservation->event_name1}}</td>
               </tr>
               <tr>
                 <td class="table-active"><label for="eventName2">イベント名称2</label></td>
-                <td>テキストテキストテキストテキスト</td>
+                <td>{{$reservation->event_name2}}</td>
               </tr>
               <tr>
                 <td class="table-active"><label for="organizer">主催者名</label></td>
-                <td>テキストテキストテキストテキストｓ</td>
+                <td>{{$reservation->event_owner}}</td>
               </tr>
             </table>
 
@@ -181,6 +186,9 @@
                 </tr>
               </thead>
               <tbody class="accordion-wrap">
+                @foreach ($equipments as $equipment)
+                {{$equipment->item}}({{$equipment->price}}円)×
+                @endforeach
                 <tr>
                   <td class="justify-content-between d-flex">
                     ホワイトボード(3000円)×1

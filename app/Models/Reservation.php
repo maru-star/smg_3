@@ -76,4 +76,16 @@ class Reservation extends Model
   {
     return $this->hasMany(Bill::class);
   }
+  /*
+|--------------------------------------------------------------------------
+| Billsを経由してbreakdowns
+|--------------------------------------------------------------------------|
+*/
+  public function breakdowns()
+  {
+    return $this->hasManyThrough(
+      'App\Models\Breakdown',
+      'App\Models\Bill',
+    );
+  }
 }

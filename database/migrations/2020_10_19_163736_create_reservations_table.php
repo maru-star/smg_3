@@ -38,8 +38,8 @@ class CreateReservationsTable extends Migration
 
       $table->date('payment_limit'); //該当予約の支払い期日
       $table->string('paid'); //支払い状況、未入金か？入金済みか？　デフォルトは0で未入金
-      $table->integer('reservation_status'); //予約状況（例：予約確認中　等）
-      $table->integer('double_check_status'); //ダブルチェックのフラグ
+      $table->integer('reservation_status'); //予約状況　0:仮抑え　1:予約確認中　2:予約完了　3:キャンセル申請中　4:キャンセル承認待ち　5:キャンセル
+      $table->integer('double_check_status'); //ダブルチェックのフラグ 0:未　1:一人済　2:二人済
       $table->string('double_check1_name')->nullable(); //ダブルチェック一人目
       $table->string('double_check2_name')->nullable(); //ダブルチェック一人目
 

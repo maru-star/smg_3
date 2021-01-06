@@ -29,6 +29,7 @@ class ComposerStaticInit0fff9c1827af8b0d0cb8bd4273c1c5a4
         '4a1f389d6ce373bda9e57857d3b61c84' => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src/helpers.php',
         'ed962a97bd972bc82007176b647d4e36' => __DIR__ . '/..' . '/facade/ignition/src/helpers.php',
         'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
+        '297c60d37daf162b4ad560de84e192f5' => __DIR__ . '/../..' . '/app/Http/Helpers/ReservationHelper.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -466,6 +467,7 @@ class ComposerStaticInit0fff9c1827af8b0d0cb8bd4273c1c5a4
         'App\\Http\\Controllers\\Admin\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Auth/LoginController.php',
         'App\\Http\\Controllers\\Admin\\Auth\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Auth/RegisterController.php',
         'App\\Http\\Controllers\\Admin\\BillsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/BillsController.php',
+        'App\\Http\\Controllers\\Admin\\BreakdownsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/BreakdownsController.php',
         'App\\Http\\Controllers\\Admin\\ClientsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ClientsController.php',
         'App\\Http\\Controllers\\Admin\\DatesController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/DatesController.php',
         'App\\Http\\Controllers\\Admin\\EquipmentsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/EquipmentsController.php',
@@ -501,6 +503,7 @@ class ComposerStaticInit0fff9c1827af8b0d0cb8bd4273c1c5a4
         'App\\Models\\Admin' => __DIR__ . '/../..' . '/app/Models/Admin.php',
         'App\\Models\\Agent' => __DIR__ . '/../..' . '/app/Models/Agent.php',
         'App\\Models\\Bill' => __DIR__ . '/../..' . '/app/Models/Bill.php',
+        'App\\Models\\Breakdown' => __DIR__ . '/../..' . '/app/Models/Breakdown.php',
         'App\\Models\\Date' => __DIR__ . '/../..' . '/app/Models/Date.php',
         'App\\Models\\Equipment' => __DIR__ . '/../..' . '/app/Models/Equipment.php',
         'App\\Models\\Frame_price' => __DIR__ . '/../..' . '/app/Models/Frame_price.php',

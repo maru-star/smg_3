@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB; //トランザクション用
 
 
 
+
 class ReservationsController extends Controller
 {
   /**
@@ -487,8 +488,11 @@ class ReservationsController extends Controller
   public function show($id)
   {
     $reservation = Reservation::find($id);
+    $venue = Venue::find($reservation->venue_id);
+    $equipments = $venue->equipments()->get();
     return view('admin.reservations.show', [
-      'reservation' => $reservation
+      'reservation' => $reservation,
+      'equipments' => $equipments,
     ]);
   }
 
