@@ -190,18 +190,21 @@
                   <td class="d-flex justify-content-between">
                     <p>事前に預かる荷物<br>（個数）</p>
                     <p>{{$luggage_count}}</p>
+                    {{ Form::hidden('luggage_count', $luggage_count,['class'=>''] ) }}
                   </td>
                 </tr>
                 <tr>
                   <td class="d-flex justify-content-between">
                     <p>事前荷物の到着日<br>午前指定のみ</p>
                     <p>{{$luggage_arrive}}</p>
+                    {{ Form::hidden('luggage_arrive', $luggage_arrive,['class'=>''] ) }}
                   </td>
                 </tr>
                 <tr>
                   <td class="d-flex justify-content-between">
                     <p>事後返送する荷物 </p>
                     <p>{{$luggage_return}}</p>
+                    {{ Form::hidden('luggage_return', $luggage_return,['class'=>''] ) }}
                   </td>
                 </tr>
                 <tr>
@@ -418,6 +421,7 @@
                 <div class="col-6 bill-box_cell">
                   <dt>会場料金合計</dt>
                   <dd class="text-right">{{intval($request->venue_price)+intval($request->extend)}}</dd>
+                  {{ Form::hidden('venue_total',intval($request->venue_price)+intval($request->extend) )}}
                 </div>
 
                 <div class="col-6">
@@ -453,6 +457,7 @@
                 <div class="col-12 bill-box_cell text-right">
                   <p class="font-weight-bold">割引後会場料金合計</p>
                   <p class="">{{$request->after_discount_price}}</p>
+                  {{ Form::hidden('discount_venue_total',$request->after_discount_price)}}
                 </div>
               </dl>
 
@@ -471,24 +476,22 @@
                       </tr>
                     </thead>
                     <tbody>
-                  @if ($v_d_counts)
-                  
-                  @for ($i = 0; $i < (count($v_d_counts)/4); $i++) 
-                  <tr>
-                    <td>{{$v_d_counts[$i*4]}}</td>
-                    <td>{{$v_d_counts[($i*4)+1]}}</td>
-                    <td>{{$v_d_counts[($i*4+2)]}}</td>
-                    <td>{{$v_d_counts[($i*4+3)]}}</td>
-                  </tr>
-                  {{ Form::hidden('v_breakdowns['.$i.'][unit_item]', $v_d_counts[$i*4],['class'=>''] ) }}
-                  {{ Form::hidden('v_breakdowns['.$i.'][unit_cost]', $v_d_counts[($i*4)+1],['class'=>''] ) }}
-                  {{ Form::hidden('v_breakdowns['.$i.'][unit_count]', $v_d_counts[($i*4)+2],['class'=>''] ) }}
-                  {{ Form::hidden('v_breakdowns['.$i.'][unit_subtotal]', $v_d_counts[($i*4)+3],['class'=>''] ) }}
-                  {{ Form::hidden('v_breakdowns['.$i.'][unit_type]', 1,['class'=>''] ) }}
-                  {{-- unit typeは 1会場　2その他備品　3レイアウト --}}
-                  @endfor 
-                  @endif 
-                </tbody>
+                      @if ($v_d_counts)
+                      @for ($i = 0; $i < (count($v_d_counts)/4); $i++) <tr>
+                        <td>{{$v_d_counts[$i*4]}}</td>
+                        <td>{{$v_d_counts[($i*4)+1]}}</td>
+                        <td>{{$v_d_counts[($i*4+2)]}}</td>
+                        <td>{{$v_d_counts[($i*4+3)]}}</td>
+                        </tr>
+                        {{ Form::hidden('v_breakdowns['.$i.'][unit_item]', $v_d_counts[$i*4],['class'=>''] ) }}
+                        {{ Form::hidden('v_breakdowns['.$i.'][unit_cost]', $v_d_counts[($i*4)+1],['class'=>''] ) }}
+                        {{ Form::hidden('v_breakdowns['.$i.'][unit_count]', $v_d_counts[($i*4)+2],['class'=>''] ) }}
+                        {{ Form::hidden('v_breakdowns['.$i.'][unit_subtotal]', $v_d_counts[($i*4)+3],['class'=>''] ) }}
+                        {{ Form::hidden('v_breakdowns['.$i.'][unit_type]', 1,['class'=>''] ) }}
+                        {{-- unit typeは 1会場　2その他備品　3レイアウト --}}
+                        @endfor
+                        @endif
+                    </tbody>
                   </table>
                 </div>
                 <div class="row bill-box_wrap price-sum bill-box_cell flex-column">
@@ -510,19 +513,23 @@
                 <div class="col-3 bill-box_cell">
                   <dt>有料備品料金</dt>
                   <dd>{{$request->selected_equipments_price}}</dd>
+                  {{ Form::hidden('selected_equipments_price',isset($request->selected_equipments_price)?$request->selected_equipments_price:0 )}}
                 </div>
                 <div class="col-3 bill-box_cell">
                   <dt>有料サービス料金</dt>
                   <dd>{{$request->selected_services_price}}</dd>
+                  {{ Form::hidden('selected_services_price',isset($request->selected_services_price)?$request->selected_services_price:0 )}}
                 </div>
                 <div class="col-3 bill-box_cell">
                   <dt>荷物預かり/返送</dt>
                   <dd class="d-flex align-items-center">{{$request->selected_luggage_price}}
+                    {{ Form::hidden('selected_luggage_price',isset($request->selected_luggage_price)?$request->selected_luggage_price:0 )}}
                   </dd>
                 </div>
                 <div class="col-3 bill-box_cell">
                   <dt>備品その他合計</dt>
                   <dd class="text-right">{{$request->selected_items_total}}</dd>
+                  {{ Form::hidden('selected_items_total',isset($request->selected_items_total)?$request->selected_items_total:0 )}}
                 </div>
 
                 <div class="col-6">
@@ -543,9 +550,9 @@
                 <div class="col-6 bill-box_cell text-right">
                   <p class="font-weight-bold">割引後備品その他合計</p>
                   <p class="">{{$request->items_discount_price}}</p>
+                  {{ Form::hidden('discount_equipment_service_total',isset($request->items_discount_price)?$request->items_discount_price:0 )}}
                 </div>
               </dl>
-
 
               <!-- 料金内訳-------------------------------------------------------------- -->
               <div class="bill-list">
@@ -562,21 +569,20 @@
                     </thead>
                     <tbody>
                       @if ($e_d_counts)
-                      @for ($i = 0; $i < (count($e_d_counts)/4); $i++) 
-                      <tr>
+                      @for ($i = 0; $i < (count($e_d_counts)/4); $i++) <tr>
                         <td>{{$e_d_counts[$i*4]}}</td>
                         <td>{{$e_d_counts[($i*4)+1]}}</td>
                         <td>{{$e_d_counts[($i*4+2)]}}</td>
                         <td>{{$e_d_counts[($i*4+3)]}}</td>
-                      </tr>
-                      {{ Form::hidden('e_breakdowns['.$i.'][unit_item]', $e_d_counts[$i*4],['class'=>''] ) }}
-                      {{ Form::hidden('e_breakdowns['.$i.'][unit_cost]', $e_d_counts[($i*4)+1],['class'=>''] ) }}
-                      {{ Form::hidden('e_breakdowns['.$i.'][unit_count]', $e_d_counts[($i*4)+2],['class'=>''] ) }}
-                      {{ Form::hidden('e_breakdowns['.$i.'][unit_subtotal]', $e_d_counts[($i*4)+3],['class'=>''] ) }}
-                      {{ Form::hidden('e_breakdowns['.$i.'][unit_type]', 2,['class'=>''] ) }}
-                      {{-- unit typeは 1会場　2その他備品　3レイアウト --}}
-                      @endfor 
-                      @endif     
+                        </tr>
+                        {{ Form::hidden('e_breakdowns['.$i.'][unit_item]', $e_d_counts[$i*4],['class'=>''] ) }}
+                        {{ Form::hidden('e_breakdowns['.$i.'][unit_cost]', $e_d_counts[($i*4)+1],['class'=>''] ) }}
+                        {{ Form::hidden('e_breakdowns['.$i.'][unit_count]', $e_d_counts[($i*4)+2],['class'=>''] ) }}
+                        {{ Form::hidden('e_breakdowns['.$i.'][unit_subtotal]', $e_d_counts[($i*4)+3],['class'=>''] ) }}
+                        {{ Form::hidden('e_breakdowns['.$i.'][unit_type]', 2,['class'=>''] ) }}
+                        {{-- unit typeは 1会場　2その他備品　3レイアウト --}}
+                        @endfor
+                        @endif
                     </tbody>
                   </table>
                 </div>
@@ -616,6 +622,7 @@
                   <dt>レイアウト変更合計</dt>
                   <dd class="text-right">
                     <p class="layout_total">{{$request->layout_total}}</p>
+                    {{ Form::hidden('layout_total',isset($request->layout_total)?$request->layout_total:0 )}}
                   </dd>
                 </div>
 
@@ -637,6 +644,7 @@
                 <div class="col-6 bill-box_cell text-right">
                   <p class="font-weight-bold">割引後レイアウト変更合計</p>
                   <p class="after_duscount_layouts">{{$request->after_duscount_layouts}}</p>
+                  {{ Form::hidden('after_duscount_layouts',isset($request->after_duscount_layouts)?$request->after_duscount_layouts:0 )}}
                 </div>
               </dl>
 
@@ -656,22 +664,21 @@
                     </thead>
                     <tbody>
                       @if ($l_d_counts)
-                      @for ($i = 0; $i < (count($l_d_counts)/4); $i++) 
-                      <tr>
+                      @for ($i = 0; $i < (count($l_d_counts)/4); $i++) <tr>
                         <td>{{$l_d_counts[$i*4]}}</td>
                         <td>{{$l_d_counts[($i*4)+1]}}</td>
                         <td>{{$l_d_counts[($i*4+2)]}}</td>
                         <td>{{$l_d_counts[($i*4+3)]}}</td>
-                      </tr>
-                      {{ Form::hidden('l_breakdowns['.$i.'][unit_item]', $l_d_counts[$i*4],['class'=>''] ) }}
-                      {{ Form::hidden('l_breakdowns['.$i.'][unit_cost]', $l_d_counts[($i*4)+1],['class'=>''] ) }}
-                      {{ Form::hidden('l_breakdowns['.$i.'][unit_count]', $l_d_counts[($i*4)+2],['class'=>''] ) }}
-                      {{ Form::hidden('l_breakdowns['.$i.'][unit_subtotal]', $l_d_counts[($i*4)+3],['class'=>''] ) }}
-                      {{ Form::hidden('l_breakdowns['.$i.'][unit_type]', 3,['class'=>''] ) }}
-                      {{-- unit typeは 1会場　2その他備品　3レイアウト --}}
+                        </tr>
+                        {{ Form::hidden('l_breakdowns['.$i.'][unit_item]', $l_d_counts[$i*4],['class'=>''] ) }}
+                        {{ Form::hidden('l_breakdowns['.$i.'][unit_cost]', $l_d_counts[($i*4)+1],['class'=>''] ) }}
+                        {{ Form::hidden('l_breakdowns['.$i.'][unit_count]', $l_d_counts[($i*4)+2],['class'=>''] ) }}
+                        {{ Form::hidden('l_breakdowns['.$i.'][unit_subtotal]', $l_d_counts[($i*4)+3],['class'=>''] ) }}
+                        {{ Form::hidden('l_breakdowns['.$i.'][unit_type]', 3,['class'=>''] ) }}
+                        {{-- unit typeは 1会場　2その他備品　3レイアウト --}}
 
-                      @endfor 
-                      @endif     
+                        @endfor
+                        @endif
                     </tbody>
                   </table>
                 </div>

@@ -17,6 +17,9 @@ class Reservation extends Model
     'event_name1',
     'event_name2',
     'event_owner',
+    'luggage_count',
+    'luggage_arrive',
+    'luggage_return',
     'email_flag',
     'in_charge',
     'tel',
@@ -43,6 +46,7 @@ class Reservation extends Model
     'payment_limit',
     'bill_created_at',
     'bill_pay_limit',
+    'luggage_arrive'
   ];
   //formatで使用できるようにするため 参考https://readouble.com/laravel/6.x/ja/eloquent-mutators.html
 

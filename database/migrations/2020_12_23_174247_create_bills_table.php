@@ -16,6 +16,17 @@ class CreateBillsTable extends Migration
     Schema::create('bills', function (Blueprint $table) {
       $table->bigIncrements('id');
       $table->bigInteger('reservation_id')->unsigned()->index();
+
+      $table->integer('venue_total');
+      $table->integer('discount_venue_total');
+      $table->integer('equipment_total');
+      $table->integer('service_total');
+      $table->integer('luggage_total');
+      $table->integer('equipment_service_total');
+      $table->integer('discount_equipment_service_total');
+      $table->integer('layout_total');
+      $table->integer('after_duscount_layouts');
+
       $table->integer('sub_total');
       $table->integer('tax');
       $table->integer('total');

@@ -27,6 +27,9 @@ class CreateReservationsTable extends Migration
       $table->string('event_name1')->nullable();
       $table->string('event_name2')->nullable();
       $table->string('event_owner')->nullable();
+      $table->string('luggage_count')->nullable();
+      $table->string('luggage_arrive')->nullable();
+      $table->string('luggage_return')->nullable();
       $table->integer('email_flag'); //あるかないかだけ保持
       $table->string('in_charge');
       $table->string('tel');

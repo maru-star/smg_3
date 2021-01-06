@@ -311,14 +311,12 @@
           <tr>
             <td class="table-active"><label for="ondayName">氏名</label></td>
             <td>
-              {{-- <input class="form-control" name="ondayName" type="text" id="ondayName"> --}}
               {{ Form::text('in_charge', old('in_charge'),['class'=>'form-control', 'placeholder'=>'入力してください'] ) }}
             </td>
           </tr>
           <tr>
             <td class="table-active"><label for="mobilePhone">携帯番号</label></td>
             <td>
-              {{-- <input class="form-control" name="mobilePhone" type="text" id="mobilePhone"> --}}
               {{ Form::text('tel', old('tel'),['class'=>'form-control', 'placeholder'=>'入力してください'] ) }}
             </td>
           </tr>
@@ -371,28 +369,24 @@
               <input type="checkbox" id="discount" checked>
               <label for="discount">割引条件</label>
             </p>
-            {{-- <textarea name="discount" rows="5"></textarea> --}}
             {{ Form::textarea('discount_condition', old('discount_condition'),['class'=>'form-control', 'placeholder'=>'入力してください'] ) }}
           </td>
         </tr>
         <tr class="caution">
           <td>
             <label for="caution">注意事項</label>
-            {{-- <textarea name="caution" rows="10"></textarea> --}}
             {{ Form::textarea('attention', old('attention'),['class'=>'form-control', 'placeholder'=>'入力してください'] ) }}
           </td>
         </tr>
         <tr>
           <td>
             <label for="userNote">顧客情報の備考</label>
-            {{-- <textarea name="userNote" rows="10"></textarea> --}}
             {{ Form::textarea('user_details', old('user_details'),['class'=>'form-control', 'placeholder'=>'入力してください'] ) }}
           </td>
         </tr>
         <tr>
           <td>
             <label for="adminNote">管理者備考</label>
-            {{-- <textarea name="adminNote" rows="10"></textarea> --}}
             {{ Form::textarea('admin_details', old('admin_details'),['class'=>'form-control', 'placeholder'=>'入力してください'] ) }}
           </td>
         </tr>

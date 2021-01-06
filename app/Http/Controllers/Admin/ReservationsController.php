@@ -237,7 +237,6 @@ class ReservationsController extends Controller
   public function check(Request $request)
   {
 
-    var_dump($request->all());
 
     $reserve_date = $request->reserve_date;
     $venue_id = $request->venue_id;
@@ -419,6 +418,11 @@ class ReservationsController extends Controller
       $reservation->event_name1 = $request->event_name1;
       $reservation->event_name2 = $request->event_name2;
       $reservation->event_owner = $request->event_owner;
+
+      $reservation->luggage_count = $request->luggage_count;
+      $reservation->luggage_arrive = $request->luggage_arrive;
+      $reservation->luggage_return = $request->luggage_return;
+
       $reservation->user_id = $request->user_id;
       $reservation->in_charge = $request->in_charge;
       $reservation->tel = $request->tel;
@@ -437,6 +441,19 @@ class ReservationsController extends Controller
 
       $bills = $reservation->bills()->create([
         'reservation_id' => $reservation->id,
+
+        'venue_total' => $request->venue_total,
+        'discount_venue_total' => $request->discount_venue_total,
+
+        'equipment_total' => $request->selected_equipments_price,
+        'service_total' => $request->selected_services_price,
+        'luggage_total' => $request->selected_luggage_price,
+        'equipment_service_total' => $request->selected_items_total,
+        'discount_equipment_service_total' => $request->discount_equipment_service_total,
+
+        'layout_total' => $request->layout_total,
+        'after_duscount_layouts' => $request->after_duscount_layouts,
+
         'sub_total' => $request->sub_total,
         'tax' => $request->tax,
         'total' => $request->total,
@@ -489,10 +506,16 @@ class ReservationsController extends Controller
   {
     $reservation = Reservation::find($id);
     $venue = Venue::find($reservation->venue_id);
+    $user = user::find($reservation->user_id);
     $equipments = $venue->equipments()->get();
+    $services = $venue->services()->get();
+    $breakdowns = $reservation->breakdowns()->get();
     return view('admin.reservations.show', [
       'reservation' => $reservation,
       'equipments' => $equipments,
+      'services' => $services,
+      'breakdowns' => $breakdowns,
+      'user' => $user,
     ]);
   }
 

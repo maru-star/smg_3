@@ -34,7 +34,23 @@ class ReservationHelper
 
   public static function formatDate($num)
   {
-    return date('Y/m/d',  strtotime($num));
+    $weekday = date('w',  strtotime($num));
+    if ($weekday == 0) {
+      $weekday = "日";
+    } elseif ($weekday == 1) {
+      $weekday = "月";
+    } elseif ($weekday == 2) {
+      $weekday = "火";
+    } elseif ($weekday == 3) {
+      $weekday = "水";
+    } elseif ($weekday == 4) {
+      $weekday = "木";
+    } elseif ($weekday == 5) {
+      $weekday = "金";
+    } elseif ($weekday == 6) {
+      $weekday = "土";
+    }
+    return date('Y/m/d',  strtotime($num)) . '(' . $weekday . ')';
   }
 
   public static function getVenue($venue_id)
