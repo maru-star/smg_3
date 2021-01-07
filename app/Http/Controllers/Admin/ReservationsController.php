@@ -519,6 +519,29 @@ class ReservationsController extends Controller
     ]);
   }
 
+  public function doublecheck(Request $request, $id)
+  {
+    $reservation = Reservation::find($id);
+
+    if ($request->double_check_status == 0) {
+      $reservation->update([
+        'double_check1_name' => $request->double_check1_name,
+        'double_check_status' => 1
+      ]);
+    } else if ($request->double_check_status == 1) {
+      $reservation->update([
+        'double_check2_name' => $request->double_check2_name,
+        'double_check_status' => 2
+      ]);
+    }
+
+    return redirect('admin/reservations/' . $id);
+
+
+    // return view('admin.reservations.show', []);
+  }
+
+
   /**
    * Show the form for editing the specified resource.
    *

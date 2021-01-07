@@ -72,7 +72,6 @@ class User extends Authenticatable
 | 会場と予約の一対多
 |--------------------------------------------------------------------------|
 */
-
   public function reservations()
   {
     return $this->hasMany(Reservation::class);

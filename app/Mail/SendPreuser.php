@@ -11,27 +11,27 @@ use App\Models\Preuser;
 
 class SendPreuser extends Mailable
 {
-    use Queueable, SerializesModels;
+  use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
-    public function __construct($id, $token)
-    {
-        $this->id = $id;
-        $this->token = $token;
-    }
+  /**
+   * Create a new message instance.
+   *
+   * @return void
+   */
+  public function __construct($id, $token)
+  {
+    $this->id = $id;
+    $this->token = $token;
+  }
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
-    public function build()
-    {
-
-        return $this->view('user.preusers.create')->subject('メール認証をお願いします')->with(['id' => $this->id, 'token' => $this->token]);
-    }
+  /**
+   * Build the message.
+   *
+   * @return $this
+   */
+  public function build()
+  {
+    return $this->view('user.preusers.create')
+      ->subject('メール認証をお願いします')->with(['id' => $this->id, 'token' => $this->token]);
+  }
 }

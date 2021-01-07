@@ -26,11 +26,11 @@
       <!-- 削除ボタン-ステータス：予約が完了する前で表示----- -->
       <p class="text-left"><a class="more_btn4" href="">削除</a></p>
       <!-- 請求書の追加ボタン-ステータス：予約完了で表示----- -->
-      <p class="text-right"><a class="more_btn3" href="">追加の請求書を作成する</a></p>
+      {{-- <p class="text-right"><a class="more_btn3" href="">追加の請求書を作成する</a></p> --}}
     </div>
     <div class="col-12 btn-wrapper2">
       <!-- 請求書の追加ボタン-ステータス：予約完了で表示----- -->
-      <p class="text-right"><a class="more_btn4_lg" href="">一括キャンセルをする</a></p>
+      {{-- <p class="text-right"><a class="more_btn4_lg" href="">一括キャンセルをする</a></p> --}}
     </div>
     <!-- 予約詳細--------------------------------------------------------　 -->
     <div class="section-wrap">
@@ -54,20 +54,44 @@
                 <dt>予約状況</dt>
                 <dd>{{ReservationHelper::judgeStatus($reservation->reservation_status)}}</dd>
               </dl>
+              @if ($reservation->double_check_status==0)
               <dl>
                 <dt>一人目チェック</dt>
-                <dd>
-                  <p>※後ほど修正※　山田太郎</p>
+                <dd class="d-flex">
+                  <p>未</p>
+                  <p class="ml-2"> <button class="btn more_btn first_double_check">チェックをする</button> </p>
+                </dd>
+              </dl>
+              @elseif ($reservation->double_check_status==1)
+              <dl>
+                <dt>一人目チェック</dt>
+                <dd class="d-flex">
+                  <p>{{$reservation->double_check1_name}}</p>
                 </dd>
               </dl>
               <dl>
                 <dt>二人目チェック</dt>
                 <dd class="d-flex">
-                  <p>※後ほど修正※　未</p>
-                  <p class="ml-2"><a class="more_btn" href="">チェックをする</a></p>
+                  <p>未</p>
+                  <p class="ml-2"> <button class="btn more_btn second_double_check">チェックをする</button> </p>
                 </dd>
               </dl>
+              @elseif ($reservation->double_check_status==2)
+              <dl>
+                <dt>一人目チェック</dt>
+                <dd class="d-flex">
+                  <p>{{$reservation->double_check1_name}}</p>
+                </dd>
+              </dl>
+              <dl>
+                <dt>二人目チェック</dt>
+                <dd class="d-flex">
+                  <p>{{$reservation->double_check2_name}}</p>
+                </dd>
+              </dl>
+              @endif
             </div>
+
 
             <div class="col-2">
               <p>
@@ -79,14 +103,15 @@
             </div>
           </div>
 
-
+          @if ($reservation->double_check_status==2)
           <!-- 承認確認ボタン-ダブルチェック後に表示------ -->
-          {{-- <div class="row justify-content-end mt-5">
+          <div class="row justify-content-end mt-5">
             <div class="d-flex col-2 justify-content-around">
               <p class="text-right"><a class="more_btn" href="">承認</a></p>
               <p class="text-right"><a class="more_btn4" href="">確定</a></p>
             </div>
-          </div> --}}
+          </div>
+          @endif
 
           <!-- キャンセルボタン-ステータス：予約完了で表示------ -->
           {{-- <div class="row justify-content-end mt-5">
@@ -94,8 +119,6 @@
               <p class="text-right"><a class="more_btn4" href="">キャンセルする</a></p>
             </div>
           </div> --}}
-
-
         </div>
 
 
@@ -113,7 +136,7 @@
               </tr>
               <tr>
                 <td class="table-active"><label for="date">利用日</label></td>
-                <dd>{{ReservationHelper::formatDate($reservation->reserve_date)}}</dd>
+                <td>{{ReservationHelper::formatDate($reservation->reserve_date)}}</td>
               </tr>
               <tr>
                 <td class="table-active"><label for="venue">会場</label></td>
@@ -1091,12 +1114,10 @@
 
 
 <!-- 追加請求のフィールド------------------------------------------------------------------->
-<div class="section-wrap">
+{{-- <div class="section-wrap">
   <div class="ttl-box d-flex align-items-center">
     <div class="col-9 d-flex justify-content-between">
       <h2>その他の有料備品、サービス</h2>
-      <!-- <p>予約ID:00001</p> -->
-      <!-- <p>予約一括ID:00001</p> -->
     </div>
     <div class="col-3">
       <p class="text-right"><a class="more_btn" href="">編集</a></p>
@@ -1135,35 +1156,35 @@
             予約確定日：2020/10/15(木)
           </p>
         </div>
-      </div>
+      </div> --}}
 
 
-      <!-- 承認確認ボタン-ダブルチェック後に表示------ -->
-      {{-- <div class="row justify-content-end mt-5">
+<!-- 承認確認ボタン-ダブルチェック後に表示------ -->
+{{-- <div class="row justify-content-end mt-5">
         <div class="d-flex col-2 justify-content-around">
           <p class="text-right"><a class="more_btn" href="">承認</a></p>
           <p class="text-right"><a class="more_btn4" href="">確定</a></p>
         </div>
       </div> --}}
 
-      <!-- キャンセルボタン-ステータス：予約完了で表示------ -->
-      {{-- <div class="row justify-content-end mt-5">
+<!-- キャンセルボタン-ステータス：予約完了で表示------ -->
+{{-- <div class="row justify-content-end mt-5">
         <div class="d-flex col-12 justify-content-end">
           <p class="text-right"><a class="more_btn4" href="">キャンセルする</a></p>
         </div>
       </div> --}}
 
 
-    </div>
+{{-- </div> --}}
 
-    <!-- 請求セクション------------------------------------------------------------------- -->
+<!-- 請求セクション------------------------------------------------------------------- -->
 
-    <section class="section-wrap section-bg">
+{{-- <section class="section-wrap section-bg"> --}}
 
-      <!-- 請求内容----------- -->
+<!-- 請求内容----------- -->
 
-      <!-- 請求書情報-------- -->
-      <div class="bill-ttl mb-5">
+<!-- 請求書情報-------- -->
+{{-- <div class="bill-ttl mb-5">
         <div class="section-ttl-box d-flex align-items-center">
           <div class="col-6">
             <h3 class="">請求情報</h3>
@@ -1173,9 +1194,9 @@
             <!-- ステータスが入金確認後に表示------ -->
             <p class="text-right ml-3"><a class="more_btn" href="">領収書をみる</a></p>
           </div>
-        </div>
-        <!-- 請求書情報--予約完了後に表示------ -->
-        {{-- <dl class="row bill-box_wrap">
+        </div> --}}
+<!-- 請求書情報--予約完了後に表示------ -->
+{{-- <dl class="row bill-box_wrap">
           <div class="col-4 bill-box_cell">
             <dt><label for="billCompany">請求No</label></dt>
             <dd>2020092225</dd>
@@ -1190,10 +1211,10 @@
           </div>
         </dl> --}}
 
-      </div>
+{{-- </div> --}}
 
-      <!-- 　追加請求内容----------- -->
-      <div class="bill-box">
+<!-- 　追加請求内容----------- -->
+{{-- <div class="bill-box">
         <h3 class="row">その他の有料備品、サービス</h3>
         <dl class="row bill-box_wrap">
           <div class="col-12 bill-box_cell">
@@ -1221,11 +1242,11 @@
             <p class="font-weight-bold">割引後その他の有料備品、サービス合計</p>
             <p class=""></p>
           </div>
-        </dl>
+        </dl> --}}
 
 
-        <!-- 料金内訳-------------------------------------------------------------- -->
-        <div class="bill-list">
+<!-- 料金内訳-------------------------------------------------------------- -->
+{{-- <div class="bill-list">
           <h3 class="row">料金内訳</h3>
           <div class="col-12 venue_price_details">
             <table class="table table-bordered">
@@ -1246,46 +1267,21 @@
             <p class="text-right"><span>消費税</span>720円</p>
             <p class="text-right"><span class="font-weight-bold">合計金額</span>7,200円</p>
           </div>
-        </div>
-        <!-- 料金内訳 終わり---------------------------- -->
+        </div> --}}
+<!-- 料金内訳 終わり---------------------------- -->
 
 
-      </div>
-      <!-- 請求内容 終わり---------------------------- -->
+{{-- </div> --}}
+<!-- 請求内容 終わり---------------------------- -->
 
-      <!-- 請求内容 終わり---------------------------- -->
+<!-- 請求内容 終わり---------------------------- -->
 
-      <!-- 請求書内容変更----------- -->
-      <div class="bill-box">
-        <h3 class="row">請求書内容変更</h3>
-        <dl class="row bill-box_wrap">
-          <div class="col-6 bill-box_cell">
-            <dt><label for="billCompany">請求書の会社名</label></dt>
-            <dd>株式会社テスト</dd>
-          </div>
-          <div class="col-6 bill-box_cell">
-            <dt><label for="billCustomer">請求書の担当者名</label></dt>
-            <dd>山田太郎</dd>
-          </div>
-          <div class="col-6 bill-box_cell">
-            <dt><label for="billDate">請求日</label></dt>
-            <dd>2020/12/10(木)</dd>
-          </div>
-          <div class="col-6 bill-box_cell">
-            <dt><label for="billDue">支払期日</label></dt>
-            <dd>2020/12/10(木)</dd>
-          </div>
-          <div class="col-12 bill-box_cell">
-            <dt><label for="billNote">備考</label></dt>
-            <dd>テキストテキストテキストテキストテキストテキスト</dd>
-          </div>
-        </dl>
-      </div>
-      <!-- 請求書内容変更 終わり---------------------------- -->
+<!-- 請求書内容変更----------- -->
+<!-- 請求書内容変更 終わり---------------------------- -->
 
 
-      <!-- 入金確認入力フィールド　予約完了後の表示----------- -->
-      {{-- <div class="bill-box">
+<!-- 入金確認入力フィールド　予約完了後の表示----------- -->
+{{-- <div class="bill-box">
         <h3 class="row">入金確認</h3>
         <dl class="row bill-box_wrap">
           <div class="col-4 bill-box_cell">
@@ -1306,13 +1302,13 @@
           </div>
         </dl>
       </div> --}}
-      <!-- 入金確認入力フィールド 終わり---------------------------- -->
+<!-- 入金確認入力フィールド 終わり---------------------------- -->
 
-    </section>
+</section>
 
-    　　　　　
-    <!-- 請求セクション　キャンセル料-　キャンセルをしたときに、表示------------------------------------------------------------------ -->
-    {{-- <section class="bill-wrap section-wrap section-bg">
+　　　　　
+<!-- 請求セクション　キャンセル料-　キャンセルをしたときに、表示------------------------------------------------------------------ -->
+{{-- <section class="bill-wrap section-wrap section-bg">
       <div class="bill-bg">
 
         <!-- 請求書情報-------- -->
@@ -1473,7 +1469,7 @@
 
 
 
-  </section>
+</section>
 </div>
 
 
@@ -1495,25 +1491,25 @@
       <tr>
         <td class="table-active"><label for="venueFee">会場料</label></td>
         <td class="text-right">
-          5,300円
+          ※後ほど修正　5,300円
         </td>
       </tr>
       <tr>
         <td class="table-active"><label for="serviceFee">備品その他</label></td>
         <td class="text-right">
-          5,300円
+          ※後ほど修正　5,300円
         </td>
       </tr>
       <tr>
         <td class="table-active"><label for="layoutFee">レイアウト変更</label></td>
         <td class="text-right">
-          5,300円
+          ※後ほど修正　5,300円
         </td>
       </tr>
       <tr>
         <td class="table-active"><label for="layoutFee">キャンセル料</label></td>
         <td class="text-right">
-          5,300円
+          ※後ほど修正　5,300円
         </td>
       </tr>
       <tr>
@@ -1523,7 +1519,7 @@
         </td>
       </tr>
       <tr>
-        <td colspan="2" class="text-right"><span class="font-weight-bold">請求総額</span>7,200円</td>
+        <td colspan="2" class="text-right"><span class="font-weight-bold">請求総額</span>※後ほど修正　7,200円</td>
       </tr>
     </tbody>
   </table>
@@ -1531,21 +1527,55 @@
 
 
 <!-- チェックボックス ----------------------------------------------------------------------------->
+@if ($reservation->double_check_status==0)
 <div class="checkbox section-wrap">
   <dl class="d-flex col-12 justify-content-end align-items-center">
-    <dt><label for="checkname">チェック者</label></dt>
+    <dt><label for="checkname">一人目チェック者</label></dt>
     <dd>
-      <select class="form-control select2" name="checkname">
-        <option>山田太郎</option>
-        <option>山田太郎</option>
-        <option>山田太郎</option>
-      </select>
+      {{ Form::model($reservation->id, ['route'=> ['admin.reservations.double_check',$reservation->id]]) }}
+      @csrf
+      {{Form::select('double_check1_name', [
+        '名前test1' => '名前test1', 
+        '名前test2' => '名前test2',
+        '名前test3' => '名前test3',
+        '名前test4' => '名前test4',], 
+        null, ['placeholder' => '選択してください', 'class'=>'form-control double_check1_name'])}}
+      {{ Form::hidden('double_check_status', $reservation->double_check_status ) }}
     </dd>
     <dd>
-      <p class="text-right"><a class="more_btn" href="">チェック完了</a></p>
+      <p class="text-right">
+        {{Form::submit('チェック完了', ['class'=>'btn more_btn', 'id'=>'double_check1_submit'])}}
+      </p>
     </dd>
   </dl>
 </div>
+@elseif($reservation->double_check_status==1)
+<div class="checkbox section-wrap">
+  <dl class="d-flex col-12 justify-content-end align-items-center">
+    <dt><label for="checkname">二人目チェック者</label></dt>
+    <dd>
+      {{ Form::model($reservation->id, ['route'=> ['admin.reservations.double_check',$reservation->id]]) }}
+      @csrf
+      {{Form::select('double_check2_name', [
+        '名前test1' => '名前test1', 
+        '名前test2' => '名前test2',
+        '名前test3' => '名前test3',
+        '名前test4' => '名前test4',], 
+        null, ['placeholder' => '選択してください', 'class'=>'form-control double_check2_name'])}}
+      {{ Form::hidden('double_check_status', $reservation->double_check_status ) }}
+    </dd>
+    <dd>
+      <p class="text-right">
+        {{Form::submit('チェック完了', ['class'=>'btn more_btn', 'id'=>'double_check2_submit'])}}
+      </p>
+    </dd>
+  </dl>
+</div>
+
+@endif
+
+
+
 
 
 

@@ -93,10 +93,10 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
     Route::post('reservations/getoperation', 'ReservationsController@getoperation');
     // ajax 会場　直営 or 提携　判別
     Route::post('clients/getclients', 'ClientsController@getclients');
-
+    //予約に対するダブルチェック
+    Route::post('reservations/{reservation}/double_check', 'ReservationsController@doublecheck')->name('reservations.double_check');;
     // Bill　予約に紐づく
     Route::resource('bills', 'BillsController');
-
     // Breakdown　Billに紐づく
     Route::resource('breakdowns', 'BreakdownsController');
   });
