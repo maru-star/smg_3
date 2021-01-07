@@ -15,6 +15,7 @@ use Carbon\Carbon;
 
 use Illuminate\Support\Facades\DB; //トランザクション用
 
+use PDF;
 
 
 
@@ -236,8 +237,6 @@ class ReservationsController extends Controller
 
   public function check(Request $request)
   {
-
-
     $reserve_date = $request->reserve_date;
     $venue_id = $request->venue_id;
     $venue = Venue::find($venue_id);
@@ -459,7 +458,6 @@ class ReservationsController extends Controller
         'total' => $request->total,
       ]);
 
-
       if ($request->v_breakdowns) {
         foreach ($request->v_breakdowns as $key => $value) {
           $bills->breakdowns()->create([
@@ -540,6 +538,17 @@ class ReservationsController extends Controller
 
     // return view('admin.reservations.show', []);
   }
+
+  public function generate_pdf($id)
+  {
+    $reservation = Reservation::find($id);
+
+    $pdf = PDF::loadView('admin/reservations/generate_pdf', [
+      'reservation' => $reservation
+    ])->setPaper('a4', 'landscape');
+    return $pdf->stream();
+  }
+
 
 
   /**

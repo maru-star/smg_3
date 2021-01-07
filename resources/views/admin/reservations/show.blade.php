@@ -165,7 +165,14 @@
                 <td class="table-active"><label for="direction">案内板</label></td>
                 <td class="d-flex justify-content-between">
                   <p>{{$reservation->board_flag==0?'無し':"要作成"}}</p>
-                  <p><a class="more_btn" href="">※後ほど修正※案内板出力(PDF)</a></p>
+                  <p>
+                    {{-- <a class="more_btn" href="">※後ほど修正※案内板出力(PDF)</a> --}}
+                    {{-- <a href="{{ url('/admin/reservations/'. $reservation->id.'/generate_pdf') }}"
+                    class="more_btn">案内版出力(PDF)</a> --}}
+
+                    <a href="{{ url('/admin/reservations/generate_pdf', $reservation->id) }}" class="more_btn">案内版出力</a>
+
+                  </p>
                 </td>
               </tr>
               <tr>
