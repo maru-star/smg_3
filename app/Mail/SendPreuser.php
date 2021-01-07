@@ -23,7 +23,6 @@ class SendPreuser extends Mailable
     $this->id = $id;
     $this->token = $token;
   }
-
   /**
    * Build the message.
    *
