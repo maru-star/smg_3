@@ -265,16 +265,22 @@ $(function () {
     })
       .done(function ($times) {
         $('#fullOverlay').css('display', 'none');
-        console.log('$timeは', $times);
-        console.log('配列の数は', $times[0].length);
-
+        // console.log('$timeは', $times);
+        // console.log('配列の数は', $times[0].length);
         for (let index = 0; index < $times[0].length; index++) {
           $("#sales_start option").each(function ($result) {
             if ($times[0][index] == $('#sales_start option').eq($result).val()) {
               $('#sales_start option').eq($result).prop('disabled', true);
             }
           });
+        };
 
+        for (let index = 0; index < $times[0].length; index++) {
+          $("#sales_finish option").each(function ($result) {
+            if ($times[0][index] == $('#sales_finish option').eq($result).val()) {
+              $('#sales_finish option').eq($result).prop('disabled', true);
+            }
+          });
         }
 
 
