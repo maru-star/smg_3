@@ -549,8 +549,6 @@ class ReservationsController extends Controller
     return $pdf->stream();
   }
 
-
-
   /**
    * Show the form for editing the specified resource.
    *
@@ -559,7 +557,14 @@ class ReservationsController extends Controller
    */
   public function edit($id)
   {
-    //
+    $reservation = Reservation::find($id);
+    $venues = Venue::all();
+    $users = User::all();
+    return view('admin.reservations.edit', [
+      'reservation' => $reservation,
+      'venues' => $venues,
+      'users' => $users,
+    ]);
   }
 
   /**
