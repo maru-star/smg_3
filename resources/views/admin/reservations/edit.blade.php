@@ -5,11 +5,11 @@
 
 <link href="{{ asset('/css/template.css') }}" rel="stylesheet">
 <script src="{{ asset('/js/template.js') }}"></script>
-{{-- <script src="{{ asset('/js/ajax.js') }}"></script> --}}
+<script src="{{ asset('/js/edit_ajax.js') }}"></script>
 
 
 {{-- ajax画面変遷時の待機画面 --}}
-{{-- <style>
+<style>
   #fullOverlay {
     position: absolute;
     left: 0;
@@ -40,7 +40,7 @@
       <span class="sr-only hide">Loading...</span>
     </div>
   </div>
-</div> --}}
+</div>
 
 
 {{ Form::model($reservation, ['route'=> ['admin.reservations.update',$reservation->id],'method' => 'PUT' ]) }}
@@ -55,7 +55,8 @@
         <tr>
           <td class="table-active">利用日</td>
           <td>
-            {{ Form::text('reserve_date', $reservation->reserve_date ,['class'=>'form-control', 'id'=>'datepicker1', 'placeholder'=>'入力してください'] ) }}
+            
+            {{ Form::text('reserve_date', date("Y-m-d",strtotime($reservation->reserve_date)) ,['class'=>'form-control', 'id'=>'datepicker1', 'placeholder'=>'入力してください'] ) }}
           </td>
         </tr>
         <tr>
@@ -264,6 +265,34 @@
             </tr>
           </thead>
           <tbody>
+            @if ($reservation->venue->layout==1)
+            <tr>
+              <td>レイアウト準備料金</td>
+              <td>
+                <input type="radio" value="0" name="layout_prepare" checked>無し
+                <input type="radio" value="1" name="layout_prepare"
+                @foreach ($reservation->breakdowns as $breakdown)
+                @if ($breakdown->unit_item=='レイアウト準備')
+                checked
+                @endif
+                @endforeach
+                >有り
+              </td>
+            </tr>
+            <tr>
+              <td>レイアウト片付料金</td>
+              <td>
+                <input type="radio" value="0" name="layout_clean">無し
+                <input type="radio" value="1" name="layout_clean"
+                @foreach ($reservation->breakdowns as $breakdown)
+                @if ($breakdown->unit_item=='レイアウト片付')
+                checked
+                @endif
+                @endforeach
+                >有り
+              </td>
+            </tr>
+            @endif
           </tbody>
         </table>
       </div>

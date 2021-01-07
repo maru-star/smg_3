@@ -58,8 +58,9 @@ $(function () {
     var venue_id = $('#venues_selector').val();
     $('#sales_start').val();
     $('#sales_finish').val();
+
     ajaxGetItems(venue_id);
-    // ajaxGetSalesHours(venue_id, dates);　管理者は24時間予約登録可能。そのため一旦、本機能停止
+    ajaxGetSalesHours(venue_id, dates);
     ajaxGetPriceStstem(venue_id);
     ajaxGetLayout(venue_id); //レイアウトが存在するかしないか、　"0"か"1"でreturn
     ajaxGetLuggage(venue_id); //会場に荷物預かりが存在するかしないか、　"0"か"1"でreturn
@@ -74,7 +75,7 @@ $(function () {
     var dates = $('#datepicker1').val();
     var venue_id = $('#venues_selector').val();
     // ajaxGetItems(venue_id);
-    // ajaxGetSalesHours(venue_id, dates);　管理者は24時間予約登録可能。そのため一旦、本機能停止
+    // ajaxGetSalesHours(venue_id, dates);
 
     if ($('.select2-hidden-accessible').val() != null) { //顧客が選択されていたら、支払い期日抽出
       var user_id = $('.select2-hidden-accessible').val();
@@ -249,43 +250,69 @@ $(function () {
 
   // 営業時間取得
   // 管理者は24時間予約登録可能。そのため一旦、本機能停止
-  // function ajaxGetSalesHours($venue_id, $dates) {
-  //   $.ajax({
-  //     headers: {
-  //       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-  //     },
-  //     url: '/admin/reservations/getsaleshours',
-  //     type: 'POST',
-  //     data: { 'venue_id': $venue_id, 'dates': $dates },
-  //     dataType: 'json',
-  //     beforeSend: function () {
-  //       $('#fullOverlay').css('display', 'block');
-  //     },
-  //   })
-  //     .done(function ($times) {
-  //       $('#fullOverlay').css('display', 'none');
-  //       $('#sales_start').html('');//初期化
-  //       $('#sales_finish').html('');//初期化
-  //       $('#event_start').html('');//初期化
-  //       $('#event_finish').html(''); //初期化
+  function ajaxGetSalesHours($venue_id, $dates) {
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      url: '/admin/reservations/getsaleshours',
+      type: 'POST',
+      data: { 'venue_id': $venue_id, 'dates': $dates },
+      dataType: 'json',
+      beforeSend: function () {
+        $('#fullOverlay').css('display', 'block');
+      },
+    })
+      .done(function ($times) {
+        $('#fullOverlay').css('display', 'none');
+        console.log('$timeは', $times);
+        console.log('配列の数は', $times[0].length);
 
-  //       var $time_start = new Date($times[0]);
-  //       var $time_finish = new Date($times[1]);
-  //       for (let index = $time_start.getHours(); index <= $time_finish.getHours(); index++) {
-  //         $('#sales_start').append("<option value='" + ("0" + index).slice(-2) + ":00:00" + "'>" + ("0" + index).slice(-2) + ":00" + "</option>");
-  //         $('#sales_finish').append("<option value='" + ("0" + index).slice(-2) + ":00:00" + "'>" + ("0" + index).slice(-2) + ":00" + "</option>");
-  //         $('#event_start').append("<option value='" + ("0" + index).slice(-2) + ":00:00" + "'>" + ("0" + index).slice(-2) + ":00" + "</option>");
-  //         $('#event_finish').append("<option value='" + ("0" + index).slice(-2) + ":00:00" + "'>" + ("0" + index).slice(-2) + ":00" + "</option>");
-  //       }
-  //     })
-  //     .fail(function ($start, $$finish) {
-  //       $('#fullOverlay').css('display', 'none');
-  //       $('#sales_start').html('');//初期化
-  //       $('#sales_finish').html('');//初期化
-  //       $('#event_start').html('');//初期化
-  //       $('#event_finish').html(''); //初期化
-  //     });
-  // };
+        for (let index = 0; index < $times[0].length; index++) {
+          $("#sales_start option").each(function ($result) {
+            if ($times[0][index] == $('#sales_start option').eq($result).val()) {
+              $('#sales_start option').eq($result).prop('disabled', true);
+            }
+          });
+
+        }
+
+
+        // $("#sales_start option").each(function($answer)
+        // {
+        //   // $("#sales_start option").eq($answer).val();
+        //   if ($times[0][$answer].length) {
+        //     if ($("#sales_start option").eq($answer).val()==$times[0][$answer]) {
+        //   $("#sales_start option").eq($answer).prop('disabled',true);
+        // }
+        //   // $("#sales_start option").eq($answer).prop('disabled',true);
+        // }
+        // });
+
+        // $('#sales_start').html('');//初期化
+        // $('#sales_finish').html('');//初期化
+        // $('#event_start').html('');//初期化
+        // $('#event_finish').html(''); //初期化
+
+        // var $time_start = new Date($times[0]);
+        // var $time_finish = new Date($times[1]);
+        // for (let index = $time_start.getHours(); index <= $time_finish.getHours(); index++) {
+        //   $('#sales_start').append("<option value='" + ("0" + index).slice(-2) + ":00:00" + "'>" + ("0" + index).slice(-2) + ":00" + "</option>");
+        //   $('#sales_finish').append("<option value='" + ("0" + index).slice(-2) + ":00:00" + "'>" + ("0" + index).slice(-2) + ":00" + "</option>");
+        //   $('#event_start').append("<option value='" + ("0" + index).slice(-2) + ":00:00" + "'>" + ("0" + index).slice(-2) + ":00" + "</option>");
+        //   $('#event_finish').append("<option value='" + ("0" + index).slice(-2) + ":00:00" + "'>" + ("0" + index).slice(-2) + ":00" + "</option>");
+        // }
+      })
+      .fail(function ($times) {
+        $('#fullOverlay').css('display', 'none');
+        console.log('失敗', $times);
+
+        // $('#sales_start').html('');//初期化
+        // $('#sales_finish').html('');//初期化
+        // $('#event_start').html('');//初期化
+        // $('#event_finish').html(''); //初期化
+      });
+  };
 
   // 料金体系取得
   function ajaxGetPriceStstem($venue_id) {
@@ -741,10 +768,10 @@ $(function () {
           var target_name2 = $('input[name="bill_pay_limit"]');
           target_name.val(three_days_before.getFullYear() + '-' + (('0' + (three_days_before.getMonth() + 1)).slice(-2)) + '-' + (('0' + three_days_before.getDate()).slice(-2)));
           target_name2.val(three_days_before.getFullYear() + '-' + (('0' + (three_days_before.getMonth() + 1)).slice(-2)) + '-' + (('0' + three_days_before.getDate()).slice(-2)));
-        $('.selected_person').text('');
-        $('.selected_person').text($user_results[1]);
-        $('input[name="bill_person"]').val(''); //hiddenのbill_personに挿入
-        $('input[name="bill_person"]').val($user_results[1]);//hiddenのbill_personに挿入
+          $('.selected_person').text('');
+          $('.selected_person').text($user_results[1]);
+          $('input[name="bill_person"]').val(''); //hiddenのbill_personに挿入
+          $('input[name="bill_person"]').val($user_results[1]);//hiddenのbill_personに挿入
         } else if ($user_results[0] == 2) {
           var dt = new Date(s_date);
           var end_of_month = new Date(dt.getFullYear(), dt.getMonth() + 1, 0);　//当月末日
@@ -753,7 +780,7 @@ $(function () {
           target_name.val(end_of_month.getFullYear() + '-' + (('0' + (end_of_month.getMonth() + 1)).slice(-2)) + '-' + (('0' + end_of_month.getDate()).slice(-2)));
           target_name2.val(end_of_month.getFullYear() + '-' + (('0' + (end_of_month.getMonth() + 1)).slice(-2)) + '-' + (('0' + end_of_month.getDate()).slice(-2)));
           $('.selected_person').text('');
-          $('.selected_person').text($user_results[1]);  
+          $('.selected_person').text($user_results[1]);
           $('input[name="bill_person"]').val(''); //hiddenのbill_personに挿入
           $('input[name="bill_person"]').val($user_results[1]);//hiddenのbill_personに挿入
 
@@ -765,7 +792,7 @@ $(function () {
           target_name.val(end_of_next_month.getFullYear() + '-' + (('0' + (end_of_next_month.getMonth() + 1)).slice(-2)) + '-' + (('0' + end_of_next_month.getDate()).slice(-2)));
           target_name2.val(end_of_next_month.getFullYear() + '-' + (('0' + (end_of_next_month.getMonth() + 1)).slice(-2)) + '-' + (('0' + end_of_next_month.getDate()).slice(-2)));
           $('.selected_person').text('');
-          $('.selected_person').text($user_results[1]);  
+          $('.selected_person').text($user_results[1]);
           $('input[name="bill_person"]').val(''); //hiddenのbill_personに挿入
           $('input[name="bill_person"]').val($user_results[1]);//hiddenのbill_personに挿入  
         };

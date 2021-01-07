@@ -85,13 +85,27 @@ class ReservationsController extends Controller
    */
   public function getsaleshours(Request $request)
   {
-    $venue = Venue::find($request->venue_id);
-    $dates = Carbon::parse($request->dates); //日付取得
-    $week_day = $dates->dayOfWeekIso; //曜日取得
-    $sales_start = Carbon::parse($venue->dates()->where('week_day', $week_day)->first()->start);
-    $sales_finish = Carbon::parse($venue->dates()->where('week_day', $week_day)->first()->finish);
+    $venue_id=$request->venue_id;
+    $dates=$request->dates;
 
-    return [$sales_start, $sales_finish];
+    $reject_targets=[];
+    $reservations=Reservation::where('reserve_date',$dates)->where('venue_id',$venue_id)->get();
+    foreach ($reservations as $key => $value) {
+      $f_start = Carbon::createFromTimeString($value->enter_time, 'Asia/Tokyo');
+      $f_finish = Carbon::createFromTimeString($value->leave_time, 'Asia/Tokyo');
+      $diff = ($f_finish->diffInMinutes($f_start)/30);
+      for ($i=0; $i <=$diff ; $i++) { 
+        $reject_targets[]=date('H:i:s',strtotime($f_start."+ ".(30*$i)." min"));
+      }
+    }
+    return [$reject_targets];
+    // $venue = Venue::find($request->venue_id);
+    // $dates = Carbon::parse($request->dates); //日付取得
+    // $week_day = $dates->dayOfWeekIso; //曜日取得
+    // $sales_start = Carbon::parse($venue->dates()->where('week_day', $week_day)->first()->start);
+    // $sales_finish = Carbon::parse($venue->dates()->where('week_day', $week_day)->first()->finish);
+
+    // return [$sales_start, $sales_finish];
   }
 
   /***********************

@@ -64,7 +64,6 @@
         <tr>
           <td class="table-active">利用日</td>
           <td>
-            {{-- <input id="datepicker1" type="text"> --}}
             {{ Form::text('reserve_date', isset($request)?$request->reserve_date:'' ,['class'=>'form-control', 'id'=>'datepicker1', 'placeholder'=>'入力してください'] ) }}
           </td>
         </tr>
@@ -142,7 +141,7 @@
           <td>案内板</td>
           <td>
             <input type="radio" name="board_flag" value="0"
-              {{isset($request->board_flag)?$request->board_flag==0?'checked':'':'',}}>無し
+              {{isset($request->board_flag)?$request->board_flag==0?'checked':'':'checked',}}>無し
             <input type="radio" name="board_flag" value="1"
               {{isset($request->board_flag)?$request->board_flag==1?'checked':'':'',}}>有り
           </td>
