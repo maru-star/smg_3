@@ -320,7 +320,7 @@
           <tr>
             <td>※後ほど修正</td>
             <td>{{$reservation->id}}</td>
-            <td>{{$reservation->reserve_date}}</td>
+            <td>{{ReservationHelper::formatDate($reservation->reserve_date)}}</td>
             <td>{{$reservation->enter_time}}</td>
             <td>{{$reservation->leave_time}}</td>
             <td>
@@ -331,19 +331,17 @@
             </td>
             <td>{{$user->find($reservation->venue_id)->mobile}}</td>
             <td>{{$user->find($reservation->venue_id)->tel}}</td>
-            <td>-※後ほど修正</td>
+            <td>-</td>
             <td class="table_column1">
               <p>※後ほど修正　会場</p>
             </td>
             <td class="table_column1">
-              <p>※後ほど修正　会場</p>
+              <p>{{ReservationHelper::judgeStatus($reservation->reservation_status)}}</p>
             </td>
             <td>
-              {{-- <a class="more_btn" href="http://staging-smg2.herokuapp.com/admin/venues/1">詳細</a> --}}
               <a href="{{ url('admin/reservations', $reservation->id) }}" class="more_btn">詳細</a>
-
             </td>
-            <td><a class="more_btn" href="http://staging-smg2.herokuapp.com/admin/venues/1">詳細</a></td>
+            <td><a href="{{ url('admin/reservations/generate_pdf/'.$reservation->id) }}" class="more_btn">詳細</a></td>
           </tr>
           @endforeach
           {{-- 

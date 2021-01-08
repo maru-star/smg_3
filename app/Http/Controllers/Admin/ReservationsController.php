@@ -36,6 +36,7 @@ class ReservationsController extends Controller
       'venue_id',
       'user_id',
       'tel',
+      'reservation_status'
     )->get();
     $venue = Venue::select('id', 'name_area', 'name_bldg', 'name_venue')->get();
     $user = User::select('id', 'company', 'first_name', 'last_name', 'mobile', 'tel')->get();
