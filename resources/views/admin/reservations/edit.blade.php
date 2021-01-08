@@ -493,7 +493,8 @@
             <div class="col-5 bill-box_cell">
               <dd class="text-right d-flex">
                 <input type="text" name="venue_discount_percent" class="form-control venue_discount_percent"
-                  id="venue_discount_percent" value="0" min=0><span>%</span>
+                  id="venue_discount_percent" value="{{$reservation->bills()->first()->venue_discount_percent}}"
+                  min=0><span>%</span>
               </dd>
             </div>
             <div class="col-3 bill-box_cell">
@@ -510,7 +511,7 @@
             <div class="col-5 bill-box_cell">
               <p class="text-right">
                 <input type="text" name="venue_dicsount_number" class="form-control venue_dicsount_number"
-                  id="venue_dicsount_number" min=0>
+                  id="venue_dicsount_number" min=0 value="{{$reservation->bills()->first()->venue_dicsount_number}}">
               </p>
             </div>
             <div class="col-3 bill-box_cell">
@@ -635,7 +636,8 @@
           </div>
           <div class="col-5 bill-box_cell">
             <p class="text-right">
-              <input type="text" name="discount_item" class="form-control discount_item" id="price">
+              <input type="text" name="discount_item" class="form-control discount_item" id="price"
+                value="{{$reservation->bills()->first()->discount_item}}">
             </p>
           </div>
           <div class="col-3 bill-box_cell text-right">
@@ -700,7 +702,10 @@
         </div>
       </div>
       <div class="d-flex" style="height: 70px">
-        <div style="width: 33%">割引料金 <input type="text" class="layout_discount d-block" name="layout_discount"></div>
+        <div style="width: 33%">割引料金
+          <input type="text" class="layout_discount d-block" name="layout_discount"
+            value="{{$reservation->bills()->first()->layout_discount}}">
+        </div>
         <div style="width: 33%">割引率：<p class="layout_discount_percent"><span>%</span></p>
           {{ Form::hidden('layout_discount_percent', '', ['class'=>'layout_discount_percent']) }}
         </div>

@@ -359,12 +359,12 @@ $(function () {
         $('.discount_input_number_items').remove(); //初期化
       }
       // 小計、消費税、最終の請求総額に反映
-      $('.items_subtotal').text($('.items_discount_price').text());
-      $('.items_subtotal').val($('.items_discount_price').text());
-      $('.items_tax').text(Math.floor((Number($('.items_discount_price').text())) * 0.1));
-      $('.items_tax').val(Math.floor((Number($('.items_discount_price').text())) * 0.1));
-      $('.all_items_total').text(Math.floor(Number($('.items_discount_price').text()) + (Number($('.items_discount_price').text())) * 0.1));
-      $('.all_items_total').val(Math.floor(Number($('.items_discount_price').text()) + (Number($('.items_discount_price').text())) * 0.1));
+      $('.items_subtotal').text($('.items_discount_price').eq(0).text());
+      $('.items_subtotal').val($('.items_discount_price').eq(0).text());
+      $('.items_tax').text(Math.floor((Number($('.items_discount_price').eq(0).text())) * 0.1));
+      $('.items_tax').val(Math.floor((Number($('.items_discount_price').eq(0).text())) * 0.1));
+      $('.all_items_total').text(Math.floor(Number($('.items_discount_price').eq(0).text()) + (Number($('.items_discount_price').eq(0).text())) * 0.1));
+      $('.all_items_total').val(Math.floor(Number($('.items_discount_price').eq(0).text()) + (Number($('.items_discount_price').eq(0).text())) * 0.1));
     }
 
     // 総請求額　反映

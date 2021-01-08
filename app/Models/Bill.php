@@ -11,15 +11,19 @@ class Bill extends Model
     'reservation_id',
 
     'venue_total',
+    'venue_discount_percent',
+    'venue_dicsount_number',
     'discount_venue_total',
 
     'equipment_total',
     'service_total',
     'luggage_total',
     'equipment_service_total',
+    'discount_item',
     'discount_equipment_service_total',
 
     'layout_total',
+    'layout_discount',
     'after_duscount_layouts',
 
     'sub_total',
