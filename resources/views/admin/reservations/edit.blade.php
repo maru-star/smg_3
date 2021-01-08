@@ -727,6 +727,7 @@
         <tbody></tbody>
       </table>
     </div>
+
     <div style="margin-top: 50px;" class="text-right">
       小計：<p class="layout_subtotal"></p>
       {{ Form::hidden('layout_subtotal', '', ['class'=>'layout_subtotal']) }}
@@ -737,6 +738,46 @@
     </div>
   </div>
   {{-- レイアウト終わり --}}
+
+  <!-- 請求書内容変更----------- -->
+  <div class="bill-box">
+    <h3 class="row">請求書内容</h3>
+    <dl class="row bill-box_wrap">
+      <div class="col-6 bill-box_cell">
+        <dt><label for="billCompany">請求書の会社名</label></dt>
+        <dd>
+          {{ Form::text('bill_company', $reservation->user()->first()->company, ['class'=>'form-control', 'id'=>'billCompany']) }}
+        </dd>
+      </div>
+      <div class="col-6 bill-box_cell">
+        <dt><label for="billCustomer">請求書の担当者名</label></dt>
+        <dd>
+          {{ Form::text('bill_person', $reservation->user()->first()->first_name.$reservation->user()->first()->last_name, ['class'=>'form-control', 'id'=>'billCustomer']) }}
+        </dd>
+      </div>
+      <div class="col-6 bill-box_cell">
+        <dt><label for="billDate">請求日</label></dt>
+        <dd>
+          {{ Form::text('bill_created_at', date('Y-m-d',strtotime($reservation->bill_created_at)), ['class'=>'form-control', 'id'=>'datepicker4']) }}
+        </dd>
+      </div>
+      <div class="col-6 bill-box_cell">
+        <dt><label for="billDue">支払期日</label></dt>
+        <dd>
+          {{ Form::text('bill_pay_limit', date('Y-m-d',strtotime($reservation->bill_pay_limit)), ['class'=>'form-control', 'id'=>'datepicker5']) }}
+        </dd>
+      </div>
+      <div class="col-12 bill-box_cell">
+        <dt><label for="billNote">備考</label></dt>
+        <dd>
+          {{ Form::textarea('bill_remark', $reservation->bill_remark, ['class'=>'form-control']) }}
+        </dd>
+      </div>
+    </dl>
+  </div>
+  <!-- 請求書内容変更 終わり---------------------------- -->
+
+
   <dl class="row bill-box_wrap total-sum">
     <div class="col-3 bill-box_cell">
       <dt>合計請求総額</dt>
@@ -781,6 +822,9 @@
 {{-- {{ Form::hidden('tax', isset($request)?$request->tax:'', ['id'=>'tax']) }} --}}
 {{-- 総合計 --}}
 {{-- {{ Form::hidden('total', isset($request)?$request->total:'', ['id'=>'total']) }} --}}
+
+
+
 
 
 {{Form::submit('送信', ['class'=>'btn btn-primary mx-auto', 'id'=>'check_submit'])}}

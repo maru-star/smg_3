@@ -30,6 +30,12 @@ $(function () {
   });
   // datepicker3は直接埋め込んだ
   // *** datepicker3は使わないように ****
+  $('#datepicker4').datepicker({
+    dateFormat: 'yy-mm-dd',
+  });
+  $('#datepicker5').datepicker({
+    dateFormat: 'yy-mm-dd',
+  });
 
 });
 
