@@ -52,7 +52,8 @@ class CreateReservationsTable extends Migration
       $table->date('bill_created_at'); //請求書作成日　デフォルトはtimestamp
       $table->date('bill_pay_limit'); //請求書支払い期日　デフォルトは自動計算
       $table->string('bill_remark')->nullable(); //請求書備考　デフォルト空白
-
+      // ソフトデリート用
+      $table->softDeletes();
       $table->timestamps();
     });
   }

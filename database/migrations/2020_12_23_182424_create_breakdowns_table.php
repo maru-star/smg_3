@@ -21,6 +21,8 @@ class CreateBreakdownsTable extends Migration
       $table->string('unit_count');
       $table->integer('unit_subtotal');
       $table->integer('unit_type');
+      // ソフトデリート用
+      $table->softDeletes();
       $table->timestamps();
     });
   }

@@ -3,9 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Bill extends Model
 {
+
+  use SoftDeletes;
 
   protected $fillable = [
     'reservation_id',
@@ -48,5 +52,16 @@ class Bill extends Model
   public function breakdowns()
   {
     return $this->hasMany(Breakdown::class);
+  }
+
+  // breakdowns 削除用
+  protected static function boot()
+  {
+    parent::boot();
+    static::deleting(function ($model) {
+      foreach ($model->breakdowns()->get() as $child) {
+        $child->delete();
+      }
+    });
   }
 }

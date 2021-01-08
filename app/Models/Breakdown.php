@@ -3,9 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Breakdown extends Model
 {
+  use SoftDeletes;
+
   protected $fillable = [
     'unit_item',
     'unit_cost',

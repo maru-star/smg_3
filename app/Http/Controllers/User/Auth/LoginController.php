@@ -10,34 +10,34 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    use AuthenticatesUsers;
+  use AuthenticatesUsers;
 
-    protected $redirectTo = RouteServiceProvider::HOME;
+  protected $redirectTo = RouteServiceProvider::HOME;
 
-    public function __construct()
-    {
-        $this->middleware('guest:user')->except('logout');
-    }
+  public function __construct()
+  {
+    $this->middleware('guest:user')->except('logout');
+  }
 
-    protected function guard()
-    {
-        return Auth::guard('user');
-    }
+  protected function guard()
+  {
+    return Auth::guard('user');
+  }
 
-    public function showLoginForm()
-    {
-        return view('user.auth.login');
-    }
+  public function showLoginForm()
+  {
+    return view('user.auth.login');
+  }
 
-    public function logout(Request $request)
-    {
-        Auth::guard('user')->logout();
+  public function logout(Request $request)
+  {
+    Auth::guard('user')->logout();
 
-        return $this->loggedOut($request);
-    }
+    return $this->loggedOut($request);
+  }
 
-    public function loggedOut(Request $request)
-    {
-        return redirect(route('user.login'));
-    }
+  public function loggedOut(Request $request)
+  {
+    return redirect(route('user.login'));
+  }
 }

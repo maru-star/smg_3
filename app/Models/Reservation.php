@@ -3,9 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Reservation extends Model
 {
+
+  use SoftDeletes; //reservation大事なのでソフトデリートする
+
   protected $fillable = [
     'venue_id',
     'user_id',
@@ -93,6 +98,14 @@ class Reservation extends Model
     );
   }
 
-
-
+  // bills 削除用
+  protected static function boot()
+  {
+    parent::boot();
+    static::deleting(function ($model) {
+      foreach ($model->bills()->get() as $child) {
+        $child->delete();
+      }
+    });
+  }
 }

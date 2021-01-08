@@ -37,6 +37,9 @@ class CreateBillsTable extends Migration
       $table->integer('sub_total');
       $table->integer('tax');
       $table->integer('total');
+      // ソフトデリート用
+      $table->softDeletes();
+
       $table->timestamps();
     });
   }

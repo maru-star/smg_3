@@ -612,6 +612,9 @@ class ReservationsController extends Controller
    */
   public function destroy($id)
   {
-    //
+    $reservation = Reservation::find($id);
+    $reservation->delete();
+
+    return redirect('admin/reservations');
   }
 }
