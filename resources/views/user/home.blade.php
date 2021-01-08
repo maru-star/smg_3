@@ -47,7 +47,6 @@
 
     <!-- 一覧　　------------------------------------------------ -->
 
-
     <ul class="nav nav-tabs">
       <li class="nav-item">
         <a href="#reserve-list" class="nav-link active" data-toggle="tab">予約一覧</a>
@@ -57,7 +56,123 @@
       </li>
     </ul>
 
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <td rowspan="4"></td>
+          <td rowspan="4"></td>
+          <td rowspan="4"></td>
+          <td rowspan="4"></td>
+          <td rowspan="4"></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td rowspan="4"></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+
+
+
     <div class="tab-content">
+      <div id="reserve-list" class="tab-pane active">
+        <div class="container-field">
+          <table class="table table-striped table-bordered table-box">
+            <thead>
+              <tr>
+                <th>予約<br>ID</th>
+                <th>利用日</th>
+                <th>入室</th>
+                <th>退室</th>
+                <th>利用会場</th>
+                <th width="120">予約状況</th>
+                <th width="120">カテゴリー</th>
+                <th>利用料金</th>
+                <th>支払期日</th>
+                <th>支払状況</th>
+                <th class="btn-cell">予約詳細</th>
+                <th class="btn-cell">請求書</th>
+                <th class="btn-cell">領収書</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>00000</td>
+                <td>2020/12/07(月)</td>
+                <td>9:00</td>
+                <td>18:00</td>
+                <td>四ツ橋・サンワールドビル22号室</td>
+                <td class="table_column">
+                  <p>予約完了</p>
+                  <p>予約確認中</p>
+                </td>
+                <td class="table_column">
+                  <p>会場</p>
+                  <p>追加請求</p>
+                </td>
+                <td class="table_column">
+                  <p>30,000<span>円</span></p>
+                  <p>5,000<span>円</span></p>
+                </td>
+                <td class="table_column">
+                  <p>2020/12/07(月)</p>
+                  <p>2020/12/07(月)</p>
+                </td>
+                <td class="table_column">
+                  <p>未払</p>
+                  <p>未払</p>
+                </td>
+                <td>
+                  <a class="more_btn" href="">詳細</a>
+                </td>
+                <td class="table_column">
+                  <p><a class="more_btn4" href="">詳細</a></p>
+                  <p><a class="more_btn4" href="">詳細</a></p>
+                </td>
+                <td class="table_column">
+                  <p><a class="more_btn4" href="">詳細</a></p>
+                  <p><a class="more_btn4" href="">詳細</a></p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+    {{-- <div class="tab-content">
       <div id="reserve-list" class="tab-pane active">
         <div class="container-field">
           <table class="table table-striped table-bordered table-box">
@@ -186,7 +301,7 @@
           </table>
         </div>
       </div>
-    </div>
+    </div> --}}
 
 
 

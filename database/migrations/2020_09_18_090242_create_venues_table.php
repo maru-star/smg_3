@@ -73,10 +73,10 @@ class CreateVenuesTable extends Migration
   public function down()
   {
     // 無効化
-    Schema::disableForeignKeyConstraints();
+    // Schema::disableForeignKeyConstraints();
 
     Schema::dropIfExists('venues');
     // 有効化
-    Schema::enableForeignKeyConstraints();
+    // Schema::enableForeignKeyConstraints();
   }
 }
