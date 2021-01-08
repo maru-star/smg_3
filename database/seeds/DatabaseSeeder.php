@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
       ServicesTableSeeder::class,
       AgentsTableSeeder::class,
       VenuesTableSeeder::class,
-      DatesTableSeeder::class,
+      // DatesTableSeeder::class,
 
     ]);
   }
