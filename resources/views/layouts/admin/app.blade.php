@@ -70,15 +70,29 @@
 </head>
 
 <body class="hold-transition sidebar-mini">
+
+
   <div class="wrapper">
     <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light d-flex justify-content-between">
       <!-- Left navbar links -->
-      <ul class="navbar-nav">
+      <ul class="navbar-nav d-block">
         <li class="nav-item">
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
       </ul>
+      <div>
+        {{-- ログアウト用 --}}
+        <a class="dropdown-item" href="{{ route('admin.logout') }}"
+          onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+          {{ __('Logout') }}
+        </a>
+        <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="">
+          @csrf
+        </form>
+        {{-- ログアウト用 --}}
+
+      </div>
     </nav>
 
     <!-- Main Sidebar Container -->
