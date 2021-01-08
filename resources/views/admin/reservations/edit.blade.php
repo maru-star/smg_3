@@ -55,7 +55,7 @@
         <tr>
           <td class="table-active">利用日</td>
           <td>
-            
+
             {{ Form::text('reserve_date', date("Y-m-d",strtotime($reservation->reserve_date)) ,['class'=>'form-control', 'id'=>'datepicker1', 'placeholder'=>'入力してください'] ) }}
           </td>
         </tr>
@@ -95,8 +95,8 @@
               <select name="enter_time" id="sales_start" class="form-control">
                 <option disabled>選択してください</option>
                 @for ($start = 0*2; $start <=23*2; $start++) <option
-                  value="{{date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))}}" 
-                  @if($reservation->enter_time==(date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))))
+                  value="{{date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))}}" @if($reservation->
+                  enter_time==(date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))))
                   selected
                   @endif
                   >
@@ -114,8 +114,8 @@
               <select name="leave_time" id="sales_finish" class="form-control">
                 <option disabled>選択してください</option>
                 @for ($start = 0*2; $start <=23*2; $start++) <option
-                  value="{{date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))}}" 
-                  @if($reservation->leave_time==(date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))))
+                  value="{{date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))}}" @if($reservation->
+                  leave_time==(date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))))
                   selected
                   @endif
                   >
@@ -128,10 +128,8 @@
         <tr>
           <td>案内板</td>
           <td>
-            <input type="radio" name="board_flag" value="0"
-              {{$reservation->board_flag==0?'checked':''}}>無し
-            <input type="radio" name="board_flag" value="1"
-              {{$reservation->board_flag==1?'checked':''}}>有り
+            <input type="radio" name="board_flag" value="0" {{$reservation->board_flag==0?'checked':''}}>無し
+            <input type="radio" name="board_flag" value="1" {{$reservation->board_flag==1?'checked':''}}>有り
           </td>
         </tr>
         <tr>
@@ -141,8 +139,8 @@
               <select name="event_start" id="event_start" class="form-control">
                 <option selected disabled>選択してください</option>
                 @for ($start = 0*2; $start <=23*2; $start++) <option
-                  value="{{date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))}}" 
-                  @if($reservation->event_start==(date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))))
+                  value="{{date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))}}" @if($reservation->
+                  event_start==(date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))))
                   selected
                   @endif
                   >
@@ -159,8 +157,8 @@
               <select name="event_finish" id="event_finish" class="form-control">
                 <option selected disabled>選択してください</option>
                 @for ($start = 0*2; $start <=23*2; $start++) <option
-                  value="{{date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))}}" 
-                  @if($reservation->event_finish==(date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))))
+                  value="{{date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))}}" @if($reservation->
+                  event_finish==(date("H:i:s", strtotime("00:00 +". $start * 30 ." minute"))))
                   selected
                   @endif
                   >
@@ -206,18 +204,18 @@
             @foreach ($reservation->venue->equipments as $key=>$equipment)
             <tr>
               <td>
-              {{$equipment->item}}
-            </td>
-            <td>
-              <input type="text" class="form-control" name="{{'equipments'.$key}}"
-              @foreach ($reservation->breakdowns as $breakdown)
-              @if ($breakdown->unit_item==$equipment->item)
-                  {{print "value='".$breakdown->unit_count."'"}}
-              @endif
-              @endforeach
-              >
-            </td>
-            </tr>    
+                {{$equipment->item}}
+              </td>
+              <td>
+                <input type="text" class="form-control" name="{{'equipments'.$key}}" @foreach ($reservation->breakdowns
+                as $breakdown)
+                @if ($breakdown->unit_item==$equipment->item)
+                {{print "value='".$breakdown->unit_count."'"}}
+                @endif
+                @endforeach
+                >
+              </td>
+            </tr>
             @endforeach
           </tbody>
         </table>
@@ -240,19 +238,19 @@
             @foreach ($reservation->venue->services as $key=>$service)
             <tr>
               <td>
-              {{$service->item}}
-            </td>
-            <td>
-              <input type='radio' value='0' name='{{'services'.$key}}' checked>無し
-              <input type='radio' value='1' name='{{'services'.$key}}'
-              @foreach ($reservation->breakdowns as $breakdown)
-              @if ($breakdown->unit_item==$service->item)
-              checked
-              @endif
-              @endforeach
-              >有り
-            </td>
-            </tr>    
+                {{$service->item}}
+              </td>
+              <td>
+                <input type='radio' value='0' name='{{'services'.$key}}' checked>無し
+                <input type='radio' value='1' name='{{'services'.$key}}' @foreach ($reservation->breakdowns as
+                $breakdown)
+                @if ($breakdown->unit_item==$service->item)
+                checked
+                @endif
+                @endforeach
+                >有り
+              </td>
+            </tr>
             @endforeach
           </tbody>
         </table>
@@ -270,8 +268,7 @@
               <td>レイアウト準備料金</td>
               <td>
                 <input type="radio" value="0" name="layout_prepare" checked>無し
-                <input type="radio" value="1" name="layout_prepare"
-                @foreach ($reservation->breakdowns as $breakdown)
+                <input type="radio" value="1" name="layout_prepare" @foreach ($reservation->breakdowns as $breakdown)
                 @if ($breakdown->unit_item=='レイアウト準備')
                 checked
                 @endif
@@ -283,8 +280,7 @@
               <td>レイアウト片付料金</td>
               <td>
                 <input type="radio" value="0" name="layout_clean">無し
-                <input type="radio" value="1" name="layout_clean"
-                @foreach ($reservation->breakdowns as $breakdown)
+                <input type="radio" value="1" name="layout_clean" @foreach ($reservation->breakdowns as $breakdown)
                 @if ($breakdown->unit_item=='レイアウト片付')
                 checked
                 @endif
@@ -304,6 +300,34 @@
             </tr>
           </thead>
           <tbody>
+            <tr class='luggage_input_price'>
+              <td>事前に預かる荷物<br>（個数）</td>
+              <td>
+                {{ Form::text('luggage_count', $reservation->luggage_count,['class'=>'form-control luggage_count', 'placeholder'=>'入力してください'] ) }}
+              </td>
+            </tr>
+            <tr class='luggage_input_price'>
+              <td>事前荷物の到着日<br>午前指定のみ</td>
+              <td>
+                {{ Form::text('luggage_arrive', isset($reservation->luggage_arrive)?date('Y-m-d',strtotime($reservation->luggage_arrive)):'',['class'=>'form-control luggage_arrive', 'placeholder'=>'入力してください'] ) }}
+              </td>
+            </tr>
+            <tr class='luggage_input_price'>
+              <td>事後返送する荷物</td>
+              <td>
+                {{ Form::text('luggage_return', $reservation->luggage_return,['class'=>'form-control luggage_return', 'placeholder'=>'入力してください'] ) }}
+              </td>
+            </tr>
+            <tr class='luggage_input_price'>
+              <td>荷物預かり/返送<br>料金</td>
+              <td>
+                @foreach ($reservation->breakdowns as $breakdown)
+                @if ($breakdown->unit_item=='荷物預かり/返送')
+                {{ Form::text('luggage_price', $breakdown->unit_cost,['class'=>'form-control luggage_price', 'placeholder'=>'入力してください'] ) }}
+                @endif
+                @endforeach
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -331,8 +355,7 @@
               <select class="form-control" name="user_id" id="user_select">
                 <option disabled selected>選択してください</option>
                 @foreach ($users as $user)
-                <option value="{{$user->id}}" 
-                  @if($reservation->user_id==$user->id)
+                <option value="{{$user->id}}" @if($reservation->user_id==$user->id)
                   selected
                   @endif
                   >{{$user->company}} | {{$user->first_name}}{{$user->last_name}} | {{$user->email}}</option>

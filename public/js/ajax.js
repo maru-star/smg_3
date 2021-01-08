@@ -248,7 +248,7 @@ $(function () {
   };
 
 
-  // 営業時間取得
+  // 新規予約時の入退室時間の制御
   // 管理者は24時間予約登録可能。そのため一旦、本機能停止
   function ajaxGetSalesHours($venue_id, $dates) {
     $.ajax({
@@ -692,7 +692,6 @@ $(function () {
     })
       .done(function ($luggage) {
         if ($luggage == 1) {
-          console.log('荷物', "ある");
           $('.luggage table tbody').html('');
           $('.luggage table tbody').append("<tr> <td>事前に預かる荷物<br>（個数）</td> <td class=''><input type='text' class='form-control luggage_count' placeholder='個数入力' name='luggage_count'></td> </tr> <tr> <td>事前荷物の到着日<br>午前指定のみ</td> <td class=''> <input id='datepicker3' type='text' class='form-control' placeholder='年-月-日' name='luggage_arrive'> </td> </tr> <tr> <td>事後返送する荷物</td> <td class=''><input type='text' class='form-control luggage_return' placeholder='個数入力' name='luggage_return'></td> </tr> <tr><td>荷物預かり/返送　料金</td><td class=''><input type='text' class='form-control luggage_price' placeholder='金額入力' name='luggage_price'></td></tr><script>$('#datepicker3').datepicker({ dateFormat: 'yy-mm-dd', minDate: 0, });</script>");
           // ***********マイナス、全角制御用

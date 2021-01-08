@@ -85,17 +85,17 @@ class ReservationsController extends Controller
    */
   public function getsaleshours(Request $request)
   {
-    $venue_id=$request->venue_id;
-    $dates=$request->dates;
+    $venue_id = $request->venue_id;
+    $dates = $request->dates;
 
-    $reject_targets=[];
-    $reservations=Reservation::where('reserve_date',$dates)->where('venue_id',$venue_id)->get();
+    $reject_targets = [];
+    $reservations = Reservation::where('reserve_date', $dates)->where('venue_id', $venue_id)->get();
     foreach ($reservations as $key => $value) {
       $f_start = Carbon::createFromTimeString($value->enter_time, 'Asia/Tokyo');
       $f_finish = Carbon::createFromTimeString($value->leave_time, 'Asia/Tokyo');
-      $diff = ($f_finish->diffInMinutes($f_start)/30);
-      for ($i=0; $i <=$diff ; $i++) { 
-        $reject_targets[]=date('H:i:s',strtotime($f_start."+ ".(30*$i)." min"));
+      $diff = ($f_finish->diffInMinutes($f_start) / 30);
+      for ($i = 0; $i <= $diff; $i++) {
+        $reject_targets[] = date('H:i:s', strtotime($f_start . "+ " . (30 * $i) . " min"));
       }
     }
     return [$reject_targets];
@@ -254,6 +254,7 @@ class ReservationsController extends Controller
     $reserve_date = $request->reserve_date;
     $venue_id = $request->venue_id;
     $venue = Venue::find($venue_id);
+    $price_system = $request->price_system;
     $enter_time = $request->enter_time;
     $leave_time = $request->leave_time;
     $board_flag = $request->board_flag;
@@ -335,6 +336,7 @@ class ReservationsController extends Controller
       'reserve_date' => $reserve_date,
       'venue_id' => $venue_id,
       'venue' => $venue,
+      'price_system' => $price_system,
       'enter_time' => $enter_time,
       'leave_time' => $leave_time,
       'board_flag' => $board_flag,
@@ -416,12 +418,12 @@ class ReservationsController extends Controller
     //   'bill_pay_limit' => 'required',
     // ]);
 
-    var_dump($request->v_breakdowns);
 
-    return DB::transaction(function () use ($request) { //トランザクションさせる
+    DB::transaction(function () use ($request) { //トランザクションさせる
       $reservation = new Reservation;
       $reservation->reserve_date = $request->reserve_date;
       $reservation->venue_id = $request->venue_id;
+      $reservation->price_system = $request->price_system;
       $reservation->enter_time = $request->enter_time;
       $reservation->leave_time = $request->leave_time;
       $reservation->board_flag = $request->board_flag;
@@ -456,15 +458,19 @@ class ReservationsController extends Controller
         'reservation_id' => $reservation->id,
 
         'venue_total' => $request->venue_total,
+        'venue_discount_percent' => $request->venue_discount_percent, //割引率
+        'venue_dicsount_number' => $request->venue_dicsount_number, //割引額
         'discount_venue_total' => $request->discount_venue_total,
 
         'equipment_total' => $request->selected_equipments_price,
         'service_total' => $request->selected_services_price,
         'luggage_total' => $request->selected_luggage_price,
         'equipment_service_total' => $request->selected_items_total,
+        'discount_item' => $request->discount_item, //割引額
         'discount_equipment_service_total' => $request->discount_equipment_service_total,
 
         'layout_total' => $request->layout_total,
+        'layout_discount' => $request->layout_discount, //割引額
         'after_duscount_layouts' => $request->after_duscount_layouts,
 
         'sub_total' => $request->sub_total,
@@ -506,6 +512,10 @@ class ReservationsController extends Controller
         }
       }
     });
+
+    // 戻って再度送信してもエラーになるように設定
+    $request->session()->regenerate();
+    return redirect()->route('admin.reservations.index');
   }
 
   /**
