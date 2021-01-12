@@ -18,15 +18,18 @@ class ReservationHelper
         return "予約確認中";
         break;
       case 2:
-        return "予約完了";
+        return "予約承認待ち";
         break;
       case 3:
-        return "キャンセル申請中";
+        return "予約完了";
         break;
       case 4:
-        return "キャンセル承認待ち";
+        return "キャンセル申請中";
         break;
       case 5:
+        return "キャンセル承認待ち";
+        break;
+      case 6:
         return "キャンセル";
         break;
     }
@@ -57,5 +60,28 @@ class ReservationHelper
   {
     $venue = Venue::find($venue_id);
     return [$venue->name_area, $venue->name_bldg, $venue->name_venue];
+  }
+
+  public static function judgePaid($num)
+  {
+    return $num == 0 ? '未払' : '支払済';
+  }
+
+  public static function priceSystem($num)
+  {
+    return $num == 1 ? '通常（枠貸）' : 'アクセア（時間貸）';
+  }
+
+  public static function getTax($num)
+  {
+    return floor($num * 0.1);
+  }
+
+  public static function taxAndPrice($num)
+  {
+    $tax = 0;
+    $tax = floor($num * 0.1);
+    $result = floor($num + $tax);
+    return $result;
   }
 }

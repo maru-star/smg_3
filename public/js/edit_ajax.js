@@ -416,7 +416,7 @@ function ajaxGetItemsDetails($venue_id, $equipemnts, $services) {
           $('.items_equipments table tbody').append("<tr class='luggage_input_price'><td>" + '荷物預かり/返送' + "</td><td>" + luggage_target + "</td><td>" + '1' + "</td><td>" + luggage_target + "</td></tr>");
         }
       } else {
-        $('.luggage_input_price').remove();
+        // $('.luggage_input_price').remove();
       }
       $('.selected_equipments_price').text($each[0][3]);
       $('.selected_equipments_price').val($each[0][3]);

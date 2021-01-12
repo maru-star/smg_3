@@ -31,7 +31,9 @@ Route::namespace('User')->prefix('user')->name('user.')->group(function () {
   Auth::routes(['register' => false, 'confirm'  => true, 'reset'    => true,]);
   Route::get('preusers/register', 'Auth\RegisterController@showRegistrationForm')->name('register')->middleware('check_status');
   Route::post('preusers/register', 'Auth\RegisterController@register')->name('preusers.show');
-  Route::get('/home', 'HomeController@index')->name('home');
+  // Route::get('/home', 'HomeController@index')->name('home');
+  Route::resource('home', 'HomeController');
+  Route::put('home/{home}/update_status', 'HomeController@updateReservationStatus')->name('home.updatestatus');
 });
 
 

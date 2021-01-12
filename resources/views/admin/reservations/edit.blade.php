@@ -321,11 +321,15 @@
             <tr class='luggage_input_price'>
               <td>荷物預かり/返送<br>料金</td>
               <td>
-                @foreach ($reservation->breakdowns as $breakdown)
+                {{ Form::text('luggage_price', '',['class'=>'form-control luggage_price', 'placeholder'=>'入力してください'] ) }}
+
+                {{-- @foreach ($reservation->breakdowns as $breakdown)
                 @if ($breakdown->unit_item=='荷物預かり/返送')
                 {{ Form::text('luggage_price', $breakdown->unit_cost,['class'=>'form-control luggage_price', 'placeholder'=>'入力してください'] ) }}
+                @else
+                {{ Form::text('luggage_price', '',['class'=>'form-control luggage_price', 'placeholder'=>'入力してください'] ) }}
                 @endif
-                @endforeach
+                @endforeach --}}
               </td>
             </tr>
           </tbody>

@@ -146,6 +146,10 @@ table.dataTable thead .sorting_desc:after {
   background: pink;
 }
 
+.hide{
+  display: none;
+}
+
 
 /****************************
 //////////////////
