@@ -557,11 +557,7 @@ class ReservationsController extends Controller
         'double_check_status' => 2
       ]);
     }
-
     return redirect('admin/reservations/' . $id);
-
-
-    // return view('admin.reservations.show', []);
   }
 
   public function generate_pdf($id)
@@ -572,6 +568,16 @@ class ReservationsController extends Controller
       'reservation' => $reservation
     ])->setPaper('a4', 'landscape');
     return $pdf->stream();
+  }
+
+  public function send_email_and_approve(Request $request)
+  {
+    var_dump($request->all());
+    // $reservation = $request->reservation_id;
+    // $token = $request->token;
+    // $email = $request->email;
+    // Mail::to($email)->send(new SendPreuser($id, $token));
+    // return redirect(route('user.preusers.complete', ['email' => $email]));
   }
 
   /**

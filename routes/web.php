@@ -102,5 +102,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('bills', 'BillsController');
     // Breakdown　Billに紐づく
     Route::resource('breakdowns', 'BreakdownsController');
+
+    Route::post('reservations/{reservation}/send_email_and_approve', 'ReservationsController@send_email_and_approve')->name('reservations.send_email_and_approve');
   });
 });

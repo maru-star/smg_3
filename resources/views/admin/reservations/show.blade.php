@@ -119,7 +119,15 @@
       <!-- 承認確認ボタン-ダブルチェック後に表示------ -->
       <div class="row justify-content-end mt-5">
         <div class="d-flex col-2 justify-content-around">
-          <p class="text-right"><a class="more_btn" href="">承認</a></p>
+          <p class="text-right">
+            {{-- 予約ステータスを2にして、ユーザーにメール送付 --}}
+            {{-- <a class="more_btn" href="">承認</a> --}}
+            {{ Form::open(['url' => 'admin/reservations/'.$reservation->id.'/send_email_and_approve', 'method'=>'POST', 'class'=>'']) }}
+            @csrf
+            {{ Form::submit('承認',['class' => 'btn more_btn']) }}
+            {{ Form::close() }}
+
+          </p>
           <p class="text-right"><a class="more_btn4" href="">確定</a></p>
         </div>
       </div>
