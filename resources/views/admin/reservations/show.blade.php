@@ -32,8 +32,12 @@
     </div>
     @endif
 
+    @if ($reservation->reservation_status==3)
     <!-- 請求書の追加ボタン-ステータス：予約完了で表示----- -->
-    {{-- <p class="text-right"><a class="more_btn3" href="">追加の請求書を作成する</a></p> --}}
+    <p class="text-right">
+      <a class="more_btn3" href="">追加の請求書を作成する</a></p>
+    @endif
+
   </div>
   <div class="col-12 btn-wrapper2">
     <!-- 請求書の追加ボタン-ステータス：予約完了で表示----- -->
