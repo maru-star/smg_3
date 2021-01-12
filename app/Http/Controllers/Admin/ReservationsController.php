@@ -17,6 +17,10 @@ use Illuminate\Support\Facades\DB; //トランザクション用
 
 use PDF;
 
+use App\Mail\SendUserAprove;
+use Illuminate\Support\Facades\Mail;
+
+
 
 
 class ReservationsController extends Controller
@@ -572,13 +576,22 @@ class ReservationsController extends Controller
 
   public function send_email_and_approve(Request $request)
   {
-    var_dump($request->all());
-    // $reservation = $request->reservation_id;
-    // $token = $request->token;
-    // $email = $request->email;
-    // Mail::to($email)->send(new SendPreuser($id, $token));
-    // return redirect(route('user.preusers.complete', ['email' => $email]));
+    try {
+      $reservation_id = $request->reservation_id;
+      $reservation = Reservation::find($reservation_id);
+      $reservation->reservation_status = 2; //固定で２
+      $reservation->save();
+    } catch (Exception $e) {
+      report($e);
+      return false;
+    }
+    $user = User::find($request->user_id);
+    $email = $user->email;
+    // 管理者側のメール本文等は未定
+    Mail::to($email)->send(new SendUserAprove($reservation_id));
+    return redirect()->route('admin.reservations.index');
   }
+
 
   /**
    * Show the form for editing the specified resource.

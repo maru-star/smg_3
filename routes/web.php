@@ -14,7 +14,9 @@ Route::namespace('User')->prefix('user')->name('user.')->group(function () {
   // ログイン認証後
   Route::middleware('verified')->group(function () {
     // TOPページ
-    Route::resource('home', 'HomeController', ['only' => 'index']);
+    Route::resource('home', 'HomeController');
+    Route::put('home/{home}/update_status', 'HomeController@updateReservationStatus')->name('home.updatestatus');
+    Route::get('home/generate_invoice/{home}', 'HomeController@generate_invoice')->name('home.generate_invoice');
   });
 
   // メール入力フォーム
@@ -32,8 +34,8 @@ Route::namespace('User')->prefix('user')->name('user.')->group(function () {
   Route::get('preusers/register', 'Auth\RegisterController@showRegistrationForm')->name('register')->middleware('check_status');
   Route::post('preusers/register', 'Auth\RegisterController@register')->name('preusers.show');
   // Route::get('/home', 'HomeController@index')->name('home');
-  Route::resource('home', 'HomeController');
-  Route::put('home/{home}/update_status', 'HomeController@updateReservationStatus')->name('home.updatestatus');
+  // Route::resource('home', 'HomeController');
+  // Route::put('home/{home}/update_status', 'HomeController@updateReservationStatus')->name('home.updatestatus');
 });
 
 
@@ -97,6 +99,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
     Route::post('clients/getclients', 'ClientsController@getclients');
     //予約に対するダブルチェック
     Route::post('reservations/{reservation}/double_check', 'ReservationsController@doublecheck')->name('reservations.double_check');
+
     Route::get('reservations/generate_pdf/{reservation}', 'ReservationsController@generate_pdf')->name('reservations.generate_pdf');
     // Bill　予約に紐づく
     Route::resource('bills', 'BillsController');

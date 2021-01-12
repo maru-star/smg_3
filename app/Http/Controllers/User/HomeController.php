@@ -9,6 +9,11 @@ use App\Models\User;
 use App\Models\Venue;
 use App\Models\Reservation;
 
+use Illuminate\Support\Facades\Auth;
+
+use PDF;
+
+
 
 class HomeController extends Controller
 {
@@ -31,12 +36,16 @@ class HomeController extends Controller
   public function show($id)
   {
     $reservation = Reservation::find($id);
-    $venue = Venue::find($reservation->venue_id);
+    if (Auth::id() == $reservation->user_id) {
+      $venue = Venue::find($reservation->venue_id);
 
-    return view('user.home.show', [
-      'reservation' => $reservation,
-      'venue' => $venue,
-    ]);
+      return view('user.home.show', [
+        'reservation' => $reservation,
+        'venue' => $venue,
+      ]);
+    } else {
+      return redirect('user/login');
+    }
   }
 
   public function updateReservationStatus(Request $request, $id)
@@ -46,5 +55,21 @@ class HomeController extends Controller
     $reservation->save();
     $request->session()->regenerate();
     return redirect()->route('user.home.index');
+  }
+
+  public function generate_invoice($id)
+  {
+
+    $reservation = Reservation::find($id);
+    if (Auth::id() == $reservation->user_id) {
+      $user = User::find($reservation->user_id);
+      $pdf = PDF::loadView('admin/reservations/generate_invoice', [
+        'reservation' => $reservation,
+        'user' => $user
+      ])->setPaper('a4');
+      return $pdf->stream();
+    } else {
+      return redirect('user/login');
+    }
   }
 }

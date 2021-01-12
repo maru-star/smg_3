@@ -5,7 +5,6 @@
 <script src="{{ asset('/js/ajax.js') }}"></script> --}}
 
 
-{{$reservation}}
 
 <div class="content">
   <div class="container-fluid">
@@ -359,15 +358,23 @@
             <!-- 請求内容----------- -->
 
             <!-- 請求書情報-------- -->
-            {{-- <div class="bill-ttl mb-5">
+            {{-- ステータス３は予約完了 --}}
+            @if ($reservation->reservation_status>=3)
+            <div class="bill-ttl mb-5">
               <div class="section-ttl-box d-flex align-items-center">
                 <div class="col-6">
                   <h3 class="">請求情報</h3>
                 </div>
                 <div class="col-6 d-flex justify-content-end">
-                  <p class="text-right"><a class="more_btn" href="">請求書をみる</a></p>
+                  <p class="text-right">
+                    {{-- <a class="more_btn" href="{{url('user.home.generate_invoice')}}">請求書をみる</a> --}}
+                    <a href="{{ url('user/home/generate_invoice/'.$reservation->id) }}" class="more_btn">請求書を見る</a>
+
+                  </p>
+                  @if ($reservation->paid==1)
                   <!-- ステータスが入金確認後に表示------ -->
                   <p class="text-right ml-3"><a class="more_btn" href="">領収書をみる</a></p>
+                  @endif
                 </div>
               </div>
               <!-- 請求書情報--予約完了後に表示------ -->
@@ -385,8 +392,8 @@
                   <dd>2020/12/10(木)</dd>
                 </div>
               </dl>
-
-            </div> --}}
+            </div>
+            @endif
             <!-- 請求書情報 終わり---------------------------- -->
 
 
@@ -1096,7 +1103,8 @@
         {{-- <a href="" class="more_btn4_lg">予約を承認する</a> --}}
         {{ Form::model($reservation, ['method'=>'PUT', 'route'=> ['user.home.updatestatus',$reservation->id],'class'=>"text-center"])}}
         @csrf
-        {{ Form::hidden('update_status',3) }}
+        {{ Form::hidden('update_status',3,) }}
+
         {{ Form::submit('予約を承認する',['class' => 'btn more_btn4_lg']) }}
         {{ Form::close() }}
       </p>

@@ -124,6 +124,8 @@
             {{-- <a class="more_btn" href="">承認</a> --}}
             {{ Form::open(['url' => 'admin/reservations/'.$reservation->id.'/send_email_and_approve', 'method'=>'POST', 'class'=>'']) }}
             @csrf
+            {{ Form::hidden('reservation_id', $reservation->id ) }}
+            {{ Form::hidden('user_id', $reservation->user_id ) }}
             {{ Form::submit('承認',['class' => 'btn more_btn']) }}
             {{ Form::close() }}
 
