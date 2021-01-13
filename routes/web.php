@@ -3,6 +3,15 @@
 Route::get('/', function () {
   return view('index');
 });
+// Route::get('/calender/date_calendar', function () {
+//   return view('calendar.date_calendar');
+// });
+Route::get('calender/date_calendar', 'CalendarsController@index');
+Route::get('calender/venue_calendar', 'CalendarsController@venue_calendar');
+
+// Route::get('/calender/venue_calendar', function () {
+//   return view('calendar.venue_calendar');
+// });
 
 /*
 |--------------------------------------------------------------------------
