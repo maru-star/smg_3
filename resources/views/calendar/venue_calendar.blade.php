@@ -4,12 +4,14 @@
 
 <link href="{{ asset('/css/template.css') }}" rel="stylesheet">
 
-
+@foreach ($days as $key=>$day)
 @foreach ($find_venues as $find_venue)
-日付：{{$find_venue->reserve_date}}<br>
-入室：{{date('Y-m-d',strtotime($find_venue->reserve_date)).' '.$find_venue->enter_time}}<br>
-退室：{{date('Y-m-d',strtotime($find_venue->reserve_date)).' '.$find_venue->leave_time}}<br>
+@if ($find_venue->reserve_date==$day)
+{{Form::text('start', date('Y-m-d',strtotime($find_venue->reserve_date)).' '.$find_venue->enter_time,['id'=>date('Y-m-d',strtotime($day)).'start'])}}
+{{Form::text('finish', date('Y-m-d',strtotime($find_venue->reserve_date)).' '.$find_venue->leave_time,['id'=>date('Y-m-d',strtotime($day)).'finish'])}}
 <br><br>
+@endif
+@endforeach
 @endforeach
 
 
@@ -65,8 +67,8 @@
     </thead>
     <tbody>
       @foreach ($days as $key=>$day)
-      @foreach ($find_venues as $find_venue)
-      @if ($find_venue->reserve_date==$day)
+      {{-- @foreach ($find_venues as $find_venue)
+      @if ($find_venue->reserve_date==$day) --}}
       <tr class="calender-data">
         <td class="field-title">{{ReservationHelper::formatDate($day)}}</td>
         <td class="{{date('Y-m-d',strtotime($day))}}cal100 calhalf"></td>
@@ -97,15 +99,15 @@
         <td class="{{date('Y-m-d',strtotime($day))}}cal2230"></td>
         <td class="{{date('Y-m-d',strtotime($day))}}cal230 calhalf"></td>
         <td class="{{date('Y-m-d',strtotime($day))}}cal2330"></td>
-        <td>
-          {{Form::text('start', date("Hi",strtotime($find_venue->enter_time)),['id'=>date('Y-m-d',strtotime($day)).'start'])}}
+        {{-- <td>
+          {{Form::text('start', date('Y-m-d',strtotime($find_venue->reserve_date)).' '.$find_venue->enter_time,['id'=>date('Y-m-d',strtotime($day)).'start'])}}
         </td>
         <td>
-          {{Form::text('finish', date("Hi",strtotime($find_venue->leave_time)),['id'=>date('Y-m-d',strtotime($day)).'finish'])}}
-        </td>
+          {{Form::text('finish', date('Y-m-d',strtotime($find_venue->reserve_date)).' '.$find_venue->leave_time,['id'=>date('Y-m-d',strtotime($day)).'finish'])}}
+        </td> --}}
       </tr>
-      @endif
-      @endforeach
+      {{-- @endif
+      @endforeach --}}
       @endforeach
     </tbody>
   </table>
@@ -113,6 +115,19 @@
 
 <script>
   $(function(){
+    var name = $('input[name="start"]');
+    for (let nums = 0; nums < name.length; nums++) {
+      //５回
+      console.log($('input[name="start"]').eq(nums));
+      console.log($('input[name="finish"]').eq(nums));
+      
+      var start=$('input[name="start"]').eq(nums);
+      var finish = $('input[name="finish"]').eq(nums);
+
+    }
+
+
+
     var ds= new Date('2021-01-20 11:30:00');
     ds.setMinutes(ds.getMinutes() - (30));
     var df= new Date('2021-01-20 16:00:00');
@@ -125,7 +140,7 @@
       ds.setMinutes(ds.getMinutes() + (30));
       var result=String(ds.getHours())+String(ds.getMinutes());
       $('.2021-01-20cal'+ result).addClass('bg-reserve');
-      console.log(result);
+      // console.log(result);
     }
 
 
