@@ -7,9 +7,10 @@
 @foreach ($days as $key=>$day)
 @foreach ($find_venues as $find_venue)
 @if ($find_venue->reserve_date==$day)
-{{Form::text('start', date('Y-m-d',strtotime($find_venue->reserve_date)).' '.$find_venue->enter_time,['id'=>date('Y-m-d',strtotime($day)).'start'])}}
-{{Form::text('finish', date('Y-m-d',strtotime($find_venue->reserve_date)).' '.$find_venue->leave_time,['id'=>date('Y-m-d',strtotime($day)).'finish'])}}
-<br><br>
+{{Form::hidden('start', date('Y-m-d',strtotime($find_venue->reserve_date)).' '.$find_venue->enter_time,['id'=>date('Y-m-d',strtotime($day)).'start'])}}
+{{Form::hidden('finish', date('Y-m-d',strtotime($find_venue->reserve_date)).' '.$find_venue->leave_time,['id'=>date('Y-m-d',strtotime($day)).'finish'])}}
+{{Form::hidden('date', date('Y-m-d',strtotime($find_venue->reserve_date)))}}
+{{Form::hidden('status', $find_venue->reservation_status)}}
 @endif
 @endforeach
 @endforeach
@@ -117,50 +118,32 @@
   $(function(){
     var name = $('input[name="start"]');
     for (let nums = 0; nums < name.length; nums++) {
-      //５回
-      console.log($('input[name="start"]').eq(nums));
-      console.log($('input[name="finish"]').eq(nums));
       
-      var start=$('input[name="start"]').eq(nums);
-      var finish = $('input[name="finish"]').eq(nums);
+      var start=$('input[name="start"]').eq(nums).val();
+      var finish = $('input[name="finish"]').eq(nums).val();
+      var s_date = $('input[name="date"]').eq(nums).val();
+      var status = $('input[name="status"]').eq(nums).val();
+
+      var ds= new Date(start);
+      ds.setMinutes(ds.getMinutes() - (30));
+      var df= new Date(finish);
+      var diffTime = df.getTime() - ds.getTime();
+      var diffTime = Math.floor(diffTime / (1000 * 60  ));
+      var target=diffTime/30;
+
+      var times=[];
+      for (let index = 0; index < target-1; index++) {
+        ds.setMinutes(ds.getMinutes() + (30));
+        var result=String(ds.getHours())+String(ds.getMinutes());
+        if (status==3) {
+          $("."+s_date+"cal"+ result).addClass('bg-reserve');
+        }else if(status<3){
+          $("."+s_date+"cal"+ result).addClass('bg-prereserve');
+        }
+      }
 
     }
 
-
-
-    var ds= new Date('2021-01-20 11:30:00');
-    ds.setMinutes(ds.getMinutes() - (30));
-    var df= new Date('2021-01-20 16:00:00');
-    var diffTime = df.getTime() - ds.getTime();
-    var diffTime = Math.floor(diffTime / (1000 * 60  ));
-    var target=diffTime/30;
-
-    var times=[];
-    for (let index = 0; index < target-1; index++) {
-      ds.setMinutes(ds.getMinutes() + (30));
-      var result=String(ds.getHours())+String(ds.getMinutes());
-      $('.2021-01-20cal'+ result).addClass('bg-reserve');
-      // console.log(result);
-    }
-
-
-  //   var name = $('input[name="start"]');
-  //   for (let index = 0; index < name.length; index++) {
-  //     console.log($(name[index]));
-  //     // var start = $('#2021-01-14start').val();
-  //     // var finish = $('#2021-01-14finish').val();
-
-  //   }
-
-
-  // var between=[];
-  // for(var i=start; i<=finish; i++) {
-  //   between.push(i);
-  // }
-  
-  // $.each(between, function(index, value){
-  //   $('.2021-01-14cal'+ value).addClass('bg-reserve');
-  // })
 })
 
 </script>
