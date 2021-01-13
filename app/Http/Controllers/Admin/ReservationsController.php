@@ -580,6 +580,7 @@ class ReservationsController extends Controller
       $reservation_id = $request->reservation_id;
       $reservation = Reservation::find($reservation_id);
       $reservation->reservation_status = 2; //固定で２
+      $reservation->approve_send_at = date('Y-m-d H:i:s');
       $reservation->save();
     } catch (Exception $e) {
       report($e);
