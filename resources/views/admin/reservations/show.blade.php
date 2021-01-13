@@ -133,7 +133,15 @@
             {{ Form::submit('承認',['class' => 'btn more_btn']) }}
             {{ Form::close() }}
           </p>
-          <p class="text-right"><a class="more_btn4" href="">確定</a></p>
+          <p class="text-right">
+            {{-- <a class="more_btn4" href="">確定</a> --}}
+            {{ Form::open(['url' => 'admin/reservations/'.$reservation->id.'/confirm_reservation', 'method'=>'POST', 'class'=>'']) }}
+            @csrf
+            {{ Form::hidden('reservation_id', $reservation->id ) }}
+            {{ Form::hidden('user_id', $reservation->user_id ) }}
+            {{ Form::submit('確定',['class' => 'btn more_btn4']) }}
+            {{ Form::close() }}
+          </p>
         </div>
     </div>
 

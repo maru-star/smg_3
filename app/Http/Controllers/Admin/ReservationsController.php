@@ -593,6 +593,16 @@ class ReservationsController extends Controller
     return redirect()->route('admin.reservations.index');
   }
 
+  public function confirm_reservation(Request $request)
+  {
+    $reservation_id = $request->reservation_id;
+    $reservation = Reservation::find($reservation_id);
+    $reservation->reservation_status = 3; //固定で２
+    $reservation->approve_send_at = date('Y-m-d H:i:s');
+    $reservation->save();
+    return redirect()->route('admin.reservations.index');
+  }
+
 
   /**
    * Show the form for editing the specified resource.
