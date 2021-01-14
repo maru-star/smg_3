@@ -119,6 +119,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
     // Route::get('calendar/venue_calendar', function () {
     //   return view('admin.calendar.venue_calendar');
     // });
-    Route::get('calendar/venue_calendar', 'CalendarsController@venue_calendar');
+    Route::get('calendar/venue_calendar', 'CalendarsController@index');
+    Route::post('calendar/venue_calendar', 'CalendarsController@getData');
   });
 });

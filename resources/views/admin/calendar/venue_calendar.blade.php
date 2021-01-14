@@ -23,7 +23,7 @@
 {{Form::hidden('date', date('Y-m-d',strtotime($find_venue->reserve_date)))}}
 {{Form::hidden('status', $find_venue->reservation_status)}}
 {{Form::hidden('company', ReservationHelper::getCompany($find_venue->user_id))}}
-{{Form::text('reservation_id', $find_venue->id)}}
+{{Form::hidden('reservation_id', $find_venue->id)}}
 @endif
 @endforeach
 @endforeach
@@ -32,15 +32,34 @@
 <div class="calender-wrap">
 
   <div class="calender-ttl">
-    {{ Form::open(['url' => 'calender/venue_calendar', 'method' => 'get']) }}
+    {{ Form::open(['url' => '/admin/calendar/venue_calendar', 'method' => 'post']) }}
     @csrf
     <select name="venue_id" id="venue_id">
       @foreach ($venues as $venue)
-      <option value="{{$venue->id}}" @if ($venue->id==$selected_venue)
+      <option value="{{$venue->id}}" 
+        @if ($venue->id==$selected_venue)
         selected
         @endif
         >{{$venue->name_area}}{{$venue->name_bldg}}{{$venue->name_venue}}</option>
       @endforeach
+    </select>
+    <select name="selected_year" id="selected_year">
+      @for ($i = 2021; $i < 2031; $i++) 
+      <option value="{{$i}}"
+      @if ($selected_year==$i)
+          selected
+      @endif
+      >{{$i}}</option>
+        @endfor
+    </select>
+    <select name="selected_month" id="selected_month">
+      @for ($ii = 1; $ii <= 12; $ii++) 
+      <option value="{{$ii}}"
+      @if ($selected_month==$ii)
+      selected
+      @endif
+      >{{$ii}}月</option>
+        @endfor
     </select>
     {{Form::submit('確認する')}}
     {{ Form::close() }}
