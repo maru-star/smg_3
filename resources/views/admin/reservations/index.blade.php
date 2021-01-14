@@ -326,7 +326,7 @@
             <td>
               {{$venue->find($reservation->venue_id)->name_area}}{{$venue->find($reservation->venue_id)->name_bldg}}{{$venue->find($reservation->venue_id)->name_venue}}
             </td>
-            <td>{{$user->find($reservation->venue_id)->company}}</td>
+            <td>{{$user->find($reservation->user_id)->company}}</td>
             <td>{{$user->find($reservation->venue_id)->first_name}}{{$user->find($reservation->venue_id)->last_name}}
             </td>
             <td>{{$user->find($reservation->venue_id)->mobile}}</td>

@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 use App\Models\Venue;
 use App\Models\Reservation;
@@ -34,7 +35,7 @@ class CalendarsController extends Controller
     $find_venues = $reservations->where('venue_id', $selected_venue);
 
 
-    return view('calendar.venue_calendar', [
+    return view('admin.calendar.venue_calendar', [
       'days' => $days,
       'venues' => $venues,
       'selected_venue' => $selected_venue,

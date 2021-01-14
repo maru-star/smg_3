@@ -23,6 +23,7 @@
 
         link_check('/admin/reservations','reservations-index');
         link_check('/admin/reservations/create','reservations-create');
+        link_check('/admin/calendar/venue_calendar','venue_calendar');
    });
 
 </script>
@@ -72,7 +73,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{url('admin/calendar/venue_calendar')}}" class="nav-link venue_calendar">
               <i class="far fa-circle nav-icon ml-4"></i>
               <p>会場別</p>
             </a>

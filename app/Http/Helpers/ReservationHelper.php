@@ -3,6 +3,7 @@
 namespace App\Http\Helpers;
 
 use App\Models\Venue;
+use App\Models\User;
 
 
 class ReservationHelper
@@ -60,6 +61,12 @@ class ReservationHelper
   {
     $venue = Venue::find($venue_id);
     return [$venue->name_area, $venue->name_bldg, $venue->name_venue];
+  }
+
+  public static function getCompany($user_id)
+  {
+    $user = User::find($user_id);
+    return $user->company;
   }
 
   public static function judgePaid($num)

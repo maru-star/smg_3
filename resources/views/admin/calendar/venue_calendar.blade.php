@@ -1,6 +1,17 @@
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.5.0.min.js"></script>
+@extends('layouts.admin.app')
+
+@section('content')
+
+
+
+
+
+
+
+
+
+
+
 
 <link href="{{ asset('/css/template.css') }}" rel="stylesheet">
 
@@ -12,7 +23,7 @@
 {{Form::hidden('date', date('Y-m-d',strtotime($find_venue->reserve_date)))}}
 {{Form::hidden('status', $find_venue->reservation_status)}}
 {{Form::hidden('company', ReservationHelper::getCompany($find_venue->user_id))}}
-{{Form::hidden('reservation_id', $find_venue->id)}}
+{{Form::text('reservation_id', $find_venue->id)}}
 @endif
 @endforeach
 @endforeach
@@ -109,6 +120,11 @@
   .gray {
     background: gray;
   }
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
 </style>
 <script>
   $(function(){
@@ -120,6 +136,7 @@
       var s_date = $('input[name="date"]').eq(nums).val();
       var status = $('input[name="status"]').eq(nums).val();
       var company = $('input[name="company"]').eq(nums).val();
+      var reservation_id = $('input[name="reservation_id"]').eq(nums).val();
 
       var ds= new Date(start);
       ds.setMinutes(ds.getMinutes() - (60));
@@ -137,6 +154,9 @@
             // 始めに灰色
             $("."+s_date+"cal"+ result).addClass('gray');
           }
+          if ($("."+s_date+"cal"+ result).prev().hasClass('gray')) {
+            $("."+s_date+"cal"+ result).html("<a href='/admin/reservations/"+reservation_id+"'>"+company+"</a>");
+          }
         }else if(status<3){
           $("."+s_date+"cal"+ result).addClass('bg-prereserve');
         }
@@ -147,3 +167,4 @@
 })
 
 </script>
+@endsection
