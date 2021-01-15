@@ -113,6 +113,10 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
     Route::post('reservations/{reservation}/send_email_and_approve', 'ReservationsController@send_email_and_approve')->name('reservations.send_email_and_approve');
 
     Route::post('reservations/{reservation}/confirm_reservation', 'ReservationsController@confirm_reservation')->name('reservations.confirm_reservation');
+
+    Route::get('reservations/{reservation}/add_bill', 'ReservationsController@confirm_reservation')->name('reservations.confirm_reservation');
+
+
     // 管理者用カレンダーページ
     Route::get('calendar/venue_calendar', 'CalendarsController@index');
     Route::post('calendar/venue_calendar', 'CalendarsController@getData');

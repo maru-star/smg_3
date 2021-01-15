@@ -10,16 +10,11 @@ use App\Models\Venue;
 use App\Models\User;
 use App\Models\Bill;
 use App\Models\Breakdown;
-
 use Carbon\Carbon;
-
 use Illuminate\Support\Facades\DB; //トランザクション用
-
 use PDF;
-
 use App\Mail\SendUserAprove;
 use Illuminate\Support\Facades\Mail;
-
 
 
 
@@ -572,7 +567,6 @@ class ReservationsController extends Controller
 
   public function send_email_and_approve(Request $request)
   {
-
     DB::transaction(function () use ($request) { //トランザクションさせる
       $reservation_id = $request->reservation_id;
       $reservation = Reservation::find($reservation_id);
@@ -587,11 +581,11 @@ class ReservationsController extends Controller
 
   public function confirm_reservation(Request $request)
   {
-    $reservation_id = $request->reservation_id;
-    $reservation = Reservation::find($reservation_id);
-    // $reservation->reservation_status = 3; //固定で２
-    // $reservation->approve_send_at = date('Y-m-d H:i:s');
-    $reservation->save();
+    DB::transaction(function () use ($request) { //トランザクションさせる
+      $reservation_id = $request->reservation_id;
+      $reservation = Reservation::find($reservation_id);
+      $reservation->bills()->first()->update(['reservation_status' => 3, 'approve_send_at' => date('Y-m-d H:i:s')]); //固定で3
+    });
     return redirect()->route('admin.reservations.index');
   }
 

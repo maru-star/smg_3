@@ -45,6 +45,8 @@ class CreateBillsTable extends Migration
       $table->string('double_check2_name')->nullable(); //ダブルチェック一人目
       $table->datetime('approve_send_at')->nullable(); //ダブルチェック後の承認メールにてユーザーにメールが送付される
 
+      $table->string('category');
+
 
       // ソフトデリート用
       $table->softDeletes();
