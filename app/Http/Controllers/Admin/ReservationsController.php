@@ -576,20 +576,18 @@ class ReservationsController extends Controller
 
   public function send_email_and_approve(Request $request)
   {
-    try {
+
+    DB::transaction(function () use ($request) { //トランザクションさせる
       $reservation_id = $request->reservation_id;
       $reservation = Reservation::find($reservation_id);
       $reservation->reservation_status = 2; //固定で２
       $reservation->approve_send_at = date('Y-m-d H:i:s');
       $reservation->save();
-    } catch (Exception $e) {
-      report($e);
-      return false;
-    }
-    $user = User::find($request->user_id);
-    $email = $user->email;
-    // 管理者側のメール本文等は未定
-    Mail::to($email)->send(new SendUserAprove($reservation_id));
+      $user = User::find($request->user_id);
+      $email = $user->email;
+      // 管理者側のメール本文等は未定
+      Mail::to($email)->send(new SendUserAprove($reservation_id));
+    });
     return redirect()->route('admin.reservations.index');
   }
 

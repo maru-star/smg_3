@@ -7,7 +7,8 @@
   マイページにログイン頂き、請求書をご確認の上、ご対応をお願いいたします。<br>
   <br>
   ＜マイページＵＲＬ＞<br>
-  <a href="{{'http://127.0.0.1:8000/user/home/'.$reservation_id}}">請求書を確認する</a>
+  {{-- <a href="{{'http://127.0.0.1:8000/user/home/'.$reservation_id}}">請求書を確認する</a> --}}
+  <a href="{{request()->server->get('SERVER_ADDR').'user/home/'.$reservation_id}}">請求書を確認する</a>
   <br>
   ※ＰＤＦにて印刷をお願いいたします。<br>
   ※請求書のご郵送は対応致し兼ねますので、予めご了承をお願いいたします。<br>
