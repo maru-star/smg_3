@@ -65,7 +65,6 @@ class HomeController extends Controller
 
   public function generate_invoice($id)
   {
-
     $reservation = Reservation::find($id);
     if (Auth::id() == $reservation->user_id) {
       $user = User::find($reservation->user_id);
