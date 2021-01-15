@@ -41,11 +41,11 @@ class CreateReservationsTable extends Migration
       $table->text('admin_details')->nullable();
 
       $table->date('payment_limit'); //該当予約の支払い期日
-      $table->string('paid'); //支払い状況、未入金か？入金済みか？　デフォルトは0で未入金
-      $table->integer('reservation_status'); //予約状況　0:仮抑え　1:予約確認中　2予約承認待ち　3:予約完了　4:キャンセル申請中　5:キャンセル承認待ち　6:キャンセル
-      $table->integer('double_check_status'); //ダブルチェックのフラグ 0:未　1:一人済　2:二人済
-      $table->string('double_check1_name')->nullable(); //ダブルチェック一人目
-      $table->string('double_check2_name')->nullable(); //ダブルチェック一人目
+      // $table->string('paid'); //支払い状況、未入金か？入金済みか？　デフォルトは0で未入金
+      // $table->integer('reservation_status'); //予約状況　0:仮抑え　1:予約確認中　2予約承認待ち　3:予約完了　4:キャンセル申請中　5:キャンセル承認待ち　6:キャンセル
+      // $table->integer('double_check_status'); //ダブルチェックのフラグ 0:未　1:一人済　2:二人済
+      // $table->string('double_check1_name')->nullable(); //ダブルチェック一人目
+      // $table->string('double_check2_name')->nullable(); //ダブルチェック一人目
 
       $table->string('bill_company'); //請求書の会社名　デフォルトは顧客名
       $table->string('bill_person'); //請求書の担当者名　デフォルトは顧客の担当者
@@ -53,7 +53,7 @@ class CreateReservationsTable extends Migration
       $table->date('bill_pay_limit'); //請求書支払い期日　デフォルトは自動計算
       $table->string('bill_remark')->nullable(); //請求書備考　デフォルト空白
 
-      $table->datetime('approve_send_at')->nullable();
+      // $table->datetime('approve_send_at')->nullable(); //ダブルチェック後の承認メールにてユーザーにメールが送付される
       // ソフトデリート用
       $table->softDeletes();
       $table->timestamps();

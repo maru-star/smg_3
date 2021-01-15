@@ -40,7 +40,7 @@ class ReservationsController extends Controller
       'venue_id',
       'user_id',
       'tel',
-      'reservation_status'
+      // 'reservation_status'
     )->get();
     $venue = Venue::select('id', 'name_area', 'name_bldg', 'name_venue')->get();
     $user = User::select('id', 'company', 'first_name', 'last_name', 'mobile', 'tel')->get();
@@ -244,14 +244,6 @@ class ReservationsController extends Controller
         'users' => $users,
       ]);
     }
-
-
-    // return view('admin.reservations.create', [
-    //   'venues' => $venues,
-    //   'users' => $users,
-    //   'reserve_date' => $reserve_date,
-    //   'venue_id' => $venue_id,
-    // ]);
   }
 
   public function check(Request $request)
@@ -279,9 +271,9 @@ class ReservationsController extends Controller
     $user_details = $request->user_details;
     $admin_details = $request->admin_details;
     $payment_limit = $request->payment_limit;
-    $paid = $request->paid;
-    $reservation_status = $request->reservation_status;
-    $double_check_status = $request->double_check_status;
+    // $paid = $request->paid;
+    // $reservation_status = $request->reservation_status;
+    // $double_check_status = $request->double_check_status;
     $bill_company = $request->bill_company;
     $bill_person = $request->bill_person;
     $bill_created_at = $request->bill_created_at;
@@ -361,9 +353,9 @@ class ReservationsController extends Controller
       'user_details' => $user_details,
       'admin_details' => $admin_details,
       'payment_limit' => $payment_limit,
-      'paid' => $paid,
-      'reservation_status' => $reservation_status,
-      'double_check_status' => $double_check_status,
+      // 'paid' => $paid,
+      // 'reservation_status' => $reservation_status,
+      // 'double_check_status' => $double_check_status,
       'bill_company' => $bill_company,
       'bill_person' => $bill_person,
       'bill_created_at' => $bill_created_at,
@@ -449,9 +441,9 @@ class ReservationsController extends Controller
       $reservation->email_flag = $request->email_flag;
       $reservation->cost = $request->cost;
       $reservation->payment_limit = $request->payment_limit;
-      $reservation->paid = $request->paid;
-      $reservation->reservation_status = $request->reservation_status;
-      $reservation->double_check_status = $request->double_check_status;
+      // $reservation->paid = $request->paid;
+      // $reservation->reservation_status = $request->reservation_status;
+      // $reservation->double_check_status = $request->double_check_status;
       $reservation->bill_company = $request->bill_company;
       $reservation->bill_person = $request->bill_person;
       $reservation->bill_created_at = $request->bill_created_at;
@@ -461,26 +453,30 @@ class ReservationsController extends Controller
 
       $bills = $reservation->bills()->create([
         'reservation_id' => $reservation->id,
-
+        // 会場関連
         'venue_total' => $request->venue_total,
         'venue_discount_percent' => $request->venue_discount_percent, //割引率
         'venue_dicsount_number' => $request->venue_dicsount_number, //割引額
         'discount_venue_total' => $request->discount_venue_total,
-
+        // 備品関連
         'equipment_total' => $request->selected_equipments_price,
         'service_total' => $request->selected_services_price,
         'luggage_total' => $request->selected_luggage_price,
         'equipment_service_total' => $request->selected_items_total,
         'discount_item' => $request->discount_item, //割引額
         'discount_equipment_service_total' => $request->discount_equipment_service_total,
-
+        // レイアウト関連
         'layout_total' => $request->layout_total,
         'layout_discount' => $request->layout_discount, //割引額
         'after_duscount_layouts' => $request->after_duscount_layouts,
-
+        // 該当billの合計額関連
         'sub_total' => $request->sub_total,
         'tax' => $request->tax,
         'total' => $request->total,
+
+        'paid' => 0, //デフォで0 作成時点では未入金
+        'reservation_status' => 1, //デフォで1、仮抑えのデフォは0
+        'double_check_status' => 0, //デフォで0
       ]);
 
       if ($request->v_breakdowns) {
@@ -548,15 +544,15 @@ class ReservationsController extends Controller
 
   public function doublecheck(Request $request, $id)
   {
-    $reservation = Reservation::find($id);
+    $reservation_bills = Reservation::find($id)->bills()->first();
 
     if ($request->double_check_status == 0) {
-      $reservation->update([
+      $reservation_bills->update([
         'double_check1_name' => $request->double_check1_name,
         'double_check_status' => 1
       ]);
     } else if ($request->double_check_status == 1) {
-      $reservation->update([
+      $reservation_bills->update([
         'double_check2_name' => $request->double_check2_name,
         'double_check_status' => 2
       ]);
@@ -580,13 +576,11 @@ class ReservationsController extends Controller
     DB::transaction(function () use ($request) { //トランザクションさせる
       $reservation_id = $request->reservation_id;
       $reservation = Reservation::find($reservation_id);
-      $reservation->reservation_status = 2; //固定で２
-      $reservation->approve_send_at = date('Y-m-d H:i:s');
-      $reservation->save();
+      $reservation->bills()->first()->update(['reservation_status' => 2, 'approve_send_at' => date('Y-m-d H:i:s')]);
       $user = User::find($request->user_id);
       $email = $user->email;
       // 管理者側のメール本文等は未定
-      Mail::to($email)->send(new SendUserAprove($reservation_id));
+      Mail::to($email)->send(new SendUserAprove($reservation));
     });
     return redirect()->route('admin.reservations.index');
   }
@@ -595,8 +589,8 @@ class ReservationsController extends Controller
   {
     $reservation_id = $request->reservation_id;
     $reservation = Reservation::find($reservation_id);
-    $reservation->reservation_status = 3; //固定で２
-    $reservation->approve_send_at = date('Y-m-d H:i:s');
+    // $reservation->reservation_status = 3; //固定で２
+    // $reservation->approve_send_at = date('Y-m-d H:i:s');
     $reservation->save();
     return redirect()->route('admin.reservations.index');
   }

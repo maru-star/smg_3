@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Auth;
 
 use PDF;
 
+use Illuminate\Support\Facades\DB; //トランザクション用
+
+
 
 
 class HomeController extends Controller
@@ -48,13 +51,16 @@ class HomeController extends Controller
     }
   }
 
-  public function updateReservationStatus(Request $request, $id)
+  public function updateStatus(Request $request, $id)
   {
-    $reservation = Reservation::find($id);
-    $reservation->reservation_status = $request->update_status;
-    $reservation->save();
-    $request->session()->regenerate();
-    return redirect()->route('user.home.index');
+    return DB::transaction(function () use ($request, $id) {
+      $reservation = Reservation::find($id);
+      $reservation->bills()->first()->update([
+        'reservation_status' => $request->update_status
+      ]);
+      $request->session()->regenerate();
+      return redirect()->route('user.home.index');
+    });
   }
 
   public function generate_invoice($id)

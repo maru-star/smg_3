@@ -5,7 +5,6 @@
 <script src="{{ asset('/js/ajax.js') }}"></script> --}}
 
 
-
 <div class="content">
   <div class="container-fluid">
 
@@ -25,7 +24,7 @@
     </div>
 
     {{-- ステータス承認待ち --}}
-    @if ($reservation->reservation_status==2)
+    @if ($reservation->bills()->first()->reservation_status==2)
     <div class="confirm-box text-center">
       <p>下記、予約内容で承認される場合は、承認ボタンを押してください。</p>
       <p>※承認ボタンは、画面一番下にあります。</p>
@@ -50,7 +49,7 @@
             <div class="d-flex col-10 flex-wrap">
               <dl>
                 <dt>予約状況</dt>
-                <dd>{{ReservationHelper::judgeStatus($reservation->reservation_status)}}</dd>
+                <dd>{{ReservationHelper::judgeStatus($reservation->bills()->first()->reservation_status)}}</dd>
               </dl>
 
             </div>
@@ -65,7 +64,6 @@
             </div>
           </div>
         </div>
-
 
         <div class="row">
           <!-- 左側の項目------------------------------------------------------------------------ -->
@@ -207,7 +205,7 @@
               </thead>
               <tbody class="accordion-wrap hide">
                 @foreach ($venue->equipments()->get() as $equipment)
-                @foreach ($reservation->breakdowns()->get() as $breakdown)
+                @foreach ($reservation->bills()->first()->breakdowns()->get() as $breakdown)
                 @if ($equipment->item==$breakdown->unit_item)
                 <tr>
                   <td class="justify-content-between d-flex">
@@ -230,7 +228,7 @@
               </thead>
               <tbody class="accordion-wrap">
                 @foreach ($venue->services()->get() as $service)
-                @foreach ($reservation->breakdowns()->get() as $breakdown)
+                @foreach ($reservation->bills()->first()->breakdowns()->get() as $breakdown)
                 @if ($service->item==$breakdown->unit_item)
                 <tr>
                   <td colspan="2">
@@ -243,7 +241,7 @@
                 <tr>
                   <td class="table-active"><label for="layout">レイアウト変更</label></td>
                   <td>
-                    @foreach ($reservation->bills()->get() as $layout)
+                    @foreach ($reservation->bills()->first()->get() as $layout)
                     {{$layout->layout_total?'有り':'無し'}}
                     @endforeach
                   </td>
@@ -251,7 +249,7 @@
                 <tr>
                   <td class="table-active"><label for="prelayout">レイアウト準備</label></td>
                   <td>
-                    @foreach ($reservation->breakdowns()->get() as $item)
+                    @foreach ($reservation->bills()->first()->breakdowns()->get() as $item)
                     @if ($item->unit_item=="レイアウト準備")
                     有り
                     @endif
@@ -261,7 +259,7 @@
                 <tr>
                   <td class="table-active"><label for="postlayout">レイアウト片付</label></td>
                   <td>
-                    @foreach ($reservation->breakdowns()->get() as $item)
+                    @foreach ($reservation->bills()->first()->breakdowns()->get() as $item)
                     @if ($item->unit_item=="レイアウト片付")
                     有り
                     @endif
@@ -271,7 +269,7 @@
                 <tr>
                   <td class="table-active"><label for="Delivery">荷物預かり/返送</label></td>
                   <td>
-                    @foreach ($reservation->breakdowns()->get() as $item)
+                    @foreach ($reservation->bills()->first()->breakdowns()->get() as $item)
                     @if ($item->unit_item=="荷物預かり/返送")
                     有り
                     @endif
@@ -359,7 +357,7 @@
 
             <!-- 請求書情報-------- -->
             {{-- ステータス３は予約完了 --}}
-            @if ($reservation->reservation_status>=3)
+            @if ($reservation->bills()->first()->reservation_status>=3)
             <div class="bill-ttl mb-5">
               <div class="section-ttl-box d-flex align-items-center">
                 <div class="col-6">
@@ -371,7 +369,7 @@
                     <a href="{{ url('user/home/generate_invoice/'.$reservation->id) }}" class="more_btn">請求書を見る</a>
 
                   </p>
-                  @if ($reservation->paid==1)
+                  @if ($reservation->bills()->first()->paid==1)
                   <!-- ステータスが入金確認後に表示------ -->
                   <p class="text-right ml-3"><a class="more_btn" href="">領収書をみる</a></p>
                   @endif
@@ -396,7 +394,6 @@
             @endif
             <!-- 請求書情報 終わり---------------------------- -->
 
-
             <!-- 会場料請求内容----------- -->
             <div class="bill-box">
               <h3 class="row">会場料</h3>
@@ -404,7 +401,7 @@
                 <div class="col-3 bill-box_cell">
                   <dt>会場料金</dt>
                   <dd>
-                    @foreach ($reservation->breakdowns as $breakdowns)
+                    @foreach ($reservation->bills()->first()->breakdowns as $breakdowns)
                     @if ($breakdowns->unit_item=="会場料金")
                     {{$breakdowns->unit_cost}}
                     @endif
@@ -414,7 +411,7 @@
                 <div class="col-3 bill-box_cell">
                   <dt>延長料金</dt>
                   <dd>
-                    @foreach ($reservation->breakdowns as $breakdowns)
+                    @foreach ($reservation->bills()->first()->breakdowns as $breakdowns)
                     @if ($breakdowns->unit_item=="延長料金")
                     {{$breakdowns->unit_cost}}
                     @endif
@@ -479,7 +476,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      @foreach ($reservation->breakdowns as $breakdown)
+                      @foreach ($reservation->bills()->first()->breakdowns as $breakdown)
                       @if ($breakdown->unit_type==1)
                       <tr>
                         <td>{{$breakdown->unit_item}}</td>
@@ -580,7 +577,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      @foreach ($reservation->breakdowns as $breakdown)
+                      @foreach ($reservation->bills()->first()->breakdowns as $breakdown)
                       @if ($breakdown->unit_type==2)
                       <tr>
                         <td>{{$breakdown->unit_item}}</td>
@@ -1096,7 +1093,7 @@
 
     <!-- ステータスが予約承認まちのときに表示 -->
 
-    @if ($reservation->reservation_status==2)
+    @if ($reservation->bills()->first()->reservation_status==2)
     <div class="confirm-box">
       <p>上記、予約内容で間違いないでしょうか。問題なければ、予約の承認をお願い致します。</p>
       <p class="text-center mb-5 mt-3">
@@ -1116,7 +1113,7 @@
 
 
     <!-- ステータスが予約完了のときに表示 -->
-    @if ($reservation->reservation_status>2)
+    @if ($reservation->bills()->first()->reservation_status>2)
     <div class="confirm-box">
       <h3 class="caution mb-2 font-weight-bold">振込先案内</h3>
       <p>

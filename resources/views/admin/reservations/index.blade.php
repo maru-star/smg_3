@@ -315,133 +315,46 @@
             <th class="btn-cell">案内板</th>
           </tr>
         </thead>
+
+
+        @foreach ($reservations as $reservation)
         <tbody>
-          @foreach ($reservations as $reservation)
           <tr>
-            <td>※後ほど修正</td>
-            <td>{{$reservation->id}}</td>
-            <td>{{ReservationHelper::formatDate($reservation->reserve_date)}}</td>
-            <td>{{$reservation->enter_time}}</td>
-            <td>{{$reservation->leave_time}}</td>
-            <td>
+            <td rowspan="{{count($reservation->bills()->get())}}">※後ほど修正</td>
+            <td rowspan="{{count($reservation->bills()->get())}}">{{$reservation->id}}</td>
+            <td rowspan="{{count($reservation->bills()->get())}}">
+              {{ReservationHelper::formatDate($reservation->reserve_date)}}</td>
+            <td rowspan="{{count($reservation->bills()->get())}}">{{$reservation->enter_time}}</td>
+            <td rowspan="{{count($reservation->bills()->get())}}">{{$reservation->leave_time}}</td>
+            <td rowspan="{{count($reservation->bills()->get())}}">
               {{$venue->find($reservation->venue_id)->name_area}}{{$venue->find($reservation->venue_id)->name_bldg}}{{$venue->find($reservation->venue_id)->name_venue}}
             </td>
-            <td>{{$user->find($reservation->user_id)->company}}</td>
-            <td>{{$user->find($reservation->venue_id)->first_name}}{{$user->find($reservation->venue_id)->last_name}}
-            </td>
-            <td>{{$user->find($reservation->venue_id)->mobile}}</td>
-            <td>{{$user->find($reservation->venue_id)->tel}}</td>
-            <td>-</td>
-            <td class="table_column1">
-              <p>※後ほど修正　会場</p>
-            </td>
-            <td class="table_column1">
-              <p>{{ReservationHelper::judgeStatus($reservation->reservation_status)}}</p>
-            </td>
-            <td>
-              <a href="{{ url('admin/reservations', $reservation->id) }}" class="more_btn">詳細</a>
-            </td>
-            <td><a href="{{ url('admin/reservations/generate_pdf/'.$reservation->id) }}" class="more_btn">詳細</a></td>
+            <td rowspan="{{count($reservation->bills()->get())}}">{{$user->find($reservation->user_id)->company}}</td>
+            <td rowspan="{{count($reservation->bills()->get())}}">
+              {{$user->find($reservation->venue_id)->first_name}}{{$user->find($reservation->venue_id)->last_name}}</td>
+            <td rowspan="{{count($reservation->bills()->get())}}">{{$user->find($reservation->venue_id)->mobile}}</td>
+            <td rowspan="{{count($reservation->bills()->get())}}">{{$user->find($reservation->venue_id)->tel}}</td>
+            <td rowspan="{{count($reservation->bills()->get())}}">※修正</td>
+            <td>会場予約</td>　{{--重要。固定最初は必ず　会場予約　のカテゴリ--}}
+            <td>{{ReservationHelper::judgeStatus($reservation->bills()->first()->reservation_status)}}</td>
+            <td rowspan="{{count($reservation->bills()->get())}}"><a
+                href="{{ url('admin/reservations', $reservation->id) }}" class="more_btn">詳細</a></td>
+            <td rowspan="{{count($reservation->bills()->get())}}"><a
+                href="{{ url('admin/reservations/generate_pdf/'.$reservation->id) }}" class="more_btn">詳細</a></td>
           </tr>
-          @endforeach
-          {{-- 
-          <tr>
-            <td>00000</td>
-            <td>00000</td>
-            <td>2020/12/07(月)</td>
-            <td>9:00</td>
-            <td>18:00</td>
-            <td>四ツ橋・サンワールドビル22号室</td>
-            <td>株式会社テスト</td>
-            <td>山田元気</td>
-            <td>08012345678</td>
-            <td>0612345678</td>
-            <td>-</td>
-            <td class="table_column1">
-              <p>会場</p>
-            </td>
-            <td class="table_column1">
-              <p>予約確認中</p>
-            </td>
-            <td><a class="more_btn" href="http://staging-smg2.herokuapp.com/admin/venues/1">詳細</a></td>
-            <td><a class="more_btn" href="http://staging-smg2.herokuapp.com/admin/venues/1">詳細</a></td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>1</td>
-            <td>2020/12/07(月)</td>
-            <td>9:00</td>
-            <td>18:00</td>
-            <td>四ツ橋・サンワールドビル22号室</td>
-            <td>株式会社テスト</td>
-            <td>山田元気</td>
-            <td>08012345678</td>
-            <td>0612345678</td>
-            <td>-</td>
-            <td class="table_column">
-              <p>会場</p>
-              <p>追加請求</p>
-            </td>
-            <td class="table_column">
-              <p>予約確認中</p>
-              <p>予約確認中</p>
-            </td>
-            <td><a class="more_btn" href="http://staging-smg2.herokuapp.com/admin/venues/1">詳細</a></td>
-            <td><a class="more_btn" href="http://staging-smg2.herokuapp.com/admin/venues/1">詳細</a></td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>1</td>
-            <td>2020/12/07(月)</td>
-            <td>9:00</td>
-            <td>18:00</td>
-            <td>四ツ橋・サンワールドビル22号室</td>
-            <td>株式会社テスト</td>
-            <td>山田元気</td>
-            <td>08012345678</td>
-            <td>0612345678</td>
-            <td>-</td>
-            <td class="table_column">
-              <p>会場</p>
-              <p>追加請求</p>
-              <p>キャンセル</p>
-            </td>
-            <td class="table_column">
-              <p>予約確認中</p>
-              <p>予約確認中</p>
-              <p>予約確認中</p>
-            </td>
-            <td><a class="more_btn" href="http://staging-smg2.herokuapp.com/admin/venues/1">詳細</a></td>
-            <td><a class="more_btn" href="http://staging-smg2.herokuapp.com/admin/venues/1">詳細</a></td>
-          </tr>
-          <tr class="bg-alert">
-            <td>1</td>
-            <td>1</td>
-            <td>2020/12/07(月)</td>
-            <td>9:00</td>
-            <td>18:00</td>
-            <td>四ツ橋・サンワールドビル22号室</td>
-            <td>株式会社テスト</td>
-            <td>山田元気</td>
-            <td>08012345678</td>
-            <td>0612345678</td>
-            <td>-</td>
-            <td class="table_column">
-              <p>会場</p>
-              <p>追加請求</p>
-              <p>追加請求請求</p>
-              <p>キャンセル</p>
-            </td>
-            <td class="table_column">
-              <p>予約確認中</p>
-              <p>予約確認中</p>
-              <p>予約確認中</p>
-              <p>予約確認中</p>
-            </td>
-            <td><a class="more_btn" href="http://staging-smg2.herokuapp.com/admin/venues/1">詳細</a></td>
-            <td><a class="more_btn" href="http://staging-smg2.herokuapp.com/admin/venues/1">詳細</a></td>
-          </tr> --}}
+          @for ($i = 0; $i < count($reservation->bills()->get())-1; $i++)
+            <tr>
+              <td></td>
+              <td>{{ReservationHelper::judgeStatus($reservation->bills()->skip($i+1)->first()->reservation_status)}}
+              </td>
+            </tr>
+            @endfor
         </tbody>
+        @endforeach
+
+
+
+
       </table>
     </div>
 

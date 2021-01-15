@@ -8,8 +8,6 @@ Route::get('/', function () {
 Route::get('calender/date_calendar', 'CalendarsController@index');
 Route::get('calender/venue_calendar', 'CalendarsController@venue_calendar');
 
-
-
 /*
 |--------------------------------------------------------------------------
 | ユーザー用ルート
@@ -21,7 +19,7 @@ Route::namespace('User')->prefix('user')->name('user.')->group(function () {
   Route::middleware('verified')->group(function () {
     // TOPページ
     Route::resource('home', 'HomeController');
-    Route::put('home/{home}/update_status', 'HomeController@updateReservationStatus')->name('home.updatestatus');
+    Route::put('home/{home}/update_status', 'HomeController@updateStatus')->name('home.updatestatus');
     Route::get('home/generate_invoice/{home}', 'HomeController@generate_invoice')->name('home.generate_invoice');
   });
 
@@ -116,9 +114,6 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
     Route::post('reservations/{reservation}/confirm_reservation', 'ReservationsController@confirm_reservation')->name('reservations.confirm_reservation');
     // 管理者用カレンダーページ
-    // Route::get('calendar/venue_calendar', function () {
-    //   return view('admin.calendar.venue_calendar');
-    // });
     Route::get('calendar/venue_calendar', 'CalendarsController@index');
     Route::post('calendar/venue_calendar', 'CalendarsController@getData');
   });

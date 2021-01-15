@@ -24,7 +24,7 @@
     </div>
     <div class="btn-wrapper2 col-12 align-items-center d-flex justify-content-between">
       <!-- 削除ボタン-ステータス：予約が完了する前で表示----- -->
-      @if ($reservation->reservation_status<3) <div class="text-left">
+      @if ($reservation->bills()->first()->reservation_status<3) <div class="text-left">
         {{ Form::model($reservation, ['route' => ['admin.reservations.destroy', $reservation->id], 'method' => 'delete']) }}
         @csrf
         {{ Form::submit('削除', ['class' => 'btn more_btn4']) }}
@@ -32,7 +32,7 @@
     </div>
     @endif
 
-    @if ($reservation->reservation_status==3)
+    @if ($reservation->bills()->first()->reservation_status==3)
     <!-- 請求書の追加ボタン-ステータス：予約完了で表示----- -->
     <p class="text-right">
       <a class="more_btn3" href="">追加の請求書を作成する</a></p>
@@ -44,7 +44,6 @@
   </div>
   <!-- 予約詳細--------------------------------------------------------　 -->
   <div class="section-wrap">
-
     <div class="ttl-box d-flex align-items-center">
       <div class="col-9 d-flex justify-content-between">
         <h2>予約概要</h2>
@@ -53,23 +52,23 @@
       </div>
 
       {{-- 予約完了前（予約ステータス3以前）なら表示 --}}
-      @if ($reservation->reservation_status<3) <div class="col-3">
+      @if ($reservation->bills()->first()->reservation_status<3) <div class="col-3">
         <p class="text-right">
           {{ link_to_route('admin.reservations.edit', '編集', $parameters = $reservation->id, ['class' => 'more_btn']) }}
         </p>
     </div>
     @endif
   </div>
-  <section class="register-wrap">
 
+  <section class="register-wrap">
     <div class="section-header">
       <div class="row">
         <div class="d-flex col-10 flex-wrap">
           <dl>
             <dt>予約状況</dt>
-            <dd>{{ReservationHelper::judgeStatus($reservation->reservation_status)}}</dd>
+            <dd>{{ReservationHelper::judgeStatus($reservation->bills()->first()->reservation_status)}}</dd>
           </dl>
-          @if ($reservation->double_check_status==0)
+          @if ($reservation->bills()->first()->double_check_status==0)
           <dl>
             <dt>一人目チェック</dt>
             <dd class="d-flex">
@@ -77,11 +76,11 @@
               <p class="ml-2"> <button class="btn more_btn first_double_check">チェックをする</button> </p>
             </dd>
           </dl>
-          @elseif ($reservation->double_check_status==1)
+          @elseif ($reservation->bills()->first()->double_check_status==1)
           <dl>
             <dt>一人目チェック</dt>
             <dd class="d-flex">
-              <p>{{$reservation->double_check1_name}}</p>
+              <p>{{$reservation->bills()->first()->double_check1_name}}</p>
             </dd>
           </dl>
           <dl>
@@ -91,17 +90,17 @@
               <p class="ml-2"> <button class="btn more_btn second_double_check">チェックをする</button> </p>
             </dd>
           </dl>
-          @elseif ($reservation->double_check_status==2)
+          @elseif ($reservation->bills()->first()->double_check_status==2)
           <dl>
             <dt>一人目チェック</dt>
             <dd class="d-flex">
-              <p>{{$reservation->double_check1_name}}</p>
+              <p>{{$reservation->bills()->first()->double_check1_name}}</p>
             </dd>
           </dl>
           <dl>
             <dt>二人目チェック</dt>
             <dd class="d-flex">
-              <p>{{$reservation->double_check2_name}}</p>
+              <p>{{$reservation->bills()->first()->double_check2_name}}</p>
             </dd>
           </dl>
           @endif
@@ -118,10 +117,10 @@
         </div>
       </div>
 
-      @if ($reservation->double_check_status==2)
+      @if ($reservation->bills()->first()->double_check_status==2)
       <!-- 承認確認ボタン-ダブルチェック後に表示------ -->
       {{-- 予約完了後、非表示 --}}
-      @if ($reservation->reservation_status<=2) <div class="row justify-content-end mt-5">
+      @if ($reservation->bills()->first()->reservation_status<=2) <div class="row justify-content-end mt-5">
         <div class="d-flex col-2 justify-content-around">
           <p class="text-right">
             {{-- 予約ステータスを2にして、ユーザーにメール送付 --}}
@@ -1529,6 +1528,8 @@
 
 
 
+
+
 <!-- 合計請求額------------------------------------------------------------------- -->
 <div class="total-sum section-wrap">
   <table class="table table-bordered">
@@ -1579,7 +1580,7 @@
 
 
 <!-- チェックボックス ----------------------------------------------------------------------------->
-@if ($reservation->double_check_status==0)
+@if ($reservation->bills()->first()->double_check_status==0)
 <div class="checkbox section-wrap">
   <dl class="d-flex col-12 justify-content-end align-items-center">
     <dt><label for="checkname">一人目チェック者</label></dt>
@@ -1592,7 +1593,7 @@
         '名前test3' => '名前test3',
         '名前test4' => '名前test4',], 
         null, ['placeholder' => '選択してください', 'class'=>'form-control double_check1_name'])}}
-      {{ Form::hidden('double_check_status', $reservation->double_check_status ) }}
+      {{ Form::hidden('double_check_status', $reservation->bills()->first()->double_check_status ) }}
     </dd>
     <dd>
       <p class="text-right">
@@ -1601,7 +1602,7 @@
     </dd>
   </dl>
 </div>
-@elseif($reservation->double_check_status==1)
+@elseif($reservation->bills()->first()->double_check_status==1)
 <div class="checkbox section-wrap">
   <dl class="d-flex col-12 justify-content-end align-items-center">
     <dt><label for="checkname">二人目チェック者</label></dt>
@@ -1614,7 +1615,7 @@
         '名前test3' => '名前test3',
         '名前test4' => '名前test4',], 
         null, ['placeholder' => '選択してください', 'class'=>'form-control double_check2_name'])}}
-      {{ Form::hidden('double_check_status', $reservation->double_check_status ) }}
+      {{ Form::hidden('double_check_status', $reservation->bills()->first()->double_check_status ) }}
     </dd>
     <dd>
       <p class="text-right">

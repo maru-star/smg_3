@@ -7,8 +7,6 @@
 
 
 
-
-
 <div class="content">
   <div class="container-fluid">
     <div class="container-field mt-3">
@@ -66,99 +64,95 @@
                 <th>利用日</th>
                 <th>入室</th>
                 <th>退室</th>
-                <th>利用会場</th>
+                <th>会場</th>
                 <th width="120">予約状況</th>
                 <th width="120">カテゴリー</th>
-                <th>利用料金</th>
+                <th>利用料金（税込）</th>
                 <th>支払期日</th>
                 <th>支払状況</th>
-                <th class="btn-cell">予約詳細</th>
+                <th class="btn-cell">詳細</th>
                 <th class="btn-cell">請求書</th>
                 <th class="btn-cell">領収書</th>
               </tr>
             </thead>
+
+
+
+            {{-- @foreach ($user->reservations()->get() as $reservation)
             <tbody>
-
-              @foreach ($user->reservations()->get() as $reserve)
               <tr>
-                <td>{{$reserve->id}}</td>
-                <td>{{ReservationHelper::formatDate($reserve->reserve_date)}}</td>
-                <td>{{$reserve->enter_time}}</td>
-                <td>{{$reserve->leave_time}}</td>
-                <td>{{$reserve->venue_id}}</td>
-                <td>{{ReservationHelper::judgeStatus($reserve->reservation_status)}}</td>
-                <td>カテゴリー</td>
+                <td rowspan="{{count($reservation->bills()->get())}}">※後ほど修正</td>
+            <td rowspan="{{count($reservation->bills()->get())}}">{{$reservation->id}}</td>
+            <td rowspan="{{count($reservation->bills()->get())}}">
+              {{ReservationHelper::formatDate($reservation->reserve_date)}}</td>
+            <td rowspan="{{count($reservation->bills()->get())}}">{{$reservation->enter_time}}</td>
+            <td rowspan="{{count($reservation->bills()->get())}}">{{$reservation->leave_time}}</td>
+            <td rowspan="{{count($reservation->bills()->get())}}">
+              {{$reservation->venue_id}}
+            </td>
+            <td rowspan="{{count($reservation->bills()->get())}}">{{$user->find($reservation->user_id)->company}}
+            </td>
+            <td rowspan="{{count($reservation->bills()->get())}}">
+              {{$user->find($reservation->venue_id)->first_name}}{{$user->find($reservation->venue_id)->last_name}}
+            </td>
+            <td rowspan="{{count($reservation->bills()->get())}}">{{$user->find($reservation->venue_id)->mobile}}
+            </td>
+            <td rowspan="{{count($reservation->bills()->get())}}">{{$user->find($reservation->venue_id)->tel}}
+            </td>
+            <td rowspan="{{count($reservation->bills()->get())}}">※修正</td>
+            <td>会場予約</td>
+            <td>{{ReservationHelper::judgeStatus($reservation->bills()->first()->reservation_status)}}</td>
+            <td rowspan="{{count($reservation->bills()->get())}}"><a
+                href="{{ url('admin/reservations', $reservation->id) }}" class="more_btn">詳細</a></td>
+            <td rowspan="{{count($reservation->bills()->get())}}"><a
+                href="{{ url('admin/reservations/generate_pdf/'.$reservation->id) }}" class="more_btn">詳細</a></td>
+            </tr>
+            @for ($i = 0; $i < count($reservation->bills()->get())-1; $i++)
+              <tr>
+                <td></td>
                 <td>
-                  @foreach ($reservation as $item)
-                  {{$item->bills()->first()->total}}
-                  @endforeach
+                  {{ReservationHelper::judgeStatus($reservation->bills()->skip($i+1)->first()->reservation_status)}}
                 </td>
-                <td>
-                  {{ReservationHelper::formatDate($reserve->bill_pay_limit)}}
-                </td>
-                <td>
-                  {{ReservationHelper::judgePaid($reserve->paid)}}
-                </td>
-                <td>
-                  {{-- <a href="#">詳細</a> --}}
-                  <a href="{{ url('user/home',$reserve->id) }}" class="">詳細</a>
-
-
-                </td>
-                <td>請求書</td>
-                <td>領収書</td>
               </tr>
+              @endfor
+              </tbody>
+              @endforeach --}}
 
+              @foreach ($user->reservations()->get() as $reservation)
+              <tbody>
+                <tr>
+                  <td rowspan="{{count($reservation->bills()->get())}}">{{$reservation->id}}</td>
+                  <td rowspan="{{count($reservation->bills()->get())}}">{{$reservation->reserve_date}}</td>
+                  <td rowspan="{{count($reservation->bills()->get())}}">{{$reservation->enter_time}}</td>
+                  <td rowspan="{{count($reservation->bills()->get())}}">{{$reservation->leave_time}}</td>
+                  <td>{{$reservation->venue_id}}</td>
+                  <td>{{$reservation->bills()->first()->reservation_status}}</td>
+                  <td>※カテゴリー</td>
+                  <td>{{number_format($reservation->bills()->first()->total)}}円</td>
+                  <td>{{$reservation->payment_limit}}</td>
+                  <td rowspan="{{count($reservation->bills()->get())}}">{{$reservation->bills()->first()->paid}}</td>
+                  <td><a href="{{ url('user/home/'.$reservation->id) }}" class="more_btn">詳細</a></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                @for ($i = 0; $i < count($reservation->bills()->get())-1; $i++)
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  @endfor
+              </tbody>
               @endforeach
 
 
 
-              {{-- {{$reservation->first()->bills}} --}}
 
-              {{-- 以下、最大４行 --}}
-              {{-- <tr>
-                <td rowspan="4"></td>
-                <td rowspan="4"></td>
-                <td rowspan="4"></td>
-                <td rowspan="4"></td>
-                <td rowspan="4"></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td rowspan="4"></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr> --}}
-            </tbody>
+
           </table>
         </div>
       </div>

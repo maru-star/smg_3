@@ -33,6 +33,13 @@ class Bill extends Model
     'sub_total',
     'tax',
     'total',
+
+    'paid',
+    'reservation_status',
+    'double_check_status',
+    'double_check1_name',
+    'double_check2_name',
+    'approve_send_at'
   ];
 
   /*

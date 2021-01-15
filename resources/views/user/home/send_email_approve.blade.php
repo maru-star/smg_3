@@ -1,30 +1,40 @@
-<p><br>
-  株式会社テスト様
+<br>
+<p>
+  {{$reservation_id->user->company}}<br>
+  {{$reservation_id->bill_person}} 様<br>
   <br>
-  この度は、SMGアクセア会議室をご利用いただき誠にありがとうございます。<br>
-  請求が確定しましたので、ご連絡です。<br>
+  ご予約いただきありがとうございます。<br>
+  以下の内容で予約を確定してもよろしいでしょうか。<br>
+  よろしければ、予約の承認をお願い致します。<br>
   <br>
-  マイページにログイン頂き、請求書をご確認の上、ご対応をお願いいたします。<br>
+  日時： {{ReservationHelper::formatDate($reservation_id->reserve_date)}}　{{$reservation_id->enter_time}} -
+  {{$reservation_id->leave_time}}<br>
+  会場：
+  {{ReservationHelper::getVenue($reservation_id->venue_id)[0]}}
+  {{ReservationHelper::getVenue($reservation_id->venue_id)[1]}}
+  {{ReservationHelper::getVenue($reservation_id->venue_id)[2]}}
   <br>
-  ＜マイページＵＲＬ＞<br>
-  {{-- <a href="{{'http://127.0.0.1:8000/user/home/'.$reservation_id}}">請求書を確認する</a> --}}
-  <a href="{{request()->server->get('SERVER_ADDR').'user/home/'.$reservation_id}}">請求書を確認する</a>
+  住所：
+  {{ReservationHelper::getVenueAddreess($reservation_id->venue_id)[0]}}
+  {{ReservationHelper::getVenueAddreess($reservation_id->venue_id)[1]}}
+  {{ReservationHelper::getVenueAddreess($reservation_id->venue_id)[2]}}
+  {{ReservationHelper::getVenueAddreess($reservation_id->venue_id)[3]}}
+  {{ReservationHelper::getVenueAddreess($reservation_id->venue_id)[4]}}
   <br>
-  ※ＰＤＦにて印刷をお願いいたします。<br>
-  ※請求書のご郵送は対応致し兼ねますので、予めご了承をお願いいたします。<br>
+  アクセス<br>
+  #########<br>
+  #########<br>
   <br>
-  【請求書に関する注意点に関しまして】<br>
-  ①請求書はＷＥＢ請求書のみの発行となります<br>。
-  　ご郵送は対応致し兼ねますので、予めご了承をお願いいたします。<br>
+  ご請求額　{{number_format($reservation_id->bills()->first()->total)}}円<br>
   <br>
-  ②管理サイトへのログインＩＤはご登録のメールアドレスでございます。<br>
+  上記内容で問題なければ下記リンク先より承認手続きをお願い致します。<br>
+  <a href="{{'http://127.0.0.1:8000/user/home/'.$reservation_id->id}}">請求書を確認する</a><br>
   <br>
-  ご請求についてのお問い合わせはtest@osaka-conference.comへメールにて<br>
-  ご連絡ください。<br>
-  運営局（ 受付時間：平日10：00～17：00)<br>
+  ご確認お願いします。<br>
   <br>
   ※本メールはサーバーからの自動返信メールとなっております。<br>
-  本メールに返信いただいてもご連絡いたしかねますのでご了承ください。<br>
+  本メールに送信いただいていもご連絡致しかねますのでご了承ください。<br>
+  <br>
   <br>
   ---------------------------------<br>
   SMGアクセア貸し会議室<br>
@@ -32,5 +42,5 @@
   Web: https://<br>
   TEL: 03-0000-0000<br>
   ---------------------------------<br>
-  <br>
+
 </p>

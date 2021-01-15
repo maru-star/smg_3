@@ -795,9 +795,9 @@
 
 
 {{ Form::hidden('payment_limit', $payment_limit,['class'=>''] ) }}
-{{ Form::hidden('paid', $paid,['class'=>''] ) }}
-{{ Form::hidden('reservation_status', $reservation_status,['class'=>''] ) }}
-{{ Form::hidden('double_check_status', $double_check_status,['class'=>''] ) }}
+{{-- {{ Form::hidden('paid', $paid,['class'=>''] ) }} --}}
+{{-- {{ Form::hidden('reservation_status', $reservation_status,['class'=>''] ) }} --}}
+{{-- {{ Form::hidden('double_check_status', $double_check_status,['class'=>''] ) }} --}}
 {{ Form::hidden('bill_company', $bill_company,['class'=>''] ) }}
 {{ Form::hidden('bill_person', $bill_person,['class'=>''] ) }}
 {{ Form::hidden('bill_created_at', $bill_created_at,['class'=>''] ) }}
@@ -824,9 +824,9 @@
 '&user_details='.$user_details.
 '&admin_details='.$admin_details.
 '&payment_limit='.$payment_limit.
-'&paid='.$paid.
-'&reservation_status='.$reservation_status.
-'&double_check_status='.$double_check_status.
+// '&paid='.$paid.
+// '&reservation_status='.$reservation_status.
+// '&double_check_status='.$double_check_status.
 '&bill_company='.$bill_company.
 '&bill_person='.$bill_person.
 '&bill_created_at='.$bill_created_at.
