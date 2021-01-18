@@ -42,11 +42,21 @@
   </thead>
   <tbody>
     <tr>
-      <td>{{ $service->id }}</td>
-      <td>{{ $service->created_at }}</td>
-      <td>{{ Form::text('item', $service->item, ['class' => 'form-control']) }}</td>
-      <td>{{ Form::text('price', $service->price, ['class' => 'form-control']) }}</td>
-      <td>{{ Form::text('remark', $service->remark, ['class' => 'form-control']) }}</td>
+      <td>{{ ReservationHelper::IdFormat($service->id) }}</td>
+      <td>{{ ReservationHelper::formatDate($service->created_at) }}</td>
+      <td>
+        <p class="is-error-item" style="color: white"></p>
+        {{ Form::text('item', $service->item, ['class' => 'form-control']) }}
+        <p class="is-error-item" style="color: red"></p>
+      </td>
+      <td>
+        <p class="is-error-price" style="color: white"></p>
+        {{ Form::text('price', $service->price, ['class' => 'form-control']) }}
+        <p class="is-error-price" style="color: red"></p>
+      </td>
+      <td>
+        {{ Form::text('remark', $service->remark, ['class' => 'form-control']) }}
+      </td>
       <td>
         {{ Form::submit('更新', ['class' => 'btn btn-primary']) }}
       </td>

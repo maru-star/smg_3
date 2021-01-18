@@ -139,7 +139,7 @@
   <tbody>
     @foreach ($querys as $query)
     <tr>
-      <td>{{ $query->id }}</td>
+      <td>{{ ReservationHelper::IdFormat($query->id) }}</td>
       <td>{{ ReservationHelper::formatDate($query->created_at) }}</td>
       <td>{{ $query->alliance_flag==0?'直営':'提携' }}</td>
       <td>{{ $query->name_area }}{{ $query->name_bldg }}{{ $query->name_venue }}</td>

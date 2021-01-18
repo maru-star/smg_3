@@ -338,105 +338,8 @@ $(function () {
 });
 
 
-
-
 $(function () {
   $("#ServiceCreateForm").validate({
-    errorClass: "alert alert-danger", //エラー表示classをbootstrapのアラートに変える
-    rules: {
-      item: {
-        required: true,
-      },
-      price: {
-        required: true,
-      }
-    },
-    messages: {
-      item: {
-        required: "※必須項目です",
-      },
-      price: {
-        required: "※必須項目です",
-      }
-    },
-    // errorPlacement: function (err, element) {
-    //   if (element.attr("alliance_flag")) {
-    //     element.parent().before(err);
-    //   } else {
-    //     element.before(err);
-    //   }
-    // }
-  });
-})
-// サービスアップデート
-$(function () {
-  $("#ServiceUpdateForm").validate({
-    errorClass: "alert alert-danger", //エラー表示classをbootstrapのアラートに変える
-    rules: {
-      item: {
-        required: true,
-      },
-      price: {
-        required: true,
-      }
-    },
-    messages: {
-      item: {
-        required: "※必須項目です",
-      },
-      price: {
-        required: "※必須項目です",
-      }
-    },
-    // errorPlacement: function (err, element) {
-    //   if (element.attr("alliance_flag")) {
-    //     element.parent().before(err);
-    //   } else {
-    //     element.before(err);
-    //   }
-    // }
-  });
-})
-// 備品作成
-$(function () {
-  $("#EquipmentsCreateForm").validate({
-    errorClass: "alert alert-danger", //エラー表示classをbootstrapのアラートに変える
-    rules: {
-      item: {
-        required: true,
-      },
-      price: {
-        required: true,
-      },
-      stock: {
-        required: true,
-      }
-    },
-    messages: {
-      item: {
-        required: "※必須項目です",
-      },
-      price: {
-        required: "※必須項目です",
-      },
-      stock: {
-        required: "※必須項目です",
-      }
-    },
-    // errorPlacement: function (err, element) {
-    //   if (element.attr("alliance_flag")) {
-    //     element.parent().before(err);
-    //   } else {
-    //     element.before(err);
-    //   }
-    // }
-  });
-})
-// 備品アップデート
-// 会場管理　新規登録validation
-$(function () {
-  $("#EquipmentsUpdateForm").validate({
-    // errorClass: "validate_danger", //エラー表示classをbootstrapのアラートに変える
     rules: {
       item: {
         required: true,
@@ -455,7 +358,100 @@ $(function () {
         required: "※必須項目です",
         url: '正しいURLを記入してください(例:https://osaka-conference.com/rental/t6-maronie/hall/)'
       },
-      alliapricence_flag: {
+      price: {
+        required: "※必須項目です",
+      },
+      stock: {
+        required: "※必須項目です",
+      },
+    },
+    errorPlacement: function (error, element) {
+      var name = element.attr('name');
+      if (element.attr('name') === 'category[]') {
+        error.appendTo($('.is-error-category'));
+      } else if (element.attr('name') === name) {
+        error.appendTo($('.is-error-' + name));
+      }
+    },
+    errorElement: "span",
+    errorClass: "is-error",
+  });
+  $('input').on('blur', function () {
+    $(this).valid();
+    if ($('span').hasClass('is-error')) {
+      $('span').css('background', 'white');
+    }
+  });
+})
+// サービスアップデート
+$(function () {
+  $("#ServiceUpdateForm").validate({
+    rules: {
+      item: {
+        required: true,
+      },
+      price: {
+        required: true,
+        number: true
+      },
+      stock: {
+        required: true,
+        number: true
+      },
+    },
+    messages: {
+      item: {
+        required: "※必須項目です",
+        url: '正しいURLを記入してください(例:https://osaka-conference.com/rental/t6-maronie/hall/)'
+      },
+      price: {
+        required: "※必須項目です",
+        number: "※数字を入力してください"
+      },
+      stock: {
+        required: "※必須項目です",
+      },
+    },
+    errorPlacement: function (error, element) {
+      var name = element.attr('name');
+      if (element.attr('name') === 'category[]') {
+        error.appendTo($('.is-error-category'));
+      } else if (element.attr('name') === name) {
+        error.appendTo($('.is-error-' + name));
+      }
+    },
+    errorElement: "span",
+    errorClass: "is-error",
+  });
+  $('input').on('blur', function () {
+    $(this).valid();
+    if ($('span').hasClass('is-error')) {
+      $('span').css('background', 'white');
+    }
+  });
+})
+// 備品作成
+$(function () {
+  $("#EquipmentsCreateForm").validate({
+    rules: {
+      item: {
+        required: true,
+      },
+      price: {
+        required: true,
+        number: true
+      },
+      stock: {
+        required: true,
+        number: true
+      },
+    },
+    messages: {
+      item: {
+        required: "※必須項目です",
+        url: '正しいURLを記入してください(例:https://osaka-conference.com/rental/t6-maronie/hall/)'
+      },
+      price: {
         required: "※必須項目です",
       },
       stock: {
@@ -480,4 +476,52 @@ $(function () {
     }
   });
 });
+// 備品アップデート
+// 会場管理　新規登録validation
+$(function () {
+  $("#EquipmentsUpdateForm").validate({
+    rules: {
+      item: {
+        required: true,
+      },
+      price: {
+        required: true,
+        number: true
+      },
+      stock: {
+        required: true,
+        number: true
+      },
+    },
+    messages: {
+      item: {
+        required: "※必須項目です",
+        url: '正しいURLを記入してください(例:https://osaka-conference.com/rental/t6-maronie/hall/)'
+      },
+      price: {
+        required: "※必須項目です",
+      },
+      stock: {
+        required: "※必須項目です",
+      },
+    },
+    errorPlacement: function (error, element) {
+      var name = element.attr('name');
+      if (element.attr('name') === 'category[]') {
+        error.appendTo($('.is-error-category'));
+      } else if (element.attr('name') === name) {
+        error.appendTo($('.is-error-' + name));
+      }
+    },
+    errorElement: "span",
+    errorClass: "is-error",
+  });
+  $('input').on('blur', function () {
+    $(this).valid();
+    if ($('span').hasClass('is-error')) {
+      $('span').css('background', 'white');
+    }
+  });
+});
+
 
