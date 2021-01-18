@@ -130,12 +130,12 @@
             </td>
             <td>
               <p class="{{'is-error-price'.$num}}" style="color: white"></p>
-              {{ Form::text('price'.$num, old('price', number_format($time_price->price)), ['class' => 'form-control']) }}
+              {{ Form::text('price'.$num, old('price', $time_price->price), ['class' => 'form-control']) }}
               <p class="{{'is-error-price'.$num}}" style="color: red"></p>
             </td>
             <td>
               <p class="{{'is-error-extend'.$num}}" style="color: white"></p>
-              {{ Form::text('extend'.$num, old('extend', number_format($time_price->extend)), ['class' => 'form-control']) }}
+              {{ Form::text('extend'.$num, old('extend', $time_price->extend), ['class' => 'form-control']) }}
               <p class="{{'is-error-extend'.$num}}" style="color: red"></p>
             </td>
             <td>

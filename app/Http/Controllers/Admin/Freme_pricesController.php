@@ -162,29 +162,29 @@ class Freme_pricesController extends Controller
 
     $count_request = ((count($request->all())) - 4) / 4;
 
-    if ($count_request == 1) {
-      $request->validate([
-        'frame0' => 'required',
-        'start0' => 'required',
-        'finish0' => 'required',
-        'price0' => 'required',
-        'extend' => 'required',
-      ]);
-    } else {
-      for ($i = 0; $i < $count_request; $i++) {
-        $v_frame = 'frame' . $i;
-        $v_start = 'start' . $i;
-        $v_finish = 'finish' . $i;
-        $v_price = 'price' . $i;
-        $request->validate([
-          $v_frame => 'required',
-          $v_start => 'required',
-          $v_finish => 'required',
-          $v_price => 'required',
-          'extend' => 'required',
-        ]);
-      }
-    }
+    // if ($count_request == 1) {
+    //   $request->validate([
+    //     'frame0' => 'required',
+    //     'start0' => 'required',
+    //     'finish0' => 'required',
+    //     'price0' => 'required',
+    //     'extend' => 'required',
+    //   ]);
+    // } else {
+    //   for ($i = 0; $i < $count_request; $i++) {
+    //     $v_frame = 'frame' . $i;
+    //     $v_start = 'start' . $i;
+    //     $v_finish = 'finish' . $i;
+    //     $v_price = 'price' . $i;
+    //     $request->validate([
+    //       $v_frame => 'required',
+    //       $v_start => 'required',
+    //       $v_finish => 'required',
+    //       $v_price => 'required',
+    //       'extend' => 'required',
+    //     ]);
+    //   }
+    // }
 
     $frame_prices = Frame_price::where('venue_id', $id);
     $frame_prices->delete();

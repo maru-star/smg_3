@@ -53,7 +53,7 @@
       </td>
       <td>
         <p class="is-error-price" style="color: white"></p>
-        {{ Form::text('price', number_format($eqipment->price), ['class' => 'form-control']) }}
+        {{ Form::text('price', $eqipment->price, ['class' => 'form-control']) }}
         <p class="is-error-price" style="color: red"></p>
       </td>
       <td>
