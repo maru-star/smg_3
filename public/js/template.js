@@ -96,6 +96,8 @@ $(function () {
   ExceptString(price);
   var stock = $("input[name^='stock']");
   ExceptString(stock);
+  var extend = $("input[name^='extend']");
+  ExceptString(extend);
 });
 
 

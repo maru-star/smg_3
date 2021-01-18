@@ -68,7 +68,7 @@
           <td>{{Carbon\Carbon::parse($frame_price->start)->format('H:i')}} ~
             {{Carbon\Carbon::parse($frame_price->finish)->format('H:i')}}　（{{Carbon\Carbon::parse($frame_price->finish)->diffInHours(Carbon\Carbon::parse($frame_price->start))}}H）
           </td>
-          <td>{{ $frame_price->price}}円</td>
+          <td>{{ number_format($frame_price->price)}}円</td>
         </tr>
         @endforeach
       </tbody>

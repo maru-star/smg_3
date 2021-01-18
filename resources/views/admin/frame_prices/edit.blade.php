@@ -1,7 +1,10 @@
 @extends('layouts.admin.app')
 
 @section('content')
-{{-- @include('layouts.admin.side') --}}
+<script src="{{ asset('/js/template.js') }}"></script>
+<script src="{{ asset('/js/validation.js') }}"></script>
+<link href="{{ asset('/css/template.css') }}" rel="stylesheet">
+
 
 
 <!-- フォーム追加 -->
@@ -52,26 +55,26 @@
       });
 
       // 時間の入力制御
-      for (let  = 0; index < array.length; index++) {
-        const element = array[index];
+      // for (let  = 0; index < array.length; index++) {
+      //   const element = array[index];
         
-      } 
-        $('#start').on('change',function(){
-            var start=$('#start').val();
-            var finish=$('#finish').val();
-            if(start>finish){
-                alert('営業開始時間は営業終了時間より前に設定してください');
-                $('#start').val('');
-            }
-        })
-        $('#finish').on('change',function(){
-            var start=$('#start').val();
-            var finish=$('#finish').val();
-            if(start>finish){
-                alert('営業終了時間は営業開始時間より後に設定してください');
-                $('#finish').val('');
-            }
-        })
+      // } 
+      //   $('#start').on('change',function(){
+      //       var start=$('#start').val();
+      //       var finish=$('#finish').val();
+      //       if(start>finish){
+      //           alert('営業開始時間は営業終了時間より前に設定してください');
+      //           $('#start').val('');
+      //       }
+      //   })
+      //   $('#finish').on('change',function(){
+      //       var start=$('#start').val();
+      //       var finish=$('#finish').val();
+      //       if(start>finish){
+      //           alert('営業終了時間は営業開始時間より後に設定してください');
+      //           $('#finish').val('');
+      //       }
+      //   })
 
     });
 </script>
@@ -90,10 +93,6 @@
   <div class="d-flex justify-content-between mt-3 mb-5">
   </div>
 </div>
-
-
-
-
 
 
 <div class="p-3 mb-2 bg-white text-dark">
@@ -124,7 +123,7 @@
         </ul>
       </div>
       @endif
-      {{ Form::model($venue, ['route' => ['admin.frame_prices.update', $venue->id], 'method' => 'put']) }}
+      {{ Form::model($venue, ['route' => ['admin.frame_prices.update', $venue->id], 'method' => 'put', 'id'=>'dateCreateForm']) }}
       @csrf
       <table class="table">
         <thead>
@@ -139,7 +138,10 @@
         <tbody>
           @foreach ($frame_prices as $num=>$frame_price)
           <tr>
-            <td>{{ Form::text('frame'.$num, old('frame', $frame_price->frame), ['class' => 'form-control']) }}
+            <td>
+              <p class="{{'is-error-frame'.$num}}" style="color: white"></p>
+              {{ Form::text('frame'.$num, old('frame', $frame_price->frame), ['class' => 'form-control']) }}
+              <p class="{{'is-error-frame'.$num}}" style="color: red"></p>
             </td>
             <td>{{Form::select('start'.$num, [
                   '00:00:00'=>'00:00',
@@ -190,7 +192,8 @@
                   '22:30:00'=>'22:30',
                   '23:00:00'=>'23:00',
                   '23:30:00'=>'23:30',
-              ],old('start', $frame_price->start),['class'=>'form-control col-sm-12'])}}</td>
+              ],old('start', $frame_price->start),['class'=>'form-control col-sm-12'])}}
+            </td>
             <td>{{Form::select('finish'.$num, [
                   '00:00:00'=>'00:00',
                   '00:30:00'=>'00:30',
@@ -241,7 +244,11 @@
                   '23:00:00'=>'23:00',
                   '23:30:00'=>'23:30',
               ],old('finish', $frame_price->finish),['class'=>'form-control col-sm-12'])}}</td>
-            <td>{{ Form::number('price'.$num, old('price', $frame_price->price), ['class' => 'form-control']) }}</td>
+            <td>
+              <p class="{{'is-error-price'.$num}}" style="color: white"></p>
+              {{ Form::text('price'.$num, old('price', $frame_price->price), ['class' => 'form-control']) }}
+              <p class="{{'is-error-price'.$num}}" style="color: red"></p>
+            </td>
             <td>
               <input type="button" value="＋" class="add pluralBtn">
               <input type="button" value="ー" class="del pluralBtn">
@@ -254,7 +261,9 @@
         延長料金
       </div>
       <div>
-        {{ Form::number('extend', old('extend'),['class'=>'form-control w-25 mb-2'])}}
+        {{ Form::text('extend', $frame_price->extend,['class'=>'form-control w-25 mb-2'])}}
+        <p class="{{'is-error-extend'}}" style="color: red"></p>
+
       </div>
       {{Form::hidden('venue_id', $venue->id)}}
       {{ Form::submit('更新', ['class' => 'btn btn-primary']) }}
