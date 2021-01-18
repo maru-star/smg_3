@@ -56,6 +56,48 @@ $(function () {
   });
 });
 
+$(function () {
+  function ExceptString($target) {
+    $target.numeric({ negative: false, });
+    $target.on('change', function () {
+      charactersChange($(this));
+    })
+
+    charactersChange = function (ele) {
+      var val = ele.val();
+      var han = val.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function (s) { return String.fromCharCode(s.charCodeAt(0) - 0xFEE0) });
+
+      if (val.match(/[Ａ-Ｚａ-ｚ０-９]/g)) {
+        $(ele).val(han);
+      }
+    }
+  }
+  var size1 = $("input[name^='size1']");
+  ExceptString(size1);
+  var size2 = $("input[name^='size2']");
+  ExceptString(size2);
+  var capacity = $("input[name^='capacity']");
+  ExceptString(capacity);
+  var post_code = $("input[name^='post_code']");
+  ExceptString(post_code);
+  var luggage_post_code = $("input[name^='luggage_post_code']");
+  ExceptString(luggage_post_code);
+  var luggage_tel = $("input[name^='luggage_tel']");
+  ExceptString(luggage_tel);
+  var person_tel = $("input[name^='person_tel']");
+  ExceptString(person_tel);
+  var layout_prepare = $("input[name^='layout_prepare']");
+  ExceptString(layout_prepare);
+  var layout_clean = $("input[name^='layout_clean']");
+  ExceptString(layout_clean);
+  var cost = $("input[name^='cost']");
+  ExceptString(cost);
+  var price = $("input[name^='price']");
+  ExceptString(price);
+  var stock = $("input[name^='stock']");
+  ExceptString(stock);
+});
+
 
 // reservation create 日付選択後、会場選択表示
 // $(function () {

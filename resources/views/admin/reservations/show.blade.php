@@ -35,7 +35,12 @@
     @if ($reservation->bills()->first()->reservation_status==3)
     <!-- 請求書の追加ボタン-ステータス：予約完了で表示----- -->
     <p class="text-right">
-      <a class="more_btn3" href="">追加の請求書を作成する</a></p>
+      {{ Form::open(['url' => 'admin/reservations/'.$reservation->id.'/add_bill', 'method'=>'POST', 'class'=>'']) }}
+      @csrf
+      {{ Form::hidden('reservation_id', $reservation->id ) }}
+      {{ Form::submit('追加の請求書を作成する',['class' => 'btn more_btn3']) }}
+      {{ Form::close() }}
+    </p>
     @endif
   </div>
   <div class="col-12 btn-wrapper2">
@@ -43,6 +48,7 @@
     {{-- <p class="text-right"><a class="more_btn4_lg" href="">一括キャンセルをする</a></p> --}}
   </div>
   <!-- 予約詳細--------------------------------------------------------　 -->
+
   <div class="section-wrap">
     <div class="ttl-box d-flex align-items-center">
       <div class="col-9 d-flex justify-content-between">

@@ -36,6 +36,7 @@ $(function () {
       },
       post_code: {
         required: true,
+        maxlength: 7
       },
       address1: {
         required: true,
@@ -51,6 +52,7 @@ $(function () {
       },
       luggage_post_code: {
         required: true,
+        maxlength: 7
       },
       luggage_address1: {
         required: true,
@@ -108,6 +110,7 @@ $(function () {
       },
       post_code: {
         required: "※必須項目です",
+        maxlength: '７桁で入力してください'
       },
       address1: {
         required: "※必須項目です",
@@ -123,6 +126,7 @@ $(function () {
       },
       luggage_post_code: {
         required: "※必須項目です",
+        maxlength: '７桁で入力してください'
       },
       luggage_address1: {
         required: "※必須項目です",
@@ -429,41 +433,51 @@ $(function () {
   });
 })
 // 備品アップデート
+// 会場管理　新規登録validation
 $(function () {
   $("#EquipmentsUpdateForm").validate({
-    errorClass: "alert alert-danger", //エラー表示classをbootstrapのアラートに変える
+    // errorClass: "validate_danger", //エラー表示classをbootstrapのアラートに変える
     rules: {
       item: {
         required: true,
       },
       price: {
         required: true,
-        number: true,
+        number: true
       },
       stock: {
         required: true,
-        number: true,
-      }
+        number: true
+      },
     },
     messages: {
       item: {
         required: "※必須項目です",
+        url: '正しいURLを記入してください(例:https://osaka-conference.com/rental/t6-maronie/hall/)'
       },
-      price: {
+      alliapricence_flag: {
         required: "※必須項目です",
-        number: '数値で入力してください',
       },
       stock: {
         required: "※必須項目です",
-        number: '数値で入力してください',
+      },
+    },
+    errorPlacement: function (error, element) {
+      var name = element.attr('name');
+      if (element.attr('name') === 'category[]') {
+        error.appendTo($('.is-error-category'));
+      } else if (element.attr('name') === name) {
+        error.appendTo($('.is-error-' + name));
       }
     },
-    // errorPlacement: function (err, element) {
-    //   if (element.attr("alliance_flag")) {
-    //     element.parent().before(err);
-    //   } else {
-    //     element.before(err);
-    //   }
-    // }
+    errorElement: "span",
+    errorClass: "is-error",
   });
-})
+  $('input').on('blur', function () {
+    $(this).valid();
+    if ($('span').hasClass('is-error')) {
+      $('span').css('background', 'white');
+    }
+  });
+});
+

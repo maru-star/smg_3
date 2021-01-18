@@ -87,10 +87,10 @@
   <tbody>
     @foreach ($equipments as $query)
     <tr>
-      <td>{{ $query->id }}</td>
-      <td>{{ $query->created_at }}</td>
+      <td>{{ ReservationHelper::IdFormat($query->id) }}</td>
+      <td>{{ ReservationHelper::formatDate($query->created_at) }}</td>
       <td>{{ $query->item }}</td>
-      <td>{{ $query->price }}</td>
+      <td>{{  number_format($query->price )}}</td>
       <td>{{ $query->stock }}</td>
       <td>{{ $query->remark }}</td>
       <td class="d-flex justify-content-around">

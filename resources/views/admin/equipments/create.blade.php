@@ -42,11 +42,23 @@
   </thead>
   <tbody>
     <tr>
-      <td>{{App\Models\Equipment::all()->count()+1}}</td>
-      <td>{{Carbon\Carbon::now()}}</td>
-      <td>{{ Form::text('item', old('item'), ['class' => 'form-control']) }}</td>
-      <td>{{ Form::number('price', old('price'), ['class' => 'form-control']) }}</td>
-      <td>{{ Form::number('stock', old('stock'), ['class' => 'form-control']) }}</td>
+      <td>{{ReservationHelper::IdFormat(App\Models\Equipment::all()->count()+1)}}</td>
+      <td>{{ReservationHelper::formatDate(Carbon\Carbon::now())}}</td>
+      <td>
+        <p class="is-error-item" style="color: white"></p>
+        {{ Form::text('item', old('item'), ['class' => 'form-control']) }}
+        <p class="is-error-item" style="color: red"></p>
+      </td>
+      <td>
+        <p class="is-error-price" style="color: white"></p>
+        {{ Form::number('price', old('price'), ['class' => 'form-control']) }}
+        <p class="is-error-price" style="color: red"></p>
+      </td>
+      <td>
+        <p class="is-error-stock" style="color: white"></p>
+        {{ Form::number('stock', old('stock'), ['class' => 'form-control']) }}
+        <p class="is-error-stock" style="color: red"></p>
+      </td>
       <td>{{ Form::textarea('remark', old('remark'), ['class' => 'form-control','rows'=>"2"]) }}</td>
       <td>{{ Form::submit('登録', ['class' => 'btn btn-primary']) }}</td>
     </tr>

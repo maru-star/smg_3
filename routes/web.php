@@ -114,8 +114,8 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
     Route::post('reservations/{reservation}/confirm_reservation', 'ReservationsController@confirm_reservation')->name('reservations.confirm_reservation');
 
-    Route::get('reservations/{reservation}/add_bill', 'ReservationsController@confirm_reservation')->name('reservations.confirm_reservation');
-
+    // 請求書追加
+    Route::post('reservations/{reservation}/add_bill', 'ReservationsController@add_bill')->name('reservations.add_bill');
 
     // 管理者用カレンダーページ
     Route::get('calendar/venue_calendar', 'CalendarsController@index');

@@ -42,11 +42,25 @@
   </thead>
   <tbody>
     <tr>
-      <td>{{ $eqipment->id }}</td>
-      <td>{{ $eqipment->created_at }}</td>
-      <td>{{ Form::text('item', $eqipment->item, ['class' => 'form-control']) }}</td>
-      <td>{{ Form::text('price', $eqipment->price, ['class' => 'form-control']) }}</td>
-      <td>{{ Form::number('stock', $eqipment->stock, ['class' => 'form-control']) }}</td>
+      <td>{{ ReservationHelper::IdFormat($eqipment->id) }}</td>
+      <td>{{ ReservationHelper::formatDate($eqipment->created_at) }}</td>
+      <td>
+        <p class="is-error-item" style="color: white"></p>
+        <div class="d-flex align-items-center">
+          {{ Form::text('item', $eqipment->item, ['class' => 'form-control']) }}
+        </div>
+        <p class="is-error-item" style="color: red"></p>
+      </td>
+      <td>
+        <p class="is-error-price" style="color: white"></p>
+        {{ Form::text('price', number_format($eqipment->price), ['class' => 'form-control']) }}
+        <p class="is-error-price" style="color: red"></p>
+      </td>
+      <td>
+        <p class="is-error-stock" style="color: white"></p>
+        {{ Form::text('stock', $eqipment->stock, ['class' => 'form-control']) }}
+        <p class="is-error-stock" style="color: red"></p>
+      </td>
       <td>{{ Form::text('remark', $eqipment->remark, ['class' => 'form-control']) }}</td>
       <td>
         {{ Form::submit('更新', ['class' => 'btn btn-primary']) }}

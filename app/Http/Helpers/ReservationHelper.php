@@ -75,6 +75,43 @@ class ReservationHelper
     return $user->company;
   }
 
+  public static function getPersonName($user_id)
+  {
+    $user = User::find($user_id);
+    return $user->first_name . $user->last_name;
+  }
+
+  public static function getPersonNameKANA($user_id)
+  {
+    $user = User::find($user_id);
+    return $user->first_name_kana . $user->last_name_kana;
+  }
+
+  public static function getAttr($user_id)
+  {
+    $user = User::find($user_id);
+    switch ($user->attr) {
+      case 1:
+        return "一般企業";
+        break;
+      case 2:
+        return "上場企業";
+        break;
+      case 3:
+        return "近隣利用";
+        break;
+      case 4:
+        return "講師・セミナー";
+        break;
+      case 5:
+        return "ネットワーク";
+        break;
+      case 6:
+        return "その他";
+        break;
+    }
+  }
+
   public static function judgePaid($num)
   {
     return $num == 0 ? '未払' : '支払済';
@@ -96,5 +133,10 @@ class ReservationHelper
     $tax = floor($num * 0.1);
     $result = floor($num + $tax);
     return $result;
+  }
+
+  public static function IdFormat($num)
+  {
+    return sprintf('%05d', $num);
   }
 }

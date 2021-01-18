@@ -91,10 +91,10 @@
   <tbody>
     @foreach ($querys as $query)
     <tr>
-      <td>{{ $query->id }}</td>
-      <td>{{ date('Y/m/d',strtotime($query->created_at)) }}</td>
+      <td>{{ ReservationHelper::IdFormat($query->id) }}</td>
+      <td>{{ ReservationHelper::formatDate($query->created_at) }}</td>
       <td>{{ $query->item }}</td>
-      <td>{{ $query->price }}</td>
+      <td>{{ number_format($query->price) }}</td>
       <td>{{ $query->remark }}</td>
       <td class="d-flex justify-content-around">
         {{ link_to_route('admin.services.edit', '編集', $parameters = $query->id, ['class' => 'btn btn-primary']) }}

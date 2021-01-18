@@ -31,7 +31,7 @@
   @csrf
   <div class="p-3 mb-2 bg-white text-dark">
     {{ Form::label('smg_url', '会場SMG URL',['class' => 'form_required']) }}
-    {{ Form::text('smg_url', old('smg_url'), ['class' => 'form-control', 'required']) }}
+    {{ Form::text('smg_url', old('smg_url'), ['class' => 'form-control', 'required', 'placeholder'=>"https://osaka-conference.com/rental/t6-maronie/hall/"]) }}
     <p class="is-error-smg_url" style="color: red"></p>
   </div>
   <div class="row">
@@ -41,7 +41,7 @@
           <span class="form_required col-sm-4" id="alliance_flag"><i class="fas fa-info-circle"></i>ビル情報</span>
           <div class="mt-2 mb-2 col-sm-8">
             {{ Form::label('alliance_flag', '直営') }}
-            {{Form::radio('alliance_flag', '0')}}
+            {{Form::radio('alliance_flag', '0',true)}}
             <br>
             {{ Form::label('alliance_flag', '提携')}}
             {{Form::radio('alliance_flag', '1')}}
@@ -51,7 +51,8 @@
         <div class="row">
           <div class="col-sm-4">{{ Form::label('name_area', 'エリア名',['class' => 'form_required']) }}
           </div>
-          <div class="col-sm-8">{{ Form::text('name_area', old('name_area'), ['class' => 'form-control','required']) }}
+          <div class="col-sm-8">
+            {{ Form::text('name_area', old('name_area'), ['class' => 'form-control','required', 'placeholder'=>'四ツ橋']) }}
             <p class="is-error-name_area" style="color: red"></p>
           </div>
         </div>
@@ -60,7 +61,7 @@
           <div class="col-sm-4">{{ Form::label('name_bldg', 'ビル名',['class' => 'form_required']) }}
           </div>
           <div class="col-sm-8">
-            {{ Form::text('name_bldg', old('name_bldg'), ['class' => 'form-control']) }}
+            {{ Form::text('name_bldg', old('name_bldg'), ['class' => 'form-control', 'placeholder'=>'サンワールドビル']) }}
             <p class="is-error-name_bldg" style="color: red"></p>
           </div>
         </div>
@@ -68,7 +69,8 @@
         <div class="row">
           <div class="col-sm-4">{{ Form::label('name_venue', '会場名',['class' => 'form_required']) }}
           </div>
-          <div class="col-sm-8">{{ Form::text('name_venue', old('name_venue'), ['class' => 'form-control']) }}<p
+          <div class="col-sm-8">
+            {{ Form::text('name_venue', old('name_venue'), ['class' => 'form-control', 'placeholder'=>'１号室']) }}<p
               class="is-error-name_venue" style="color: red"></p>
           </div>
         </div>
@@ -76,7 +78,7 @@
         <div class="row">
           <div class="col-sm-4">{{ Form::label('size1', '会場広さ（坪）',['class' => 'form_required']) }}</div>
           <div class="col-sm-8">
-            {{ Form::number('size1', old('size1'), ['placeholder' => '15','class' => 'form-control']) }}<p
+            {{ Form::text('size1', old('size1'), ['placeholder' => '半角英数字で入力してください','class' => 'form-control']) }}<p
               class="is-error-size1" style="color: red"></p>
           </div>
 
@@ -85,7 +87,7 @@
         <div class="row">
           <div class="col-sm-4">{{ Form::label('size2', '会場広さ（㎡）',['class' => 'form_required']) }}</div>
           <div class="col-sm-8">
-            {{ Form::number('size2', old('size2'), ['placeholder' => '15','class' => 'form-control']) }}<p
+            {{ Form::text('size2', old('size2'), ['placeholder' => '半角英数字で入力してください','class' => 'form-control']) }}<p
               class="is-error-size2" style="color: red"></p>
           </div>
         </div>
@@ -93,8 +95,8 @@
         <div class="row">
           <div class="col-sm-4">{{ Form::label('capacity', '収容人数',['class' => 'form_required']) }}</div>
           <div class="col-sm-8">
-            {{ Form::number('capacity', old('capacity'), ['placeholder' => '15','class' => 'form-control']) }}<p
-              class="is-error-capacity" style="color: red"></p>
+            {{ Form::text('capacity', old('capacity'), ['placeholder' => '半角英数字で入力してください','class' => 'form-control']) }}
+            <p class="is-error-capacity" style="color: red"></p>
           </div>
         </div>
         <hr>
@@ -104,6 +106,7 @@
             'class' => 'form-control',
             'onKeyUp'=>"AjaxZip3.zip2addr(this,'','address1','address2');",
             'autocomplete'=>'off',
+            'placeholder' => '半角英数字で入力してください'
             ]) }}
             <p class="is-error-post_code" style="color: red"></p>
           </div>
@@ -162,7 +165,7 @@
         <div class="row">
           <div class="col-sm-4">{{ Form::label('luggage_flag', '荷物預かり　有・無',['class' => 'form_required']) }}</div>
           <div class="col-sm-8">
-            {{Form::select('luggage_flag', ['無し', '有り'],null,['placeholder' => '選択してください','class'=>'custom-select mr-sm-2'])}}
+            {{Form::select('luggage_flag', ['無し', '有り'],0,['placeholder' => '選択してください','class'=>'custom-select mr-sm-2'])}}
             <p class="is-error-luggage_flag" style="color: red"></p>
           </div>
         </div>
@@ -173,6 +176,7 @@
             'class' => 'form-control',
             'onKeyUp'=>"AjaxZip3.zip2addr(this,'','luggage_address1','luggage_address2');",
             'autocomplete'=>'off',
+            'placeholder' => '半角英数字で入力してください'
             ]) }}
             <p class="is-error-luggage_post_code" style="color: red"></p>
           </div>
@@ -181,7 +185,7 @@
         <div class="row">
           <div class="col-sm-4">{{ Form::label('luggage_address1', '住所（都道府県）',['class' => 'form_required']) }}</div>
           <div class="col-sm-8">
-            {{ Form::text('luggage_address1', old('luggage_address1'), ['class' => 'form-control']) }}
+            {{ Form::text('luggage_address1', old('luggage_address1'), ['class' => 'form-control','placeholder' => '大阪府']) }}
             <p class="is-error-luggage_address1" style="color: red"></p>
           </div>
         </div>
@@ -189,7 +193,7 @@
         <div class="row">
           <div class="col-sm-4">{{ Form::label('luggage_address2', '住所（市町村番地）',['class' => 'form_required']) }}</div>
           <div class="col-sm-8">
-            {{ Form::text('luggage_address2', old('luggage_address2'), ['class' => 'form-control']) }}
+            {{ Form::text('luggage_address2', old('luggage_address2'), ['class' => 'form-control','placeholder' => '大阪市北堀江1-23-1']) }}
             <p class="is-error-luggage_address2" style="color: red"></p>
           </div>
         </div>
@@ -197,7 +201,7 @@
         <div class="row">
           <div class="col-sm-4">{{ Form::label('luggage_address3', '住所（建物名）',['class' => 'form_required']) }}</div>
           <div class="col-sm-8">
-            {{ Form::text('luggage_address3', old('luggage_address3'), ['class' => 'form-control']) }}
+            {{ Form::text('luggage_address3', old('luggage_address3'), ['class' => 'form-control','placeholder' => 'プレサンスビル703号室']) }}
             <p class="is-error-luggage_address3" style="color: red"></p>
           </div>
         </div>
@@ -205,7 +209,7 @@
         <div class="row">
           <div class="col-sm-4">{{ Form::label('luggage_name', '送付先名',['class' => 'form_required']) }}</div>
           <div class="col-sm-8">
-            {{ Form::text('luggage_name', old('luggage_name'), ['class' => 'form-control']) }}
+            {{ Form::text('luggage_name', old('luggage_name'), ['class' => 'form-control','placeholder' => '入力してください']) }}
             <p class="is-error-luggage_name" style="color: red"></p>
           </div>
         </div>
@@ -213,7 +217,7 @@
         <div class="row">
           <div class="col-sm-4">{{ Form::label('luggage_tel', '電話番号',['class' => 'form_required']) }}</div>
           <div class="col-sm-8">
-            {{ Form::text('luggage_tel', old('luggage_tel'), ['class' => 'form-control']) }}
+            {{ Form::text('luggage_tel', old('luggage_tel'), ['class' => 'form-control','placeholder' => '半角英数字で入力してください']) }}
             <p class="is-error-luggage_tel" style="color: red"></p>
           </div>
         </div>
@@ -312,7 +316,7 @@
         <div class="row">
           <div class="col-sm-4">{{ Form::label('eat_in_flag', '室内飲食',['class' => 'form_required']) }}</div>
           <div class="col-sm-8">
-            {{{Form::select('eat_in_flag', ['無し', '有り'],null,['placeholder' => '選択してください', 'class'=>'custom-select mr-sm-2'])}}}
+            {{{Form::select('eat_in_flag', ['無し', '有り'],0,['placeholder' => '選択してください', 'class'=>'custom-select mr-sm-2'])}}}
             <p class="is-error-eat_in_flag" style="color: red"></p>
           </div>
         </div>
@@ -323,7 +327,7 @@
         <div class="row">
           <div class="col-sm-4">{{ Form::label('layout', 'レイアウト変更',['class' => 'form_required']) }}</div>
           <div class="col-sm-8">
-            {{{Form::select('layout', ['無し', '有り'],null,['placeholder' => '選択してください', 'class'=>'custom-select mr-sm-2'])}}}
+            {{{Form::select('layout', ['無し', '有り'],0,['placeholder' => '選択してください', 'class'=>'custom-select mr-sm-2'])}}}
             <p class="is-error-layout" style="color: red"></p>
 
           </div>
@@ -333,14 +337,14 @@
           <div class="row">
             <div class="col-sm-4">{{ Form::label('layout_prepare', 'レイアウト準備料金',['class' => '']) }}</div>
             <div class="col-sm-8">
-              {{ Form::number('layout_prepare', old('layout_prepare'), ['class' => 'form-control']) }}</div>
+              {{ Form::text('layout_prepare', old('layout_prepare'), ['class' => 'form-control']) }}</div>
           </div>
         </div>
         <div class="p-3 mb-2 bg-white text-dark">
           <div class="row">
             <div class="col-sm-4">{{ Form::label('layout_clean', 'レイアウト変更料金',['class' => '']) }}</div>
             <div class="col-sm-8">
-              {{ Form::number('layout_clean', old('layout_clean'), ['class' => 'form-control']) }}</div>
+              {{ Form::text('layout_clean', old('layout_clean'), ['class' => 'form-control']) }}</div>
           </div>
         </div>
       </div>
@@ -349,7 +353,7 @@
         <div class="row">
           <div class="col-sm-4">{{ Form::label('cost', '支払割合（原価）') }}</div>
           <div class="col-sm-8">
-            {{ Form::number('cost', old('cost'), ['class' => 'form-control']) }}</div>
+            {{ Form::text('cost', old('cost'), ['class' => 'form-control']) }}</div>
         </div>
         <hr>
       </div>

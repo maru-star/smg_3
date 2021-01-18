@@ -86,7 +86,7 @@
 
         <div class="row">
           <div class="col-sm-4">{{ Form::label('size1', '会場広さ（坪）',['class' => 'form_required']) }}</div>
-          <div class="col-sm-8">{{ Form::number('size1', $venue->size1, ['class' => 'form-control']) }}
+          <div class="col-sm-8">{{ Form::text('size1', $venue->size1, ['class' => 'form-control']) }}
             <p class="is-error-size1" style="color: red"></p>
           </div>
         </div>
@@ -95,7 +95,7 @@
 
         <div class="row">
           <div class="col-sm-4">{{ Form::label('size2', '会場広さ（㎡）',['class' => 'form_required']) }}</div>
-          <div class="col-sm-8">{{ Form::number('size2', $venue->size2, ['class' => 'form-control']) }}
+          <div class="col-sm-8">{{ Form::text('size2', $venue->size2, ['class' => 'form-control']) }}
             <p class="is-error-size2" style="color: red"></p>
           </div>
         </div>
@@ -105,7 +105,7 @@
         <div class="row">
           <div class="col-sm-4">{{ Form::label('capacity', '収容人数',['class' => 'form_required']) }}</div>
           <div class="col-sm-8">
-            {{ Form::number('capacity', $venue->capacity, ['placeholder' => '15','class' => 'form-control']) }}
+            {{ Form::text('capacity', $venue->capacity, ['placeholder' => '15','class' => 'form-control']) }}
             <p class="is-error-capacity" style="color: red"></p>
           </div>
         </div>
@@ -384,14 +384,14 @@
           <div class="row">
             <div class="col-sm-4">{{ Form::label('layout_prepare', 'レイアウト準備料金',['class' => '']) }}</div>
             <div class="col-sm-8">
-              {{ Form::number('layout_prepare', $venue->layout_prepare, ['class' => 'form-control']) }}</div>
+              {{ Form::text('layout_prepare', $venue->layout_prepare, ['class' => 'form-control']) }}</div>
           </div>
         </div>
         <div class="p-3 mb-2 bg-white text-dark">
           <div class="row">
             <div class="col-sm-4">{{ Form::label('layout_clean', 'レイアウト変更料金',['class' => '']) }}</div>
             <div class="col-sm-8">
-              {{ Form::number('layout_clean', $venue->layout_clean, ['class' => 'form-control']) }}</div>
+              {{ Form::text('layout_clean', $venue->layout_clean, ['class' => 'form-control']) }}</div>
           </div>
         </div>
       </div>
@@ -406,7 +406,7 @@
         <div class="row">
           <div class="col-sm-4">{{ Form::label('cost', '支払割合（原価）') }}</div>
           <div class="col-sm-8">
-            {{ Form::number('cost', $venue->cost, ['class' => 'form-control']) }}</div>
+            {{ Form::text('cost', $venue->cost, ['class' => 'form-control']) }}</div>
         </div>
       </div>
       <hr>
@@ -416,7 +416,7 @@
 
 
 
-<div class="p-3 mb-2 bg-white text-dark">
+<div class="p-3 mb-2  text-dark">
   <span>有料備品</span>
   <div>
     <div><span>※左部リストよりクリックで選択し右部リストに移動させてください</span></div>
@@ -433,7 +433,7 @@
   </div>
 </div>
 
-<div class="p-3 mb-2 bg-white text-dark">
+<div class="p-3 mb-2  text-dark">
   <span>有料サービス</span>
   <div>
     <div><span>※左部リストよりクリックで選択し右部リストに移動させてください</span></div>

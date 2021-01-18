@@ -589,6 +589,26 @@ class ReservationsController extends Controller
     return redirect()->route('admin.reservations.index');
   }
 
+  public function add_bill(Request $request)
+  {
+    $reservation = Reservation::find($request->reservation_id);
+    $venue = Venue::find($reservation->venue_id);
+    $equipments = $venue->equipments()->get();
+    $services = $venue->services()->get();
+    $breakdowns = $reservation->breakdowns()->get();
+    $user = user::find($reservation->user_id);
+
+
+    return view('admin.reservations.add_bill', [
+      'reservation' => $reservation,
+      'equipments' => $equipments,
+      'services' => $services,
+      'breakdowns' => $breakdowns,
+      'user' => $user,
+
+    ]);
+  }
+
 
   /**
    * Show the form for editing the specified resource.
