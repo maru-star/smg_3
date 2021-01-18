@@ -37,7 +37,6 @@
           $('.table tbody tr').eq(index).find('td').eq(0).append("<p class='is-error-"+time+"' style='color: red'></p>");
           $('.table tbody tr').eq(index).find('td').eq(1).append("<p class='is-error-"+price+"' style='color: red'></p>");
           $('.table tbody tr').eq(index).find('td').eq(2).append("<p class='is-error-"+extend+"' style='color: red'></p>");
-
         };
         
 
