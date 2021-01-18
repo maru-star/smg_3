@@ -2,6 +2,10 @@
 
 @section('content')
 {{-- @include('layouts.admin.side') --}}
+<script src="{{ asset('/js/template.js') }}"></script>
+<script src="{{ asset('/js/validation.js') }}"></script>
+<link href="{{ asset('/css/template.css') }}" rel="stylesheet">
+
 
 <!-- フォーム追加 -->
 <script>
@@ -105,7 +109,7 @@
         </ul>
       </div>
       @endif
-      {{ Form::model($venue, ['route' => ['admin.time_prices.update', $venue->id], 'method' => 'put']) }}
+      {{ Form::model($venue, ['route' => ['admin.time_prices.update', $venue->id], 'method' => 'put', 'id'=>'timeEditForm']) }}
       @csrf
       <table class="table">
         <thead>
@@ -119,9 +123,21 @@
         <tbody>
           @foreach ($time_prices as $num=>$time_price)
           <tr>
-            <td>{{ Form::text('time'.$num, old('time', $time_price->time), ['class' => 'form-control']) }}</td>
-            <td>{{ Form::number('price'.$num, old('price', $time_price->price), ['class' => 'form-control']) }}</td>
-            <td>{{ Form::number('extend'.$num, old('extend', $time_price->extend), ['class' => 'form-control']) }}</td>
+            <td>
+              <p class="{{'is-error-time'.$num}}" style="color: white"></p>
+              {{ Form::text('time'.$num, old('time', $time_price->time), ['class' => 'form-control']) }}
+              <p class="{{'is-error-time'.$num}}" style="color: red"></p>
+            </td>
+            <td>
+              <p class="{{'is-error-price'.$num}}" style="color: white"></p>
+              {{ Form::text('price'.$num, old('price', number_format($time_price->price)), ['class' => 'form-control']) }}
+              <p class="{{'is-error-price'.$num}}" style="color: red"></p>
+            </td>
+            <td>
+              <p class="{{'is-error-extend'.$num}}" style="color: white"></p>
+              {{ Form::text('extend'.$num, old('extend', number_format($time_price->extend)), ['class' => 'form-control']) }}
+              <p class="{{'is-error-extend'.$num}}" style="color: red"></p>
+            </td>
             <td>
               <input type="button" value="＋" class="add pluralBtn">
               <input type="button" value="ー" class="del pluralBtn">

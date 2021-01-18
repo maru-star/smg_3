@@ -576,3 +576,60 @@ $(function () {
 
 
 });
+
+
+
+// 料金管理　編集
+$(function () {
+  $("#timeEditForm").validate({
+    errorPlacement: function (error, element) {
+      var name = element.attr('name');
+      if (element.attr('name') === 'category[]') {
+        error.appendTo($('.is-error-category'));
+      } else if (element.attr('name') === name) {
+        error.appendTo($('.is-error-' + name));
+      }
+    },
+    errorElement: "span",
+    errorClass: "is-error",
+  });
+  $('input').on('blur', function () {
+    $(this).valid();
+    if ($('span').hasClass('is-error')) {
+      $('span').css('background', 'white');
+    }
+  });
+  $("input[name^='time']").each( function( index, elem ) {
+    console.log(index);
+      $("input[name='time"+index+"']").rules( "add", {
+    required: true,
+    messages: {
+      required: "※必須項目です",
+    }
+  });
+  });
+  $("input[name^='price']").each( function( index, elem ) {
+    console.log(index);
+      $("input[name='price"+index+"']").rules( "add", {
+    required: true,
+    number: true,
+    messages: {
+      required: "※必須項目です",
+      number:"※半角英数字を入力してください"
+    }
+  });
+  });
+  $("input[name^='extend']").each( function( index, elem ) {
+    console.log(index);
+      $("input[name='extend"+index+"']").rules( "add", {
+    required: true,
+    number: true,
+    messages: {
+      required: "※必須項目です",
+      number:"※半角英数字を入力してください"
+    }
+  });
+  });
+
+
+});

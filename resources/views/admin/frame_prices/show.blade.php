@@ -108,9 +108,9 @@
         @foreach ($time_prices as $time_price)
         <tr>
           <th>{{ $time_price->time}}</th>
-          <td>{{ $time_price->price}}</td>
-          <td>{{ $time_price->extend}}</td>
-          <td>{{ $time_price->created_at}}</td>
+          <td>{{ number_format($time_price->price)}}</td>
+          <td>{{ number_format($time_price->extend)}}</td>
+          <td>{{ ReservationHelper::formatDate($time_price->created_at)}}</td>
         </tr>
         @endforeach
       </tbody>

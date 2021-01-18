@@ -246,7 +246,7 @@
               ],old('finish', $frame_price->finish),['class'=>'form-control col-sm-12'])}}</td>
             <td>
               <p class="{{'is-error-price'.$num}}" style="color: white"></p>
-              {{ Form::text('price'.$num, old('price', $frame_price->price), ['class' => 'form-control']) }}
+              {{ Form::text('price'.$num, old('price', number_format($frame_price->price)), ['class' => 'form-control']) }}
               <p class="{{'is-error-price'.$num}}" style="color: red"></p>
             </td>
             <td>
@@ -261,7 +261,7 @@
         延長料金
       </div>
       <div>
-        {{ Form::text('extend', $frame_price->extend,['class'=>'form-control w-25 mb-2'])}}
+        {{ Form::text('extend', number_format($frame_price->extend),['class'=>'form-control w-25 mb-2'])}}
         <p class="{{'is-error-extend'}}" style="color: red"></p>
 
       </div>
