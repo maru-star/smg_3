@@ -254,7 +254,6 @@
               <input type="button" value="ー" class="del pluralBtn">
             </td>
           </tr>
-          {{Form::hidden('prices_each_id'.$num, $frame_price->id)}}
           @endforeach
         </tbody>
       </table>
