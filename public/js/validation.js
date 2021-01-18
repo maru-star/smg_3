@@ -546,7 +546,7 @@ $(function () {
     }
   });
   $("input[name^='frame']").each( function( index, elem ) {
-    console.log(index);
+    
       $("input[name='frame"+index+"']").rules( "add", {
     required: true,
     messages: {
@@ -555,7 +555,7 @@ $(function () {
   });
   });
   $("input[name^='price']").each( function( index, elem ) {
-    console.log(index);
+    
       $("input[name='price"+index+"']").rules( "add", {
     required: true,
     number: true,
@@ -600,7 +600,6 @@ $(function () {
     }
   });
   $("input[name^='time']").each( function( index, elem ) {
-    console.log(index);
       $("input[name='time"+index+"']").rules( "add", {
     required: true,
     messages: {
@@ -609,7 +608,6 @@ $(function () {
   });
   });
   $("input[name^='price']").each( function( index, elem ) {
-    console.log(index);
       $("input[name='price"+index+"']").rules( "add", {
     required: true,
     number: true,
@@ -620,7 +618,6 @@ $(function () {
   });
   });
   $("input[name^='extend']").each( function( index, elem ) {
-    console.log(index);
       $("input[name='extend"+index+"']").rules( "add", {
     required: true,
     number: true,
