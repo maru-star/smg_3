@@ -120,5 +120,8 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
     // 管理者用カレンダーページ
     Route::get('calendar/venue_calendar', 'CalendarsController@index');
     Route::post('calendar/venue_calendar', 'CalendarsController@getData');
+
+    // ajax 予約　請求書　追加
+    Route::post('reservations/ajaxaddbillsequipments', 'ReservationsController@ajaxaddbillsequipments');
   });
 });

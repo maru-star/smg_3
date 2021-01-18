@@ -593,21 +593,26 @@ class ReservationsController extends Controller
   {
     $reservation = Reservation::find($request->reservation_id);
     $venue = Venue::find($reservation->venue_id);
-    $equipments = $venue->equipments()->get();
-    $services = $venue->services()->get();
-    $breakdowns = $reservation->breakdowns()->get();
-    $user = user::find($reservation->user_id);
-
 
     return view('admin.reservations.add_bill', [
       'reservation' => $reservation,
-      'equipments' => $equipments,
-      'services' => $services,
-      'breakdowns' => $breakdowns,
-      'user' => $user,
 
     ]);
   }
+  /***********************
+   * ajax 請求書追加
+   ***********************
+   */
+  public function ajaxaddbillsequipments(Request $request)
+  {
+    $reservation = Reservation::find($request->reservation_id);
+    $equipments = $reservation->venue->equipments()->get();
+    $services = $reservation->venue->services()->get();
+
+    return [$equipments, $services];
+  }
+
+
 
 
   /**
