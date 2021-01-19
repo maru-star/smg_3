@@ -38,10 +38,15 @@ $(function () {
         var data3 = $('.extra-bill-table tbody tr').eq(index).find('td').eq(2).find('input').val();
         var data4 = data2 * data3;
         sub_total = sub_total + data4;
+        var m_append_data = "<tr>"
+          + "<td><input class='form-control' name='equipment_service_item" + index + "' type='text' readonly disabled value='" + data1 + "'></td>"
+          + "<td><input class='form-control' name='equipment_service_cost" + index + "' type='text' readonly disabled value='" + data2 + "'></td>"
+          + "<td><input class='form-control' name='equipment_service_count" + index + "' type='text' readonly disabled value='" + data3 + "'></td>"
+          + "<td><input class='form-control' name='equipment_service_subtotal" + index + "' type='text' readonly disabled value='" + data4 + "'></td>"
+          + "</tr>";
         if (data3 > 0) {
-          main_tar.append("<tr><td>" + data1 + "</td><td>" + data2 + "</td><td>" + data3 + "</td><td>" + data4 + "</td></tr>");
+          main_tar.append(m_append_data);
         }
-
       }
     } else if (judge == 2) { //レイアウト変更なら
       $('.result_table tbody').html('');
@@ -51,9 +56,14 @@ $(function () {
         var data3 = $('.extra-bill-table tbody tr').eq(index).find('td').eq(2).find('input').val();
         var data4 = data2 * data3;
         sub_total = sub_total + data4;
-
+        var m_append_data = "<tr>"
+          + "<td><input class='form-control' name='layout_item" + index + "' type='text' readonly disabled value='" + data1 + "'></td>"
+          + "<td><input class='form-control' name='layout_cost" + index + "' type='text' readonly disabled value='" + data2 + "'></td>"
+          + "<td><input class='form-control' name='layout_count" + index + "' type='text' readonly disabled value='" + data3 + "'></td>"
+          + "<td><input class='form-control' name='layout_subtotal" + index + "' type='text' readonly disabled value='" + data4 + "'></td>"
+          + "</tr>";
         if (data3 > 0) {
-          main_tar.append("<tr><td>" + data1 + "</td><td>" + data2 + "</td><td>" + data3 + "</td><td>" + data4 + "</td></tr>");
+          main_tar.append(m_append_data);
         }
       }
     } else if (judge == 3) {
@@ -64,15 +74,22 @@ $(function () {
         var data3 = $('.extra-bill-table tbody tr').eq(index).find('td').eq(2).find('input').val();
         var data4 = data2 * data3;
         sub_total = sub_total + data4;
-        main_tar.append("<tr><td>" + data1 + "</td><td>" + data2 + "</td><td>" + data3 + "</td><td>" + data4 + "</td></tr>");
+        var m_append_data = "<tr>"
+          + "<td><input class='form-control' name='others_item" + index + "' type='text' readonly disabled value='" + data1 + "'></td>"
+          + "<td><input class='form-control' name='others_cost" + index + "' type='text' readonly disabled value='" + data2 + "'></td>"
+          + "<td><input class='form-control' name='others_count" + index + "' type='text' readonly disabled value='" + data3 + "'></td>"
+          + "<td><input class='form-control' name='others_subtotal" + index + "' type='text' readonly disabled value='" + data4 + "'></td>"
+          + "</tr>";
+
+        main_tar.append(m_append_data);
       }
     }
 
     console.log(sub_total);
-    $('.sub_total').val(sub_total);
-    $('.after_dicsount').val(sub_total);
-    $('.tax').val(sub_total * 0.1);
-    $('.total').val(sub_total + (sub_total * 0.1));
+    $('.sub_total').val(Math.floor(sub_total));
+    $('.after_dicsount').val(Math.floor(sub_total));
+    $('.tax').val(Math.floor(sub_total * 0.1));
+    $('.total').val(Math.floor(sub_total + (sub_total * 0.1)));
 
 
   })

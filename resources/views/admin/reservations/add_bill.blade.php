@@ -95,14 +95,16 @@
       <button class="text-center more_btn_lg add_bill_calculate">計算する</button>
     </div>
 
+    {{ Form::open(['url' => 'admin/reservations/'.$reservation->id.'/add_bill_check', 'method'=>'POST']) }}
+    @csrf
     <table class="result_table table table-bordered">
       <thead>
         <tr>
           <td colspan="4" style="background: gray">結果</td>
         </tr>
         <tr>
-          <td>割引料金<input type="text" class="discount_input"></td>
-          <td>割引率　<span></span>%</td>
+          <td>割引料金<input type="text" class="discount_input" name="discount_input"></td>
+          <td>割引率　<input class="percentage" type="text" readonly disabled name="percentage">%</td>
           <td colspan="2"> </td>
         </tr>
         <tr>
@@ -116,17 +118,20 @@
       </tbody>
     </table>
     <div>
-      <p>小計</p> <input type="text" class="sub_total" readonly>
-      <p>割引後　備品その他合計</p><input class="after_dicsount" type="text" readonly>
-      <p>消費税</p><input class="tax" type="text" readonly>
-      <p>請求総額</p><input class="total" type="text" readonly>
+      <p>小計</p>
+      <input type="text" class="sub_total" readonly disabled name="sub_total">
+      <p>割引後　備品その他合計</p>
+      <input class="after_dicsount" type="text" readonly disabled name="after_dicsount">
+      <p>消費税</p>
+      <input class="tax" type="text" readonly disabled name="tax">
+      <p>請求総額</p>
+      <input class="total" type="text" readonly disabled name="total">
     </div>
 
-
-
-
     <div class="btn_wrapper">
-      <p class="text-center"><a class="more_btn_lg">作成する</a></p>
+      <p class="text-center">{!! Form::submit('確認する', ['class' => 'btn btn-primary']) !!}</p>
+      {{ Form::close() }}
+
     </div>
 
     <div class="btn_wrapper">
@@ -167,20 +172,23 @@
       var discount=$(this).val();
       var sub_total=$('.sub_total').val();
       var after_discount=$('.after_dicsount').val();
+      var percentage = Math.floor((discount/sub_total)*100);
       $('.selected_discount').remove();
       var data = "<tr class='selected_discount'><td>割引料金</td><td>"+(-discount)+"</td><td>1</td><td>"+(-discount)+"</td></tr>"
 
       if (discount>0) {
+        $('.percentage').val(percentage);
         $('.result_table tbody').append(data);
-        $('.after_dicsount').val(sub_total-discount);
-        $('.tax').val((sub_total-discount)*0.1);
-        $('.total').val(Number($('.tax').val())+Number($('.after_dicsount').val()));
+        $('.after_dicsount').val(Math.floor(sub_total-discount));
+        $('.tax').val(Math.floor((sub_total-discount)*0.1));
+        $('.total').val(Math.floor(Number($('.tax').val())+Number($('.after_dicsount').val())));
       }else{
+        $('.percentage').val('');
         $('.selected_discount').remove();
-        $('.after_dicsount').val(sub_total);
-        $('.tax').val((sub_total)*0.1);
+        $('.after_dicsount').val(Math.floor(sub_total));
+        $('.tax').val(Math.floor((sub_total)*0.1));
         $('.total').val('');
-        $('.total').val(Number(sub_total)+Number((sub_total)*0.1));
+        $('.total').val(Math.floor(Number(sub_total)+Number((sub_total)*0.1)));
       }
       
 

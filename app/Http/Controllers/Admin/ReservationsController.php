@@ -627,6 +627,18 @@ class ReservationsController extends Controller
 
 
 
+  public function add_bill_check(Request $request)
+  {
+    var_dump($request->all());
+
+
+    // return view('admin.reservations.add_bill_check', [
+
+    // ]);
+  }
+
+
+
   /**
    * Show the form for editing the specified resource.
    *

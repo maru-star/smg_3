@@ -125,5 +125,8 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
     Route::post('reservations/ajaxaddbillsequipments', 'ReservationsController@ajaxaddbillsequipments');
     // ajax 予約　請求書　追加　レイアウト取得
     Route::post('reservations/ajaxaddbillslaytout', 'ReservationsController@ajaxaddbillslaytout');
+
+    // 管理者請求書作成　確認画面
+    Route::post('reservations/{reservation}/add_bill_check', 'ReservationsController@add_bill_check')->name('reservations.add_bill_check');
   });
 });
