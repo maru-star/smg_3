@@ -20,30 +20,61 @@ $(function () {
   })
 
   $('.add_bill_calculate').on('click', function () {
+    $('.result_table tbody').html(''); //全体初期化
+    $('.discount_input').val('');
     var judge = $('input:radio[name="billcategory"]:checked').val();
 
     var count = $('.extra-bill-table tbody tr').length;
 
+    var main_tar = $('.result_table tbody');
+
+    var sub_total = 0;
+
     if (judge == 1) { //その他有料備品なら
+      $('.result_table tbody').html('');
       for (let index = 0; index < count; index++) {
-        console.log($('.extra-bill-table tbody tr').eq(index).find('td').eq(0).text());
-        console.log($('.extra-bill-table tbody tr').eq(index).find('td').eq(1).text());
-        console.log($('.extra-bill-table tbody tr').eq(index).find('td').eq(2).find('input').val());
+        var data1 = $('.extra-bill-table tbody tr').eq(index).find('td').eq(0).text();
+        var data2 = Number($('.extra-bill-table tbody tr').eq(index).find('td').eq(1).text());
+        var data3 = $('.extra-bill-table tbody tr').eq(index).find('td').eq(2).find('input').val();
+        var data4 = data2 * data3;
+        sub_total = sub_total + data4;
+        if (data3 > 0) {
+          main_tar.append("<tr><td>" + data1 + "</td><td>" + data2 + "</td><td>" + data3 + "</td><td>" + data4 + "</td></tr>");
+        }
+
       }
     } else if (judge == 2) { //レイアウト変更なら
+      $('.result_table tbody').html('');
       for (let index = 0; index < count; index++) {
-        console.log($('.extra-bill-table tbody tr').eq(index).find('td').eq(0).text());
-        console.log($('.extra-bill-table tbody tr').eq(index).find('td').eq(1).text());
-        console.log($('.extra-bill-table tbody tr').eq(index).find('td').eq(2).find('input').val());
+        var data1 = $('.extra-bill-table tbody tr').eq(index).find('td').eq(0).text();
+        var data2 = $('.extra-bill-table tbody tr').eq(index).find('td').eq(1).text();
+        var data3 = $('.extra-bill-table tbody tr').eq(index).find('td').eq(2).find('input').val();
+        var data4 = data2 * data3;
+        sub_total = sub_total + data4;
+
+        if (data3 > 0) {
+          main_tar.append("<tr><td>" + data1 + "</td><td>" + data2 + "</td><td>" + data3 + "</td><td>" + data4 + "</td></tr>");
+        }
       }
     } else if (judge == 3) {
+      $('.result_table tbody').html('');
       for (let index = 0; index < count; index++) {
-        console.log($('.extra-bill-table tbody tr').eq(index).find('td').eq(0).find('input').val());
-        console.log($('.extra-bill-table tbody tr').eq(index).find('td').eq(1).find('input').val());
-        console.log($('.extra-bill-table tbody tr').eq(index).find('td').eq(2).find('input').val());
+        var data1 = $('.extra-bill-table tbody tr').eq(index).find('td').eq(0).find('input').val();
+        var data2 = $('.extra-bill-table tbody tr').eq(index).find('td').eq(1).find('input').val();
+        var data3 = $('.extra-bill-table tbody tr').eq(index).find('td').eq(2).find('input').val();
+        var data4 = data2 * data3;
+        sub_total = sub_total + data4;
+        main_tar.append("<tr><td>" + data1 + "</td><td>" + data2 + "</td><td>" + data3 + "</td><td>" + data4 + "</td></tr>");
       }
-
     }
+
+    console.log(sub_total);
+    $('.sub_total').val(sub_total);
+    $('.after_dicsount').val(sub_total);
+    $('.tax').val(sub_total * 0.1);
+    $('.total').val(sub_total + (sub_total * 0.1));
+
+
   })
 
 });
