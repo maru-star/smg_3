@@ -632,9 +632,7 @@ class ReservationsController extends Controller
     var_dump($request->all());
 
 
-    // return view('admin.reservations.add_bill_check', [
-
-    // ]);
+    // return view('admin.reservations.add_bill_check', []);
   }
 
 

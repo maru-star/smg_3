@@ -40,6 +40,9 @@
   </div>
 </div>
 
+{{ Form::open(['url' => 'admin/reservations/'.$reservation->id.'/add_bill_check', 'method'=>'POST','id'=>'testid']) }}
+@csrf
+
 {{ Form::hidden('reservation', $reservation->id, ['class' => 'form-control', 'id'=>'reservation']) }}
 
 
@@ -92,11 +95,9 @@
     </table>
 
     <div class="btn_wrapper">
-      <button class="text-center more_btn_lg add_bill_calculate">計算する</button>
+      <p class=" btn text-center more_btn_lg add_bill_calculate">計算する</p>
     </div>
 
-    {{ Form::open(['url' => 'admin/reservations/'.$reservation->id.'/add_bill_check', 'method'=>'POST']) }}
-    @csrf
     <table class="result_table table table-bordered">
       <thead>
         <tr>
@@ -128,26 +129,28 @@
       <input class="total" type="text" readonly disabled name="total">
     </div>
 
-    <div class="btn_wrapper">
-      <p class="text-center">{!! Form::submit('確認する', ['class' => 'btn btn-primary']) !!}</p>
-      {{ Form::close() }}
+    {{-- <div class="btn_wrapper">
+      <p class="text-center">確認する</p>
+    </div> --}}
 
-    </div>
-
-    <div class="btn_wrapper">
+    {{-- <div class="btn_wrapper">
       <p class="text-center"><a class="more_btn_lg">予約一覧へもどる</a></p>
-    </div>
+    </div> --}}
 
   </div>
 </div>
 </div>
 
-<tr>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-</tr>
+<input type="submit">
+{{ Form::close() }}
+
+
+
+{{-- {{ Form::open(['url' => 'admin/reservations/'.$reservation->id.'/add_bill_check', 'method'=>'POST','id'=>'testid']) }}
+@csrf
+{!! Form::submit('確認する', ['class' => 'btn btn-primary']) !!}
+{{ Form::close() }} --}}
+
 
 <script>
   $(function(){
