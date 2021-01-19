@@ -600,7 +600,7 @@ class ReservationsController extends Controller
     ]);
   }
   /***********************
-   * ajax 請求書追加
+   * ajax 請求書追加 備品サービス取得
    ***********************
    */
   public function ajaxaddbillsequipments(Request $request)
@@ -612,6 +612,18 @@ class ReservationsController extends Controller
     return [$equipments, $services];
   }
 
+  /***********************
+   * ajax 請求書追加 レイアウト取得
+   ***********************
+   */
+
+  public function ajaxaddbillslaytout(Request $request)
+  {
+    $reservation = Reservation::find($request->reservation_id);
+    $layout_prepare = $reservation->venue->layout_prepare;
+    $layout_clean = $reservation->venue->layout_clean;
+    return [$layout_prepare, $layout_clean];
+  }
 
 
 

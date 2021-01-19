@@ -814,9 +814,3 @@ $(function () {
 
 
 // 追加請求書、計算ボタン
-$(function () {
-  $('.add_bill_calculate').on('click', function () {
-    var target = $('input[name="billcategory"]').val();
-    console.log(target);
-  })
-})

@@ -75,7 +75,6 @@
           <input type="radio" name="billcategory" id="billcategory5" value="3">その他
         </label>
         <label for="other"></label>
-        <input type="text" class="form-control" id="inputother" placeholder="入力してください" disabled="disabled">
       </p>
     </div>
 
@@ -139,18 +138,25 @@
 </div>
 
 
+
 <script>
+  // プラス・マイナス押下アクション
   $(function(){
-    $("input[name=billcategory]").on('click',function(){
-      if ($(this).val()==3) {
-        $('#inputother').prop('disabled',false);
-      }else{
-        $('#inputother').prop('disabled',true);
-        $('#inputother').val('');
+    $(document).on("click", ".add", function() {
+      var target =$(this).parent().parent();
+      target.clone(true).insertAfter(target);
+    })
+    $(document).on("click", ".del", function() {
+      var master =$(this).parent().parent().parent().find('tr').length;
+      var target =$(this).parent().parent();
+      if (master>1) {
+        target.remove();
       }
     })
+
   })
 </script>
+
 
 
 @endsection
