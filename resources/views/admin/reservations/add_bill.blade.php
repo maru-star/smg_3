@@ -145,6 +145,10 @@
     $(document).on("click", ".add", function() {
       var target =$(this).parent().parent();
       target.clone(true).insertAfter(target);
+      console.log(target.parent());
+      target.parent().find('tr').last().find('td').eq(0).find('input').val('');
+      target.parent().find('tr').last().find('td').eq(1).find('input').val('');
+      target.parent().find('tr').last().find('td').eq(2).find('input').val('');
     })
     $(document).on("click", ".del", function() {
       var master =$(this).parent().parent().parent().find('tr').length;

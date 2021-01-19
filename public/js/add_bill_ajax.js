@@ -19,11 +19,33 @@ $(function () {
     }
   })
 
-
   $('.add_bill_calculate').on('click', function () {
-    var target = $('input:radio[name="billcategory"]:checked').val();
-    console.log(target);
+    var judge = $('input:radio[name="billcategory"]:checked').val();
+
+    var count = $('.extra-bill-table tbody tr').length;
+
+    if (judge == 1) { //その他有料備品なら
+      for (let index = 0; index < count; index++) {
+        console.log($('.extra-bill-table tbody tr').eq(index).find('td').eq(0).text());
+        console.log($('.extra-bill-table tbody tr').eq(index).find('td').eq(1).text());
+        console.log($('.extra-bill-table tbody tr').eq(index).find('td').eq(2).find('input').val());
+      }
+    } else if (judge == 2) { //レイアウト変更なら
+      for (let index = 0; index < count; index++) {
+        console.log($('.extra-bill-table tbody tr').eq(index).find('td').eq(0).text());
+        console.log($('.extra-bill-table tbody tr').eq(index).find('td').eq(1).text());
+        console.log($('.extra-bill-table tbody tr').eq(index).find('td').eq(2).find('input').val());
+      }
+    } else if (judge == 3) {
+      for (let index = 0; index < count; index++) {
+        console.log($('.extra-bill-table tbody tr').eq(index).find('td').eq(0).find('input').val());
+        console.log($('.extra-bill-table tbody tr').eq(index).find('td').eq(1).find('input').val());
+        console.log($('.extra-bill-table tbody tr').eq(index).find('td').eq(2).find('input').val());
+      }
+
+    }
   })
+
 });
 
 
