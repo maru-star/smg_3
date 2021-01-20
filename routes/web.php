@@ -131,5 +131,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
     Route::post('bills/check/{reservation}', 'BillsController@check');
     // // 管理者請求書作成　保存
     Route::post('bills/store', 'BillsController@store');
+
+    Route::post('bills/other_doublecheck', 'BillsController@OtherDoubleCheck');
   });
 });

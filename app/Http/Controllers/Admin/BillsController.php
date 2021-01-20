@@ -109,9 +109,7 @@ class BillsController extends Controller
    */
   public function store(Request $request)
   {
-
     DB::transaction(function () use ($request) { //トランザクションさせる
-
       if ($request->unit_type == 2) {
         $bill = Bill::create([
           'reservation_id' => $request->reservation_id,
@@ -230,6 +228,30 @@ class BillsController extends Controller
     $request->session()->regenerate();
     return redirect()->route('admin.reservations.show', $request->reservation_id);
   }
+
+  public function OtherDoubleCheck(Request $request)
+  {
+
+    $bill = Bill::find($request->bills_id);
+    echo "<pre>";
+    var_dump($bill->id);
+    echo "</pre>";
+
+    if ($request->double_check_status == 0) {
+      $bill->update([
+        'double_check1_name' => $request->double_check1_name,
+        'double_check_status' => 1
+      ]);
+    } else if ($request->double_check_status == 1) {
+      $bill->update([
+        'double_check2_name' => $request->double_check2_name,
+        'double_check_status' => 2
+      ]);
+    }
+    return redirect('admin/reservations/' . $bill->reservation_id);
+  }
+
+
 
   /**
    * Display the specified resource.

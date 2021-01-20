@@ -6,7 +6,6 @@
 <link href="{{ asset('/css/template.css') }}" rel="stylesheet">
 <script src="{{ asset('/js/template.js') }}"></script>
 
-billsのカウント：{{count($reservation->bills()->get())}}
 
 <div class="content">
   <div class="container-fluid">
@@ -49,7 +48,6 @@ billsのカウント：{{count($reservation->bills()->get())}}
     {{-- <p class="text-right"><a class="more_btn4_lg" href="">一括キャンセルをする</a></p> --}}
   </div>
   <!-- 予約詳細--------------------------------------------------------　 -->
-
   <div class="section-wrap">
     <div class="ttl-box d-flex align-items-center">
       <div class="col-9 d-flex justify-content-between">
@@ -57,7 +55,6 @@ billsのカウント：{{count($reservation->bills()->get())}}
         <p>予約ID: {{$reservation->id}}</p>
         <p>予約一括ID:</p>
       </div>
-
       {{-- 予約完了前（予約ステータス3以前）なら表示 --}}
       @if ($reservation->bills()->first()->reservation_status<3) <div class="col-3">
         <p class="text-right">
@@ -66,7 +63,6 @@ billsのカウント：{{count($reservation->bills()->get())}}
     </div>
     @endif
   </div>
-
   <section class="register-wrap">
     <div class="section-header">
       <div class="row">
@@ -112,8 +108,6 @@ billsのカウント：{{count($reservation->bills()->get())}}
           </dl>
           @endif
         </div>
-
-
         <div class="col-2">
           <p>
             <dd>申込日：{{ReservationHelper::formatDate($reservation->created_at)}}</dd>
@@ -123,7 +117,6 @@ billsのカウント：{{count($reservation->bills()->get())}}
           </p>
         </div>
       </div>
-
       @if ($reservation->bills()->first()->double_check_status==2)
       <!-- 承認確認ボタン-ダブルチェック後に表示------ -->
       {{-- 予約完了後、非表示 --}}
@@ -150,16 +143,8 @@ billsのカウント：{{count($reservation->bills()->get())}}
           </p>
         </div>
     </div>
-
     @endif
     @endif
-
-    <!-- キャンセルボタン-ステータス：予約完了で表示------ -->
-    {{-- <div class="row justify-content-end mt-5">
-            <div class="d-flex col-12 justify-content-end">
-              <p class="text-right"><a class="more_btn4" href="">キャンセルする</a></p>
-            </div>
-          </div> --}}
 </div>
 
 
@@ -207,10 +192,6 @@ billsのカウント：{{count($reservation->bills()->get())}}
         <td class="d-flex justify-content-between">
           <p>{{$reservation->board_flag==0?'無し':"要作成"}}</p>
           <p>
-            {{-- <a class="more_btn" href="">※後ほど修正※案内板出力(PDF)</a> --}}
-            {{-- <a href="{{ url('/admin/reservations/'. $reservation->id.'/generate_pdf') }}"
-            class="more_btn">案内版出力(PDF)</a> --}}
-
             <a href="{{ url('/admin/reservations/generate_pdf', $reservation->id) }}" class="more_btn">案内版出力</a>
 
           </p>
@@ -555,8 +536,6 @@ billsのカウント：{{count($reservation->bills()->get())}}
     </table>
   </div>
   <!-- 右側の項目 終わり-------------------------------------------------- -->
-
-
   <!-- 予約完了後も編集可能な備考欄-------------------------------------------------- -->
   <div class="col-12">
     <table class="table table-bordered note-table">
@@ -575,19 +554,11 @@ billsのカウント：{{count($reservation->bills()->get())}}
       </tr>
     </table>
   </div>
-
-
 </div>
-
-
-
 <!-- 請求セクション------------------------------------------------------------------- -->
-
 <section class="bill-wrap section-wrap section-bg">
   <div class="bill-bg">
-
     <!-- 請求内容----------- -->
-
     <!-- 請求書情報-------- -->
     <div class="bill-ttl mb-5">
       <div class="section-ttl-box d-flex align-items-center">
@@ -600,943 +571,279 @@ billsのカウント：{{count($reservation->bills()->get())}}
           <p class="text-right ml-3"><a class="more_btn" href="">※後ほど修正　領収書をみる</a></p>
         </div>
       </div>
-      <!-- 請求書情報--予約完了後に表示------ -->
-      {{-- <dl class="row bill-box_wrap">
-                <div class="col-4 bill-box_cell">
-                  <dt><label for="billCompany">※後ほど修正　請求No</label></dt>
-                  <dd>※後ほど修正　2020092225</dd>
-                </div>
-                <div class="col-4 bill-box_cell">
-                  <dt><label for="billCustomer">請求日</label></dt>
-                  <dd>{{ReservationHelper::formatDate($reservation->created_at)}}</dd>
     </div>
-    <div class="col-4 bill-box_cell">
-      <dt><label for="billDate">支払期日</label></dt>
-      <dd>{{ReservationHelper::formatDate($reservation->payment_limit)}}</dd>
-    </div>
-    </dl> --}}
-
-  </div>
-  <!-- 請求書情報 終わり---------------------------- -->
-
-
-  <!-- 会場料請求内容----------- -->
-  <div class="bill-box">
-    <h3 class="row">会場料</h3>
-    <dl class="row bill-box_wrap">
-      <div class="col-3 bill-box_cell">
-        <dt>会場料金</dt>
-        <dd>
-          @foreach ($breakdowns as $breakdown)
-          @if ($breakdown->unit_type==1)
-          @if ($breakdown->unit_item=='会場料金')
-          {{number_format($breakdown->unit_cost)}}
-          @endif
-          @endif
-          @endforeach
-        </dd>
-      </div>
-      <div class="col-3 bill-box_cell">
-        <dt>延長料金</dt>
-        <dd>
-          @foreach ($breakdowns as $breakdown)
-          @if ($breakdown->unit_type==1)
-          @if ($breakdown->unit_item=='延長料金')
-          {{number_format($breakdown->unit_cost)}}
-          @endif
-          @endif
-          @endforeach
-        </dd>
-      </div>
-      <div class="col-6 bill-box_cell">
-        <dt>会場料金合計</dt>
-        <dd class="text-right">
-          {{$reservation->bills()->first()->venue_total}}
-        </dd>
-      </div>
-
-      {{-- <div class="col-6">
-                <div class="row">
-                  <div class="col-4 bill-box_cell cell-gray">
-                    <p>割引率</p>
-                  </div>
-                  <div class="col-5 bill-box_cell">
-                    <p class="text-right">※後ほど修正　1111</p>
-                  </div>
-                  <div class="col-3 bill-box_cell text-right">
-                    <p>割引金額</p>
-                    <p class="">※後ほど修正<span>円</span></p>
-                  </div>
-                </div>
-              </div> --}}
-
-      {{-- <div class="col-6">
-                <div class="row">
-                  <div class="col-4 bill-box_cell cell-gray">
-                    <p>割引料金</p>
-                  </div>
-                  <div class="col-5 bill-box_cell">
-                    <p class="text-right">※後ほど修正　111</p>
-                  </div>
-                  <div class="col-3 bill-box_cell text-right">
-                    <p>割引率</p>
-                    <p class="">※後ほど修正<span>%</span></p>
-                  </div>
-                </div>
-              </div> --}}
-      {{-- <div class="col-12 bill-box_cell text-right">
-                <p class="font-weight-bold">割引後会場料金合計</p>
-                <p class="">※後ほど修正</p>
-              </div> --}}
-    </dl>
-
-    <!-- 料金内訳-------------------------------------------------------------- -->
-    <div class="bill-list">
-      <h3 class="row">料金内訳</h3>
-      <div class="col-12 venue_price_details">
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <td>内容</td>
-              <td>単価</td>
-              <td>数量</td>
-              <td>金額</td>
-            </tr>
-          </thead>
-          <tbody>
+    <!-- 請求書情報 終わり---------------------------- -->
+    <!-- 会場料請求内容----------- -->
+    <div class="bill-box">
+      <h3 class="row">会場料</h3>
+      <dl class="row bill-box_wrap">
+        <div class="col-3 bill-box_cell">
+          <dt>会場料金</dt>
+          <dd>
             @foreach ($breakdowns as $breakdown)
             @if ($breakdown->unit_type==1)
-            <tr>
-              <td>{{$breakdown->unit_item}}</td>
-              <td>{{$breakdown->unit_cost}}</td>
-              <td>{{$breakdown->unit_count}}</td>
-              <td>{{$breakdown->unit_subtotal}}</td>
-            </tr>
-            @endif
-            @endforeach
-          </tbody>
-        </table>
-      </div>
-
-      <div class="row bill-box_wrap price-sum bill-box_cell flex-column">
-        <p class="text-right">
-          <span class="font-weight-bold">小計</span>
-          {{$reservation->bills()->first()->discount_venue_total}}
-        </p>
-        <p class="text-right">
-          <span>消費税</span>
-          {{($reservation->bills()->first()->discount_venue_total)*0.1}}
-        </p>
-        <p class="text-right">
-          <span class="font-weight-bold">合計金額</span>
-          ※後ほど修正
-        </p>
-      </div>
-    </div>
-    <!-- 料金内訳 終わり---------------------------- -->
-
-
-  </div>
-  <!-- 請求内容 終わり---------------------------- -->
-
-  <!-- 備品その他　請求内容----------- -->
-  <div class="bill-box">
-    <h3 class="row">備品その他</h3>
-    <dl class="row bill-box_wrap">
-      <div class="col-3 bill-box_cell">
-        <dt>有料備品料金</dt>
-        <dd>
-          {{$reservation->bills()->first()->equipment_total}}
-        </dd>
-      </div>
-      <div class="col-3 bill-box_cell">
-        <dt>有料サービス料金</dt>
-        <dd>
-          {{$reservation->bills()->first()->service_total}}
-        </dd>
-      </div>
-      <div class="col-3 bill-box_cell">
-        <dt>荷物預かり/返送</dt>
-        <dd class="d-flex align-items-center">
-          {{$reservation->bills()->first()->luggage_total}}
-          円
-        </dd>
-      </div>
-      <div class="col-3 bill-box_cell">
-        <dt>備品その他合計</dt>
-        <dd class="text-right">
-          {{$reservation->bills()->first()->equipment_service_total}}
-        </dd>
-      </div>
-
-      {{-- <div class="col-6">
-                <div class="row">
-                  <div class="col-4 bill-box_cell cell-gray">
-                    <p>※後ほど修正　割引料金</p>
-                  </div>
-                  <div class="col-5 bill-box_cell">
-                    <p class="text-right">※後ほど修正　</p>
-                  </div>
-                  <div class="col-3 bill-box_cell text-right">
-                    <p>割引率</p>
-                    <p class="">※後ほど修正　<span>%</span></p>
-                  </div>
-                </div>
-              </div> --}}
-
-      {{-- <div class="col-6 bill-box_cell text-right">
-                <p class="font-weight-bold">割引後備品その他合計</p>
-                <p class="">※後ほど修正　</p>
-              </div> --}}
-    </dl>
-
-
-    <!-- 料金内訳-------------------------------------------------------------- -->
-    <div class="bill-list">
-      <h3 class="row">料金内訳</h3>
-      <div class="col-12 items_equipments">
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <td>内容</td>
-              <td>単価</td>
-              <td>数量</td>
-              <td>金額</td>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach ($breakdowns as $breakdown)
-            @if ($breakdown->unit_type==2)
-            <tr>
-              <td>{{$breakdown->unit_item}}</td>
-              <td>{{$breakdown->unit_cost}}</td>
-              <td>{{$breakdown->unit_count}}</td>
-              <td>{{$breakdown->unit_subtotal}}</td>
-            </tr>
-            @endif
-            @endforeach
-          </tbody>
-        </table>
-      </div>
-
-      <div class="row bill-box_wrap price-sum bill-box_cell flex-column">
-        <p class="text-right"><span class="font-weight-bold">小計</span>※その他修正　7,200円</p>
-        <p class="text-right"><span>消費税</span>※その他修正　720円</p>
-        <p class="text-right"><span class="font-weight-bold">合計金額</span>※その他修正　7,200円</p>
-      </div>
-
-
-
-    </div>
-    <!-- 料金内訳 終わり---------------------------- -->
-
-
-  </div>
-  <!-- 請求内容 終わり---------------------------- -->
-
-  <!-- レイアウト変更 請求内容----------- -->
-  <div class="bill-box layout_price_list">
-    <h3 class="row">レイアウト変更</h3>
-    <dl class="row bill-box_wrap">
-      <div class="col-4 bill-box_cell">
-        <dt>レイアウト準備料金</dt>
-        <dd>
-          <p class="layout_prepare_result">
-            @foreach ($breakdowns as $breakdown)
-            @if ($breakdown->unit_type==3)
-            @if ($breakdown->unit_item=='レイアウト準備')
+            @if ($breakdown->unit_item=='会場料金')
             {{number_format($breakdown->unit_cost)}}
             @endif
             @endif
             @endforeach
-          </p>
-        </dd>
-      </div>
-      <div class="col-4 bill-box_cell">
-        <dt>レイアウト片付料金</dt>
-        <dd>
-          <p class="layout_clean_result">
+          </dd>
+        </div>
+        <div class="col-3 bill-box_cell">
+          <dt>延長料金</dt>
+          <dd>
             @foreach ($breakdowns as $breakdown)
-            @if ($breakdown->unit_type==3)
-            @if ($breakdown->unit_item=='レイアウト片付')
+            @if ($breakdown->unit_type==1)
+            @if ($breakdown->unit_item=='延長料金')
             {{number_format($breakdown->unit_cost)}}
             @endif
             @endif
             @endforeach
+          </dd>
+        </div>
+        <div class="col-6 bill-box_cell">
+          <dt>会場料金合計</dt>
+          <dd class="text-right">
+            {{$reservation->bills()->first()->venue_total}}
+          </dd>
+        </div>
+      </dl>
+      <!-- 料金内訳-------------------------------------------------------------- -->
+      <div class="bill-list">
+        <h3 class="row">料金内訳</h3>
+        <div class="col-12 venue_price_details">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <td>内容</td>
+                <td>単価</td>
+                <td>数量</td>
+                <td>金額</td>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach ($breakdowns as $breakdown)
+              @if ($breakdown->unit_type==1)
+              <tr>
+                <td>{{$breakdown->unit_item}}</td>
+                <td>{{$breakdown->unit_cost}}</td>
+                <td>{{$breakdown->unit_count}}</td>
+                <td>{{$breakdown->unit_subtotal}}</td>
+              </tr>
+              @endif
+              @endforeach
+            </tbody>
+          </table>
+        </div>
+        <div class="row bill-box_wrap price-sum bill-box_cell flex-column">
+          <p class="text-right">
+            <span class="font-weight-bold">小計</span>
+            {{$reservation->bills()->first()->discount_venue_total}}
           </p>
-        </dd>
-      </div>
-      <div class="col-4 bill-box_cell">
-        <dt>レイアウト変更合計</dt>
-        <dd class="text-right">
-          <p class="layout_total">
-            {{$reservation->bills()->first()->layout_total}}
+          <p class="text-right">
+            <span>消費税</span>
+            {{($reservation->bills()->first()->discount_venue_total)*0.1}}
           </p>
-        </dd>
+          <p class="text-right">
+            <span class="font-weight-bold">合計金額</span>
+            ※後ほど修正
+          </p>
+        </div>
       </div>
-
-      {{-- <div class="col-6">
-                <div class="row">
-                  <div class="col-4 bill-box_cell cell-gray">
-                    <p>※後ほど修正　割引料金</p>
-                  </div>
-                  <div class="col-5 bill-box_cell">
-                    <p class="text-right"></p>
-                  </div>
-                  <div class="col-3 bill-box_cell text-right">
-                    <p>※後ほど修正　割引率</p>
-                    <p class="layout_discount_percent"><span>%</span></p>
-                  </div>
-                </div>
-              </div> --}}
-
-      {{-- <div class="col-6 bill-box_cell text-right">
-                <p class="font-weight-bold">割引後レイアウト変更合計</p>
-                <p class="after_duscount_layouts"></p>
-              </div> --}}
-    </dl>
-
-
-    <!-- 料金内訳-------------------------------------------------------------- -->
-    <div class="bill-list">
-      <h3 class="row">料金内訳</h3>
-      <div class="col-12 items_equipments">
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <td>内容</td>
-              <td>単価</td>
-              <td>数量</td>
-              <td>金額</td>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach ($breakdowns as $breakdown)
-            @if ($breakdown->unit_type==3)
-            <tr>
-              <td>{{$breakdown->unit_item}}</td>
-              <td>{{$breakdown->unit_cost}}</td>
-              <td>{{$breakdown->unit_count}}</td>
-              <td>{{$breakdown->unit_subtotal}}</td>
-            </tr>
-            @endif
-            @endforeach
-          </tbody>
-        </table>
-      </div>
-
-      <div class="row bill-box_wrap price-sum bill-box_cell flex-column">
-        <p class="text-right"><span class="font-weight-bold">小計</span>※後ほど修正　7,200円</p>
-        <p class="text-right"><span>消費税</span>※後ほど修正　720円</p>
-        <p class="text-right"><span class="font-weight-bold">合計金額</span>※後ほど修正　7,200円</p>
-      </div>
-
-
-
+      <!-- 料金内訳 終わり---------------------------- -->
     </div>
-    <!-- 料金内訳 終わり---------------------------- -->
+    <!-- 請求内容 終わり---------------------------- -->
+    <!-- 備品その他　請求内容----------- -->
+    <div class="bill-box">
+      <h3 class="row">備品その他</h3>
+      <dl class="row bill-box_wrap">
+        <div class="col-3 bill-box_cell">
+          <dt>有料備品料金</dt>
+          <dd>
+            {{$reservation->bills()->first()->equipment_total}}
+          </dd>
+        </div>
+        <div class="col-3 bill-box_cell">
+          <dt>有料サービス料金</dt>
+          <dd>
+            {{$reservation->bills()->first()->service_total}}
+          </dd>
+        </div>
+        <div class="col-3 bill-box_cell">
+          <dt>荷物預かり/返送</dt>
+          <dd class="d-flex align-items-center">
+            {{$reservation->bills()->first()->luggage_total}}
+            円
+          </dd>
+        </div>
+        <div class="col-3 bill-box_cell">
+          <dt>備品その他合計</dt>
+          <dd class="text-right">
+            {{$reservation->bills()->first()->equipment_service_total}}
+          </dd>
+        </div>
+      </dl>
 
-
-  </div>
-  <!-- 請求内容 終わり---------------------------- -->
-
-
-  <!-- 請求書内容変更----------- -->
-  <div class="bill-box">
-    <h3 class="row">請求書内容</h3>
-    <dl class="row bill-box_wrap">
-      <div class="col-6 bill-box_cell">
-        <dt><label for="billCompany">請求書の会社名</label></dt>
-        <dd>{{$user->company}}</dd>
+      <!-- 料金内訳-------------------------------------------------------------- -->
+      <div class="bill-list">
+        <h3 class="row">料金内訳</h3>
+        <div class="col-12 items_equipments">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <td>内容</td>
+                <td>単価</td>
+                <td>数量</td>
+                <td>金額</td>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach ($breakdowns as $breakdown)
+              @if ($breakdown->unit_type==2)
+              <tr>
+                <td>{{$breakdown->unit_item}}</td>
+                <td>{{$breakdown->unit_cost}}</td>
+                <td>{{$breakdown->unit_count}}</td>
+                <td>{{$breakdown->unit_subtotal}}</td>
+              </tr>
+              @endif
+              @endforeach
+            </tbody>
+          </table>
+        </div>
+        <div class="row bill-box_wrap price-sum bill-box_cell flex-column">
+          <p class="text-right"><span class="font-weight-bold">小計</span>※その他修正　7,200円</p>
+          <p class="text-right"><span>消費税</span>※その他修正　720円</p>
+          <p class="text-right"><span class="font-weight-bold">合計金額</span>※その他修正　7,200円</p>
+        </div>
       </div>
-      <div class="col-6 bill-box_cell">
-        <dt><label for="billCustomer">請求書の担当者名</label></dt>
-        <dd>{{$user->first_name}}{{$user->last_name}}</dd>
-      </div>
-      <div class="col-6 bill-box_cell">
-        <dt><label for="billDate">請求日</label></dt>
-        <dd>{{ReservationHelper::formatDate($reservation->created_at)}}</dd>
-      </div>
-      <div class="col-6 bill-box_cell">
-        <dt><label for="billDue">支払期日</label></dt>
-        <dd>{{ReservationHelper::formatDate($reservation->payment_limit)}}</dd>
-      </div>
-      <div class="col-12 bill-box_cell">
-        <dt><label for="billNote">備考</label></dt>
-        <dd>{{$reservation->bill_remark}}</dd>
-      </div>
-    </dl>
-  </div>
-  <!-- 請求書内容変更 終わり---------------------------- -->
+      <!-- 料金内訳 終わり---------------------------- -->
+    </div>
+    <!-- 請求内容 終わり---------------------------- -->
+    <!-- レイアウト変更 請求内容----------- -->
+    <div class="bill-box layout_price_list">
+      <h3 class="row">レイアウト変更</h3>
+      <dl class="row bill-box_wrap">
+        <div class="col-4 bill-box_cell">
+          <dt>レイアウト準備料金</dt>
+          <dd>
+            <p class="layout_prepare_result">
+              @foreach ($breakdowns as $breakdown)
+              @if ($breakdown->unit_type==3)
+              @if ($breakdown->unit_item=='レイアウト準備')
+              {{number_format($breakdown->unit_cost)}}
+              @endif
+              @endif
+              @endforeach
+            </p>
+          </dd>
+        </div>
+        <div class="col-4 bill-box_cell">
+          <dt>レイアウト片付料金</dt>
+          <dd>
+            <p class="layout_clean_result">
+              @foreach ($breakdowns as $breakdown)
+              @if ($breakdown->unit_type==3)
+              @if ($breakdown->unit_item=='レイアウト片付')
+              {{number_format($breakdown->unit_cost)}}
+              @endif
+              @endif
+              @endforeach
+            </p>
+          </dd>
+        </div>
+        <div class="col-4 bill-box_cell">
+          <dt>レイアウト変更合計</dt>
+          <dd class="text-right">
+            <p class="layout_total">
+              {{$reservation->bills()->first()->layout_total}}
+            </p>
+          </dd>
+        </div>
+      </dl>
+      <!-- 料金内訳-------------------------------------------------------------- -->
+      <div class="bill-list">
+        <h3 class="row">料金内訳</h3>
+        <div class="col-12 items_equipments">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <td>内容</td>
+                <td>単価</td>
+                <td>数量</td>
+                <td>金額</td>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach ($breakdowns as $breakdown)
+              @if ($breakdown->unit_type==3)
+              <tr>
+                <td>{{$breakdown->unit_item}}</td>
+                <td>{{$breakdown->unit_cost}}</td>
+                <td>{{$breakdown->unit_count}}</td>
+                <td>{{$breakdown->unit_subtotal}}</td>
+              </tr>
+              @endif
+              @endforeach
+            </tbody>
+          </table>
+        </div>
 
+        <div class="row bill-box_wrap price-sum bill-box_cell flex-column">
+          <p class="text-right"><span class="font-weight-bold">小計</span>※後ほど修正　7,200円</p>
+          <p class="text-right"><span>消費税</span>※後ほど修正　720円</p>
+          <p class="text-right"><span class="font-weight-bold">合計金額</span>※後ほど修正　7,200円</p>
+        </div>
+      </div>
+      <!-- 料金内訳 終わり---------------------------- -->
+    </div>
+    <!-- 請求内容 終わり---------------------------- -->
 
-  <!-- 入金確認入力フィールド　予約完了後の表示----------- -->
-  {{-- <div class="bill-box">
-              <h3 class="row">入金確認</h3>
-              <dl class="row bill-box_wrap">
-                <div class="col-4 bill-box_cell">
-                  <dt><label for="payDate">入金日</label></dt>
-                  <dd>※後ほど修正　2020/12/21(月)</dd>
-                </div>
-                <div class="col-4 bill-box_cell">
-                  <dt><label for="payType">支払タイプ</label></dt>
-                  <dd>※後ほど修正　振込</dd>
-                </div>
-                <div class="col-4 bill-box_cell">
-                  <dt><label for="payStatus">入金状況</label></dt>
-                  <dd>{{$reservation->paid==0?'未入金':'入金済'}}</dd>
-  </div>
-  <div class="col-12 bill-box_cell">
-    <dt><label for="billNote">※後ほど修正　振込名</label></dt>
-    <dd>テキストテキストテキストテキストテキストテキスト</dd>
-  </div>
-  </dl>
-  </div> --}}
-  <!-- 入金確認入力フィールド 終わり---------------------------- -->
-
+    <!-- 請求書内容変更----------- -->
+    <div class="bill-box">
+      <h3 class="row">請求書内容</h3>
+      <dl class="row bill-box_wrap">
+        <div class="col-6 bill-box_cell">
+          <dt><label for="billCompany">請求書の会社名</label></dt>
+          <dd>{{$user->company}}</dd>
+        </div>
+        <div class="col-6 bill-box_cell">
+          <dt><label for="billCustomer">請求書の担当者名</label></dt>
+          <dd>{{$user->first_name}}{{$user->last_name}}</dd>
+        </div>
+        <div class="col-6 bill-box_cell">
+          <dt><label for="billDate">請求日</label></dt>
+          <dd>{{ReservationHelper::formatDate($reservation->created_at)}}</dd>
+        </div>
+        <div class="col-6 bill-box_cell">
+          <dt><label for="billDue">支払期日</label></dt>
+          <dd>{{ReservationHelper::formatDate($reservation->payment_limit)}}</dd>
+        </div>
+        <div class="col-12 bill-box_cell">
+          <dt><label for="billNote">備考</label></dt>
+          <dd>{{$reservation->bill_remark}}</dd>
+        </div>
+      </dl>
+    </div>
   </div>
 </section>
 
-　　　　　
-<!-- 請求セクション　キャンセル料 キャンセルをしたときに、表示------------------------------------------------------------------ -->
-{{-- <section class="bill-wrap section-wrap section-bg">
-    <div class="bill-bg">
 
-      <!-- 請求書情報-------- -->
-      <div class="bill-ttl mb-5">
-        <div class="section-ttl-box d-flex align-items-center">
-          <div class="col-6">
-            <h3 class="section-ttl">キャンセル料請求情報</h3>
-          </div>
-          <div class="col-6 d-flex justify-content-end">
-            <p class="text-right"><a class="more_btn" href="">請求書をみる</a></p>
-            <!-- ステータスが入金確認後に表示------ -->
-            <p class="text-right ml-3"><a class="more_btn" href="">領収書をみる</a></p>
-          </div>
-
-
-        </div>
-        <!-- 請求書情報--予約完了後に表示------ -->
-        <dl class="row bill-box_wrap">
-          <div class="col-4 bill-box_cell">
-            <dt><label for="billCompany">請求No</label></dt>
-            <dd>2020092225</dd>
-          </div>
-          <div class="col-4 bill-box_cell">
-            <dt><label for="billCustomer">請求日</label></dt>
-            <dd>2020/09/02</dd>
-          </div>
-          <div class="col-4 bill-box_cell">
-            <dt><label for="billDate">支払期日</label></dt>
-            <dd>2020/12/10(木)</dd>
-          </div>
-        </dl>
-
-      </div>
-      <!-- 請求書情報 終わり---------------------------- -->
-
-
-      <!-- 　キャンセル料金内容----------- -->
-      <div class="bill-box">
-        <h3 class="row">キャンセル料</h3>
-        <dl class="row bill-box_wrap">
-          <div class="col-12 bill-box_cell">
-            <dt>キャンセル料金合計</dt>
-            <dd class="text-right">57,700円</dd>
-          </div>
-
-          <div class="col-6">
-            <div class="row">
-              <div class="col-4 bill-box_cell cell-gray">
-                <p>割引率</p>
-              </div>
-              <div class="col-5 bill-box_cell">
-                <p class="text-right"></p>
-              </div>
-              <div class="col-3 bill-box_cell text-right">
-                <p>割引金額</p>
-                <p class=""><span>円</span></p>
-              </div>
-            </div>
-          </div>
-
-
-          <div class="col-6 bill-box_cell text-right">
-            <p class="font-weight-bold">割引後キャンセル料合計</p>
-            <p class=""></p>
-          </div>
-        </dl>
-
-
-        <!-- 料金内訳-------------------------------------------------------------- -->
-        <div class="bill-list">
-          <h3 class="row">料金内訳</h3>
-          <div class="col-12 venue_price_details">
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <td>内容</td>
-                  <td>単価</td>
-                  <td>数量</td>
-                  <td>金額</td>
-                </tr>
-              </thead>
-              <tbody></tbody>
-            </table>
-          </div>
-
-          <div class="row bill-box_wrap price-sum bill-box_cell flex-column">
-            <p class="text-right"><span class="font-weight-bold">小計</span>7,200円</p>
-            <p class="text-right"><span>消費税</span>720円</p>
-            <p class="text-right"><span class="font-weight-bold">合計金額</span>7,200円</p>
-          </div>
-        </div>
-        <!-- 料金内訳 終わり---------------------------- -->
-
-
-      </div>
-      <!-- 請求内容 終わり---------------------------- -->
-
-
-      <!-- 請求書内容変更----------- -->
-      <div class="bill-box">
-        <h3 class="row">請求書内容変更</h3>
-        <dl class="row bill-box_wrap">
-          <div class="col-6 bill-box_cell">
-            <dt><label for="billCompany">請求書の会社名</label></dt>
-            <dd>株式会社テスト</dd>
-          </div>
-          <div class="col-6 bill-box_cell">
-            <dt><label for="billCustomer">請求書の担当者名</label></dt>
-            <dd>山田太郎</dd>
-          </div>
-          <div class="col-6 bill-box_cell">
-            <dt><label for="billDate">請求日</label></dt>
-            <dd>2020/12/10(木)</dd>
-          </div>
-          <div class="col-6 bill-box_cell">
-            <dt><label for="billDue">支払期日</label></dt>
-            <dd>2020/12/10(木)</dd>
-          </div>
-          <div class="col-12 bill-box_cell">
-            <dt><label for="billNote">備考</label></dt>
-            <dd>テキストテキストテキストテキストテキストテキスト</dd>
-          </div>
-        </dl>
-      </div>
-      <!-- 請求書内容変更 終わり---------------------------- -->
-
-
-      <!-- 入金確認入力フィールド　予約完了後の表示----------- -->
-      <div class="bill-box">
-        <h3 class="row">入金確認</h3>
-        <dl class="row bill-box_wrap">
-          <div class="col-4 bill-box_cell">
-            <dt><label for="payDate">入金日</label></dt>
-            <dd>2020/12/21(月)</dd>
-          </div>
-          <div class="col-4 bill-box_cell">
-            <dt><label for="payType">支払タイプ</label></dt>
-            <dd>振込</dd>
-          </div>
-          <div class="col-4 bill-box_cell">
-            <dt><label for="payStatus">入金状況</label></dt>
-            <dd>入金済</dd>
-          </div>
-          <div class="col-12 bill-box_cell">
-            <dt><label for="billNote">振込名</label></dt>
-            <dd>テキストテキストテキストテキストテキストテキスト</dd>
-          </div>
-        </dl>
-      </div>
-      <!-- 入金確認入力フィールド 終わり---------------------------- -->
-
-
-
-
-
-    </div>
-  </section> --}}
-
-
-
-
-</section>
-</div>
-
-<!-- 予約詳細   終わり--------------------------------------------------　 -->
-
-
-
-
-
-
-<!-- 追加請求のフィールド------------------------------------------------------------------->
-{{-- <div class="section-wrap">
-  <div class="ttl-box d-flex align-items-center">
-    <div class="col-9 d-flex justify-content-between">
-      <h2>その他の有料備品、サービス</h2>
-    </div>
-    <div class="col-3">
-      <p class="text-right"><a class="more_btn" href="">編集</a></p>
-    </div>
-
-  </div>
-  <section class="register-wrap">
-
-    <div class="section-header">
-      <div class="row">
-        <div class="d-flex col-10 flex-wrap">
-          <dl>
-            <dt>予約状況</dt>
-            <dd>予約確認中</dd>
-          </dl>
-          <dl>
-            <dt>一人目チェック</dt>
-            <dd>
-              <p>山田太郎</p>
-            </dd>
-          </dl>
-          <dl>
-            <dt>二人目チェック</dt>
-            <dd class="d-flex">
-              <p>未</p>
-              <p class="ml-2"><a class="more_btn" href="">チェックをする</a></p>
-            </dd>
-          </dl>
-        </div>
-
-        <div class="col-2">
-          <p>
-            申込日：2020/10/15(木)
-          </p>
-          <p>
-            予約確定日：2020/10/15(木)
-          </p>
-        </div>
-      </div> --}}
-
-
-<!-- 承認確認ボタン-ダブルチェック後に表示------ -->
-{{-- <div class="row justify-content-end mt-5">
-        <div class="d-flex col-2 justify-content-around">
-          <p class="text-right"><a class="more_btn" href="">承認</a></p>
-          <p class="text-right"><a class="more_btn4" href="">確定</a></p>
-        </div>
-      </div> --}}
-
-<!-- キャンセルボタン-ステータス：予約完了で表示------ -->
-{{-- <div class="row justify-content-end mt-5">
-        <div class="d-flex col-12 justify-content-end">
-          <p class="text-right"><a class="more_btn4" href="">キャンセルする</a></p>
-        </div>
-      </div> --}}
-
-
-{{-- </div> --}}
-
-<!-- 請求セクション------------------------------------------------------------------- -->
-
-{{-- <section class="section-wrap section-bg"> --}}
-
-<!-- 請求内容----------- -->
-
-<!-- 請求書情報-------- -->
-{{-- <div class="bill-ttl mb-5">
-        <div class="section-ttl-box d-flex align-items-center">
-          <div class="col-6">
-            <h3 class="">請求情報</h3>
-          </div>
-          <div class="col-6 d-flex justify-content-end">
-            <p class="text-right"><a class="more_btn" href="">請求書をみる</a></p>
-            <!-- ステータスが入金確認後に表示------ -->
-            <p class="text-right ml-3"><a class="more_btn" href="">領収書をみる</a></p>
-          </div>
-        </div> --}}
-<!-- 請求書情報--予約完了後に表示------ -->
-{{-- <dl class="row bill-box_wrap">
-          <div class="col-4 bill-box_cell">
-            <dt><label for="billCompany">請求No</label></dt>
-            <dd>2020092225</dd>
-          </div>
-          <div class="col-4 bill-box_cell">
-            <dt><label for="billCustomer">請求日</label></dt>
-            <dd>2020/09/02</dd>
-          </div>
-          <div class="col-4 bill-box_cell">
-            <dt><label for="billDate">支払期日</label></dt>
-            <dd>2020/12/10(木)</dd>
-          </div>
-        </dl> --}}
-
-{{-- </div> --}}
-
-<!-- 　追加請求内容----------- -->
-{{-- <div class="bill-box">
-        <h3 class="row">その他の有料備品、サービス</h3>
-        <dl class="row bill-box_wrap">
-          <div class="col-12 bill-box_cell">
-            <dt>その他の有料備品、サービス合計</dt>
-            <dd class="text-right">57,700円</dd>
-          </div>
-
-          <div class="col-6">
-            <div class="row">
-              <div class="col-4 bill-box_cell cell-gray">
-                <p>割引率</p>
-              </div>
-              <div class="col-5 bill-box_cell">
-                <p class="text-right"></p>
-              </div>
-              <div class="col-3 bill-box_cell text-right">
-                <p>割引金額</p>
-                <p class=""><span>円</span></p>
-              </div>
-            </div>
-          </div>
-
-
-          <div class="col-6 bill-box_cell text-right">
-            <p class="font-weight-bold">割引後その他の有料備品、サービス合計</p>
-            <p class=""></p>
-          </div>
-        </dl> --}}
-
-
-<!-- 料金内訳-------------------------------------------------------------- -->
-{{-- <div class="bill-list">
-          <h3 class="row">料金内訳</h3>
-          <div class="col-12 venue_price_details">
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <td>内容</td>
-                  <td>単価</td>
-                  <td>数量</td>
-                  <td>金額</td>
-                </tr>
-              </thead>
-              <tbody></tbody>
-            </table>
-          </div>
-
-          <div class="row bill-box_wrap price-sum bill-box_cell flex-column">
-            <p class="text-right"><span class="font-weight-bold">小計</span>7,200円</p>
-            <p class="text-right"><span>消費税</span>720円</p>
-            <p class="text-right"><span class="font-weight-bold">合計金額</span>7,200円</p>
-          </div>
-        </div> --}}
-<!-- 料金内訳 終わり---------------------------- -->
-
-
-{{-- </div> --}}
-<!-- 請求内容 終わり---------------------------- -->
-
-<!-- 請求内容 終わり---------------------------- -->
-
-<!-- 請求書内容変更----------- -->
-<!-- 請求書内容変更 終わり---------------------------- -->
-
-
-<!-- 入金確認入力フィールド　予約完了後の表示----------- -->
-{{-- <div class="bill-box">
-        <h3 class="row">入金確認</h3>
-        <dl class="row bill-box_wrap">
-          <div class="col-4 bill-box_cell">
-            <dt><label for="payDate">入金日</label></dt>
-            <dd>2020/12/21(月)</dd>
-          </div>
-          <div class="col-4 bill-box_cell">
-            <dt><label for="payType">支払タイプ</label></dt>
-            <dd>振込</dd>
-          </div>
-          <div class="col-4 bill-box_cell">
-            <dt><label for="payStatus">入金状況</label></dt>
-            <dd>入金済</dd>
-          </div>
-          <div class="col-12 bill-box_cell">
-            <dt><label for="billNote">振込名</label></dt>
-            <dd>テキストテキストテキストテキストテキストテキスト</dd>
-          </div>
-        </dl>
-      </div> --}}
-<!-- 入金確認入力フィールド 終わり---------------------------- -->
-
-</section>
-
-　　　　　
-<!-- 請求セクション　キャンセル料-　キャンセルをしたときに、表示------------------------------------------------------------------ -->
-{{-- <section class="bill-wrap section-wrap section-bg">
-      <div class="bill-bg">
-
-        <!-- 請求書情報-------- -->
-        <div class="bill-ttl mb-5">
-          <div class="section-ttl-box d-flex align-items-center">
-            <div class="col-6">
-              <h3 class="section-ttl">キャンセル料請求情報</h3>
-            </div>
-            <div class="col-6 d-flex justify-content-end">
-              <p class="text-right"><a class="more_btn" href="">請求書をみる</a></p>
-              <!-- ステータスが入金確認後に表示------ -->
-              <p class="text-right ml-3"><a class="more_btn" href="">領収書をみる</a></p>
-            </div>
-          </div>
-          <!-- 請求書情報--予約完了後に表示------ -->
-          <dl class="row bill-box_wrap">
-            <div class="col-4 bill-box_cell">
-              <dt><label for="billCompany">請求No</label></dt>
-              <dd>2020092225</dd>
-            </div>
-            <div class="col-4 bill-box_cell">
-              <dt><label for="billCustomer">請求日</label></dt>
-              <dd>2020/09/02</dd>
-            </div>
-            <div class="col-4 bill-box_cell">
-              <dt><label for="billDate">支払期日</label></dt>
-              <dd>2020/12/10(木)</dd>
-            </div>
-          </dl>
-
-        </div>
-        <!-- 請求書情報 終わり---------------------------- -->
-
-
-        <!-- 　キャンセル料金内容----------- -->
-        <div class="bill-box">
-          <h3 class="row">キャンセル料</h3>
-          <dl class="row bill-box_wrap">
-            <div class="col-12 bill-box_cell">
-              <dt>キャンセル料金合計</dt>
-              <dd class="text-right">57,700円</dd>
-            </div>
-
-            <div class="col-6">
-              <div class="row">
-                <div class="col-4 bill-box_cell cell-gray">
-                  <p>割引率</p>
-                </div>
-                <div class="col-5 bill-box_cell">
-                  <p class="text-right"></p>
-                </div>
-                <div class="col-3 bill-box_cell text-right">
-                  <p>割引金額</p>
-                  <p class=""><span>円</span></p>
-                </div>
-              </div>
-            </div>
-
-
-            <div class="col-6 bill-box_cell text-right">
-              <p class="font-weight-bold">割引後キャンセル料合計</p>
-              <p class=""></p>
-            </div>
-          </dl>
-
-
-          <!-- 料金内訳-------------------------------------------------------------- -->
-          <div class="bill-list">
-            <h3 class="row">料金内訳</h3>
-            <div class="col-12 venue_price_details">
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <td>内容</td>
-                    <td>単価</td>
-                    <td>数量</td>
-                    <td>金額</td>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
-            </div>
-
-            <div class="row bill-box_wrap price-sum bill-box_cell flex-column">
-              <p class="text-right"><span class="font-weight-bold">小計</span>7,200円</p>
-              <p class="text-right"><span>消費税</span>720円</p>
-              <p class="text-right"><span class="font-weight-bold">合計金額</span>7,200円</p>
-            </div>
-          </div>
-          <!-- 料金内訳 終わり---------------------------- -->
-
-
-        </div>
-        <!-- 請求内容 終わり---------------------------- -->
-
-
-
-        <!-- 請求書内容変更----------- -->
-        <div class="bill-box">
-          <h3 class="row">請求書内容変更</h3>
-          <dl class="row bill-box_wrap">
-            <div class="col-6 bill-box_cell">
-              <dt><label for="billCompany">請求書の会社名</label></dt>
-              <dd>株式会社テスト</dd>
-            </div>
-            <div class="col-6 bill-box_cell">
-              <dt><label for="billCustomer">請求書の担当者名</label></dt>
-              <dd>山田太郎</dd>
-            </div>
-            <div class="col-6 bill-box_cell">
-              <dt><label for="billDate">請求日</label></dt>
-              <dd>2020/12/10(木)</dd>
-            </div>
-            <div class="col-6 bill-box_cell">
-              <dt><label for="billDue">支払期日</label></dt>
-              <dd>2020/12/10(木)</dd>
-            </div>
-            <div class="col-12 bill-box_cell">
-              <dt><label for="billNote">備考</label></dt>
-              <dd>テキストテキストテキストテキストテキストテキスト</dd>
-            </div>
-          </dl>
-        </div>
-        <!-- 請求書内容変更 終わり---------------------------- -->
-
-
-        <!-- 入金確認入力フィールド　予約完了後の表示----------- -->
-        <div class="bill-box">
-          <h3 class="row">入金確認</h3>
-          <dl class="row bill-box_wrap">
-            <div class="col-4 bill-box_cell">
-              <dt><label for="payDate">入金日</label></dt>
-              <dd>2020/12/21(月)</dd>
-            </div>
-            <div class="col-4 bill-box_cell">
-              <dt><label for="payType">支払タイプ</label></dt>
-              <dd>振込</dd>
-            </div>
-            <div class="col-4 bill-box_cell">
-              <dt><label for="payStatus">入金状況</label></dt>
-              <dd>入金済</dd>
-            </div>
-            <div class="col-12 bill-box_cell">
-              <dt><label for="billNote">振込名</label></dt>
-              <dd>テキストテキストテキストテキストテキストテキスト</dd>
-            </div>
-          </dl>
-        </div>
-        <!-- 入金確認入力フィールド 終わり---------------------------- -->
-
-
-
-
-
-      </div>
-    </section> --}}
-
-
-
-
-</section>
-</div>
-
-
+@foreach ($other_bills as $key=>$other_bill)
 {{-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ --}}
 {{-- ここから追加された請求書 --}}
 <div class="section-wrap">
   <div class="ttl-box d-flex align-items-center">
     <div class="col-9 d-flex justify-content-between">
-      <h2>その他の有料備品、サービス</h2>
+      <h2>
+        @if ($other_bill->category==2)
+        その他の有料備品、サービス
+        @elseif($other_bill->category==3)
+        レイアウト
+        @elseif($other_bill->category==4)
+        その他
+        @endif
+      </h2>
       <!-- <p>予約ID:00001</p> -->
       <!-- <p>予約一括ID:00001</p> -->
     </div>
@@ -1552,23 +859,45 @@ billsのカウント：{{count($reservation->bills()->get())}}
         <div class="d-flex col-10 flex-wrap">
           <dl>
             <dt>予約状況</dt>
-            <dd>予約確認中</dd>
+            <dd>{{ReservationHelper::judgeStatus($other_bill->reservation_status)}}</dd>
           </dl>
+          @if ($other_bill->double_check_status==0)
           <dl>
             <dt>一人目チェック</dt>
-            <dd>
-              <p>山田太郎</p>
+            <dd class="d-flex">
+              <p>未</p>
+              <p class="ml-2"> <button class="btn more_btn first_double_check{{$key}}">チェックをする</button> </p>
+            </dd>
+          </dl>
+          @elseif ($other_bill->double_check_status==1)
+          <dl>
+            <dt>一人目チェック</dt>
+            <dd class="d-flex">
+              <p>{{$other_bill->double_check1_name}}</p>
             </dd>
           </dl>
           <dl>
             <dt>二人目チェック</dt>
             <dd class="d-flex">
               <p>未</p>
-              <p class="ml-2"><a class="more_btn" href="">チェックをする</a></p>
+              <p class="ml-2"> <button class="btn more_btn second_double_check">チェックをする</button> </p>
             </dd>
           </dl>
+          @elseif ($other_bill->double_check_status==2)
+          <dl>
+            <dt>一人目チェック</dt>
+            <dd class="d-flex">
+              <p>{{$other_bill->double_check1_name}}</p>
+            </dd>
+          </dl>
+          <dl>
+            <dt>二人目チェック</dt>
+            <dd class="d-flex">
+              <p>{{$other_bill->double_check2_name}}</p>
+            </dd>
+          </dl>
+          @endif
         </div>
-
         <div class="col-2">
           <p>
             申込日：2020/10/15(木)
@@ -1578,323 +907,241 @@ billsのカウント：{{count($reservation->bills()->get())}}
           </p>
         </div>
       </div>
-
-
       <!-- 承認確認ボタン-ダブルチェック後に表示------ -->
-      <div class="row justify-content-end mt-5">
+      @if ($other_bill->double_check_status==2)
+      <!-- 承認確認ボタン-ダブルチェック後に表示------ -->
+      {{-- 予約完了後、非表示 --}}
+      @if ($other_bill->reservation_status<=2) <div class="row justify-content-end mt-5">
+        <div class="d-flex col-2 justify-content-around">
+          <p class="text-right">
+            {{-- 予約ステータスを2にして、ユーザーにメール送付 --}}
+            {{ Form::open(['url' => 'admin/reservations/'.$reservation->id.'/send_email_and_approve', 'method'=>'POST', 'class'=>'']) }}
+            @csrf
+            {{ Form::hidden('reservation_id', $reservation->id ) }}
+            {{ Form::hidden('user_id', $reservation->user_id ) }}
+            {{ Form::submit('承認',['class' => 'btn more_btn']) }}
+            {{ Form::close() }}
+          </p>
+          <p class="text-right">
+            {{ Form::open(['url' => 'admin/reservations/'.$reservation->id.'/confirm_reservation', 'method'=>'POST', 'class'=>'']) }}
+            @csrf
+            {{ Form::hidden('reservation_id', $reservation->id ) }}
+            {{ Form::hidden('user_id', $reservation->user_id ) }}
+            {{ Form::submit('確定',['class' => 'btn more_btn4']) }}
+            {{ Form::close() }}
+          </p>
+        </div>
+    </div>
+    @endif
+    @endif
+
+    {{-- <div class="row justify-content-end mt-5">
         <div class="d-flex col-2 justify-content-around">
           <p class="text-right"><a class="more_btn" href="">承認</a></p>
           <p class="text-right"><a class="more_btn4" href="">確定</a></p>
         </div>
+      </div> --}}
+    <!-- キャンセルボタン-ステータス：予約完了で表示------ -->
+    {{-- <div class="row justify-content-end mt-5">
+      <div class="d-flex col-12 justify-content-end">
+        <p class="text-right"><a class="more_btn4" href="">キャンセルする</a></p>
       </div>
+    </div> --}}
+</div>
 
-      <!-- キャンセルボタン-ステータス：予約完了で表示------ -->
-      <div class="row justify-content-end mt-5">
-        <div class="d-flex col-12 justify-content-end">
-          <p class="text-right"><a class="more_btn4" href="">キャンセルする</a></p>
-        </div>
+<!-- 請求セクション------------------------------------------------------------------- -->
+<section class="section-wrap section-bg">
+  <!-- 請求内容----------- -->
+  <!-- 請求書情報-------- -->
+  <div class="bill-ttl mb-5">
+    <div class="section-ttl-box d-flex align-items-center">
+      <div class="col-6">
+        <h3 class="">請求情報</h3>
       </div>
-
-
+      <div class="col-6 d-flex justify-content-end">
+        <p class="text-right"><a class="more_btn" href="">請求書をみる</a></p>
+        <!-- ステータスが入金確認後に表示------ -->
+        <p class="text-right ml-3"><a class="more_btn" href="">領収書をみる</a></p>
+      </div>
     </div>
-
-    <!-- 請求セクション------------------------------------------------------------------- -->
-
-    <section class="section-wrap section-bg">
-
-      <!-- 請求内容----------- -->
-
-      <!-- 請求書情報-------- -->
-      <div class="bill-ttl mb-5">
-        <div class="section-ttl-box d-flex align-items-center">
-          <div class="col-6">
-            <h3 class="">請求情報</h3>
-          </div>
-          <div class="col-6 d-flex justify-content-end">
-            <p class="text-right"><a class="more_btn" href="">請求書をみる</a></p>
-            <!-- ステータスが入金確認後に表示------ -->
-            <p class="text-right ml-3"><a class="more_btn" href="">領収書をみる</a></p>
-          </div>
-        </div>
-        <!-- 請求書情報--予約完了後に表示------ -->
-        <dl class="row bill-box_wrap">
-          <div class="col-4 bill-box_cell">
-            <dt><label for="billCompany">請求No</label></dt>
-            <dd>2020092225</dd>
-          </div>
-          <div class="col-4 bill-box_cell">
-            <dt><label for="billCustomer">請求日</label></dt>
-            <dd>2020/09/02</dd>
-          </div>
-          <div class="col-4 bill-box_cell">
-            <dt><label for="billDate">支払期日</label></dt>
-            <dd>2020/12/10(木)</dd>
-          </div>
-        </dl>
-
+    <!-- 請求書情報--予約完了後に表示------ -->
+    <dl class="row bill-box_wrap">
+      <div class="col-4 bill-box_cell">
+        <dt><label for="billCompany">請求No</label></dt>
+        <dd>2020092225</dd>
+      </div>
+      <div class="col-4 bill-box_cell">
+        <dt><label for="billCustomer">請求日</label></dt>
+        <dd>2020/09/02</dd>
+      </div>
+      <div class="col-4 bill-box_cell">
+        <dt><label for="billDate">支払期日</label></dt>
+        <dd>2020/12/10(木)</dd>
+      </div>
+    </dl>
+  </div>
+  <!-- 　追加請求内容----------- -->
+  <div class="bill-box">
+    <h3 class="row">その他の有料備品、サービス</h3>
+    <dl class="row bill-box_wrap">
+      <div class="col-12 bill-box_cell">
+        <dt>その他の有料備品、サービス合計</dt>
+        <dd class="text-right">57,700円</dd>
       </div>
 
-      <!-- 　追加請求内容----------- -->
-      <div class="bill-box">
-        <h3 class="row">その他の有料備品、サービス</h3>
-        <dl class="row bill-box_wrap">
-          <div class="col-12 bill-box_cell">
-            <dt>その他の有料備品、サービス合計</dt>
-            <dd class="text-right">57,700円</dd>
+      <div class="col-6">
+        <div class="row">
+          <div class="col-4 bill-box_cell cell-gray">
+            <p>割引率</p>
           </div>
-
-          <div class="col-6">
-            <div class="row">
-              <div class="col-4 bill-box_cell cell-gray">
-                <p>割引率</p>
-              </div>
-              <div class="col-5 bill-box_cell">
-                <p class="text-right"></p>
-              </div>
-              <div class="col-3 bill-box_cell text-right">
-                <p>割引金額</p>
-                <p class=""><span>円</span></p>
-              </div>
-            </div>
+          <div class="col-5 bill-box_cell">
+            <p class="text-right"></p>
           </div>
-
-
-          <div class="col-6 bill-box_cell text-right">
-            <p class="font-weight-bold">割引後その他の有料備品、サービス合計</p>
-            <p class=""></p>
-          </div>
-        </dl>
-
-
-        <!-- 料金内訳-------------------------------------------------------------- -->
-        <div class="bill-list">
-          <h3 class="row">料金内訳</h3>
-          <div class="col-12 venue_price_details">
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <td>内容</td>
-                  <td>単価</td>
-                  <td>数量</td>
-                  <td>金額</td>
-                </tr>
-              </thead>
-              <tbody></tbody>
-            </table>
-          </div>
-
-          <div class="row bill-box_wrap price-sum bill-box_cell flex-column">
-            <p class="text-right"><span class="font-weight-bold">小計</span>7,200円</p>
-            <p class="text-right"><span>消費税</span>720円</p>
-            <p class="text-right"><span class="font-weight-bold">合計金額</span>7,200円</p>
+          <div class="col-3 bill-box_cell text-right">
+            <p>割引金額</p>
+            <p class=""><span>円</span></p>
           </div>
         </div>
-        <!-- 料金内訳 終わり---------------------------- -->
-
-
       </div>
-      <!-- 請求内容 終わり---------------------------- -->
-
-      <!-- 請求内容 終わり---------------------------- -->
-
-      <!-- 請求書内容----------- -->
-      <div class="bill-box">
-        <h3 class="row">請求書内容</h3>
-        <dl class="row bill-box_wrap">
-          <div class="col-6 bill-box_cell">
-            <dt><label for="billCompany">請求書の会社名</label></dt>
-            <dd>株式会社テスト</dd>
-          </div>
-          <div class="col-6 bill-box_cell">
-            <dt><label for="billCustomer">請求書の担当者名</label></dt>
-            <dd>山田太郎</dd>
-          </div>
-          <div class="col-6 bill-box_cell">
-            <dt><label for="billDate">請求日</label></dt>
-            <dd>2020/12/10(木)</dd>
-          </div>
-          <div class="col-6 bill-box_cell">
-            <dt><label for="billDue">支払期日</label></dt>
-            <dd>2020/12/10(木)</dd>
-          </div>
-          <div class="col-12 bill-box_cell">
-            <dt><label for="billNote">備考</label></dt>
-            <dd>テキストテキストテキストテキストテキストテキスト</dd>
-          </div>
-        </dl>
+      <div class="col-6 bill-box_cell text-right">
+        <p class="font-weight-bold">割引後その他の有料備品、サービス合計</p>
+        <p class=""></p>
       </div>
-      <!-- 請求書内容 終わり---------------------------- -->
-
-
-      <!-- 入金確認入力フィールド　予約完了後の表示----------- -->
-      <div class="bill-box">
-        <h3 class="row">入金確認</h3>
-        <dl class="row bill-box_wrap">
-          <div class="col-4 bill-box_cell">
-            <dt><label for="payDate">入金日</label></dt>
-            <dd>2020/12/21(月)</dd>
-          </div>
-          <div class="col-4 bill-box_cell">
-            <dt><label for="payType">支払タイプ</label></dt>
-            <dd>振込</dd>
-          </div>
-          <div class="col-4 bill-box_cell">
-            <dt><label for="payStatus">入金状況</label></dt>
-            <dd>入金済</dd>
-          </div>
-          <div class="col-12 bill-box_cell">
-            <dt><label for="billNote">振込名</label></dt>
-            <dd>テキストテキストテキストテキストテキストテキスト</dd>
-          </div>
-        </dl>
+    </dl>
+    <!-- 料金内訳-------------------------------------------------------------- -->
+    <div class="bill-list">
+      <h3 class="row">料金内訳</h3>
+      <div class="col-12 venue_price_details">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <td>内容</td>
+              <td>単価</td>
+              <td>数量</td>
+              <td>金額</td>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
       </div>
-      <!-- 入金確認入力フィールド 終わり---------------------------- -->
-
-    </section>
-
-    　　　　　
-    <!-- 請求セクション　キャンセル料-　キャンセルをしたときに、表示------------------------------------------------------------------ -->
-    {{-- <section class="bill-wrap section-wrap section-bg">
-      <div class="bill-bg">
-
-        <!-- 請求書情報-------- -->
-        <div class="bill-ttl mb-5">
-          <div class="section-ttl-box d-flex align-items-center">
-            <div class="col-6">
-              <h3 class="section-ttl">キャンセル料請求情報</h3>
-            </div>
-            <div class="col-6 d-flex justify-content-end">
-              <p class="text-right"><a class="more_btn" href="">請求書をみる</a></p>
-              <!-- ステータスが入金確認後に表示------ -->
-              <p class="text-right ml-3"><a class="more_btn" href="">領収書をみる</a></p>
-            </div>
-          </div>
-          <!-- 請求書情報--予約完了後に表示------ -->
-          <dl class="row bill-box_wrap">
-            <div class="col-4 bill-box_cell">
-              <dt><label for="billCompany">請求No</label></dt>
-              <dd>2020092225</dd>
-            </div>
-            <div class="col-4 bill-box_cell">
-              <dt><label for="billCustomer">請求日</label></dt>
-              <dd>2020/09/02</dd>
-            </div>
-            <div class="col-4 bill-box_cell">
-              <dt><label for="billDate">支払期日</label></dt>
-              <dd>2020/12/10(木)</dd>
-            </div>
-          </dl>
-
-        </div>
-        <!-- 請求書情報 終わり---------------------------- -->
-
-        <!-- 　キャンセル料金内容----------- -->
-        <div class="bill-box">
-          <h3 class="row">キャンセル料</h3>
-          <dl class="row bill-box_wrap">
-            <div class="col-12 bill-box_cell">
-              <dt>キャンセル料金合計</dt>
-              <dd class="text-right">57,700円</dd>
-            </div>
-            <div class="col-6">
-              <div class="row">
-                <div class="col-4 bill-box_cell cell-gray">
-                  <p>割引率</p>
-                </div>
-                <div class="col-5 bill-box_cell">
-                  <p class="text-right"></p>
-                </div>
-                <div class="col-3 bill-box_cell text-right">
-                  <p>割引金額</p>
-                  <p class=""><span>円</span></p>
-                </div>
-              </div>
-            </div>
-            <div class="col-6 bill-box_cell text-right">
-              <p class="font-weight-bold">割引後キャンセル料合計</p>
-              <p class=""></p>
-            </div>
-          </dl>
-          <!-- 料金内訳-------------------------------------------------------------- -->
-          <div class="bill-list">
-            <h3 class="row">料金内訳</h3>
-            <div class="col-12 venue_price_details">
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <td>内容</td>
-                    <td>単価</td>
-                    <td>数量</td>
-                    <td>金額</td>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
-            </div>
-            <div class="row bill-box_wrap price-sum bill-box_cell flex-column">
-              <p class="text-right"><span class="font-weight-bold">小計</span>7,200円</p>
-              <p class="text-right"><span>消費税</span>720円</p>
-              <p class="text-right"><span class="font-weight-bold">合計金額</span>7,200円</p>
-            </div>
-          </div>
-          <!-- 料金内訳 終わり---------------------------- -->
-        </div>
-        <!-- 請求内容 終わり---------------------------- -->
-        <!-- 請求書内容----------- -->
-        <div class="bill-box">
-          <h3 class="row">請求書内容</h3>
-          <dl class="row bill-box_wrap">
-            <div class="col-6 bill-box_cell">
-              <dt><label for="billCompany">請求書の会社名</label></dt>
-              <dd>株式会社テスト</dd>
-            </div>
-            <div class="col-6 bill-box_cell">
-              <dt><label for="billCustomer">請求書の担当者名</label></dt>
-              <dd>山田太郎</dd>
-            </div>
-            <div class="col-6 bill-box_cell">
-              <dt><label for="billDate">請求日</label></dt>
-              <dd>2020/12/10(木)</dd>
-            </div>
-            <div class="col-6 bill-box_cell">
-              <dt><label for="billDue">支払期日</label></dt>
-              <dd>2020/12/10(木)</dd>
-            </div>
-            <div class="col-12 bill-box_cell">
-              <dt><label for="billNote">備考</label></dt>
-              <dd>テキストテキストテキストテキストテキストテキスト</dd>
-            </div>
-          </dl>
-        </div>
-        <!-- 請求書内容 終わり---------------------------- -->
-        <!-- 入金確認入力フィールド　予約完了後の表示----------- -->
-        <div class="bill-box">
-          <h3 class="row">入金確認</h3>
-          <dl class="row bill-box_wrap">
-            <div class="col-4 bill-box_cell">
-              <dt><label for="payDate">入金日</label></dt>
-              <dd>2020/12/21(月)</dd>
-            </div>
-            <div class="col-4 bill-box_cell">
-              <dt><label for="payType">支払タイプ</label></dt>
-              <dd>振込</dd>
-            </div>
-            <div class="col-4 bill-box_cell">
-              <dt><label for="payStatus">入金状況</label></dt>
-              <dd>入金済</dd>
-            </div>
-            <div class="col-12 bill-box_cell">
-              <dt><label for="billNote">振込名</label></dt>
-              <dd>テキストテキストテキストテキストテキストテキスト</dd>
-            </div>
-          </dl>
-        </div>
-        <!-- 入金確認入力フィールド 終わり---------------------------- -->
+      <div class="row bill-box_wrap price-sum bill-box_cell flex-column">
+        <p class="text-right"><span class="font-weight-bold">小計</span>7,200円</p>
+        <p class="text-right"><span>消費税</span>720円</p>
+        <p class="text-right"><span class="font-weight-bold">合計金額</span>7,200円</p>
       </div>
-    </section> --}}
-  </section>
+    </div>
+    <!-- 料金内訳 終わり---------------------------- -->
+  </div>
+  <!-- 請求内容 終わり---------------------------- -->
+  <!-- 請求内容 終わり---------------------------- -->
+  <!-- 請求書内容----------- -->
+  <div class="bill-box">
+    <h3 class="row">請求書内容</h3>
+    <dl class="row bill-box_wrap">
+      <div class="col-6 bill-box_cell">
+        <dt><label for="billCompany">請求書の会社名</label></dt>
+        <dd>株式会社テスト</dd>
+      </div>
+      <div class="col-6 bill-box_cell">
+        <dt><label for="billCustomer">請求書の担当者名</label></dt>
+        <dd>山田太郎</dd>
+      </div>
+      <div class="col-6 bill-box_cell">
+        <dt><label for="billDate">請求日</label></dt>
+        <dd>2020/12/10(木)</dd>
+      </div>
+      <div class="col-6 bill-box_cell">
+        <dt><label for="billDue">支払期日</label></dt>
+        <dd>2020/12/10(木)</dd>
+      </div>
+      <div class="col-12 bill-box_cell">
+        <dt><label for="billNote">備考</label></dt>
+        <dd>テキストテキストテキストテキストテキストテキスト</dd>
+      </div>
+    </dl>
+  </div>
+  <!-- 請求書内容 終わり---------------------------- -->
+  <!-- 入金確認入力フィールド　予約完了後の表示----------- -->
+  <div class="bill-box">
+    <h3 class="row">入金確認</h3>
+    <dl class="row bill-box_wrap">
+      <div class="col-4 bill-box_cell">
+        <dt><label for="payDate">入金日</label></dt>
+        <dd>2020/12/21(月)</dd>
+      </div>
+      <div class="col-4 bill-box_cell">
+        <dt><label for="payType">支払タイプ</label></dt>
+        <dd>振込</dd>
+      </div>
+      <div class="col-4 bill-box_cell">
+        <dt><label for="payStatus">入金状況</label></dt>
+        <dd>入金済</dd>
+      </div>
+      <div class="col-12 bill-box_cell">
+        <dt><label for="billNote">振込名</label></dt>
+        <dd>テキストテキストテキストテキストテキストテキスト</dd>
+      </div>
+    </dl>
+  </div>
+  <!-- 入金確認入力フィールド 終わり---------------------------- -->
+</section>
+{{-- ダブルチェック部分 --}}
+@if ($other_bill->double_check_status==0)
+<div class="checkbox section-wrap">
+  <dl class="d-flex col-12 justify-content-end align-items-center">
+    <dt><label for="checkname">一人目チェック者</label></dt>
+    <dd>
+      {{ Form::open(['url' => 'admin/bills/other_doublecheck', 'method'=>'POST', 'class'=>'']) }}
+      @csrf
+      {{Form::select('double_check1_name', [
+        '名前test1' => '名前test1', 
+        '名前test2' => '名前test2',
+        '名前test3' => '名前test3',
+        '名前test4' => '名前test4',], 
+        null, ['placeholder' => '選択してください', 'class'=>'form-control double_check1_name'])}}
+      {{ Form::hidden('double_check_status', $other_bill->double_check_status ) }}
+      {{ Form::hidden('bills_id', $other_bill->id ) }}
+    </dd>
+    <dd>
+      <p class="text-right">
+        {{Form::submit('チェック完了', ['class'=>'btn more_btn', 'id'=>'double_check1_submit'])}}
+        {{ Form::close() }}
+      </p>
+    </dd>
+  </dl>
+</div>
+@elseif($other_bill->double_check_status==1)
+<div class="checkbox section-wrap">
+  <dl class="d-flex col-12 justify-content-end align-items-center">
+    <dt><label for="checkname">二人目チェック者</label></dt>
+    <dd>
+      {{ Form::open(['url' => 'admin/bills/other_doublecheck', 'method'=>'POST', 'class'=>'']) }}
+      @csrf
+      {{Form::select('double_check2_name', [
+        '名前test1' => '名前test1', 
+        '名前test2' => '名前test2',
+        '名前test3' => '名前test3',
+        '名前test4' => '名前test4',], 
+        null, ['placeholder' => '選択してください', 'class'=>'form-control double_check2_name'])}}
+      {{ Form::hidden('double_check_status', $other_bill->double_check_status ) }}
+      {{ Form::hidden('bills_id', $other_bill->id ) }}
+    </dd>
+    <dd>
+      <p class="text-right">
+        {{Form::submit('チェック完了', ['class'=>'btn more_btn', 'id'=>'double_check2_submit'])}}
+        {{ Form::close() }}
+      </p>
+    </dd>
+  </dl>
+</div>
+@endif
+
+</section>
 </div>
 {{-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ --}}
+@endforeach
+
+
 
 
 
@@ -1973,6 +1220,8 @@ billsのカウント：{{count($reservation->bills()->get())}}
     <dd>
       <p class="text-right">
         {{Form::submit('チェック完了', ['class'=>'btn more_btn', 'id'=>'double_check1_submit'])}}
+        {{ Form::close() }}
+
       </p>
     </dd>
   </dl>
@@ -1995,11 +1244,12 @@ billsのカウント：{{count($reservation->bills()->get())}}
     <dd>
       <p class="text-right">
         {{Form::submit('チェック完了', ['class'=>'btn more_btn', 'id'=>'double_check2_submit'])}}
+        {{ Form::close() }}
+
       </p>
     </dd>
   </dl>
 </div>
-
 @endif
 
 
