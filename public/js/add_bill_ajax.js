@@ -44,7 +44,6 @@ $(function () {
           + "<td><input class='form-control' name='equipment_service_count" + index + "' type='text' readonly value='" + data3 + "'></td>"
           + "<td><input class='form-control' name='equipment_service_subtotal" + index + "' type='text' readonly value='" + data4 + "'></td>"
           + "</tr>";
-
         if (data3 > 0) {
           main_tar.append(m_append_data);
         }
@@ -58,10 +57,10 @@ $(function () {
         var data4 = data2 * data3;
         sub_total = sub_total + data4;
         var m_append_data = "<tr>"
-          + "<td><input class='form-control' name='layout_item" + index + "' type='text' readonly disabled value='" + data1 + "'></td>"
-          + "<td><input class='form-control' name='layout_cost" + index + "' type='text' readonly disabled value='" + data2 + "'></td>"
-          + "<td><input class='form-control' name='layout_count" + index + "' type='text' readonly disabled value='" + data3 + "'></td>"
-          + "<td><input class='form-control' name='layout_subtotal" + index + "' type='text' readonly disabled value='" + data4 + "'></td>"
+          + "<td><input class='form-control' name='layout_item" + index + "' type='text' readonly value='" + data1 + "'></td>"
+          + "<td><input class='form-control' name='layout_cost" + index + "' type='text' readonly value='" + data2 + "'></td>"
+          + "<td><input class='form-control' name='layout_count" + index + "' type='text' readonly value='" + data3 + "'></td>"
+          + "<td><input class='form-control' name='layout_subtotal" + index + "' type='text' readonly value='" + data4 + "'></td>"
           + "</tr>";
         if (data3 > 0) {
           main_tar.append(m_append_data);
@@ -76,10 +75,10 @@ $(function () {
         var data4 = data2 * data3;
         sub_total = sub_total + data4;
         var m_append_data = "<tr>"
-          + "<td><input class='form-control' name='others_item" + index + "' type='text' readonly disabled value='" + data1 + "'></td>"
-          + "<td><input class='form-control' name='others_cost" + index + "' type='text' readonly disabled value='" + data2 + "'></td>"
-          + "<td><input class='form-control' name='others_count" + index + "' type='text' readonly disabled value='" + data3 + "'></td>"
-          + "<td><input class='form-control' name='others_subtotal" + index + "' type='text' readonly disabled value='" + data4 + "'></td>"
+          + "<td><input class='form-control' name='others_item" + index + "' type='text' readonly value='" + data1 + "'></td>"
+          + "<td><input class='form-control' name='others_cost" + index + "' type='text' readonly value='" + data2 + "'></td>"
+          + "<td><input class='form-control' name='others_count" + index + "' type='text' readonly value='" + data3 + "'></td>"
+          + "<td><input class='form-control' name='others_subtotal" + index + "' type='text' readonly value='" + data4 + "'></td>"
           + "</tr>";
 
         main_tar.append(m_append_data);

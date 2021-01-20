@@ -65,17 +65,17 @@
     <div class="categorybox d-flex justify-content-around">
       <p class="radio">
         <label>
-          <input type="radio" name="billcategory" id="optionsRadios1" value="1">その他の有料備品、サービス
+          <input type="radio" name="billcategory" id="optionsRadios" value="1">その他の有料備品、サービス
         </label>
       </p>
       <p class="radio">
         <label>
-          <input type="radio" name="billcategory" id="billcategory2" value="2">レイアウト変更
+          <input type="radio" name="billcategory" id="optionsRadios" value="2">レイアウト変更
         </label>
       </p>
       <p class="radio d-flex">
         <label style="width: 90px;">
-          <input type="radio" name="billcategory" id="billcategory5" value="3">その他
+          <input type="radio" name="billcategory" id="optionsRadios" value="3">その他
         </label>
         <label for="other"></label>
       </p>
@@ -120,13 +120,13 @@
     </table>
     <div>
       <p>小計</p>
-      <input type="text" class="sub_total" readonly disabled name="sub_total">
+      <input type="text" class="sub_total" readonly name="sub_total">
       <p>割引後　備品その他合計</p>
-      <input class="after_dicsount" type="text" readonly disabled name="after_dicsount">
+      <input class="after_dicsount" type="text" readonly name="after_dicsount">
       <p>消費税</p>
-      <input class="tax" type="text" readonly disabled name="tax">
+      <input class="tax" type="text" readonly name="tax">
       <p>請求総額</p>
-      <input class="total" type="text" readonly disabled name="total">
+      <input class="total" type="text" readonly name="total">
     </div>
 
     {{-- <div class="btn_wrapper">
@@ -141,15 +141,9 @@
 </div>
 </div>
 
-<input type="submit">
+<input type="submit" value="確認する">
 {{ Form::close() }}
 
-
-
-{{-- {{ Form::open(['url' => 'admin/reservations/'.$reservation->id.'/add_bill_check', 'method'=>'POST','id'=>'testid']) }}
-@csrf
-{!! Form::submit('確認する', ['class' => 'btn btn-primary']) !!}
-{{ Form::close() }} --}}
 
 
 <script>

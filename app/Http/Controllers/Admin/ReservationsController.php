@@ -630,9 +630,36 @@ class ReservationsController extends Controller
   public function add_bill_check(Request $request)
   {
     var_dump($request->all());
+    $master_arrays = [];
 
+    if ($request->billcategory == 1) {
+      foreach ($request->all() as $key => $value) {
+        if (preg_match('/equipment_service/', $key)) {
+          $master_arrays[] = $value;
+        }
+      }
+      $counter = count($master_arrays) / 4; //固定で4つ
+    } else if ($request->billcategory == 2) {
+      foreach ($request->all() as $key => $value) {
+        if (preg_match('/layout_/', $key)) {
+          $master_arrays[] = $value;
+        }
+      }
+      $counter = count($master_arrays) / 4; //固定で4つ
+    } else if ($request->billcategory == 3) {
+      foreach ($request->all() as $key => $value) {
+        if (preg_match('/others_/', $key)) {
+          $master_arrays[] = $value;
+        }
+      }
+      $counter = count($master_arrays) / 4; //固定で4つ
+    }
 
-    // return view('admin.reservations.add_bill_check', []);
+    return view('admin.reservations.add_bill_check', [
+      'request' => $request,
+      'master_arrays' => $master_arrays,
+      'counter' => $counter
+    ]);
   }
 
 
