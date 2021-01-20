@@ -6,6 +6,7 @@
 <link href="{{ asset('/css/template.css') }}" rel="stylesheet">
 <script src="{{ asset('/js/template.js') }}"></script>
 
+billsのカウント：{{count($reservation->bills()->get())}}
 
 <div class="content">
   <div class="container-fluid">
@@ -1528,6 +1529,374 @@
 
 </section>
 </div>
+
+
+{{-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ --}}
+{{-- ここから追加された請求書 --}}
+<div class="section-wrap">
+  <div class="ttl-box d-flex align-items-center">
+    <div class="col-9 d-flex justify-content-between">
+      <h2>その他の有料備品、サービス</h2>
+      <!-- <p>予約ID:00001</p> -->
+      <!-- <p>予約一括ID:00001</p> -->
+    </div>
+    <div class="col-3">
+      <p class="text-right"><a class="more_btn" href="">編集</a></p>
+    </div>
+
+  </div>
+  <section class="register-wrap">
+
+    <div class="section-header">
+      <div class="row">
+        <div class="d-flex col-10 flex-wrap">
+          <dl>
+            <dt>予約状況</dt>
+            <dd>予約確認中</dd>
+          </dl>
+          <dl>
+            <dt>一人目チェック</dt>
+            <dd>
+              <p>山田太郎</p>
+            </dd>
+          </dl>
+          <dl>
+            <dt>二人目チェック</dt>
+            <dd class="d-flex">
+              <p>未</p>
+              <p class="ml-2"><a class="more_btn" href="">チェックをする</a></p>
+            </dd>
+          </dl>
+        </div>
+
+        <div class="col-2">
+          <p>
+            申込日：2020/10/15(木)
+          </p>
+          <p>
+            予約確定日：2020/10/15(木)
+          </p>
+        </div>
+      </div>
+
+
+      <!-- 承認確認ボタン-ダブルチェック後に表示------ -->
+      <div class="row justify-content-end mt-5">
+        <div class="d-flex col-2 justify-content-around">
+          <p class="text-right"><a class="more_btn" href="">承認</a></p>
+          <p class="text-right"><a class="more_btn4" href="">確定</a></p>
+        </div>
+      </div>
+
+      <!-- キャンセルボタン-ステータス：予約完了で表示------ -->
+      <div class="row justify-content-end mt-5">
+        <div class="d-flex col-12 justify-content-end">
+          <p class="text-right"><a class="more_btn4" href="">キャンセルする</a></p>
+        </div>
+      </div>
+
+
+    </div>
+
+    <!-- 請求セクション------------------------------------------------------------------- -->
+
+    <section class="section-wrap section-bg">
+
+      <!-- 請求内容----------- -->
+
+      <!-- 請求書情報-------- -->
+      <div class="bill-ttl mb-5">
+        <div class="section-ttl-box d-flex align-items-center">
+          <div class="col-6">
+            <h3 class="">請求情報</h3>
+          </div>
+          <div class="col-6 d-flex justify-content-end">
+            <p class="text-right"><a class="more_btn" href="">請求書をみる</a></p>
+            <!-- ステータスが入金確認後に表示------ -->
+            <p class="text-right ml-3"><a class="more_btn" href="">領収書をみる</a></p>
+          </div>
+        </div>
+        <!-- 請求書情報--予約完了後に表示------ -->
+        <dl class="row bill-box_wrap">
+          <div class="col-4 bill-box_cell">
+            <dt><label for="billCompany">請求No</label></dt>
+            <dd>2020092225</dd>
+          </div>
+          <div class="col-4 bill-box_cell">
+            <dt><label for="billCustomer">請求日</label></dt>
+            <dd>2020/09/02</dd>
+          </div>
+          <div class="col-4 bill-box_cell">
+            <dt><label for="billDate">支払期日</label></dt>
+            <dd>2020/12/10(木)</dd>
+          </div>
+        </dl>
+
+      </div>
+
+      <!-- 　追加請求内容----------- -->
+      <div class="bill-box">
+        <h3 class="row">その他の有料備品、サービス</h3>
+        <dl class="row bill-box_wrap">
+          <div class="col-12 bill-box_cell">
+            <dt>その他の有料備品、サービス合計</dt>
+            <dd class="text-right">57,700円</dd>
+          </div>
+
+          <div class="col-6">
+            <div class="row">
+              <div class="col-4 bill-box_cell cell-gray">
+                <p>割引率</p>
+              </div>
+              <div class="col-5 bill-box_cell">
+                <p class="text-right"></p>
+              </div>
+              <div class="col-3 bill-box_cell text-right">
+                <p>割引金額</p>
+                <p class=""><span>円</span></p>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-6 bill-box_cell text-right">
+            <p class="font-weight-bold">割引後その他の有料備品、サービス合計</p>
+            <p class=""></p>
+          </div>
+        </dl>
+
+
+        <!-- 料金内訳-------------------------------------------------------------- -->
+        <div class="bill-list">
+          <h3 class="row">料金内訳</h3>
+          <div class="col-12 venue_price_details">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <td>内容</td>
+                  <td>単価</td>
+                  <td>数量</td>
+                  <td>金額</td>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <div class="row bill-box_wrap price-sum bill-box_cell flex-column">
+            <p class="text-right"><span class="font-weight-bold">小計</span>7,200円</p>
+            <p class="text-right"><span>消費税</span>720円</p>
+            <p class="text-right"><span class="font-weight-bold">合計金額</span>7,200円</p>
+          </div>
+        </div>
+        <!-- 料金内訳 終わり---------------------------- -->
+
+
+      </div>
+      <!-- 請求内容 終わり---------------------------- -->
+
+      <!-- 請求内容 終わり---------------------------- -->
+
+      <!-- 請求書内容----------- -->
+      <div class="bill-box">
+        <h3 class="row">請求書内容</h3>
+        <dl class="row bill-box_wrap">
+          <div class="col-6 bill-box_cell">
+            <dt><label for="billCompany">請求書の会社名</label></dt>
+            <dd>株式会社テスト</dd>
+          </div>
+          <div class="col-6 bill-box_cell">
+            <dt><label for="billCustomer">請求書の担当者名</label></dt>
+            <dd>山田太郎</dd>
+          </div>
+          <div class="col-6 bill-box_cell">
+            <dt><label for="billDate">請求日</label></dt>
+            <dd>2020/12/10(木)</dd>
+          </div>
+          <div class="col-6 bill-box_cell">
+            <dt><label for="billDue">支払期日</label></dt>
+            <dd>2020/12/10(木)</dd>
+          </div>
+          <div class="col-12 bill-box_cell">
+            <dt><label for="billNote">備考</label></dt>
+            <dd>テキストテキストテキストテキストテキストテキスト</dd>
+          </div>
+        </dl>
+      </div>
+      <!-- 請求書内容 終わり---------------------------- -->
+
+
+      <!-- 入金確認入力フィールド　予約完了後の表示----------- -->
+      <div class="bill-box">
+        <h3 class="row">入金確認</h3>
+        <dl class="row bill-box_wrap">
+          <div class="col-4 bill-box_cell">
+            <dt><label for="payDate">入金日</label></dt>
+            <dd>2020/12/21(月)</dd>
+          </div>
+          <div class="col-4 bill-box_cell">
+            <dt><label for="payType">支払タイプ</label></dt>
+            <dd>振込</dd>
+          </div>
+          <div class="col-4 bill-box_cell">
+            <dt><label for="payStatus">入金状況</label></dt>
+            <dd>入金済</dd>
+          </div>
+          <div class="col-12 bill-box_cell">
+            <dt><label for="billNote">振込名</label></dt>
+            <dd>テキストテキストテキストテキストテキストテキスト</dd>
+          </div>
+        </dl>
+      </div>
+      <!-- 入金確認入力フィールド 終わり---------------------------- -->
+
+    </section>
+
+    　　　　　
+    <!-- 請求セクション　キャンセル料-　キャンセルをしたときに、表示------------------------------------------------------------------ -->
+    {{-- <section class="bill-wrap section-wrap section-bg">
+      <div class="bill-bg">
+
+        <!-- 請求書情報-------- -->
+        <div class="bill-ttl mb-5">
+          <div class="section-ttl-box d-flex align-items-center">
+            <div class="col-6">
+              <h3 class="section-ttl">キャンセル料請求情報</h3>
+            </div>
+            <div class="col-6 d-flex justify-content-end">
+              <p class="text-right"><a class="more_btn" href="">請求書をみる</a></p>
+              <!-- ステータスが入金確認後に表示------ -->
+              <p class="text-right ml-3"><a class="more_btn" href="">領収書をみる</a></p>
+            </div>
+          </div>
+          <!-- 請求書情報--予約完了後に表示------ -->
+          <dl class="row bill-box_wrap">
+            <div class="col-4 bill-box_cell">
+              <dt><label for="billCompany">請求No</label></dt>
+              <dd>2020092225</dd>
+            </div>
+            <div class="col-4 bill-box_cell">
+              <dt><label for="billCustomer">請求日</label></dt>
+              <dd>2020/09/02</dd>
+            </div>
+            <div class="col-4 bill-box_cell">
+              <dt><label for="billDate">支払期日</label></dt>
+              <dd>2020/12/10(木)</dd>
+            </div>
+          </dl>
+
+        </div>
+        <!-- 請求書情報 終わり---------------------------- -->
+
+        <!-- 　キャンセル料金内容----------- -->
+        <div class="bill-box">
+          <h3 class="row">キャンセル料</h3>
+          <dl class="row bill-box_wrap">
+            <div class="col-12 bill-box_cell">
+              <dt>キャンセル料金合計</dt>
+              <dd class="text-right">57,700円</dd>
+            </div>
+            <div class="col-6">
+              <div class="row">
+                <div class="col-4 bill-box_cell cell-gray">
+                  <p>割引率</p>
+                </div>
+                <div class="col-5 bill-box_cell">
+                  <p class="text-right"></p>
+                </div>
+                <div class="col-3 bill-box_cell text-right">
+                  <p>割引金額</p>
+                  <p class=""><span>円</span></p>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 bill-box_cell text-right">
+              <p class="font-weight-bold">割引後キャンセル料合計</p>
+              <p class=""></p>
+            </div>
+          </dl>
+          <!-- 料金内訳-------------------------------------------------------------- -->
+          <div class="bill-list">
+            <h3 class="row">料金内訳</h3>
+            <div class="col-12 venue_price_details">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <td>内容</td>
+                    <td>単価</td>
+                    <td>数量</td>
+                    <td>金額</td>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <div class="row bill-box_wrap price-sum bill-box_cell flex-column">
+              <p class="text-right"><span class="font-weight-bold">小計</span>7,200円</p>
+              <p class="text-right"><span>消費税</span>720円</p>
+              <p class="text-right"><span class="font-weight-bold">合計金額</span>7,200円</p>
+            </div>
+          </div>
+          <!-- 料金内訳 終わり---------------------------- -->
+        </div>
+        <!-- 請求内容 終わり---------------------------- -->
+        <!-- 請求書内容----------- -->
+        <div class="bill-box">
+          <h3 class="row">請求書内容</h3>
+          <dl class="row bill-box_wrap">
+            <div class="col-6 bill-box_cell">
+              <dt><label for="billCompany">請求書の会社名</label></dt>
+              <dd>株式会社テスト</dd>
+            </div>
+            <div class="col-6 bill-box_cell">
+              <dt><label for="billCustomer">請求書の担当者名</label></dt>
+              <dd>山田太郎</dd>
+            </div>
+            <div class="col-6 bill-box_cell">
+              <dt><label for="billDate">請求日</label></dt>
+              <dd>2020/12/10(木)</dd>
+            </div>
+            <div class="col-6 bill-box_cell">
+              <dt><label for="billDue">支払期日</label></dt>
+              <dd>2020/12/10(木)</dd>
+            </div>
+            <div class="col-12 bill-box_cell">
+              <dt><label for="billNote">備考</label></dt>
+              <dd>テキストテキストテキストテキストテキストテキスト</dd>
+            </div>
+          </dl>
+        </div>
+        <!-- 請求書内容 終わり---------------------------- -->
+        <!-- 入金確認入力フィールド　予約完了後の表示----------- -->
+        <div class="bill-box">
+          <h3 class="row">入金確認</h3>
+          <dl class="row bill-box_wrap">
+            <div class="col-4 bill-box_cell">
+              <dt><label for="payDate">入金日</label></dt>
+              <dd>2020/12/21(月)</dd>
+            </div>
+            <div class="col-4 bill-box_cell">
+              <dt><label for="payType">支払タイプ</label></dt>
+              <dd>振込</dd>
+            </div>
+            <div class="col-4 bill-box_cell">
+              <dt><label for="payStatus">入金状況</label></dt>
+              <dd>入金済</dd>
+            </div>
+            <div class="col-12 bill-box_cell">
+              <dt><label for="billNote">振込名</label></dt>
+              <dd>テキストテキストテキストテキストテキストテキスト</dd>
+            </div>
+          </dl>
+        </div>
+        <!-- 入金確認入力フィールド 終わり---------------------------- -->
+      </div>
+    </section> --}}
+  </section>
+</div>
+{{-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ --}}
+
+
 
 
 

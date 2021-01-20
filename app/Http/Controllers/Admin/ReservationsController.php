@@ -535,6 +535,16 @@ class ReservationsController extends Controller
     $equipments = $venue->equipments()->get();
     $services = $venue->services()->get();
     $breakdowns = $reservation->breakdowns()->get();
+
+
+    //   @for ($i = 0; $i < count($reservation->bills()->get())-1; $i++)
+    // @if ($reservation->bills()->skip($i+1)->first()->category==2)
+    $other_bills = [];
+    for ($i = 0; $i < count($reservation->bills()->get()) - 1; $i++) {
+      $fake = [];
+      $fake[] = $reservation->bills()->skip($i + 1)->first();
+    }
+
     return view('admin.reservations.show', [
       'reservation' => $reservation,
       'equipments' => $equipments,
