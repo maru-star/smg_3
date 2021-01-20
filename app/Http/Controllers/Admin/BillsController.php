@@ -11,6 +11,9 @@ use App\Models\Reservation;
 
 use Illuminate\Support\Facades\DB; //トランザクション用
 
+use App\Mail\SendUserOtherBillsApprove;
+use Illuminate\Support\Facades\Mail;
+
 
 
 
@@ -231,11 +234,7 @@ class BillsController extends Controller
 
   public function OtherDoubleCheck(Request $request)
   {
-
     $bill = Bill::find($request->bills_id);
-    echo "<pre>";
-    var_dump($bill->id);
-    echo "</pre>";
 
     if ($request->double_check_status == 0) {
       $bill->update([
@@ -249,6 +248,20 @@ class BillsController extends Controller
       ]);
     }
     return redirect('admin/reservations/' . $bill->reservation_id);
+  }
+
+  public function other_send_approve(Request $request)
+  {
+    DB::transaction(function () use ($request) { //トランザクションさせる
+
+      $bill = Bill::find($request->id);
+      $bill->update([
+        'reservation_status' => 2, 'approve_send_at' => date('Y-m-d H:i:s')
+      ]);
+      $email = $bill->reservation->user->email;
+      Mail::to($email)->send(new SendUserOtherBillsApprove($bill));
+    });
+    // return redirect()->route('admin.reservations.index');
   }
 
 

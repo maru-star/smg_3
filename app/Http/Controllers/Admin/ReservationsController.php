@@ -13,7 +13,7 @@ use App\Models\Breakdown;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB; //トランザクション用
 use PDF;
-use App\Mail\SendUserAprove;
+use App\Mail\SendUserApprove;
 use Illuminate\Support\Facades\Mail;
 
 
@@ -597,7 +597,7 @@ class ReservationsController extends Controller
       $user = User::find($request->user_id);
       $email = $user->email;
       // 管理者側のメール本文等は未定
-      Mail::to($email)->send(new SendUserAprove($reservation));
+      Mail::to($email)->send(new SendUserApprove($reservation));
     });
     return redirect()->route('admin.reservations.index');
   }

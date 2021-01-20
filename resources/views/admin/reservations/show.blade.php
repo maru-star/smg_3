@@ -915,20 +915,20 @@
         <div class="d-flex col-2 justify-content-around">
           <p class="text-right">
             {{-- 予約ステータスを2にして、ユーザーにメール送付 --}}
-            {{ Form::open(['url' => 'admin/reservations/'.$reservation->id.'/send_email_and_approve', 'method'=>'POST', 'class'=>'']) }}
+            {{ Form::open(['url' => 'admin/bills/other_send_approve', 'method'=>'POST', 'class'=>'']) }}
             @csrf
-            {{ Form::hidden('reservation_id', $reservation->id ) }}
-            {{ Form::hidden('user_id', $reservation->user_id ) }}
+            {{ Form::hidden('id', $other_bill->id ) }}
             {{ Form::submit('承認',['class' => 'btn more_btn']) }}
             {{ Form::close() }}
           </p>
           <p class="text-right">
-            {{ Form::open(['url' => 'admin/reservations/'.$reservation->id.'/confirm_reservation', 'method'=>'POST', 'class'=>'']) }}
+            確定
+            {{-- {{ Form::open(['url' => 'admin/reservations/'.$reservation->id.'/confirm_reservation', 'method'=>'POST', 'class'=>'']) }}
             @csrf
             {{ Form::hidden('reservation_id', $reservation->id ) }}
             {{ Form::hidden('user_id', $reservation->user_id ) }}
             {{ Form::submit('確定',['class' => 'btn more_btn4']) }}
-            {{ Form::close() }}
+            {{ Form::close() }} --}}
           </p>
         </div>
     </div>

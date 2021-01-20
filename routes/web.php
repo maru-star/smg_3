@@ -133,5 +133,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
     Route::post('bills/store', 'BillsController@store');
 
     Route::post('bills/other_doublecheck', 'BillsController@OtherDoubleCheck');
+
+    Route::post('bills/other_send_approve', 'BillsController@other_send_approve');
   });
 });

@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class SendUserAprove extends Mailable
+class SendUserOtherBillsApprove extends Mailable
 {
   use Queueable, SerializesModels;
 
@@ -16,9 +16,9 @@ class SendUserAprove extends Mailable
    *
    * @return void
    */
-  public function __construct($reservation_id)
+  public function __construct($bill)
   {
-    $this->reservation_id = $reservation_id;
+    $this->bill = $bill;
   }
 
   /**
@@ -28,7 +28,7 @@ class SendUserAprove extends Mailable
    */
   public function build()
   {
-    return $this->view('user.home.send_email_approve')
-      ->subject('会場予約の承認をお願い申し上げます')->with(['reservation_id' => $this->reservation_id]);
+    return $this->view('user.home.other_send_approve')
+      ->subject('追加予約の承認をお願い申し上げます')->with(['bill' => $this->bill]);
   }
 }
