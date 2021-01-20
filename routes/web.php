@@ -114,19 +114,22 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
     Route::post('reservations/{reservation}/confirm_reservation', 'ReservationsController@confirm_reservation')->name('reservations.confirm_reservation');
 
-    // 請求書追加
-    Route::post('reservations/{reservation}/add_bill', 'ReservationsController@add_bill')->name('reservations.add_bill');
-
     // 管理者用カレンダーページ
     Route::get('calendar/venue_calendar', 'CalendarsController@index');
     Route::post('calendar/venue_calendar', 'CalendarsController@getData');
 
-    // ajax 予約　請求書　追加
-    Route::post('reservations/ajaxaddbillsequipments', 'ReservationsController@ajaxaddbillsequipments');
-    // ajax 予約　請求書　追加　レイアウト取得
-    Route::post('reservations/ajaxaddbillslaytout', 'ReservationsController@ajaxaddbillslaytout');
+    // 請求書追加
+    // Route::post('reservations/{reservation}/add_bill', 'ReservationsController@add_bill')->name('reservations.add_bill');
 
-    // 管理者請求書作成　確認画面
-    Route::post('reservations/{reservation}/add_bill_check', 'ReservationsController@add_bill_check')->name('reservations.add_bill_check');
+    // 追加請求書新規作成
+    Route::post('bills/create/{reservation}', 'BillsController@create');
+    // // ajax 予約　請求書　追加
+    Route::post('bills/ajaxaddbillsequipments', 'BillsController@ajaxaddbillsequipments');
+    // // ajax 予約　請求書　追加　レイアウト取得
+    Route::post('bills/ajaxaddbillslaytout', 'BillsController@ajaxaddbillslaytout');
+    // // 管理者請求書作成　確認画面
+    Route::post('bills/check/{reservation}', 'BillsController@check');
+    // // 管理者請求書作成　保存
+    Route::post('bills/store', 'BillsController@store');
   });
 });

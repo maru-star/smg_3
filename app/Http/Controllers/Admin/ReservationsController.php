@@ -472,6 +472,7 @@ class ReservationsController extends Controller
         'paid' => 0, //デフォで0 作成時点では未入金
         'reservation_status' => 1, //デフォで1、仮抑えのデフォは0
         'double_check_status' => 0, //デフォで0
+        'category' => 1 //デフォで１。　新規以外だと　2:その他有料備品　3:レイアウト　4:その他
       ]);
 
       if ($request->v_breakdowns) {
@@ -588,80 +589,6 @@ class ReservationsController extends Controller
     });
     return redirect()->route('admin.reservations.index');
   }
-
-  public function add_bill(Request $request)
-  {
-    $reservation = Reservation::find($request->reservation_id);
-    $venue = Venue::find($reservation->venue_id);
-
-    return view('admin.reservations.add_bill', [
-      'reservation' => $reservation,
-
-    ]);
-  }
-  /***********************
-   * ajax 請求書追加 備品サービス取得
-   ***********************
-   */
-  public function ajaxaddbillsequipments(Request $request)
-  {
-    $reservation = Reservation::find($request->reservation_id);
-    $equipments = $reservation->venue->equipments()->get();
-    $services = $reservation->venue->services()->get();
-
-    return [$equipments, $services];
-  }
-
-  /***********************
-   * ajax 請求書追加 レイアウト取得
-   ***********************
-   */
-
-  public function ajaxaddbillslaytout(Request $request)
-  {
-    $reservation = Reservation::find($request->reservation_id);
-    $layout_prepare = $reservation->venue->layout_prepare;
-    $layout_clean = $reservation->venue->layout_clean;
-    return [$layout_prepare, $layout_clean];
-  }
-
-
-
-  public function add_bill_check(Request $request)
-  {
-    var_dump($request->all());
-    $master_arrays = [];
-
-    if ($request->billcategory == 1) {
-      foreach ($request->all() as $key => $value) {
-        if (preg_match('/equipment_service/', $key)) {
-          $master_arrays[] = $value;
-        }
-      }
-      $counter = count($master_arrays) / 4; //固定で4つ
-    } else if ($request->billcategory == 2) {
-      foreach ($request->all() as $key => $value) {
-        if (preg_match('/layout_/', $key)) {
-          $master_arrays[] = $value;
-        }
-      }
-      $counter = count($master_arrays) / 4; //固定で4つ
-    } else if ($request->billcategory == 3) {
-      foreach ($request->all() as $key => $value) {
-        if (preg_match('/others_/', $key)) {
-          $master_arrays[] = $value;
-        }
-      }
-      $counter = count($master_arrays) / 4; //固定で4つ
-    }
-
-    return view('admin.reservations.add_bill_check', [
-      'request' => $request,
-      'master_arrays' => $master_arrays,
-      'counter' => $counter
-    ]);
-  }
-
 
 
   /**

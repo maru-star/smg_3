@@ -30,12 +30,15 @@ $(function () {
 
     var sub_total = 0;
 
+    // var tet = $('.extra-bill-table tbody tr').eq(3).find('td').eq(2).find('select').val();
+
+
     if (judge == 1) { //その他有料備品なら
       $('.result_table tbody').html('');
       for (let index = 0; index < count; index++) {
         var data1 = $('.extra-bill-table tbody tr').eq(index).find('td').eq(0).text();
         var data2 = Number($('.extra-bill-table tbody tr').eq(index).find('td').eq(1).text());
-        var data3 = $('.extra-bill-table tbody tr').eq(index).find('td').eq(2).find('input').val();
+        var data3 = $('.extra-bill-table tbody tr').eq(index).find('td').eq(2).find('input, select').val();
         var data4 = data2 * data3;
         sub_total = sub_total + data4;
         var m_append_data = "<tr>"
@@ -47,13 +50,14 @@ $(function () {
         if (data3 > 0) {
           main_tar.append(m_append_data);
         }
+
       }
     } else if (judge == 2) { //レイアウト変更なら
       $('.result_table tbody').html('');
       for (let index = 0; index < count; index++) {
         var data1 = $('.extra-bill-table tbody tr').eq(index).find('td').eq(0).text();
         var data2 = $('.extra-bill-table tbody tr').eq(index).find('td').eq(1).text();
-        var data3 = $('.extra-bill-table tbody tr').eq(index).find('td').eq(2).find('input').val();
+        var data3 = $('.extra-bill-table tbody tr').eq(index).find('td').eq(2).find('input, select').val();
         var data4 = data2 * data3;
         sub_total = sub_total + data4;
         var m_append_data = "<tr>"
@@ -84,8 +88,6 @@ $(function () {
         main_tar.append(m_append_data);
       }
     }
-
-    console.log(sub_total);
     $('.sub_total').val(Math.floor(sub_total));
     $('.after_dicsount').val(Math.floor(sub_total));
     $('.tax').val(Math.floor(sub_total * 0.1));
@@ -102,7 +104,7 @@ function ajaxAddBillsEquipments($reservation_id) {
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
-    url: '/admin/reservations/ajaxaddbillsequipments',
+    url: '/admin/bills/ajaxaddbillsequipments',
     type: 'POST',
     data: {
       'reservation_id': $reservation_id,
@@ -117,12 +119,11 @@ function ajaxAddBillsEquipments($reservation_id) {
       // $result[0]　は備品が格納
       // $result[1]　はサービスが格納
       $('.extra-bill-table tbody').html(''); //初期化
-      // console.log($result);
       for (let index = 0; index < $result[0].length; index++) {
         $('.extra-bill-table tbody').append("<tr><td>" + $result[0][index]['item'] + "</td><td>" + $result[0][index]['price'] + "</td><td><input type='text' class='equipments" + index + "' ></td></tr>");
       }
       for (let index2 = 0; index2 < $result[1].length; index2++) {
-        $('.extra-bill-table tbody').append("<tr><td>" + $result[1][index2]['item'] + "</td><td>" + $result[1][index2]['price'] + "</td><td><input type='text' class='services" + index2 + "'></td></tr>");
+        $('.extra-bill-table tbody').append("<tr><td>" + $result[1][index2]['item'] + "</td><td>" + $result[1][index2]['price'] + "</td><td><select class='services" + index2 + "'><option value='0'>なし</option><option value='1'>あり</option></select></td ></tr > ");
       }
     })
     .fail(function ($result) {
@@ -138,7 +139,7 @@ function ajaxAddBillsLayout($reservation_id) {
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
-    url: '/admin/reservations/ajaxaddbillslaytout',
+    url: '/admin/bills/ajaxaddbillslaytout',
     type: 'POST',
     data: {
       'reservation_id': $reservation_id,
@@ -151,8 +152,8 @@ function ajaxAddBillsLayout($reservation_id) {
     .done(function ($layouts) {
       $('#fullOverlay').css('display', 'none');
       $('.extra-bill-table tbody').html(''); //初期化
-      $('.extra-bill-table tbody').append("<tr><td>" + "レイアウト準備" + "</td><td>" + $layouts[0] + "</td><td><input type='text' class='layout_prepare" + "' ></td></tr>");
-      $('.extra-bill-table tbody').append("<tr><td>" + "レイアウト片付" + "</td><td>" + $layouts[1] + "</td><td><input type='text' class='layout_clean" + "'></td></tr>");
+      $('.extra-bill-table tbody').append("<tr><td>" + "レイアウト準備" + "</td><td>" + $layouts[0] + "</td><td><select class='layout_prepare" + "'><option value='0'>無し</option><option value='1'>有り</option></select></td ></tr > ");
+      $('.extra-bill-table tbody').append("<tr><td>" + "レイアウト片付" + "</td><td>" + $layouts[1] + "</td><td><select class='layout_clean" + "'><option value='0'>無し</option><option value='1'>有り</option></select></td></tr>");
     })
     .fail(function ($layouts) {
       $('#fullOverlay').css('display', 'none');

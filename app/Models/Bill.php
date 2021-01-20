@@ -39,7 +39,8 @@ class Bill extends Model
     'double_check_status',
     'double_check1_name',
     'double_check2_name',
-    'approve_send_at'
+    'approve_send_at',
+    'category'
   ];
 
   /*
