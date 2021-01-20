@@ -77,14 +77,14 @@ class BillsController extends Controller
         }
       }
       $counter = count($master_arrays) / 4; //固定で4つ
-    } else if ($request->billcategory == 2) {
+    } elseif ($request->billcategory == 2) {
       foreach ($request->all() as $key => $value) {
         if (preg_match('/layout_/', $key)) {
           $master_arrays[] = $value;
         }
       }
       $counter = count($master_arrays) / 4; //固定で4つ
-    } else if ($request->billcategory == 3) {
+    } elseif ($request->billcategory == 3) {
       foreach ($request->all() as $key => $value) {
         if (preg_match('/others_/', $key)) {
           $master_arrays[] = $value;
@@ -109,14 +109,10 @@ class BillsController extends Controller
    */
   public function store(Request $request)
   {
-    // echo "<pre>";
-    // var_dump(
-    //   $request->all()
-    // );
-    // echo "</pre>";
 
-    if ($request->unit_type == 2) {
-      DB::transaction(function () use ($request) { //トランザクションさせる
+    DB::transaction(function () use ($request) { //トランザクションさせる
+
+      if ($request->unit_type == 2) {
         $bill = Bill::create([
           'reservation_id' => $request->reservation_id,
           'venue_total' => 0, //追加請求書で会場の追加はありえないので、固定で0
@@ -132,6 +128,9 @@ class BillsController extends Controller
           'layout_total' => 0,
           'layout_discount' => 0, //割引額
           'after_duscount_layouts' => 0,
+          'others_total' => 0,
+          'others_discount' => 0,
+          'after_duscount_others' => 0,
           'sub_total' => $request->after_dicsount,
           'tax' => $request->tax,
           'total' => $request->total,
@@ -149,8 +148,87 @@ class BillsController extends Controller
             'unit_type' => 2 //unit_typeが２で渡ってきているので、２で固定
           ]);
         }
-      });
-    }
+      } elseif ($request->unit_type == 3) {
+        $bill = Bill::create([
+          'reservation_id' => $request->reservation_id,
+          'venue_total' => 0, //追加請求書で会場の追加はありえないので、固定で0
+          'venue_discount_percent' => 0, //追加請求書にて会場関連は全部固定で0
+          'venue_dicsount_number' => 0, //追加請求書にて会場関連は全部固定で0
+          'discount_venue_total' => 0, //追加請求書にて会場関連は全部固定で0
+          'equipment_total' => 0, //追加請求書にて　備品とサービスは項目が分かれておらず統一されているので、備品とサービスの個別の料金は不要
+          'service_total' =>  0, //追加請求書にて　備品とサービスは項目が分かれておらず統一されているので、備品とサービスの個別の料金は不要
+          'luggage_total' => 0, //追加請求書にて荷物預かりは不要なので、固定で0
+          'equipment_service_total' => 0, //３が渡ってきているのでここは固定０
+          'discount_item' => 0, //３が渡ってきているのでここは固定０
+          'discount_equipment_service_total' => 0, //３が渡ってきているのでここは固定０
+          'layout_total' => $request->sub_total,
+          'layout_discount' => $request->discount_input, //割引額
+          'after_duscount_layouts' => $request->after_dicsount,
+          'others_total' => 0,
+          'others_discount' => 0,
+          'after_duscount_others' => 0,
+
+          'sub_total' => $request->after_dicsount,
+          'tax' => $request->tax,
+          'total' => $request->total,
+          'paid' => 0, //デフォで0 作成時点では未入金
+          'reservation_status' => 1, //デフォで1、仮抑えのデフォは0
+          'double_check_status' => 0, //デフォで0
+          'category' => 3 //デフォで2。　新規以外だと　2:その他有料備品　3:レイアウト　4:その他
+        ]);
+        foreach ($request->master_arrays as $key => $value) {
+          $bill->breakdowns()->create([
+            'unit_item' => $value['unit_item'],
+            'unit_cost' => $value['unit_cost'],
+            'unit_count' => $value['unit_count'],
+            'unit_subtotal' => $value['unit_subtotal'],
+            'unit_type' => 3 //unit_typeが２で渡ってきているので、3で固定
+          ]);
+        }
+      } elseif ($request->unit_type == 4) {
+        var_dump($request->all());
+        $bill = Bill::create([
+          'reservation_id' => $request->reservation_id,
+          'venue_total' => 0, //追加請求書で会場の追加はありえないので、固定で0
+          'venue_discount_percent' => 0, //追加請求書にて会場関連は全部固定で0
+          'venue_dicsount_number' => 0, //追加請求書にて会場関連は全部固定で0
+          'discount_venue_total' => 0, //追加請求書にて会場関連は全部固定で0
+          'equipment_total' => 0, //追加請求書にて　備品とサービスは項目が分かれておらず統一されているので、備品とサービスの個別の料金は不要
+          'service_total' =>  0, //追加請求書にて　備品とサービスは項目が分かれておらず統一されているので、備品とサービスの個別の料金は不要
+          'luggage_total' => 0, //追加請求書にて荷物預かりは不要なので、固定で0
+          'equipment_service_total' => 0, //３が渡ってきているのでここは固定０
+          'discount_item' => 0, //３が渡ってきているのでここは固定０
+          'discount_equipment_service_total' => 0, //３が渡ってきているのでここは固定０
+          'layout_total' => 0,
+          'layout_discount' => 0,
+          'after_duscount_layouts' => 0,
+
+          'others_total' => $request->sub_total,
+          'others_discount' => $request->discount_input,
+          'after_duscount_others' => $request->after_dicsount,
+
+          'sub_total' => $request->after_dicsount,
+          'tax' => $request->tax,
+          'total' => $request->total,
+          'paid' => 0, //デフォで0 作成時点では未入金
+          'reservation_status' => 1, //デフォで1、仮抑えのデフォは0
+          'double_check_status' => 0, //デフォで0
+          'category' => 4 //デフォで2。　新規以外だと　2:その他有料備品　3:レイアウト　4:その他
+        ]);
+        foreach ($request->master_arrays as $key => $value) {
+          $bill->breakdowns()->create([
+            'unit_item' => $value['unit_item'],
+            'unit_cost' => $value['unit_cost'],
+            'unit_count' => $value['unit_count'],
+            'unit_subtotal' => $value['unit_subtotal'],
+            'unit_type' => 4 //unit_typeが２で渡ってきているので、4で固定
+          ]);
+        }
+      }
+    });
+
+    $request->session()->regenerate();
+    return redirect()->route('admin.reservations.show', $request->reservation_id);
   }
 
   /**

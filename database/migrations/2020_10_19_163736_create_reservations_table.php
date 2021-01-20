@@ -23,8 +23,8 @@ class CreateReservationsTable extends Migration
       $table->time('enter_time');
       $table->time('leave_time');
       $table->integer('board_flag');
-      $table->time('event_start');
-      $table->time('event_finish');
+      $table->time('event_start')->nullable();
+      $table->time('event_finish')->nullable();
       $table->string('event_name1')->nullable();
       $table->string('event_name2')->nullable();
       $table->string('event_owner')->nullable();

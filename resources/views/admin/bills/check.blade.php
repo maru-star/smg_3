@@ -50,7 +50,7 @@
       {{ Form::hidden('unit_type', 2 )}}
       @elseif ($request->billcategory==2)
       {{ Form::hidden('unit_type', 3 )}}
-      elseif ($request->billcategory==3)
+      @elseif ($request->billcategory==3)
       {{ Form::hidden('unit_type', 4 )}} {{--その他--}}
       @endif
       </tr>

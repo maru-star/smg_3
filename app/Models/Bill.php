@@ -30,6 +30,10 @@ class Bill extends Model
     'layout_discount',
     'after_duscount_layouts',
 
+    'others_total',
+    'others_discount',
+    'after_duscount_others',
+
     'sub_total',
     'tax',
     'total',

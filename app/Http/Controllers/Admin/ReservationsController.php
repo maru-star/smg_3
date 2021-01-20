@@ -464,6 +464,12 @@ class ReservationsController extends Controller
         'layout_total' => $request->layout_total,
         'layout_discount' => $request->layout_discount, //割引額
         'after_duscount_layouts' => $request->after_duscount_layouts,
+        // その他関連
+        'others_total' => 0,
+        'others_discount' => 0,
+        'after_duscount_others' => 0,
+
+
         // 該当billの合計額関連
         'sub_total' => $request->sub_total,
         'tax' => $request->tax,

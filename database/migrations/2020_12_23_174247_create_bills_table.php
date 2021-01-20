@@ -34,6 +34,13 @@ class CreateBillsTable extends Migration
       $table->integer('layout_discount')->nullable();
       $table->integer('after_duscount_layouts');
 
+
+      $table->integer('others_total');
+      $table->integer('others_discount')->nullable();
+      $table->integer('after_duscount_others');
+
+
+
       $table->integer('sub_total');
       $table->integer('tax');
       $table->integer('total');
