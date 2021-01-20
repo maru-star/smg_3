@@ -11,6 +11,8 @@
 
 {{ Form::model($request->reservation, ['route' => 'admin.bills.store']) }}
 @csrf
+{{ Form::hidden('reservation_id', $request->reservation, ['class' => 'form-control', 'readonly']) }}
+
 <table class="table table-borderd">
   <thead>
     <tr>
@@ -49,7 +51,7 @@
       @elseif ($request->billcategory==2)
       {{ Form::hidden('unit_type', 3 )}}
       elseif ($request->billcategory==3)
-      {{ Form::hidden('unit_type', 4 )}} //その他
+      {{ Form::hidden('unit_type', 4 )}} {{--その他--}}
       @endif
       </tr>
       @endfor
@@ -73,18 +75,13 @@
 </table>
 
 <div>
-  割引前：<p>{{$request->sub_total}}</p>
-  割引料金：<p>{{$request->discount_input}}</p>
-  小計：<p>{{$request->after_dicsount}}</p>
-  消費税：<p>{{$request->tax}}</p>
-  合計：<p>{{$request->total}}</p>
-  {{ Form::text('discount_total',    ,['class'=>'form-control', 'readonly'] ) }}
-  {{ Form::text('discount_total',    ,['class'=>'form-control', 'readonly'] ) }}
-  {{ Form::text('discount_total',    ,['class'=>'form-control', 'readonly'] ) }}
-  {{ Form::text('discount_total',    ,['class'=>'form-control', 'readonly'] ) }}
-  {{ Form::text('discount_total',    ,['class'=>'form-control', 'readonly'] ) }}
-  {{ Form::text('discount_total',    ,['class'=>'form-control', 'readonly'] ) }}
-  {{ Form::text('discount_total',    ,['class'=>'form-control', 'readonly'] ) }}
+  割引前： {{ Form::text('sub_total',$request->sub_total    ,['class'=>'form-control', 'readonly'] ) }}
+  割引料金：{{ Form::text('discount_input',  $request->discount_input  ,['class'=>'form-control', 'readonly'] ) }}
+  小計：{{ Form::text('after_dicsount',  $request->after_dicsount  ,['class'=>'form-control', 'readonly'] ) }}
+  消費税：{{ Form::text('tax',   $request->tax ,['class'=>'form-control', 'readonly'] ) }}
+  合計：{{ Form::text('total', $request->total   ,['class'=>'form-control', 'readonly'] ) }}
+
+  {{-- {{ Form::text('discount_total',    ,['class'=>'form-control', 'readonly'] ) }} --}}
 
 </div>
 
