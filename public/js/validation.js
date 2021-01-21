@@ -1,3 +1,11 @@
+// カタカナ
+jQuery.validator.addMethod("katakana", function (value, element) {
+  return this.optional(element) || /^([ァ-ヶー]+)$/.test(value);
+}, "<br/>全角カタカナを入力してください"
+);
+
+
+
 // 会場管理　新規登録validation
 $(function () {
   $("#VenuesCreateForm").validate({
@@ -75,6 +83,18 @@ $(function () {
       layout: {
         required: true,
       },
+      person_email: {
+        email: true,
+      },
+      first_name_kana: {
+        katakana: true,
+      },
+      last_name_kana: {
+        katakana: true,
+      },
+      mgmt_email: {
+        email: true,
+      },
     },
     messages: {
       smg_url: {
@@ -149,6 +169,19 @@ $(function () {
       layout: {
         required: "※必須項目です",
       },
+      person_email: {
+        email: '※Emailの形式で入力してください',
+      },
+      first_name_kana: {
+        katakana: '※カタカナで入力してください',
+      },
+      last_name_kana: {
+        katakana: '※カタカナで入力してください',
+      },
+      mgmt_email: {
+        email: '※Emailの形式で入力してください',
+      },
+
     },
     errorPlacement: function (error, element) {
       var name = element.attr('name');
@@ -168,6 +201,7 @@ $(function () {
     }
   });
 });
+
 
 
 
@@ -545,32 +579,32 @@ $(function () {
       $('span').css('background', 'white');
     }
   });
-  $("input[name^='frame']").each( function( index, elem ) {
-    
-      $("input[name='frame"+index+"']").rules( "add", {
-    required: true,
-    messages: {
-      required: "※必須項目です",
-    }
+  $("input[name^='frame']").each(function (index, elem) {
+
+    $("input[name='frame" + index + "']").rules("add", {
+      required: true,
+      messages: {
+        required: "※必須項目です",
+      }
+    });
   });
+  $("input[name^='price']").each(function (index, elem) {
+
+    $("input[name='price" + index + "']").rules("add", {
+      required: true,
+      number: true,
+      messages: {
+        required: "※必須項目です",
+        number: "※半角英数字を入力してください"
+      }
+    });
   });
-  $("input[name^='price']").each( function( index, elem ) {
-    
-      $("input[name='price"+index+"']").rules( "add", {
+  $("input[name='extend").rules("add", {
     required: true,
     number: true,
     messages: {
       required: "※必須項目です",
-      number:"※半角英数字を入力してください"
-    }
-  });
-  });
-      $("input[name='extend").rules( "add", {
-    required: true,
-    number: true,
-    messages: {
-      required: "※必須項目です",
-      number:"※半角英数字を入力してください"
+      number: "※半角英数字を入力してください"
     }
   });
 
@@ -599,33 +633,33 @@ $(function () {
       $('span').css('background', 'white');
     }
   });
-  $("input[name^='time']").each( function( index, elem ) {
-      $("input[name='time"+index+"']").rules( "add", {
-    required: true,
-    messages: {
-      required: "※必須項目です",
-    }
+  $("input[name^='time']").each(function (index, elem) {
+    $("input[name='time" + index + "']").rules("add", {
+      required: true,
+      messages: {
+        required: "※必須項目です",
+      }
+    });
   });
+  $("input[name^='price']").each(function (index, elem) {
+    $("input[name='price" + index + "']").rules("add", {
+      required: true,
+      number: true,
+      messages: {
+        required: "※必須項目です",
+        number: "※半角英数字を入力してください"
+      }
+    });
   });
-  $("input[name^='price']").each( function( index, elem ) {
-      $("input[name='price"+index+"']").rules( "add", {
-    required: true,
-    number: true,
-    messages: {
-      required: "※必須項目です",
-      number:"※半角英数字を入力してください"
-    }
-  });
-  });
-  $("input[name^='extend']").each( function( index, elem ) {
-      $("input[name='extend"+index+"']").rules( "add", {
-    required: true,
-    number: true,
-    messages: {
-      required: "※必須項目です",
-      number:"※半角英数字を入力してください"
-    }
-  });
+  $("input[name^='extend']").each(function (index, elem) {
+    $("input[name='extend" + index + "']").rules("add", {
+      required: true,
+      number: true,
+      messages: {
+        required: "※必須項目です",
+        number: "※半角英数字を入力してください"
+      }
+    });
   });
 
 

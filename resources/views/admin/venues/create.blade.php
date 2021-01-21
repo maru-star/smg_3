@@ -217,7 +217,7 @@
         <div class="row">
           <div class="col-sm-4">{{ Form::label('luggage_tel', '電話番号',['class' => 'form_required']) }}</div>
           <div class="col-sm-8">
-            {{ Form::text('luggage_tel', old('luggage_tel'), ['class' => 'form-control','placeholder' => '半角英数字で入力してください']) }}
+            {{ Form::text('luggage_tel', old('luggage_tel'), ['class' => 'form-control','placeholder' => '半角英数字で入力してください', 'maxlength'=>'13']) }}
             <p class="is-error-luggage_tel" style="color: red"></p>
           </div>
         </div>
@@ -238,22 +238,28 @@
         <div class="row">
           <div class="col-sm-2">{{ Form::label('first_name', '氏名(セイ)') }}</div>
           <div class="col-sm-4">
-            {{ Form::text('first_name_kana', old('first_name_kana'), ['class' => 'form-control']) }}</div>
+            {{ Form::text('first_name_kana', old('first_name_kana'), ['class' => 'form-control']) }}
+            <p class="is-error-first_name_kana" style="color: red"></p>
+          </div>
           <div class="col-sm-2">{{ Form::label('last_name', '氏名(メイ)') }}</div>
           <div class="col-sm-4">
-            {{ Form::text('last_name_kana', old('last_name_kana'), ['class' => 'form-control']) }}</div>
+            {{ Form::text('last_name_kana', old('last_name_kana'), ['class' => 'form-control']) }}
+            <p class="is-error-last_name_kana" style="color: red"></p>
+          </div>
         </div>
         <hr>
         <div class="row">
           <div class="col-sm-4">{{ Form::label('person_tel', '担当者電話番号') }}</div>
           <div class="col-sm-8">
-            {{ Form::text('person_tel', old('person_tel'), ['class' => 'form-control']) }}</div>
+            {{ Form::text('person_tel', old('person_tel'), ['class' => 'form-control', 'maxlength'=>'13']) }}</div>
         </div>
         <hr>
         <div class="row">
           <div class="col-sm-4">{{ Form::label('person_email', '担当者メール') }}</div>
           <div class="col-sm-8">
-            {{ Form::text('person_email', old('person_email'), ['class' => 'form-control']) }}</div>
+            {{ Form::text('person_email', old('person_email'), ['class' => 'form-control']) }}
+            <p class="is-error-person_email" style="color: red"></p>
+          </div>
         </div>
       </div>
       <div class="p-3 mb-2 bg-white text-dark">
@@ -267,13 +273,14 @@
         <div class="row">
           <div class="col-sm-4">{{ Form::label('mgmt_tel', '電話番号') }}</div>
           <div class="col-sm-8">
-            {{ Form::text('mgmt_tel', old('mgmt_tel'), ['class' => 'form-control']) }}</div>
+            {{ Form::text('mgmt_tel', old('mgmt_tel'), ['class' => 'form-control', 'maxlength'=>'13']) }}</div>
         </div>
         <hr>
         <div class="row">
           <div class="col-sm-4">{{ Form::label('mgmt_emer_tel', '夜間緊急連絡先') }}</div>
           <div class="col-sm-8">
-            {{ Form::text('mgmt_emer_tel', old('mgmt_emer_tel'), ['class' => 'form-control']) }}</div>
+            {{ Form::text('mgmt_emer_tel', old('mgmt_emer_tel'), ['class' => 'form-control', 'maxlength'=>'13']) }}
+          </div>
         </div>
         <hr>
         <div class="row">
@@ -288,7 +295,9 @@
         <div class="row">
           <div class="col-sm-4">{{ Form::label('mgmt_email', '担当者メール') }}</div>
           <div class="col-sm-8">
-            {{ Form::text('mgmt_email', old('mgmt_email'), ['class' => 'form-control']) }}</div>
+            {{ Form::text('mgmt_email', old('mgmt_email'), ['class' => 'form-control']) }}
+            <p class="is-error-mgmt_email" style="color: red"></p>
+          </div>
         </div>
         <hr>
         <div class="row">
@@ -300,7 +309,8 @@
         <div class="row">
           <div class="col-sm-4">{{ Form::label('mgmt_sec_tel', '警備会社電話番号') }}</div>
           <div class="col-sm-8">
-            {{ Form::text('mgmt_sec_company', old('mgmt_sec_company'), ['class' => 'form-control']) }}</div>
+            {{ Form::text('mgmt_sec_company', old('mgmt_sec_company'), ['class' => 'form-control', 'maxlength'=>'13']) }}
+          </div>
         </div>
         <hr>
         <div class="row">
