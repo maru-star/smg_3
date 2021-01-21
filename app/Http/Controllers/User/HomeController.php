@@ -41,10 +41,15 @@ class HomeController extends Controller
     $reservation = Reservation::find($id);
     if (Auth::id() == $reservation->user_id) {
       $venue = Venue::find($reservation->venue_id);
+      $other_bills = [];
+      for ($i = 0; $i < count($reservation->bills()->get()) - 1; $i++) {
+        $other_bills[] = $reservation->bills()->skip($i + 1)->first();
+      }
 
       return view('user.home.show', [
         'reservation' => $reservation,
         'venue' => $venue,
+        'other_bills' => $other_bills,
       ]);
     } else {
       return redirect('user/login');

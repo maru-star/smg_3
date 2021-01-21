@@ -5,8 +5,6 @@
 <script src="{{ asset('/js/ajax.js') }}"></script> --}}
 
 
-
-
 <div class="content">
   <div class="container-fluid">
     <div class="container-field mt-3">
@@ -76,78 +74,38 @@
               </tr>
             </thead>
 
-
-
-            {{-- @foreach ($user->reservations()->get() as $reservation)
+            @foreach ($user->reservations()->get() as $reservation)
             <tbody>
               <tr>
-                <td rowspan="{{count($reservation->bills()->get())}}">※後ほど修正</td>
-            <td rowspan="{{count($reservation->bills()->get())}}">{{$reservation->id}}</td>
-            <td rowspan="{{count($reservation->bills()->get())}}">
-              {{ReservationHelper::formatDate($reservation->reserve_date)}}</td>
-            <td rowspan="{{count($reservation->bills()->get())}}">{{$reservation->enter_time}}</td>
-            <td rowspan="{{count($reservation->bills()->get())}}">{{$reservation->leave_time}}</td>
-            <td rowspan="{{count($reservation->bills()->get())}}">
-              {{$reservation->venue_id}}
-            </td>
-            <td rowspan="{{count($reservation->bills()->get())}}">{{$user->find($reservation->user_id)->company}}
-            </td>
-            <td rowspan="{{count($reservation->bills()->get())}}">
-              {{$user->find($reservation->venue_id)->first_name}}{{$user->find($reservation->venue_id)->last_name}}
-            </td>
-            <td rowspan="{{count($reservation->bills()->get())}}">{{$user->find($reservation->venue_id)->mobile}}
-            </td>
-            <td rowspan="{{count($reservation->bills()->get())}}">{{$user->find($reservation->venue_id)->tel}}
-            </td>
-            <td rowspan="{{count($reservation->bills()->get())}}">※修正</td>
-            <td>会場予約</td>
-            <td>{{ReservationHelper::judgeStatus($reservation->bills()->first()->reservation_status)}}</td>
-            <td rowspan="{{count($reservation->bills()->get())}}"><a
-                href="{{ url('admin/reservations', $reservation->id) }}" class="more_btn">詳細</a></td>
-            <td rowspan="{{count($reservation->bills()->get())}}"><a
-                href="{{ url('admin/reservations/generate_pdf/'.$reservation->id) }}" class="more_btn">詳細</a></td>
-            </tr>
-            @for ($i = 0; $i < count($reservation->bills()->get())-1; $i++)
-              <tr>
+                <td rowspan="{{count($reservation->bills()->get())}}">{{$reservation->id}}</td>
+                <td rowspan="{{count($reservation->bills()->get())}}">{{$reservation->reserve_date}}</td>
+                <td rowspan="{{count($reservation->bills()->get())}}">{{$reservation->enter_time}}</td>
+                <td rowspan="{{count($reservation->bills()->get())}}">{{$reservation->leave_time}}</td>
+                <td>{{$reservation->venue_id}}</td>
+                <td>{{ReservationHelper::judgeStatus($reservation->bills()->first()->reservation_status)}}</td>
+                <td>※カテゴリー</td>
+                <td>{{number_format($reservation->bills()->first()->total)}}円</td>
+                <td>{{$reservation->payment_limit}}</td>
+                <td rowspan="{{count($reservation->bills()->get())}}">{{$reservation->bills()->first()->paid}}</td>
+                <td><a href="{{ url('user/home/'.$reservation->id) }}" class="more_btn">詳細</a></td>
                 <td></td>
-                <td>
-                  {{ReservationHelper::judgeStatus($reservation->bills()->skip($i+1)->first()->reservation_status)}}
-                </td>
+                <td></td>
               </tr>
-              @endfor
-              </tbody>
-              @endforeach --}}
-
-              @foreach ($user->reservations()->get() as $reservation)
-              <tbody>
+              @for ($i = 0; $i < count($reservation->bills()->get())-1; $i++)
                 <tr>
-                  <td rowspan="{{count($reservation->bills()->get())}}">{{$reservation->id}}</td>
-                  <td rowspan="{{count($reservation->bills()->get())}}">{{$reservation->reserve_date}}</td>
-                  <td rowspan="{{count($reservation->bills()->get())}}">{{$reservation->enter_time}}</td>
-                  <td rowspan="{{count($reservation->bills()->get())}}">{{$reservation->leave_time}}</td>
-                  <td>{{$reservation->venue_id}}</td>
-                  <td>{{$reservation->bills()->first()->reservation_status}}</td>
-                  <td>※カテゴリー</td>
-                  <td>{{number_format($reservation->bills()->first()->total)}}円</td>
-                  <td>{{$reservation->payment_limit}}</td>
-                  <td rowspan="{{count($reservation->bills()->get())}}">{{$reservation->bills()->first()->paid}}</td>
-                  <td><a href="{{ url('user/home/'.$reservation->id) }}" class="more_btn">詳細</a></td>
+                  <td></td>
+                  <td>
+                    {{ReservationHelper::judgeStatus($reservation->bills()->skip($i+1)->first()->reservation_status)}}
+                  </td>
+                  <td>カテゴリ</td>
+                  <td>{{number_format($reservation->bills()->skip($i+1)->first()->total)}}円</td>
+                  <td></td>
                   <td></td>
                   <td></td>
                 </tr>
-                @for ($i = 0; $i < count($reservation->bills()->get())-1; $i++)
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  @endfor
-              </tbody>
-              @endforeach
+                @endfor
+            </tbody>
+            @endforeach
 
 
 

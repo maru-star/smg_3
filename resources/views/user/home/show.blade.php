@@ -805,24 +805,31 @@
     <!-- 予約詳細   終わり--------------------------------------------------　 -->
 
     <!-- 追加請求のフィールド------------------------------------------------------------------->
-    {{-- <div class="section-wrap">
+    {{-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ --}}
+    @foreach ($other_bills as $key=>$other_bill)
+    <div class="section-wrap">
       <div class="ttl-box d-flex align-items-center">
         <div class="col-9 d-flex justify-content-between">
-          <h2>その他の有料備品、サービス</h2>
+          <h2>
+            @if ($other_bill->category==2)
+            その他の有料備品、サービス
+            @elseif($other_bill->category==3)
+            レイアウト
+            @elseif($other_bill->category==4)
+            その他
+            @endif
+          </h2>
         </div>
-
       </div>
       <section class="register-wrap">
-
         <div class="section-header">
           <div class="row">
             <div class="d-flex col-10 flex-wrap">
               <dl>
                 <dt>予約状況</dt>
-                <dd>予約確認中</dd>
+                <dd>{{ReservationHelper::judgeStatus($other_bill->reservation_status)}}</dd>
               </dl>
             </div>
-
             <div class="col-2">
               <p>
                 申込日：2020/10/15(木)
@@ -832,15 +839,10 @@
               </p>
             </div>
           </div>
-
         </div>
-
         <!-- 請求セクション------------------------------------------------------------------- -->
-
         <section class="section-wrap section-bg">
-
           <!-- 請求内容----------- -->
-
           <!-- 請求書情報-------- -->
           <div class="bill-ttl mb-5">
             <div class="section-ttl-box d-flex align-items-center">
@@ -868,9 +870,7 @@
                 <dd>2020/12/10(木)</dd>
               </div>
             </dl>
-
           </div>
-
           <!-- 　追加請求内容----------- -->
           <div class="bill-box">
             <h3 class="row">その他の有料備品、サービス</h3>
@@ -879,7 +879,6 @@
                 <dt>その他の有料備品、サービス合計</dt>
                 <dd class="text-right">57,700円</dd>
               </div>
-
               <div class="col-6">
                 <div class="row">
                   <div class="col-4 bill-box_cell cell-gray">
@@ -894,15 +893,11 @@
                   </div>
                 </div>
               </div>
-
-
               <div class="col-6 bill-box_cell text-right">
                 <p class="font-weight-bold">割引後その他の有料備品、サービス合計</p>
                 <p class=""></p>
               </div>
             </dl>
-
-
             <!-- 料金内訳-------------------------------------------------------------- -->
             <div class="bill-list">
               <h3 class="row">料金内訳</h3>
@@ -919,7 +914,6 @@
                   <tbody></tbody>
                 </table>
               </div>
-
               <div class="row bill-box_wrap price-sum bill-box_cell flex-column">
                 <p class="text-right"><span class="font-weight-bold">小計</span>7,200円</p>
                 <p class="text-right"><span>消費税</span>720円</p>
@@ -927,19 +921,13 @@
               </div>
             </div>
             <!-- 料金内訳 終わり---------------------------- -->
-
-
           </div>
           <!-- 請求内容 終わり---------------------------- -->
-
           <!-- 請求内容 終わり---------------------------- -->
         </section>
-
-        　　　　　
         <!-- 請求セクション　キャンセル料-　キャンセルをしたときに、表示------------------------------------------------------------------ -->
         <section class="bill-wrap section-wrap section-bg">
           <div class="bill-bg">
-
             <!-- 請求書情報-------- -->
             <div class="bill-ttl mb-5">
               <div class="section-ttl-box d-flex align-items-center">
@@ -967,11 +955,8 @@
                   <dd>2020/12/10(木)</dd>
                 </div>
               </dl>
-
             </div>
             <!-- 請求書情報 終わり---------------------------- -->
-
-
             <!-- 　キャンセル料金内容----------- -->
             <div class="bill-box">
               <h3 class="row">キャンセル料</h3>
@@ -980,7 +965,6 @@
                   <dt>キャンセル料金合計</dt>
                   <dd class="text-right">57,700円</dd>
                 </div>
-
                 <div class="col-6">
                   <div class="row">
                     <div class="col-4 bill-box_cell cell-gray">
@@ -995,15 +979,11 @@
                     </div>
                   </div>
                 </div>
-
-
                 <div class="col-6 bill-box_cell text-right">
                   <p class="font-weight-bold">割引後キャンセル料合計</p>
                   <p class=""></p>
                 </div>
               </dl>
-
-
               <!-- 料金内訳-------------------------------------------------------------- -->
               <div class="bill-list">
                 <h3 class="row">料金内訳</h3>
@@ -1020,7 +1000,6 @@
                     <tbody></tbody>
                   </table>
                 </div>
-
                 <div class="row bill-box_wrap price-sum bill-box_cell flex-column">
                   <p class="text-right"><span class="font-weight-bold">小計</span>7,200円</p>
                   <p class="text-right"><span>消費税</span>720円</p>
@@ -1028,19 +1007,14 @@
                 </div>
               </div>
               <!-- 料金内訳 終わり---------------------------- -->
-
-
             </div>
             <!-- 請求内容 終わり---------------------------- -->
-
           </div>
         </section>
-
-
-
-
       </section>
-    </div> --}}
+    </div>
+    @endforeach
+    {{-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ --}}
 
     <!-- 合計請求額------------------------------------------------------------------- -->
     <div class="total-sum">
